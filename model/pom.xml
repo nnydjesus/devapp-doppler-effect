@@ -12,6 +12,14 @@
     <artifactId>aunq-parent</artifactId>
     <version>0.1-SNAPSHOT</version>
   </parent>
+  
+  
+  	
+		<scm>
+		<connection>scm:svn:https://devapp-doppler-effect.googlecode.com/svn/trunk/model</connection>
+		<url>https://devapp-doppler-effect.googlecode.com/svn/trunk</url>
+	</scm>
+	
 
   <name>model</name>
   <url>http://maven.apache.org</url>
