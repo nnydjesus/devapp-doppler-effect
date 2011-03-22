@@ -7,6 +7,12 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
+  <parent>
+    <groupId>ar.edu.unq</groupId>
+    <artifactId>aunq-parent</artifactId>
+    <version>0.1-SNAPSHOT</version>
+  </parent>
+
   <name>model</name>
   <url>http://maven.apache.org</url>
 
