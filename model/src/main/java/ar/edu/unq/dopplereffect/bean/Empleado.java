@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect;
+package ar.edu.unq.dopplereffect.bean;
 
 /**
  * Persona que trabaja en la empresa. Un empleado posee datos personales, como

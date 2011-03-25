@@ -6,6 +6,8 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.unq.dopplereffect.bean.Empleado;
+
 public class EmpleadoTest {
     private transient Empleado empleado;
 
