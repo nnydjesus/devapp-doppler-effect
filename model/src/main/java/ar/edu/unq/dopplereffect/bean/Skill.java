@@ -4,14 +4,13 @@ import ar.edu.unq.dopplereffect.bean.enums.Level;
 import ar.edu.unq.dopplereffect.bean.enums.Type;
 
 /**
- * TODO: description
  */
 public class Skill {
     private Type type;
 
     private Level level;
 
-    public void setLevel(Level level) {
+    public void setLevel(final Level level) {
         this.level = level;
     }
 
@@ -19,7 +18,7 @@ public class Skill {
         return level;
     }
 
-    public void setType(Type type) {
+    public void setType(final Type type) {
         this.type = type;
     }
 
