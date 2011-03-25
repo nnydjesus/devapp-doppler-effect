@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect;
+package ar.edu.unq.dopplereffect.bean;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -6,9 +6,8 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.unq.dopplereffect.bean.Empleado;
-
 public class EmpleadoTest {
+
     private transient Empleado empleado;
 
     @Before
