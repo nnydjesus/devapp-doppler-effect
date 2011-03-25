@@ -117,15 +117,19 @@ public class Empleado {
      */
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (this.getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
+        }
         Empleado other = (Empleado) obj;
-        if (dni != other.dni)
+        if (dni != other.dni) {
             return false;
+        }
         return true;
     }
 
