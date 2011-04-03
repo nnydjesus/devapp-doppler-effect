@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Set;
 
 import ar.edu.unq.dopplereffect.bean.enums.Nivel;
 import ar.edu.unq.dopplereffect.bean.enums.PlanDeCarrera;
@@ -18,7 +19,7 @@ public class SueldoEstipulado {
 
     private Nivel nivel;
 
-    private List<Integer> banda;
+    private int[] banda;
 
     private int sueldoMinimo;
 
@@ -66,12 +67,12 @@ public class SueldoEstipulado {
         this.plan = plan;
     }
 
-    public List<Integer> getBanda() {
+    public int[] getBanda() {
         return banda;
     }
 
-    public void setBanda(final List<Integer> porcentajes) {
-        banda = porcentajes;
+    public void setBanda(final int[] banda) {
+        this.banda = banda;
     }
 
     public void setSueldoMinimo(final int sueldoMinimo) {
@@ -98,7 +99,12 @@ public class SueldoEstipulado {
      * @return true si el porcentaje es valido, false en caso contrario.
      */
     public boolean tienePorcentajeEnBanda(final int porcentaje) {
-        return this.getBanda().contains(porcentaje);
+        for (int porc : this.getBanda()) {
+            if (porc == porcentaje) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -117,5 +123,34 @@ public class SueldoEstipulado {
         } else {
             throw new UserException("El porcentaje no figura dentro de la banda");
         }
+    }
+
+    /**
+     * Cambia la banda del sueldo estipulado. Si es necesario actualiza
+     * empleados para que queden consistentes acorde a la nueva banda.
+     * 
+     * @param nuevaBanda
+     *            un array de porcentajes que representan a la nueva banda.
+     * @param empleados
+     *            los empleados que pueden estar afectados y deben actualizarse
+     *            sus sueldos.
+     */
+    public void cambiarBanda(final int[] nuevaBanda, final Set<Empleado> empleados) {
+        Arrays.sort(nuevaBanda);
+        if (nuevaBanda[0] != 0 || nuevaBanda[nuevaBanda.length - 1] != 100) {
+            throw new UserException("La banda debe contener 0 y 100");
+        }
+        this.setBanda(nuevaBanda);
+        for (Empleado empleado : empleados) {
+            if (this.afectaCambioBanda(empleado)) {
+                empleado.cambiarPorcentajeSueldo(this.getBanda());
+            }
+        }
+    }
+
+    private boolean afectaCambioBanda(final Empleado empleado) {
+        // si el porcentaje del empleado no esta en la banda,
+        // entonces esta afectado por el cambio de banda
+        return !this.tienePorcentajeEnBanda(empleado.getPorcentaje());
     }
 }
