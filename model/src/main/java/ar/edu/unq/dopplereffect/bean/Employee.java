@@ -9,12 +9,12 @@ import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
  */
 public class Employee {
 
-    private PersonalData personalData;
+    private EmployeeData personalData;
 
     private CareerData careerData;
 
     public Employee() {
-        personalData = new PersonalData();
+        this.setPersonalData(new EmployeeData());
         careerData = new CareerData();
     }
 
@@ -58,14 +58,6 @@ public class Employee {
         this.getPersonalData().setEmail(email);
     }
 
-    public PersonalData getPersonalData() {
-        return personalData;
-    }
-
-    public void setPersonalData(final PersonalData personalData) {
-        this.personalData = personalData;
-    }
-
     public CareerData getCareerData() {
         return careerData;
     }
@@ -80,6 +72,14 @@ public class Employee {
 
     public int getPercentage() {
         return this.getCareerData().getPercentage();
+    }
+
+    public void setPersonalData(final EmployeeData personalData) {
+        this.personalData = personalData;
+    }
+
+    public EmployeeData getPersonalData() {
+        return personalData;
     }
 
     public void setPercentage(final int percentage) {
@@ -107,28 +107,23 @@ public class Employee {
     @Override
     public int hashCode() {
         int prime = 31;
-        return prime + (personalData == null ? 0 : personalData.hashCode());
+        return prime + (this.getPersonalData() == null ? 0 : this.getPersonalData().hashCode());
     }
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (this.getClass() != obj.getClass()) {
+        if (this.getClass() != obj.getClass())
             return false;
-        }
         Employee other = (Employee) obj;
-        if (personalData == null) {
-            if (other.personalData != null) {
+        if (this.getPersonalData() == null) {
+            if (other.getPersonalData() != null)
                 return false;
-            }
-        } else if (!personalData.equals(other.personalData)) {
+        } else if (!this.getPersonalData().equals(other.getPersonalData()))
             return false;
-        }
         return true;
     }
 }
