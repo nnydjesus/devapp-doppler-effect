@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ar.edu.unq.dopplereffect.exception.UserException;
-
 /**
  * TODO: description
  */
@@ -13,43 +11,29 @@ public class Proyect {
 
     private String name;
 
-    private InformationClient informationClient;
+    private Client informationClient;
 
     private int consideredTime;
 
-    private int remainingTime;
-
     private List<Skill> skils;
 
-    /**
-     * Los empleados que estan asignados al proyecto. Cada uno de los empleados
-     * se pueden asignar por tiempos diferentes
-     */
+    private boolean actidated;
+
     private Map<Empleado, Integer> assignedEmployee = new HashMap<Empleado, Integer>();
 
-    public Proyect(final String name, final int consideredTime) {
+    public Proyect(final String name) {
         this.name = name;
-        this.consideredTime = consideredTime;
-        remainingTime = consideredTime;
     }
 
     public Proyect() {
     }
 
-    public InformationClient getInformationClient() {
+    public Client getInformationClient() {
         return informationClient;
     }
 
-    public void setInformationClient(final InformationClient informationClient) {
+    public void setInformationClient(final Client informationClient) {
         this.informationClient = informationClient;
-    }
-
-    public int getConsideredTime() {
-        return consideredTime;
-    }
-
-    public void setConsideredTime(final int consideredTime) {
-        this.consideredTime = consideredTime;
     }
 
     public List<Skill> getSkils() {
@@ -68,10 +52,6 @@ public class Proyect {
         return name;
     }
 
-    public int getRemainingTime() {
-        return remainingTime;
-    }
-
     public void setAssignedEmployee(final Map<Empleado, Integer> assignedEmployee) {
         this.assignedEmployee = assignedEmployee;
     }
@@ -81,16 +61,42 @@ public class Proyect {
     }
 
     public void manualAssignment(final Empleado empleado, final int time) {
-        if (remainingTime - time >= 0) {
-            assignedEmployee.put(empleado, time);
-            remainingTime -= time;
-        } else
-            throw new UserException("No se puede asignar mas horas de la que considero");
+        // if (remainingTime - time >= 0) {
+        // assignedEmployee.put(empleado, time);
+        // remainingTime -= time;
+        // } else
+        // throw new
+        // UserException("No se puede asignar mas horas de la que considero");
 
     }
 
     public void addSkill(final Skill skill) {
         skils.add(skill);
+    }
+
+    protected void setActidated(final boolean actidated) {
+        this.actidated = actidated;
+    }
+
+    public void activated() {
+        actidated = true;
+
+    }
+
+    public boolean isActidated() {
+        return actidated;
+    }
+
+    public void setConsideredTime(final int mounth, final int days) {
+        this.setConsideredTime((mounth * 160 + days * 8));
+    }
+
+    public void setConsideredTime(final int consideredTime) {
+        this.consideredTime = consideredTime;
+    }
+
+    public int getConsideredTime() {
+        return consideredTime;
     }
 
 }

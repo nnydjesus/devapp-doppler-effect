@@ -1,28 +1,28 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import ar.edu.unq.dopplereffect.bean.enums.Level;
-import ar.edu.unq.dopplereffect.bean.enums.Type;
+import ar.edu.unq.dopplereffect.bean.enums.LevelSkill;
+import ar.edu.unq.dopplereffect.bean.enums.TypeSkill;
 
 /**
  */
 public class Skill {
-    private Type type;
+    private TypeSkill type;
 
-    private Level level;
+    private LevelSkill level;
 
-    public void setLevel(final Level level) {
+    public void setLevel(final LevelSkill level) {
         this.level = level;
     }
 
-    public Level getLevel() {
+    public LevelSkill getLevel() {
         return level;
     }
 
-    public void setType(final Type type) {
+    public void setType(final TypeSkill type) {
         this.type = type;
     }
 
-    public Type getType() {
+    public TypeSkill getType() {
         return type;
     }
 
