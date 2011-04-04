@@ -5,9 +5,9 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ProyectTest {
+public class ProjectTest {
 
-    private Proyect proyect;
+    private Project project;
 
     private int trestMeses = 160 * 3;
 
@@ -15,12 +15,12 @@ public class ProyectTest {
 
     @Before
     public void setUp() {
-        proyect = new Proyect("p1");
-        proyect.setConsideredTime(3, 5);
+        project = new Project("p1");
+        project.setConsideredTime(3, 5);
     }
 
     @Test
     public void setConsideratedTime() {
-        Assert.assertEquals(trestMeses + cincoDias, proyect.getConsideredTime());
+        Assert.assertEquals(trestMeses + cincoDias, project.getConsideredTime());
     }
 }
