@@ -17,7 +17,7 @@ import ar.edu.unq.dopplereffect.exception.UserException;
 public class SalaryConstraintsTest {
 
     private SalaryConstraints createConsistentSalary() {
-        return new SalaryConstraints(2011, mock(CareerPlan.class), mock(CareerPlanLevel.class));
+        return new SalaryConstraints(2011, CareerPlan.TESTER, CareerPlanLevel.JUNIOR);
     }
 
     private SalaryConstraints createConsistentSalary(final int minS, final int maxS) {
