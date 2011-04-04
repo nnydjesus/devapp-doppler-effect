@@ -1,37 +1,55 @@
 package ar.edu.unq.dopplereffect.bean;
 
 /**
- * TODO: description
+ * Representa aquellos datos que identifican y caracterizan a una persona, como
+ * por ejemplo su nombre o su direccion.
  */
 public class PersonalData {
 
-    private String name;
+    private int dni;
 
-    private String direction;
+    private String firstName;
+
+    private String lastName;
+
+    private String address;
 
     private String locality;
 
-    private String phone;
+    private String phoneNumber;
 
     private String email;
 
-    public PersonalData() {
+    public int getDni() {
+        return dni;
     }
 
-    public String getName() {
-        return name;
+    public void setDni(final int dni) {
+        this.dni = dni;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getDirection() {
-        return direction;
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setDirection(final String direction) {
-        this.direction = direction;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(final String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(final String address) {
+        this.address = address;
     }
 
     public String getLocality() {
@@ -42,12 +60,12 @@ public class PersonalData {
         this.locality = locality;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(final String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(final String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -58,4 +76,27 @@ public class PersonalData {
         this.email = email;
     }
 
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        return prime + dni;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        PersonalData other = (PersonalData) obj;
+        if (dni != other.dni) {
+            return false;
+        }
+        return true;
+    }
 }

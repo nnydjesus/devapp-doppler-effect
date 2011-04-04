@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * TODO: description
  */
-public class Proyect {
+public class Project {
 
     private String name;
 
@@ -19,13 +19,13 @@ public class Proyect {
 
     private boolean actidated;
 
-    private Map<Empleado, Integer> assignedEmployee = new HashMap<Empleado, Integer>();
+    private Map<Employee, Integer> assignedEmployee = new HashMap<Employee, Integer>();
 
-    public Proyect(final String name) {
+    public Project(final String name) {
         this.name = name;
     }
 
-    public Proyect() {
+    public Project() {
     }
 
     public Client getInformationClient() {
@@ -52,15 +52,15 @@ public class Proyect {
         return name;
     }
 
-    public void setAssignedEmployee(final Map<Empleado, Integer> assignedEmployee) {
+    public void setAssignedEmployee(final Map<Employee, Integer> assignedEmployee) {
         this.assignedEmployee = assignedEmployee;
     }
 
-    public Map<Empleado, Integer> getAssignedEmployee() {
+    public Map<Employee, Integer> getAssignedEmployee() {
         return assignedEmployee;
     }
 
-    public void manualAssignment(final Empleado empleado, final int time) {
+    public void manualAssignment(final Employee empleado, final int time) {
         // if (remainingTime - time >= 0) {
         // assignedEmployee.put(empleado, time);
         // remainingTime -= time;
