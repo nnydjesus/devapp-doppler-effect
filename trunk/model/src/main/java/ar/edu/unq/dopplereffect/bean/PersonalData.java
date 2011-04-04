@@ -6,11 +6,7 @@ package ar.edu.unq.dopplereffect.bean;
  */
 public class PersonalData {
 
-    private int dni;
-
     private String firstName;
-
-    private String lastName;
 
     private String address;
 
@@ -20,28 +16,12 @@ public class PersonalData {
 
     private String email;
 
-    public int getDni() {
-        return dni;
-    }
-
-    public void setDni(final int dni) {
-        this.dni = dni;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
     public void setFirstName(final String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(final String lastName) {
-        this.lastName = lastName;
     }
 
     public String getAddress() {
@@ -76,27 +56,4 @@ public class PersonalData {
         this.email = email;
     }
 
-    @Override
-    public int hashCode() {
-        int prime = 31;
-        return prime + dni;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (this.getClass() != obj.getClass()) {
-            return false;
-        }
-        PersonalData other = (PersonalData) obj;
-        if (dni != other.dni) {
-            return false;
-        }
-        return true;
-    }
 }

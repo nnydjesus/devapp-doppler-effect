@@ -13,7 +13,7 @@ public class Project {
 
     private Client informationClient;
 
-    private int consideredTime;
+    private int consideredEffor;
 
     private List<Skill> skils;
 
@@ -87,16 +87,16 @@ public class Project {
         return actidated;
     }
 
-    public void setConsideredTime(final int mounth, final int days) {
-        this.setConsideredTime((mounth * 160 + days * 8));
+    public void setConsideredEffor(final int mounth, final int days) {
+        this.setConsideredEffor((mounth * 168 + days * 8));
     }
 
-    public void setConsideredTime(final int consideredTime) {
-        this.consideredTime = consideredTime;
+    public void setConsideredEffor(final int consideredEffor) {
+        this.consideredEffor = consideredEffor;
     }
 
-    public int getConsideredTime() {
-        return consideredTime;
+    public int getConsideredEffor() {
+        return consideredEffor;
     }
 
 }
