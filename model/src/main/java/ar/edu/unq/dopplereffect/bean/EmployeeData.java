@@ -27,23 +27,25 @@ public class EmployeeData extends PersonalData {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + dni;
-        return result;
+        int prime = 31;
+        return prime + dni;
     }
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (this.getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
+        }
         EmployeeData other = (EmployeeData) obj;
-        if (dni != other.dni)
+        if (dni != other.dni) {
             return false;
+        }
         return true;
     }
 }
