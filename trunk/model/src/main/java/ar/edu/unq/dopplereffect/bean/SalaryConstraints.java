@@ -43,6 +43,9 @@ public class SalaryConstraints {
         this.level = level;
     }
 
+    public SalaryConstraints() {
+    }
+
     public int getYear() {
         return year;
     }

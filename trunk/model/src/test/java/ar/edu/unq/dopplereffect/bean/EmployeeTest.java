@@ -9,44 +9,38 @@ public class EmployeeTest {
 
     @Test
     public void testGetFirstName() {
-        Employee empl = new Employee();
-        empl.setFirstName("Pepe");
+        Employee empl = new EmployeeBuilder().withFirstName("Pepe").build();
         assertEquals("El nombre del empleado debe ser Pepe", "Pepe", empl.getFirstName());
     }
 
     @Test
     public void testGetLastName() {
-        Employee empl = new Employee();
-        empl.setLastName("Garcia");
+        Employee empl = new EmployeeBuilder().withLastName("Garcia").build();
         assertEquals("El apellido del empleado debe ser Garcia", "Garcia", empl.getLastName());
     }
 
     @Test
     public void testGetDNI() {
-        Employee empl = new Employee();
-        empl.setDni(35247459);
+        Employee empl = new EmployeeBuilder().withDNI(35247459).build();
         assertEquals("El DNI del empleado debe ser 35247459", 35247459, empl.getDni());
     }
 
     @Test
     public void testGetPhoneNumber() {
-        Employee empl = new Employee();
-        empl.setPhoneNumber("11-3434-3434");
+        Employee empl = new EmployeeBuilder().withPhoneNumber("11-3434-3434").build();
         assertEquals("El numero de telefono del empleado debe ser 11-3434-3434", "11-3434-3434", empl.getPhoneNumber());
     }
 
     @Test
     public void testGetEmail() {
-        Employee empl = new Employee();
-        empl.setEmail("empleado@alkasoft.com");
+        Employee empl = new EmployeeBuilder().withEmail("empleado@alkasoft.com").build();
         assertEquals("El mail del empleado debe ser empleado@alkasoft.com", "empleado@alkasoft.com", empl.getEmail());
     }
 
     @Test
     public void testEqualityByDNI() {
-        Employee empl1 = new Employee(), empl2 = new Employee();
-        empl1.setDni(12354678);
-        empl2.setDni(12354678);
+        Employee empl1 = new EmployeeBuilder().withDNI(123456789).build();
+        Employee empl2 = new EmployeeBuilder().withDNI(123456789).build();
         assertEquals("empl1 y empl2 deben ser el mismo empleado", empl1, empl2);
         empl2.setDni(23456789);
         assertFalse("empl1 y empl2 no deberian ser el mismo empleado", empl1.equals(empl2));
@@ -54,20 +48,14 @@ public class EmployeeTest {
 
     @Test
     public void igualdadNotDefinedForFirstOrLastName() {
-        Employee empl1 = new Employee(), empl2 = new Employee();
-        empl1.setFirstName("Juan");
-        empl1.setLastName("Perez");
-        empl1.setDni(12345678);
-        empl2.setFirstName("Juan");
-        empl2.setLastName("Perez");
-        empl1.setDni(23456789);
+        Employee empl1 = new EmployeeBuilder().withFirstName("Juan").withFirstName("Perez").withDNI(12345678).build();
+        Employee empl2 = new EmployeeBuilder().withFirstName("Juan").withFirstName("Perez").withDNI(23456789).build();
         assertFalse("empl1 y empl2 no deberian ser el mismo empleado", empl1.equals(empl2));
     }
 
     @Test
     public void testChangeSalaryPercentage() {
-        Employee empl = new Employee();
-        empl.setPercentage(33);
+        Employee empl = new EmployeeBuilder().withPercentage(33).build();
         empl.changeSalaryPercentage(new int[] { 0, 50, 100 });
         assertEquals("el porcentaje deberia cambiar de 33 a 50", 50, empl.getPercentage());
     }
