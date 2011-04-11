@@ -13,6 +13,8 @@ import ar.edu.unq.dopplereffect.exception.UserException;
  */
 public class SalaryConstraints {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private int year;
 
     private CareerPlan plan;
@@ -24,6 +26,8 @@ public class SalaryConstraints {
     private int minSalary;
 
     private int maxSalary;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     /**
      * Constructor.
@@ -45,6 +49,8 @@ public class SalaryConstraints {
 
     public SalaryConstraints() {
     }
+
+    /* **************************** ACCESSORS ***************************** */
 
     public int getYear() {
         return year;
@@ -93,6 +99,8 @@ public class SalaryConstraints {
     public void setMaxSalary(final int maxSalary) {
         this.maxSalary = maxSalary;
     }
+
+    /* **************************** OPERATIONS **************************** */
 
     /**
      * Verifica si un porcentaje dado es valido para la banda.

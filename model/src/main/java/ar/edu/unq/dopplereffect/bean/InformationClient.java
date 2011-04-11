@@ -1,7 +1,14 @@
 package ar.edu.unq.dopplereffect.bean;
 
 public class InformationClient {
+
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private PersonalData personalData;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    /* **************************** ACCESSORS ***************************** */
 
     public String getRazonSocial() {
         return personalData.getFirstName();
@@ -11,11 +18,11 @@ public class InformationClient {
         personalData.setFirstName(razonSocial);
     }
 
-    public void setPersonalData(final PersonalData personalData) {
-        this.personalData = personalData;
-    }
-
     public PersonalData getPersonalData() {
         return personalData;
+    }
+
+    public void setPersonalData(final PersonalData personalData) {
+        this.personalData = personalData;
     }
 }

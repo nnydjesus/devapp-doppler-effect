@@ -6,24 +6,31 @@ import ar.edu.unq.dopplereffect.bean.enums.TypeSkill;
 /**
  */
 public class Skill {
+
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private TypeSkill type;
 
     private LevelSkill level;
 
-    public void setLevel(final LevelSkill level) {
-        this.level = level;
-    }
+    /* *************************** CONSTRUCTORS *************************** */
+
+    /* **************************** ACCESSORS ***************************** */
 
     public LevelSkill getLevel() {
         return level;
     }
 
-    public void setType(final TypeSkill type) {
-        this.type = type;
+    public void setLevel(final LevelSkill level) {
+        this.level = level;
     }
 
     public TypeSkill getType() {
         return type;
+    }
+
+    public void setType(final TypeSkill type) {
+        this.type = type;
     }
 
 }

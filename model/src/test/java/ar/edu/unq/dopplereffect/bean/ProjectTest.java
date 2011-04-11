@@ -47,6 +47,7 @@ public class ProjectTest {
     }
 
     @Test
+    @SuppressWarnings("PMD")
     public void manualAssignmentTwoAssignment() {
         Period period = new PeriodBuilder().withMonth(4).build();
         Project project = new ProjectBuilder().withConsideredEffor(period).build();

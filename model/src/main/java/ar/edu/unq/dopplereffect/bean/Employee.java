@@ -9,14 +9,20 @@ import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
  */
 public class Employee {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private EmployeeData personalData;
 
     private CareerData careerData;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public Employee(final EmployeeData personalData, final CareerData careerData) {
         this.personalData = personalData;
         this.careerData = careerData;
     }
+
+    /* **************************** ACCESSORS ***************************** */
 
     public String getFirstName() {
         return this.getPersonalData().getFirstName();
@@ -85,6 +91,8 @@ public class Employee {
     public void setPercentage(final int percentage) {
         this.getCareerData().setPercentage(percentage);
     }
+
+    /* **************************** OPERATIONS **************************** */
 
     /**
      * Cambia su porcentaje de sueldo acorde al cambio en la banda de sueldo,

@@ -9,11 +9,17 @@ import ar.edu.unq.dopplereffect.bean.enums.CareerPlanLevel;
  */
 public class CareerData {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private CareerPlan careerPlan;
 
     private CareerPlanLevel level;
 
     private int percentage;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    /* **************************** ACCESSORS ***************************** */
 
     public CareerPlan getCareerPlan() {
         return careerPlan;
