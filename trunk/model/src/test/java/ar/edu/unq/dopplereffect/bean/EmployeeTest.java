@@ -48,8 +48,8 @@ public class EmployeeTest {
 
     @Test
     public void igualdadNotDefinedForFirstOrLastName() {
-        Employee empl1 = new EmployeeBuilder().withFirstName("Juan").withFirstName("Perez").withDNI(12345678).build();
-        Employee empl2 = new EmployeeBuilder().withFirstName("Juan").withFirstName("Perez").withDNI(23456789).build();
+        Employee empl1 = new EmployeeBuilder().withFirstName("Juan").withLastName("Perez").withDNI(12345678).build();
+        Employee empl2 = new EmployeeBuilder().withFirstName("Juan").withLastName("Perez").withDNI(23456789).build();
         assertFalse("empl1 y empl2 no deberian ser el mismo empleado", empl1.equals(empl2));
     }
 

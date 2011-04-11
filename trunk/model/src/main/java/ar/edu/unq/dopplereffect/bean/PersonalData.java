@@ -6,6 +6,8 @@ package ar.edu.unq.dopplereffect.bean;
  */
 public class PersonalData {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private String firstName;
 
     private String address;
@@ -15,6 +17,10 @@ public class PersonalData {
     private String phoneNumber;
 
     private String email;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    /* **************************** ACCESSORS ***************************** */
 
     public String getFirstName() {
         return firstName;

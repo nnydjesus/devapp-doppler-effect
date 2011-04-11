@@ -1,29 +1,37 @@
 package ar.edu.unq.dopplereffect.bean;
 
 /**
- * TODO: description
+ * Datos personales propios del empleado.
  */
 public class EmployeeData extends PersonalData {
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private int dni;
 
     private String lastName;
 
+    /* *************************** CONSTRUCTORS *************************** */
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public int getDni() {
+        return dni;
+    }
+
     public void setDni(final int dni) {
         this.dni = dni;
     }
 
-    public int getDni() {
-        return dni;
+    public String getLastName() {
+        return lastName;
     }
 
     public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
+    /* **************************** OPERATIONS **************************** */
 
     @Override
     public int hashCode() {

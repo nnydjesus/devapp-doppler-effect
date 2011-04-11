@@ -2,7 +2,7 @@ package ar.edu.unq.dopplereffect.bean;
 
 public class SalaryConstraintsBuilder {
 
-    private SalaryConstraints salaryConstraints;
+    private transient SalaryConstraints salaryConstraints;
 
     public SalaryConstraintsBuilder() {
         salaryConstraints = new SalaryConstraints();
