@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.bean;
 
-public class Client {
+public class InformationClient {
     private PersonalData personalData;
 
     public String getRazonSocial() {

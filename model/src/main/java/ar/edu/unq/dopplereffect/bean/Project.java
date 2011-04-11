@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.Interval;
+import org.joda.time.Period;
+
+import ar.edu.unq.dopplereffect.exception.UserException;
+
 /**
  * TODO: description
  */
@@ -11,28 +16,30 @@ public class Project {
 
     private String name;
 
-    private Client informationClient;
+    private InformationClient informationClient;
 
-    private int consideredEffor;
+    private Period consideredEffor;
 
     private List<Skill> skils;
 
     private boolean actidated;
 
-    private Map<Employee, Integer> assignedEmployee = new HashMap<Employee, Integer>();
+    private Map<Employee, Interval> assignedEmployee = new HashMap<Employee, Interval>();
 
     public Project(final String name) {
+        this();
         this.name = name;
     }
 
     public Project() {
+        super();
     }
 
-    public Client getInformationClient() {
+    public InformationClient getInformationClient() {
         return informationClient;
     }
 
-    public void setInformationClient(final Client informationClient) {
+    public void setInformationClient(final InformationClient informationClient) {
         this.informationClient = informationClient;
     }
 
@@ -52,50 +59,53 @@ public class Project {
         return name;
     }
 
-    public void setAssignedEmployee(final Map<Employee, Integer> assignedEmployee) {
+    public void setAssignedEmployee(final Map<Employee, Interval> assignedEmployee) {
         this.assignedEmployee = assignedEmployee;
     }
 
-    public Map<Employee, Integer> getAssignedEmployee() {
+    public Map<Employee, Interval> getAssignedEmployee() {
         return assignedEmployee;
     }
 
-    public void manualAssignment(final Employee empleado, final int time) {
-        // if (remainingTime - time >= 0) {
-        // assignedEmployee.put(empleado, time);
-        // remainingTime -= time;
-        // } else
-        // throw new
-        // UserException("No se puede asignar mas horas de la que considero");
+    // FIXME renombrarme
+    public void manualAssignment(final Employee employee, final Interval interval) {
+        this.validateAssignment(employee, interval);
+        assignedEmployee.put(employee, interval);
+    }
 
+    protected void validateAssignment(final Employee employee, final Interval interval) {
+        if (this.isAssigned(employee)) {
+            if (assignedEmployee.get(employee).overlaps(interval))
+                throw new UserException(
+                        "El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
+            // FIXME cambiar el mensaje
+        }
+
+        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor)))
+            throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
     }
 
     public void addSkill(final Skill skill) {
         skils.add(skill);
     }
 
-    protected void setActidated(final boolean actidated) {
-        this.actidated = actidated;
+    public boolean isAssigned(final Employee employee) {
+        return assignedEmployee.containsKey(employee);
     }
 
     public void activated() {
         actidated = true;
-
     }
 
     public boolean isActidated() {
         return actidated;
     }
 
-    public void setConsideredEffor(final int mounth, final int days) {
-        this.setConsideredEffor((mounth * 168 + days * 8));
-    }
-
-    public void setConsideredEffor(final int consideredEffor) {
+    public void setConsideredEffor(final Period consideredEffor) {
         this.consideredEffor = consideredEffor;
     }
 
-    public int getConsideredEffor() {
+    public Period getConsideredEffor() {
         return consideredEffor;
     }
 
