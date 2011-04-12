@@ -1,12 +1,7 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import org.joda.time.DateTime;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -14,39 +9,32 @@ import ar.edu.unq.dopplereffect.configuration.Configuration;
 
 public class LeaveRequestTest {
 
-    private Date d20110405, d20110408;
-
-    @Before
-    public void setUp() throws ParseException {
-        d20110405 = new SimpleDateFormat("yyyy.MM.dd").parse("2011.04.05");
-        d20110408 = new SimpleDateFormat("yyyy.MM.dd").parse("2011.04.08");
-    }
+    private static final DateTime D_2011_04_05 = new DateTime("2011-04-05"), D_2011_04_08 = new DateTime("2011-04-08");
 
     @Test
     public void testIncludesStartDate() {
-        LeaveRequest request = new LeaveRequestBuilder().withStartDate(d20110405).withEndDate(d20110408).build();
-        Assert.assertTrue(request.includesDay(d20110405));
+        LeaveRequest request = new LeaveRequestBuilder().withStartDate(D_2011_04_05).withEndDate(D_2011_04_08).build();
+        Assert.assertTrue(request.includesDay(D_2011_04_05));
     }
 
     @Test
     public void testIncludesEndDate() {
-        LeaveRequest request = new LeaveRequestBuilder().withStartDate(d20110405).withEndDate(d20110408).build();
-        Assert.assertTrue(request.includesDay(d20110408));
+        LeaveRequest request = new LeaveRequestBuilder().withStartDate(D_2011_04_05).withEndDate(D_2011_04_08).build();
+        Assert.assertTrue(request.includesDay(D_2011_04_08));
     }
 
     @Test
-    public void testIncludesIntermediateDate() throws ParseException {
-        LeaveRequest request = new LeaveRequestBuilder().withStartDate(d20110405).withEndDate(d20110408).build();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-        Date middle1 = dateFormat.parse("2011.04.06");
-        Date middle2 = dateFormat.parse("2011.04.07");
+    public void testIncludesIntermediateDate() {
+        LeaveRequest request = new LeaveRequestBuilder().withStartDate(D_2011_04_05).withEndDate(D_2011_04_08).build();
+        DateTime middle1 = new DateTime("2011-04-06");
+        DateTime middle2 = new DateTime("2011-04-06");
         Assert.assertTrue(request.includesDay(middle1));
         Assert.assertTrue(request.includesDay(middle2));
     }
 
     @Test
     public void testAmountofDays() {
-        LeaveRequest request = new LeaveRequestBuilder().withStartDate(d20110405).withEndDate(d20110408).build();
+        LeaveRequest request = new LeaveRequestBuilder().withStartDate(D_2011_04_05).withEndDate(D_2011_04_08).build();
         Assert.assertEquals("La cantidad de dias fallo", 4, request.getAmountOfDays());
     }
 
@@ -57,8 +45,8 @@ public class LeaveRequestTest {
         // @formatter:off
         LeaveRequest request = new LeaveRequestBuilder()
             .withType(new HolidayLeaveRequest(conf))
-            .withStartDate(d20110405)
-            .withEndDate(d20110408)
+            .withStartDate(D_2011_04_05)
+            .withEndDate(D_2011_04_08)
             .build();
         // @formatter:on
         Assert.assertFalse("Licencia de 4 dias no debe ser valida (minimo 7)",

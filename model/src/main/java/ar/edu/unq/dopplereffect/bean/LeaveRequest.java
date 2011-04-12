@@ -1,9 +1,7 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import java.util.Date;
-
+import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.joda.time.Instant;
 
 /**
  * Representa pedidos de licencia adquiridos por los empleados.
@@ -12,9 +10,9 @@ public class LeaveRequest {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    private Date startDate;
+    private DateTime startDate;
 
-    private Date endDate;
+    private DateTime endDate;
 
     private LeaveRequestType type;
 
@@ -22,19 +20,19 @@ public class LeaveRequest {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public Date getStartDate() {
+    public DateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(final Date date) {
+    public void setStartDate(final DateTime date) {
         startDate = date;
     }
 
-    public Date getEndDate() {
+    public DateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(final Date date) {
+    public void setEndDate(final DateTime date) {
         endDate = date;
     }
 
@@ -56,10 +54,10 @@ public class LeaveRequest {
      * @return <code>true</code> si esta dentro de la licencia (se incluyen la
      *         fecha de inicio y fin), <code>false</code> en caso contrario.
      */
-    public boolean includesDay(final Date date) {
+    public boolean includesDay(final DateTime date) {
         boolean isInTheStart = date.equals(this.getStartDate());
         boolean isInTheEnd = date.equals(this.getEndDate());
-        boolean isInTheMiddle = date.after(this.getStartDate()) && date.before(this.getEndDate());
+        boolean isInTheMiddle = date.isAfter(this.getStartDate()) && date.isBefore(this.getEndDate());
         return isInTheStart || isInTheEnd || isInTheMiddle;
     }
 
@@ -68,7 +66,7 @@ public class LeaveRequest {
      *         laborables y no laborables).
      */
     public int getAmountOfDays() {
-        return Days.daysBetween(new Instant(this.getStartDate()), new Instant(this.getEndDate())).getDays() + 1;
+        return Days.daysBetween(this.getStartDate(), this.getEndDate()).getDays() + 1;
     }
 
     /**

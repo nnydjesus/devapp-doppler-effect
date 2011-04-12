@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class LeaveRequestBuilder {
 
@@ -14,12 +14,12 @@ public class LeaveRequestBuilder {
         return leaveRequest;
     }
 
-    public LeaveRequestBuilder withStartDate(final Date date) {
+    public LeaveRequestBuilder withStartDate(final DateTime date) {
         leaveRequest.setStartDate(date);
         return this;
     }
 
-    public LeaveRequestBuilder withEndDate(final Date date) {
+    public LeaveRequestBuilder withEndDate(final DateTime date) {
         leaveRequest.setEndDate(date);
         return this;
     }
