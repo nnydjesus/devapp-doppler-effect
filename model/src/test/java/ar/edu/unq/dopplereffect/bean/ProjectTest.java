@@ -18,14 +18,14 @@ public class ProjectTest {
 
     @Test
     public void setConsideratedTime() {
-        Period consideredEfforr = new PeriodBuilder().withMonth(2).withDays(3).build();
+        Period consideredEfforr = Period.months(2).plusDays(3);
         Project project = new ProjectBuilder().withConsideredEffor(consideredEfforr).build();
         Assert.assertEquals(consideredEfforr, project.getConsideredEffor());
     }
 
     @Test
     public void manualAssignmentOk() {
-        Period period = new PeriodBuilder().withMonth(2).withDays(3).build();
+        Period period = Period.months(2).plusDays(3);
         Project project = new ProjectBuilder().withConsideredEffor(period).build();
         Interval interval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR,
                 MONTH_BASE + 2, DAY_BASE));
@@ -38,7 +38,7 @@ public class ProjectTest {
 
     @Test(expected = UserException.class)
     public void manualAssignmentSpendTimeOfProyect() {
-        Period period = new PeriodBuilder().withMonth(2).withDays(1).build();
+        Period period = Period.months(2).plusDays(1);
         Project project = new ProjectBuilder().withConsideredEffor(period).build();
         Interval interval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR,
                 MONTH_BASE + 2, DAY_BASE + 2));
@@ -46,10 +46,10 @@ public class ProjectTest {
         project.manualAssignment(new EmployeeBuilder().build(), interval);
     }
 
-    @Test
     @SuppressWarnings("PMD")
+    @Test
     public void manualAssignmentTwoAssignment() {
-        Period period = new PeriodBuilder().withMonth(4).build();
+        Period period = Period.months(4);
         Project project = new ProjectBuilder().withConsideredEffor(period).build();
         Interval firstInterval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(
                 YEAR, MONTH_BASE + 1, DAY_BASE));
@@ -62,7 +62,7 @@ public class ProjectTest {
 
     @Test(expected = UserException.class)
     public void manualAssignmentOverlaps() {
-        Period period = new PeriodBuilder().withMonth(4).build();
+        Period period = Period.months(4);
         Project project = new ProjectBuilder().withConsideredEffor(period).build();
         Interval firstInterval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(
                 YEAR, MONTH_BASE + 1, DAY_BASE));
