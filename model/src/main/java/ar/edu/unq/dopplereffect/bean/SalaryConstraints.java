@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
@@ -21,7 +22,7 @@ public class SalaryConstraints {
 
     private CareerPlanLevel level;
 
-    private int[] percentages;
+    private List<Integer> percentages;
 
     private int minSalary;
 
@@ -76,11 +77,11 @@ public class SalaryConstraints {
         this.plan = plan;
     }
 
-    public int[] getPercentages() {
+    public List<Integer> getPercentages() {
         return percentages;
     }
 
-    public void setPercentages(final int[] percentages) {
+    public void setPercentages(final List<Integer> percentages) {
         this.percentages = percentages;
     }
 
@@ -140,14 +141,14 @@ public class SalaryConstraints {
      * empleados para que queden consistentes acorde a la nueva banda.
      * 
      * @param newPercentages
-     *            un array de porcentajes que representan a la nueva banda.
+     *            una lista de porcentajes que representan a la nueva banda.
      * @param employees
      *            los empleados que pueden estar afectados y deben actualizarse
      *            sus sueldos.
      */
-    public void changePecentages(final int[] newPercentages, final Set<Employee> employees) {
-        Arrays.sort(newPercentages);
-        if (newPercentages[0] != 0 || newPercentages[newPercentages.length - 1] != 100) {
+    public void changePecentages(final List<Integer> newPercentages, final Set<Employee> employees) {
+        Collections.sort(newPercentages);
+        if (newPercentages.get(0) != 0 || newPercentages.get(newPercentages.size() - 1) != 100) {
             throw new UserException("La banda debe contener 0 y 100");
         }
         this.setPercentages(newPercentages);
@@ -157,6 +158,8 @@ public class SalaryConstraints {
             }
         }
     }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     private boolean affectsPercentagesChange(final Employee employee) {
         // si el porcentaje del empleado no esta en la banda,

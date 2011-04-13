@@ -1,5 +1,7 @@
 package ar.edu.unq.dopplereffect.bean;
 
+import java.util.List;
+
 public class SalaryConstraintsBuilder {
 
     private transient SalaryConstraints salaryConstraints;
@@ -18,7 +20,7 @@ public class SalaryConstraintsBuilder {
         return this;
     }
 
-    public SalaryConstraintsBuilder withPercentages(final int[] percentages) {
+    public SalaryConstraintsBuilder withPercentages(final List<Integer> percentages) {
         salaryConstraints.setPercentages(percentages);
         return this;
     }

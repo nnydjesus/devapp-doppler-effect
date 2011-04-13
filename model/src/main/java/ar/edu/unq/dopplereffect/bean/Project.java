@@ -15,7 +15,7 @@ import ar.edu.unq.dopplereffect.exception.UserException;
  */
 public class Project {
 
-    private final static Logger LOGGER = Logger.getLogger(Project.class);
+    private static final Logger LOGGER = Logger.getLogger(Project.class);
 
     private String name;
 
@@ -79,14 +79,16 @@ public class Project {
     protected void validateAssignment(final Employee employee, final Interval interval) {
         LOGGER.info("\n validando en la asignacion el empleado:  " + employee + " con este intervalo: " + interval);
         if (this.isAssigned(employee)) {
-            if (assignedEmployee.get(employee).overlaps(interval))
+            if (assignedEmployee.get(employee).overlaps(interval)) {
                 throw new UserException(
                         "El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
-            // FIXME cambiar el mensaje
+                // FIXME cambiar el mensaje
+            }
         }
 
-        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor)))
+        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor))) {
             throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
+        }
     }
 
     public void addSkill(final Skill skill) {

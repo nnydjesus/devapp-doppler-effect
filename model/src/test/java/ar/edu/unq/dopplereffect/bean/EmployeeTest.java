@@ -3,6 +3,9 @@ package ar.edu.unq.dopplereffect.bean;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 
 public class EmployeeTest {
@@ -56,7 +59,8 @@ public class EmployeeTest {
     @Test
     public void testChangeSalaryPercentage() {
         Employee empl = new EmployeeBuilder().withPercentage(33).build();
-        empl.changeSalaryPercentage(new int[] { 0, 50, 100 });
+        List<Integer> percentages = Arrays.asList(0, 50, 100);
+        empl.changeSalaryPercentage(percentages);
         assertEquals("el porcentaje deberia cambiar de 33 a 50", 50, empl.getPercentage());
     }
 }

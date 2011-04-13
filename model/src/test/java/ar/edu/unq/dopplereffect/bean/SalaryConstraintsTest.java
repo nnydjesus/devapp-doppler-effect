@@ -4,7 +4,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -14,7 +16,7 @@ import ar.edu.unq.dopplereffect.exception.UserException;
 
 public class SalaryConstraintsTest {
 
-    private static final int[] P_0_33_66_100 = { 0, 33, 66, 100 };
+    private static final List<Integer> P_0_33_66_100 = Arrays.asList(0, 33, 66, 100);
 
     private static final int MIN_SALARY = 3000;
 
@@ -93,7 +95,7 @@ public class SalaryConstraintsTest {
         when(affected.getPercentage()).thenReturn(33).thenReturn(50);
         Set<Employee> employees = new HashSet<Employee>();
         employees.add(affected);
-        int[] newPercentages = { 0, 50, 100 };
+        List<Integer> newPercentages = Arrays.asList(0, 50, 100);
         base.changePecentages(newPercentages, employees);
         verify(affected).changeSalaryPercentage(newPercentages);
         Assert.assertEquals("El porcentaje del empleado debe haber cambiado de 33 a 50", 50, affected.getPercentage());
@@ -101,12 +103,12 @@ public class SalaryConstraintsTest {
 
     @Test
     public void precentageChangeDoesNotAffectEmployee() {
-        SalaryConstraints base = new SalaryConstraintsBuilder().withPercentages(new int[] { 0, 50, 100 }).build();
+        SalaryConstraints base = new SalaryConstraintsBuilder().withPercentages(Arrays.asList(0, 50, 100)).build();
         Employee notAffected = mock(Employee.class);
         when(notAffected.getPercentage()).thenReturn(50);
         Set<Employee> employees = new HashSet<Employee>();
         employees.add(notAffected);
-        int[] newPercentages = { 0, 25, 50, 75, 100 };
+        List<Integer> newPercentages = Arrays.asList(0, 25, 50, 75, 100);
         base.changePecentages(newPercentages, employees);
         Assert.assertEquals("El porcentaje del empleado debe permanecer en 50", 50, notAffected.getPercentage());
     }
@@ -114,14 +116,14 @@ public class SalaryConstraintsTest {
     @Test(expected = UserException.class)
     public void percentagesChangeWithout0() {
         SalaryConstraints base = new SalaryConstraintsBuilder().build();
-        int[] newPercentages = { 33, 66, 100 };
+        List<Integer> newPercentages = Arrays.asList(33, 66, 100);
         base.changePecentages(newPercentages, new HashSet<Employee>());
     }
 
     @Test(expected = UserException.class)
     public void percentagesChangeWithout100() {
         SalaryConstraints base = new SalaryConstraintsBuilder().build();
-        int[] newPercentages = { 0, 25, 50, 75 };
+        List<Integer> newPercentages = Arrays.asList(0, 25, 50, 75);
         base.changePecentages(newPercentages, new HashSet<Employee>());
     }
 }
