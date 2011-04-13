@@ -1,5 +1,8 @@
 package ar.edu.unq.dopplereffect.bean;
 
+import java.util.Collections;
+import java.util.List;
+
 import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
 
 /**
@@ -64,6 +67,10 @@ public class Employee {
         this.getPersonalData().setEmail(email);
     }
 
+    public CareerPlan getCareerPlan() {
+        return this.getCareerData().getCareerPlan();
+    }
+
     public CareerData getCareerData() {
         return careerData;
     }
@@ -72,20 +79,16 @@ public class Employee {
         this.careerData = careerData;
     }
 
-    public CareerPlan getCareerPlan() {
-        return this.getCareerData().getCareerPlan();
-    }
-
-    public int getPercentage() {
-        return this.getCareerData().getPercentage();
+    public EmployeeData getPersonalData() {
+        return personalData;
     }
 
     public void setPersonalData(final EmployeeData personalData) {
         this.personalData = personalData;
     }
 
-    public EmployeeData getPersonalData() {
-        return personalData;
+    public int getPercentage() {
+        return this.getCareerData().getPercentage();
     }
 
     public void setPercentage(final int percentage) {
@@ -103,7 +106,8 @@ public class Employee {
      * @param percentages
      * 
      */
-    public void changeSalaryPercentage(final int[] percentages) {
+    public void changeSalaryPercentage(final List<Integer> percentages) {
+        Collections.sort(percentages);
         for (int perc : percentages) {
             if (perc >= this.getPercentage()) {
                 this.setPercentage(perc);

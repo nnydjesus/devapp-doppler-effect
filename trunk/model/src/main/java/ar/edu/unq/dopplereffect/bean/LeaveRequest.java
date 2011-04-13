@@ -80,6 +80,12 @@ public class LeaveRequest {
      *         <code>false</code> en caso contrario.
      */
     public boolean isValidFor(final Employee employee) {
-        return this.getType().isValidFor(this, employee);
+        return this.isValidDateInterval() && this.getType().isValidFor(this, employee);
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
+
+    private boolean isValidDateInterval() {
+        return this.getAmountOfDays() >= 1;
     }
 }
