@@ -2,7 +2,7 @@ package ar.edu.unq.dopplereffect.bean;
 
 import org.joda.time.DateTime;
 
-public class DateHelpers {
+final public class DateHelpers {
 
     private DateHelpers() {
     }
