@@ -4,7 +4,7 @@ import org.joda.time.Period;
 
 public class ProjectBuilder {
 
-    private Project proyect;
+    private final Project proyect;
 
     public ProjectBuilder() {
         proyect = new Project();
