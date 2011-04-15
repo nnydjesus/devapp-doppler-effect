@@ -20,6 +20,11 @@ public class Employee {
 
     /* *************************** CONSTRUCTORS *************************** */
 
+    public Employee() {
+        this(new EmployeeData(), new CareerData());
+
+    }
+
     public Employee(final EmployeeData personalData, final CareerData careerData) {
         this.personalData = personalData;
         this.careerData = careerData;
@@ -124,23 +129,23 @@ public class Employee {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (this.getClass() != obj.getClass()) {
+        if (this.getClass() != obj.getClass())
             return false;
-        }
         Employee other = (Employee) obj;
         if (this.getPersonalData() == null) {
-            if (other.getPersonalData() != null) {
+            if (other.getPersonalData() != null)
                 return false;
-            }
-        } else if (!this.getPersonalData().equals(other.getPersonalData())) {
+        } else if (!this.getPersonalData().equals(other.getPersonalData()))
             return false;
-        }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "employee";
     }
 }
