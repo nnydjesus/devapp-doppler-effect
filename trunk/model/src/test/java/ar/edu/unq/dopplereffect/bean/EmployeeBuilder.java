@@ -5,7 +5,7 @@ public class EmployeeBuilder {
     private transient Employee employee;
 
     public EmployeeBuilder() {
-        employee = new Employee(new EmployeeData(), new CareerData());
+        employee = new Employee();
     }
 
     public EmployeeBuilder withFirstName(final String firstName) {

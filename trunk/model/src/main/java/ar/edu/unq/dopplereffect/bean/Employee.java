@@ -1,7 +1,9 @@
 package ar.edu.unq.dopplereffect.bean;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
 
@@ -18,11 +20,13 @@ public class Employee {
 
     private CareerData careerData;
 
+    private Set<LeaveRequest> leaveRequests;
+
     /* *************************** CONSTRUCTORS *************************** */
 
     public Employee() {
         this(new EmployeeData(), new CareerData());
-
+        leaveRequests = new HashSet<LeaveRequest>();
     }
 
     public Employee(final EmployeeData personalData, final CareerData careerData) {
@@ -100,6 +104,14 @@ public class Employee {
         this.getCareerData().setPercentage(percentage);
     }
 
+    public Set<LeaveRequest> getLeaveRequests() {
+        return leaveRequests;
+    }
+
+    public void setLeaveRequests(final Set<LeaveRequest> leaveRequests) {
+        this.leaveRequests = leaveRequests;
+    }
+
     /* **************************** OPERATIONS **************************** */
 
     /**
@@ -121,6 +133,38 @@ public class Employee {
         }
     }
 
+    /**
+     * Agrega una licencia al empleado.
+     * 
+     * @param leaveReq
+     *            la licencia a agregar.
+     */
+    public void addLeaveRequest(final LeaveRequest leaveReq) {
+        this.getLeaveRequests().add(leaveReq);
+    }
+
+    /**
+     * Calcula la cantidad de dias que el empleado pidio en un año, para un
+     * determinado tipo de licencia.
+     * 
+     * @param leaveRequestType
+     *            el tipo de licencia por el que se desea buscar.
+     * @param year
+     *            el año por el que se desea averiguar.
+     * @return la cantidad de dias que el empleado pidio hasta el momento.
+     */
+    public int daysRequestedInYear(final LeaveRequestType leaveRequestType, final int year) {
+        int days = 0;
+        for (LeaveRequest leaveRequest : this.getLeaveRequests()) {
+            if (leaveRequest.getType().equals(leaveRequestType) && year == leaveRequest.getStartDate().getYear()) {
+                // TODO no se banca pedir una licencia en un año y terminarla en
+                // otro
+                days += leaveRequest.getAmountOfDays();
+            }
+        }
+        return days;
+    }
+
     @Override
     public int hashCode() {
         int prime = 31;
@@ -129,18 +173,23 @@ public class Employee {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (this.getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
+        }
         Employee other = (Employee) obj;
         if (this.getPersonalData() == null) {
-            if (other.getPersonalData() != null)
+            if (other.getPersonalData() != null) {
                 return false;
-        } else if (!this.getPersonalData().equals(other.getPersonalData()))
+            }
+        } else if (!this.getPersonalData().equals(other.getPersonalData())) {
             return false;
+        }
         return true;
     }
 

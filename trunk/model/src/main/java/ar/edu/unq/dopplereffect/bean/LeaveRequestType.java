@@ -4,11 +4,16 @@ package ar.edu.unq.dopplereffect.bean;
  * Representa un tipo de licencia particular. Un tipo de licencia posee un tope
  * minimo (es decir, por cuantos dias se puede dividir la licencia), un tope
  * maximo (cual es la maxima cantidad de dias que se puede tomar de una vez), y
- * la cantidad total de dias por año que se puede tomar.
+ * la cantidad total de dias por año que se puede tomar. Ademas posee una razon,
+ * un motivo que identifica a cada tipo de licencia.
  */
 public class LeaveRequestType {
 
     /* ************************ INSTANCE VARIABLES ************************* */
+
+    private String reason;
+
+    private int maxDaysInYear;
 
     private int minLimit;
 
@@ -34,6 +39,22 @@ public class LeaveRequestType {
         this.maxLimit = maxLimit;
     }
 
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(final String reason) {
+        this.reason = reason;
+    }
+
+    public int getMaxDaysInYear() {
+        return maxDaysInYear;
+    }
+
+    public void setMaxDaysInYear(final int maxDaysInYear) {
+        this.maxDaysInYear = maxDaysInYear;
+    }
+
     /* **************************** OPERATIONS **************************** */
 
     /**
@@ -50,7 +71,9 @@ public class LeaveRequestType {
     public boolean isValidFor(final LeaveRequest leaveReq, final Employee employee) {
         boolean satisfiesMinimum = this.isSpecifiedMinimum() ? leaveReq.getAmountOfDays() >= this.getMinLimit() : true;
         boolean satisfiesMaximum = this.isSpecifiedMaximum() ? leaveReq.getAmountOfDays() <= this.getMaxLimit() : true;
-        return satisfiesMinimum && satisfiesMaximum;
+        boolean employeeCanRequestMoreDays = this.isSpecifiedMaxDaysInAYear() ? employee.daysRequestedInYear(this,
+                leaveReq.getStartDate().getYear()) + leaveReq.getAmountOfDays() <= this.getMaxDaysInYear() : true;
+        return satisfiesMinimum && satisfiesMaximum && employeeCanRequestMoreDays;
     }
 
     /* ************************* PRIVATE METHODS ************************** */
@@ -61,5 +84,9 @@ public class LeaveRequestType {
 
     private boolean isSpecifiedMaximum() {
         return this.getMaxLimit() != 0;
+    }
+
+    private boolean isSpecifiedMaxDaysInAYear() {
+        return this.getMaxDaysInYear() != 0;
     }
 }
