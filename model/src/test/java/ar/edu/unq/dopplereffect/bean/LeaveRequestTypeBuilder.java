@@ -17,6 +17,16 @@ public class LeaveRequestTypeBuilder {
         return this;
     }
 
+    public LeaveRequestTypeBuilder withReason(final String reason) {
+        leaveRequestType.setReason(reason);
+        return this;
+    }
+
+    public LeaveRequestTypeBuilder withMaxDaysInYear(final int daysInYear) {
+        leaveRequestType.setMaxDaysInYear(daysInYear);
+        return this;
+    }
+
     public LeaveRequestType build() {
         return leaveRequestType;
     }

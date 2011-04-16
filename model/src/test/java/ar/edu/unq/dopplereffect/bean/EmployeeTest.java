@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import java.util.Arrays;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.junit.Test;
 
 public class EmployeeTest {
@@ -62,5 +63,39 @@ public class EmployeeTest {
         List<Integer> percentages = Arrays.asList(0, 50, 100);
         empl.changeSalaryPercentage(percentages);
         assertEquals("el porcentaje deberia cambiar de 33 a 50", 50, empl.getPercentage());
+    }
+
+    @Test
+    public void testDaysRequestedInAYear() {
+        Employee empl = new EmployeeBuilder().build();
+        LeaveRequestType leaveReqType = new LeaveRequestTypeBuilder().withReason("Holiday").build();
+        LeaveRequest sevenDaysReq = new LeaveRequestBuilder().withStartDate(new DateTime("2011-04-05"))
+                .withEndDate(new DateTime("2011-04-11")).withType(leaveReqType).build();
+        LeaveRequest fiveDaysReq = new LeaveRequestBuilder().withStartDate(new DateTime("2011-02-26"))
+                .withEndDate(new DateTime("2011-03-02")).withType(leaveReqType).build();
+        empl.addLeaveRequest(sevenDaysReq); // 7 dias de vacaciones
+        empl.addLeaveRequest(fiveDaysReq); // 5 dias de vacaciones
+        assertEquals("la cantidad de dias de licencia fallo", 12, empl.daysRequestedInYear(leaveReqType, 2011));
+    }
+
+    @Test
+    public void testDaysRequestedInAYearFromAnotherReason() {
+        Employee empl = new EmployeeBuilder().build();
+        LeaveRequestType holidayLeaveReqType = new LeaveRequestTypeBuilder().withReason("Holiday").build();
+        LeaveRequestType movingLeaveReqType = new LeaveRequestTypeBuilder().withReason("Moving").build();
+        LeaveRequest sevenDaysReq = new LeaveRequestBuilder().withStartDate(new DateTime("2011-04-05"))
+                .withEndDate(new DateTime("2011-04-11")).withType(holidayLeaveReqType).build();
+        empl.addLeaveRequest(sevenDaysReq); // 7 dias de vacaciones
+        assertEquals("la cantidad de dias de licencia fallo", 0, empl.daysRequestedInYear(movingLeaveReqType, 2011));
+    }
+
+    @Test
+    public void testDaysRequestedInAYearFromAnotherYear() {
+        Employee empl = new EmployeeBuilder().build();
+        LeaveRequestType holidayLeaveReqType = new LeaveRequestTypeBuilder().withReason("Holiday").build();
+        LeaveRequest sevenDaysReq = new LeaveRequestBuilder().withStartDate(new DateTime("2011-04-05"))
+                .withEndDate(new DateTime("2011-04-11")).withType(holidayLeaveReqType).build();
+        empl.addLeaveRequest(sevenDaysReq); // 7 dias de vacaciones
+        assertEquals("la cantidad de dias de licencia fallo", 0, empl.daysRequestedInYear(holidayLeaveReqType, 2010));
     }
 }

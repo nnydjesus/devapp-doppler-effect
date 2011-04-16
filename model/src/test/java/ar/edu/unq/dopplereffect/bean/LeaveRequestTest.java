@@ -114,4 +114,15 @@ public class LeaveRequestTest {
         Assert.assertTrue("La validacion de la licencia fallo (deberia validarla correctamente)",
                 request.isValidFor(Mockito.mock(Employee.class)));
     }
+
+    @Test
+    public void testValidateEmployeeWhenAlreadyRequestedAllPossibleDays() {
+        int maxDays = 15;
+        Employee empl = Mockito.mock(Employee.class);
+        LeaveRequestType leaveReqType = new LeaveRequestTypeBuilder().withMaxDaysInYear(maxDays).build();
+        LeaveRequest request = new LeaveRequestBuilder().withType(leaveReqType).withStartDate(D_2011_04_05)
+                .withEndDate(D_2011_04_08).build();
+        Mockito.when(empl.daysRequestedInYear(leaveReqType, 2011)).thenReturn(maxDays);
+        Assert.assertFalse("la validacion de la licencia fallo", request.isValidFor(empl));
+    }
 }
