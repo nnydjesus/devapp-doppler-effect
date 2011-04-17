@@ -80,7 +80,39 @@ public class LeaveRequest {
      *         <code>false</code> en caso contrario.
      */
     public boolean isValidFor(final Employee employee) {
-        return this.isValidDateInterval() && this.getType().isValidFor(this, employee);
+        return this.isValidDateInterval() && !this.overlapOtherLeaveRequest(employee)
+                && this.getType().isValidFor(this, employee);
+    }
+
+    /**
+     * Verifica si la licencia se superpone con alguna licencia que el empleado
+     * (pasado como parametro) ya tenia.
+     * 
+     * @param leaveRequest
+     *            la licencia a verificar.
+     * @return <code>true</code> si la licencia se superpone, <code>false</code>
+     *         en caso contrario.
+     */
+    public boolean overlapOtherLeaveRequest(final Employee employee) {
+        for (LeaveRequest req : employee.getLeaveRequests()) {
+            if (this.overlapsWith(req)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Verifica si la licencia se superpone con otra licencia pasada como
+     * parametro. Se incluyen dias de inicio y fin para ambas.
+     * 
+     * @param req
+     *            la licencia a verificar.
+     * @return <code>true</code> si se superponen, <code>false</code> en caso
+     *         contrario.
+     */
+    public boolean overlapsWith(final LeaveRequest req) {
+        return !(req.getEndDate().isBefore(this.getStartDate()) || this.getEndDate().isBefore(req.getStartDate()));
     }
 
     /* ************************* PRIVATE METHODS ************************** */

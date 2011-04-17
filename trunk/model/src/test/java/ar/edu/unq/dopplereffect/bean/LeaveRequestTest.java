@@ -1,5 +1,8 @@
 package ar.edu.unq.dopplereffect.bean;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
@@ -124,5 +127,47 @@ public class LeaveRequestTest {
                 .withEndDate(D_2011_04_08).build();
         Mockito.when(empl.daysRequestedInYear(leaveReqType, 2011)).thenReturn(maxDays);
         Assert.assertFalse("la validacion de la licencia fallo", request.isValidFor(empl));
+    }
+
+    @Test
+    public void testValidateEmployeeWhenAlreadyRequestedForTheSameDays() {
+        Employee empl = Mockito.mock(Employee.class);
+        LeaveRequest request1 = new LeaveRequestBuilder().withType(new LeaveRequestTypeBuilder().build())
+                .withStartDate(D_2011_04_05).withEndDate(D_2011_04_08).build();
+        LeaveRequest request2 = new LeaveRequestBuilder().withType(new LeaveRequestTypeBuilder().build())
+                .withStartDate(D_2011_04_06).withEndDate(D_2011_04_11).build();
+        Set<LeaveRequest> reqs = new HashSet<LeaveRequest>();
+        reqs.add(request1);
+        Mockito.when(empl.getLeaveRequests()).thenReturn(reqs);
+        Assert.assertFalse("la validacion de la licencia fallo", request2.isValidFor(empl));
+        Mockito.verify(empl).getLeaveRequests();
+    }
+
+    @Test
+    public void testOverlapsWithLeaveRequestIntersectingInTheEnd() {
+        LeaveRequest req1 = new LeaveRequestBuilder().withStartDate(D_2011_04_05).withEndDate(D_2011_04_08).build();
+        LeaveRequest req2 = new LeaveRequestBuilder().withStartDate(D_2011_04_08).withEndDate(D_2011_04_11).build();
+        Assert.assertTrue("las licencias deberian superponerse", req1.overlapsWith(req2));
+    }
+
+    @Test
+    public void testOverlapsWithLeaveRequestIntersectingSomeDays() {
+        LeaveRequest req1 = new LeaveRequestBuilder().withStartDate(D_2011_04_06).withEndDate(D_2011_04_11).build();
+        LeaveRequest req2 = new LeaveRequestBuilder().withStartDate(D_2011_04_05).withEndDate(D_2011_04_08).build();
+        Assert.assertTrue("las licencias deberian superponerse", req1.overlapsWith(req2));
+    }
+
+    @Test
+    public void testOverlapsWithLeaveRequestIntersectingAllDays() {
+        LeaveRequest req1 = new LeaveRequestBuilder().withStartDate(D_2011_04_06).withEndDate(D_2011_04_08).build();
+        LeaveRequest req2 = new LeaveRequestBuilder().withStartDate(D_2011_04_05).withEndDate(D_2011_04_11).build();
+        Assert.assertTrue("las licencias deberian superponerse", req1.overlapsWith(req2));
+    }
+
+    @Test
+    public void testOverlapsWithLeaveRequestDontIntersect() {
+        LeaveRequest req1 = new LeaveRequestBuilder().withStartDate(D_2011_04_05).withEndDate(D_2011_04_06).build();
+        LeaveRequest req2 = new LeaveRequestBuilder().withStartDate(D_2011_04_08).withEndDate(D_2011_04_11).build();
+        Assert.assertFalse("las licencias NO deberian superponerse", req1.overlapsWith(req2));
     }
 }
