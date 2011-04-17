@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.joda.time.DateTime;
+
 import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
 
 /**
@@ -163,6 +165,23 @@ public class Employee {
             }
         }
         return days;
+    }
+
+    /**
+     * Verifica si el empleado tiene una licencia en la fecha dada.
+     * 
+     * @param date
+     *            la fecha a verificar
+     * @return <code>true</code> si tiene una licencia en la fecha dada,
+     *         <code>false</code> en caso contrario.
+     */
+    public boolean hasLeaveRequestInDay(final DateTime date) {
+        for (LeaveRequest req : this.getLeaveRequests()) {
+            if (req.includesDay(date)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

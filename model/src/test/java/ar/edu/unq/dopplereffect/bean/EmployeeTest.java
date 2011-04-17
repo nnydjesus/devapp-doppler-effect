@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class EmployeeTest {
@@ -97,5 +98,41 @@ public class EmployeeTest {
                 .withEndDate(new DateTime("2011-04-11")).withType(holidayLeaveReqType).build();
         empl.addLeaveRequest(sevenDaysReq); // 7 dias de vacaciones
         assertEquals("la cantidad de dias de licencia fallo", 0, empl.daysRequestedInYear(holidayLeaveReqType, 2010));
+    }
+
+    @Test
+    public void testHasLeaveRequestInADay() {
+        Employee empl = new EmployeeBuilder().build();
+        // @formatter:off
+        LeaveRequest leaveReq = new LeaveRequestBuilder()
+            .withStartDate(new DateTime("2011-04-16"))
+            .withEndDate(new DateTime("2011-04-22"))
+            .withType(new LeaveRequestTypeBuilder().build())
+            .build();
+        // @formatter:on
+        empl.addLeaveRequest(leaveReq);
+        Assert.assertTrue("el empleado deberia tener una licencia ese dia",
+                empl.hasLeaveRequestInDay(new DateTime("2011-04-16")));
+        Assert.assertTrue("el empleado deberia tener una licencia ese dia",
+                empl.hasLeaveRequestInDay(new DateTime("2011-04-19")));
+        Assert.assertTrue("el empleado deberia tener una licencia ese dia",
+                empl.hasLeaveRequestInDay(new DateTime("2011-04-22")));
+    }
+
+    @Test
+    public void testHasntLeaveRequestInADay() {
+        Employee empl = new EmployeeBuilder().build();
+        // @formatter:off
+        LeaveRequest leaveReq = new LeaveRequestBuilder()
+            .withStartDate(new DateTime("2011-04-16"))
+            .withEndDate(new DateTime("2011-04-22"))
+            .withType(new LeaveRequestTypeBuilder().build())
+            .build();
+        // @formatter:on
+        empl.addLeaveRequest(leaveReq);
+        Assert.assertFalse("el empleado NO deberia tener una licencia ese dia",
+                empl.hasLeaveRequestInDay(new DateTime("2011-04-15")));
+        Assert.assertFalse("el empleado NO deberia tener una licencia ese dia",
+                empl.hasLeaveRequestInDay(new DateTime("2011-04-23")));
     }
 }
