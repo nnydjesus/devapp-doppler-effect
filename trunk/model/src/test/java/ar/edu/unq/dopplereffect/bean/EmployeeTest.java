@@ -70,12 +70,12 @@ public class EmployeeTest {
     public void testDaysRequestedInAYear() {
         Employee empl = new EmployeeBuilder().build();
         LeaveRequestType leaveReqType = new LeaveRequestTypeBuilder().withReason("Holiday").build();
-        LeaveRequest sevenDaysReq = new LeaveRequestBuilder().withStartDate(new DateTime("2011-04-05"))
-                .withEndDate(new DateTime("2011-04-11")).withType(leaveReqType).build();
-        LeaveRequest fiveDaysReq = new LeaveRequestBuilder().withStartDate(new DateTime("2011-02-26"))
-                .withEndDate(new DateTime("2011-03-02")).withType(leaveReqType).build();
-        empl.addLeaveRequest(sevenDaysReq); // 7 dias de vacaciones
-        empl.addLeaveRequest(fiveDaysReq); // 5 dias de vacaciones
+        LeaveRequest sevenDaysReq = new LeaveRequestBuilder()
+                .withInterval(new DateTime("2011-04-05"), new DateTime("2011-04-11")).withType(leaveReqType).build();
+        LeaveRequest fiveDaysReq = new LeaveRequestBuilder()
+                .withInterval(new DateTime("2011-02-26"), new DateTime("2011-03-02")).withType(leaveReqType).build();
+        empl.addAssignment(sevenDaysReq); // 7 dias de vacaciones
+        empl.addAssignment(fiveDaysReq); // 5 dias de vacaciones
         assertEquals("la cantidad de dias de licencia fallo", 12, empl.daysRequestedInYear(leaveReqType, 2011));
     }
 
@@ -84,9 +84,10 @@ public class EmployeeTest {
         Employee empl = new EmployeeBuilder().build();
         LeaveRequestType holidayLeaveReqType = new LeaveRequestTypeBuilder().withReason("Holiday").build();
         LeaveRequestType movingLeaveReqType = new LeaveRequestTypeBuilder().withReason("Moving").build();
-        LeaveRequest sevenDaysReq = new LeaveRequestBuilder().withStartDate(new DateTime("2011-04-05"))
-                .withEndDate(new DateTime("2011-04-11")).withType(holidayLeaveReqType).build();
-        empl.addLeaveRequest(sevenDaysReq); // 7 dias de vacaciones
+        LeaveRequest sevenDaysReq = new LeaveRequestBuilder()
+                .withInterval(new DateTime("2011-04-05"), new DateTime("2011-04-11")).withType(holidayLeaveReqType)
+                .build();
+        empl.addAssignment(sevenDaysReq); // 7 dias de vacaciones
         assertEquals("la cantidad de dias de licencia fallo", 0, empl.daysRequestedInYear(movingLeaveReqType, 2011));
     }
 
@@ -94,9 +95,10 @@ public class EmployeeTest {
     public void testDaysRequestedInAYearFromAnotherYear() {
         Employee empl = new EmployeeBuilder().build();
         LeaveRequestType holidayLeaveReqType = new LeaveRequestTypeBuilder().withReason("Holiday").build();
-        LeaveRequest sevenDaysReq = new LeaveRequestBuilder().withStartDate(new DateTime("2011-04-05"))
-                .withEndDate(new DateTime("2011-04-11")).withType(holidayLeaveReqType).build();
-        empl.addLeaveRequest(sevenDaysReq); // 7 dias de vacaciones
+        LeaveRequest sevenDaysReq = new LeaveRequestBuilder()
+                .withInterval(new DateTime("2011-04-05"), new DateTime("2011-04-11")).withType(holidayLeaveReqType)
+                .build();
+        empl.addAssignment(sevenDaysReq); // 7 dias de vacaciones
         assertEquals("la cantidad de dias de licencia fallo", 0, empl.daysRequestedInYear(holidayLeaveReqType, 2010));
     }
 
@@ -105,12 +107,11 @@ public class EmployeeTest {
         Employee empl = new EmployeeBuilder().build();
         // @formatter:off
         LeaveRequest leaveReq = new LeaveRequestBuilder()
-            .withStartDate(new DateTime("2011-04-16"))
-            .withEndDate(new DateTime("2011-04-22"))
+            .withInterval(new DateTime("2011-04-16"), new DateTime("2011-04-22"))
             .withType(new LeaveRequestTypeBuilder().build())
             .build();
         // @formatter:on
-        empl.addLeaveRequest(leaveReq);
+        empl.addAssignment(leaveReq);
         Assert.assertTrue("el empleado deberia tener una licencia ese dia",
                 empl.hasLeaveRequestInDay(new DateTime("2011-04-16")));
         Assert.assertTrue("el empleado deberia tener una licencia ese dia",
@@ -124,12 +125,11 @@ public class EmployeeTest {
         Employee empl = new EmployeeBuilder().build();
         // @formatter:off
         LeaveRequest leaveReq = new LeaveRequestBuilder()
-            .withStartDate(new DateTime("2011-04-16"))
-            .withEndDate(new DateTime("2011-04-22"))
+            .withInterval(new DateTime("2011-04-16"), new DateTime("2011-04-22"))
             .withType(new LeaveRequestTypeBuilder().build())
             .build();
         // @formatter:on
-        empl.addLeaveRequest(leaveReq);
+        empl.addAssignment(leaveReq);
         Assert.assertFalse("el empleado NO deberia tener una licencia ese dia",
                 empl.hasLeaveRequestInDay(new DateTime("2011-04-15")));
         Assert.assertFalse("el empleado NO deberia tener una licencia ese dia",
