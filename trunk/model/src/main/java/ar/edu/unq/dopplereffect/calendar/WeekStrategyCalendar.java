@@ -25,7 +25,8 @@ public class WeekStrategyCalendar extends AbstractStrategyCalendar {
 
         for (Employee employee2 : employee) {
             for (int i = 0; i < 7; i++) {
-                matrix.put(employee2, ((WeekdayWrapper) this.getWeekday()).getDay().getDayOfWeek() + i, " L ");
+                int dayOfWeek = ((WeekdayWrapper) this.getWeekday()).getDay().getDayOfWeek();
+                matrix.put(employee2, dayOfWeek + i, " L ");
             }
         }
         return matrix;
