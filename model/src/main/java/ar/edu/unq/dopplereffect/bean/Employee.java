@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
 
@@ -13,6 +14,8 @@ import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
  * Persona que trabaja en la empresa. Un empleado posee datos personales, como
  * por ejemplo su nombre y apellido, pero tambien posee datos relacionados al
  * trabajo, como su plan de carrera.
+ * 
+ * Ademas el empleado tiene asignaciones, ya sean a licencias o a proyectos.
  */
 public class Employee {
 
@@ -22,15 +25,13 @@ public class Employee {
 
     private CareerData careerData;
 
-    private Set<LeaveRequest> leaveRequests;
-
-    // private Set<Assignable> assignment;
+    private Set<Assignable> assignments;
 
     /* *************************** CONSTRUCTORS *************************** */
 
     public Employee() {
         this(new EmployeeData(), new CareerData());
-        leaveRequests = new HashSet<LeaveRequest>();
+        assignments = new HashSet<Assignable>();
     }
 
     public Employee(final EmployeeData personalData, final CareerData careerData) {
@@ -108,23 +109,35 @@ public class Employee {
         this.getCareerData().setPercentage(percentage);
     }
 
+    public Set<Assignable> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(final Set<Assignable> assignments) {
+        this.assignments = assignments;
+    }
+
     public Set<LeaveRequest> getLeaveRequests() {
+        Set<LeaveRequest> leaveRequests = new HashSet<LeaveRequest>();
+        for (Assignable assignable : this.getAssignments()) {
+            if (assignable.isLeaveRequest()) {
+                leaveRequests.add((LeaveRequest) assignable);
+            }
+        }
         return leaveRequests;
     }
 
-    public void setLeaveRequests(final Set<LeaveRequest> leaveRequests) {
-        this.leaveRequests = leaveRequests;
-    }
-
-    // public void setAssignment(final Set<Assignable> assignment) {
-    // this.assignment = assignment;
-    // }
-    //
-    // public Set<Assignable> getAssignment() {
-    // return assignment;
-    // }
-
     /* **************************** OPERATIONS **************************** */
+
+    /**
+     * Agrega una asignacion
+     * 
+     * @param assignable
+     *            Asignacion a agregar.
+     */
+    public void addAssignment(final Assignable assignable) {
+        this.getAssignments().add(assignable);
+    }
 
     /**
      * Cambia su porcentaje de sueldo acorde al cambio en la banda de sueldo,
@@ -144,26 +157,6 @@ public class Employee {
             }
         }
     }
-
-    /**
-     * Agrega una licencia al empleado.
-     * 
-     * @param leaveReq
-     *            la licencia a agregar.
-     */
-    public void addLeaveRequest(final LeaveRequest leaveReq) {
-        this.getLeaveRequests().add(leaveReq);
-    }
-
-    /**
-     * Agrega una asignacion
-     * 
-     * @param assignable
-     *            Asignacion a agregar.
-     */
-    // public void addAssignment(final Assignable assignable) {
-    // this.getAssignment().add(assignable);
-    // }
 
     /**
      * Calcula la cantidad de dias que el empleado pidio en un año, para un
@@ -197,10 +190,40 @@ public class Employee {
      */
     public boolean hasLeaveRequestInDay(final DateTime date) {
         for (LeaveRequest req : this.getLeaveRequests()) {
-            if (req.includesDay(date))
+            if (req.includesDay(date)) {
                 return true;
+            }
         }
         return false;
+    }
+
+    /**
+     * Retorna que esta haciendo el empleado en un dia determinado. Puede ser
+     * que este de licencia, o este asignado a un proyecto, o bien que no este
+     * asignado, en ese caso se retorna null.
+     */
+    public Assignable getAssignableForDay(final DateTime date) {
+        // TODO testear!
+        for (Assignable assignable : this.getAssignments()) {
+            if (assignable.includesDay(date)) {
+                return assignable;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Retorna true si el empleado esta libre en el intervalo dado.
+     */
+    public boolean isFreeAtInterval(final Interval interval) {
+        // TODO testear!
+        for (Assignable assignable : this.getAssignments()) {
+            // si alguna asignacion se pisa, entonces no esta libre
+            if (assignable.overlapsAssignment(interval)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -211,18 +234,23 @@ public class Employee {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (this.getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
+        }
         Employee other = (Employee) obj;
         if (this.getPersonalData() == null) {
-            if (other.getPersonalData() != null)
+            if (other.getPersonalData() != null) {
                 return false;
-        } else if (!this.getPersonalData().equals(other.getPersonalData()))
+            }
+        } else if (!this.getPersonalData().equals(other.getPersonalData())) {
             return false;
+        }
         return true;
     }
 

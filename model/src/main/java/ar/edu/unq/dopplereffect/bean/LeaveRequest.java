@@ -2,17 +2,16 @@ package ar.edu.unq.dopplereffect.bean;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.Interval;
 
 /**
  * Representa pedidos de licencia adquiridos por los empleados.
  */
-public class LeaveRequest {
+public class LeaveRequest implements Assignable {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    private DateTime startDate;
-
-    private DateTime endDate;
+    private Interval interval;
 
     private LeaveRequestType type;
 
@@ -20,20 +19,20 @@ public class LeaveRequest {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public DateTime getStartDate() {
-        return startDate;
+    public Interval getInterval() {
+        return interval;
     }
 
-    public void setStartDate(final DateTime date) {
-        startDate = date;
+    public void setInterval(final Interval interval) {
+        this.interval = interval;
+    }
+
+    public DateTime getStartDate() {
+        return this.getInterval().getStart();
     }
 
     public DateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(final DateTime date) {
-        endDate = date;
+        return this.getInterval().getEnd();
     }
 
     public LeaveRequestType getType() {
@@ -46,6 +45,17 @@ public class LeaveRequest {
 
     /* **************************** OPERATIONS **************************** */
 
+    @Override
+    public boolean isLeaveRequest() {
+        return true;
+    }
+
+    @Override
+    public boolean overlapsAssignment(final Interval interv) {
+        // TODO testear!
+        return interv.contains(this.getStartDate()) || interv.contains(this.getEndDate());
+    }
+
     /**
      * Verifica que una fecha dada este contemplada por la licencia.
      * 
@@ -54,6 +64,7 @@ public class LeaveRequest {
      * @return <code>true</code> si esta dentro de la licencia (se incluyen la
      *         fecha de inicio y fin), <code>false</code> en caso contrario.
      */
+    @Override
     public boolean includesDay(final DateTime date) {
         boolean isInTheStart = date.equals(this.getStartDate());
         boolean isInTheEnd = date.equals(this.getEndDate());
@@ -80,8 +91,7 @@ public class LeaveRequest {
      *         <code>false</code> en caso contrario.
      */
     public boolean isValidFor(final Employee employee) {
-        return this.isValidDateInterval() && !this.overlapOtherLeaveRequest(employee)
-                && this.getType().isValidFor(this, employee);
+        return !this.overlapOtherLeaveRequest(employee) && this.getType().isValidFor(this, employee);
     }
 
     /**
@@ -95,8 +105,9 @@ public class LeaveRequest {
      */
     public boolean overlapOtherLeaveRequest(final Employee employee) {
         for (LeaveRequest req : employee.getLeaveRequests()) {
-            if (this.overlapsWith(req))
+            if (this.overlapsWith(req)) {
                 return true;
+            }
         }
         return false;
     }
@@ -112,11 +123,5 @@ public class LeaveRequest {
      */
     public boolean overlapsWith(final LeaveRequest req) {
         return !(req.getEndDate().isBefore(this.getStartDate()) || this.getEndDate().isBefore(req.getStartDate()));
-    }
-
-    /* ************************* PRIVATE METHODS ************************** */
-
-    private boolean isValidDateInterval() {
-        return this.getAmountOfDays() >= 1;
     }
 }
