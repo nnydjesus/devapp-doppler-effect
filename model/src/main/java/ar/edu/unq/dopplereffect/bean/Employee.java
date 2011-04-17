@@ -24,6 +24,8 @@ public class Employee {
 
     private Set<LeaveRequest> leaveRequests;
 
+    // private Set<Assignable> assignment;
+
     /* *************************** CONSTRUCTORS *************************** */
 
     public Employee() {
@@ -114,6 +116,14 @@ public class Employee {
         this.leaveRequests = leaveRequests;
     }
 
+    // public void setAssignment(final Set<Assignable> assignment) {
+    // this.assignment = assignment;
+    // }
+    //
+    // public Set<Assignable> getAssignment() {
+    // return assignment;
+    // }
+
     /* **************************** OPERATIONS **************************** */
 
     /**
@@ -144,6 +154,16 @@ public class Employee {
     public void addLeaveRequest(final LeaveRequest leaveReq) {
         this.getLeaveRequests().add(leaveReq);
     }
+
+    /**
+     * Agrega una asignacion
+     * 
+     * @param assignable
+     *            Asignacion a agregar.
+     */
+    // public void addAssignment(final Assignable assignable) {
+    // this.getAssignment().add(assignable);
+    // }
 
     /**
      * Calcula la cantidad de dias que el empleado pidio en un año, para un
@@ -177,9 +197,8 @@ public class Employee {
      */
     public boolean hasLeaveRequestInDay(final DateTime date) {
         for (LeaveRequest req : this.getLeaveRequests()) {
-            if (req.includesDay(date)) {
+            if (req.includesDay(date))
                 return true;
-            }
         }
         return false;
     }
@@ -192,23 +211,18 @@ public class Employee {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (this.getClass() != obj.getClass()) {
+        if (this.getClass() != obj.getClass())
             return false;
-        }
         Employee other = (Employee) obj;
         if (this.getPersonalData() == null) {
-            if (other.getPersonalData() != null) {
+            if (other.getPersonalData() != null)
                 return false;
-            }
-        } else if (!this.getPersonalData().equals(other.getPersonalData())) {
+        } else if (!this.getPersonalData().equals(other.getPersonalData()))
             return false;
-        }
         return true;
     }
 
@@ -216,4 +230,5 @@ public class Employee {
     public String toString() {
         return "employee";
     }
+
 }

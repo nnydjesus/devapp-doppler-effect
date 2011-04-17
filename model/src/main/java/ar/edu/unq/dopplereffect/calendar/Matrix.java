@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Matrix<X, Y, V> {
 
-    private final Logger logger = LoggerFactory.getLogger(Matrix.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Matrix.class);
 
     private Map<X, Map<Y, V>> matrix = new HashMap<X, Map<Y, V>>();
 
@@ -62,7 +62,7 @@ public class Matrix<X, Y, V> {
             }
             sBuilder.append("\n");
         }
-        logger.info(sBuilder.toString());
+        LOGGER.info(sBuilder.toString());
     }
 
     public void setMatrix(final Map<X, Map<Y, V>> matrix) {

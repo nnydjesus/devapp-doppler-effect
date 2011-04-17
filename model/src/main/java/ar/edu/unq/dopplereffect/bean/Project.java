@@ -1,9 +1,9 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import org.apache.commons.collections15.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.Interval;
 import org.joda.time.Period;
@@ -11,7 +11,6 @@ import org.joda.time.Period;
 import ar.edu.unq.dopplereffect.exception.UserException;
 
 /**
- * TODO: description
  */
 public class Project {
 
@@ -27,7 +26,7 @@ public class Project {
 
     private boolean actidated;
 
-    private Map<Employee, Interval> assignedEmployee = new HashMap<Employee, Interval>();
+    private List<ProjectAssignment> assignedEmployee = new ArrayList<ProjectAssignment>();
 
     public Project(final String name) {
         this();
@@ -36,6 +35,58 @@ public class Project {
 
     public Project() {
         super();
+    }
+
+    // FIXME renombrarme
+    public void manualAssignment(final Employee employee, final Interval interval) {
+        this.validateAssignment(employee, interval);
+        this.findOrCreateAssignment(employee).addInterval(interval);
+    }
+
+    protected void validateAssignment(final Employee employee, final Interval interval) {
+        LOGGER.info("\n validando en la asignacion el empleado:  " + employee + " con este intervalo: " + interval);
+        ProjectAssignment assignment = this.getAssignment(employee);
+        if (assignment != null && assignment.overlapsAssignment(interval))
+            throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
+        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor)))
+            throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
+    }
+
+    public boolean isAssigned(final Employee employee) {
+        return this.getAssignment(employee) != null;
+    }
+
+    public void addSkill(final Skill skill) {
+        skils.add(skill);
+    }
+
+    public ProjectAssignment getAssignment(final Employee employee) {
+        return CollectionUtils.find(assignedEmployee, new ProyectAssignmentPredicate(employee));
+    }
+
+    /**
+     * Busca la asignacion de un empleado, en caso de que no tenga crea una y se
+     * la guarda
+     */
+    public ProjectAssignment findOrCreateAssignment(final Employee employee) {
+        ProjectAssignment projectAssignment = this.getAssignment(employee);
+        if (projectAssignment == null) {
+            projectAssignment = new ProjectAssignment(employee);
+            assignedEmployee.add(projectAssignment);
+        }
+        return projectAssignment;
+    }
+
+    public boolean isAssignedInInverval(final Employee employee, final Interval interval) {
+        return this.isAssigned(employee) && this.getAssignment(employee).containsInterval(interval);
+    }
+
+    public void activated() {
+        actidated = true;
+    }
+
+    public boolean isActidated() {
+        return actidated;
     }
 
     public InformationClient getInformationClient() {
@@ -62,45 +113,12 @@ public class Project {
         return name;
     }
 
-    public void setAssignedEmployee(final Map<Employee, Interval> assignedEmployee) {
+    public void setAssignedEmployee(final List<ProjectAssignment> assignedEmployee) {
         this.assignedEmployee = assignedEmployee;
     }
 
-    public Map<Employee, Interval> getAssignedEmployee() {
+    public List<ProjectAssignment> getAssignedEmployee() {
         return assignedEmployee;
-    }
-
-    // FIXME renombrarme
-    public void manualAssignment(final Employee employee, final Interval interval) {
-        this.validateAssignment(employee, interval);
-        assignedEmployee.put(employee, interval);
-    }
-
-    protected void validateAssignment(final Employee employee, final Interval interval) {
-        LOGGER.info("\n validando en la asignacion el empleado:  " + employee + " con este intervalo: " + interval);
-        if (this.isAssigned(employee) && assignedEmployee.get(employee).overlaps(interval)) {
-        	throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
-                // FIXME cambiar el mensaje
-        }
-        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor))) {
-            throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
-        }
-    }
-
-    public void addSkill(final Skill skill) {
-        skils.add(skill);
-    }
-
-    public boolean isAssigned(final Employee employee) {
-        return assignedEmployee.containsKey(employee);
-    }
-
-    public void activated() {
-        actidated = true;
-    }
-
-    public boolean isActidated() {
-        return actidated;
     }
 
     public void setConsideredEffor(final Period consideredEffor) {
