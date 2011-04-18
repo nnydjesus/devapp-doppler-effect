@@ -219,7 +219,6 @@ public class Employee {
      *         contrario.
      */
     public boolean isFreeAtInterval(final Interval interval) {
-        // TODO testear!
         for (Assignable assignable : this.getAssignments()) {
             // si alguna asignacion se pisa, entonces no esta libre
             if (assignable.overlapsAssignment(interval)) {
@@ -261,5 +260,4 @@ public class Employee {
     public String toString() {
         return "employee";
     }
-
 }

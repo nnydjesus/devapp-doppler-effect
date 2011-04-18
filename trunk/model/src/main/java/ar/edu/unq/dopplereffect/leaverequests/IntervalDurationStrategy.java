@@ -70,13 +70,14 @@ public class IntervalDurationStrategy extends LeaveRequestDurationStrategy {
     }
 
     @Override
-    protected boolean overlapsWithIntervalDuration(final IntervalDurationStrategy intervalDuration) {
+    public boolean overlapsWithIntervalDuration(final IntervalDurationStrategy intervalDuration) {
         return !(intervalDuration.getEndDate().isBefore(this.getStartDate()) || this.getEndDate().isBefore(
                 intervalDuration.getStartDate()));
     }
 
     @Override
-    protected boolean overlapsWithOneDayDuration(final OneDayDurationStrategy oneDayDuration) {
-        throw new UnsupportedOperationException();
+    public boolean overlapsWithOneDayDuration(final OneDayDurationStrategy oneDayDuration) {
+        return this.getInterval().contains(oneDayDuration.getDate())
+                || this.getInterval().getEnd().equals(oneDayDuration.getDate());
     }
 }
