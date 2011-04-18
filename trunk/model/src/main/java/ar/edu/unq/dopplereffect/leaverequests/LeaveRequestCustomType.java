@@ -1,13 +1,15 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.leaverequests;
+
+import ar.edu.unq.dopplereffect.bean.Employee;
 
 /**
- * Representa un tipo de licencia particular. Un tipo de licencia posee un tope
- * minimo (es decir, por cuantos dias se puede dividir la licencia), un tope
- * maximo (cual es la maxima cantidad de dias que se puede tomar de una vez), y
- * la cantidad total de dias por año que se puede tomar. Ademas posee una razon,
- * un motivo que identifica a cada tipo de licencia.
+ * Representa un tipo de licencia personalizado. Un tipo de licencia posee un
+ * tope minimo (es decir, por cuantos dias se puede dividir la licencia), un
+ * tope maximo (cual es la maxima cantidad de dias que se puede tomar de una
+ * vez), y la cantidad total de dias por año que se puede tomar. Ademas posee
+ * una razon, un motivo que identifica a cada tipo de licencia.
  */
-public class LeaveRequestType {
+public class LeaveRequestCustomType implements LeaveRequestType {
 
     /* ************************ INSTANCE VARIABLES ************************* */
 
@@ -68,11 +70,12 @@ public class LeaveRequestType {
      * @return <code>true</code> si la licencia es valida, <code>false</code> en
      *         caso contrario.
      */
+    @Override
     public boolean isValidFor(final LeaveRequest leaveReq, final Employee employee) {
         boolean satisfiesMinimum = this.isSpecifiedMinimum() ? leaveReq.getAmountOfDays() >= this.getMinLimit() : true;
         boolean satisfiesMaximum = this.isSpecifiedMaximum() ? leaveReq.getAmountOfDays() <= this.getMaxLimit() : true;
         boolean employeeCanRequestMoreDays = this.isSpecifiedMaxDaysInAYear() ? employee.daysRequestedInYear(this,
-                leaveReq.getStartDate().getYear()) + leaveReq.getAmountOfDays() <= this.getMaxDaysInYear() : true;
+                leaveReq.getYear()) + leaveReq.getAmountOfDays() <= this.getMaxDaysInYear() : true;
         return satisfiesMinimum && satisfiesMaximum && employeeCanRequestMoreDays;
     }
 

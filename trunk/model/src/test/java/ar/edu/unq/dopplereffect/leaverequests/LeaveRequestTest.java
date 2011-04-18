@@ -1,49 +1,49 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.leaverequests;
+
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_06;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_08;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_11;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_13;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import ar.edu.unq.dopplereffect.bean.Employee;
+
 public class LeaveRequestTest {
 
-    // @formatter:off
-    private static final DateTime 
-            D_2011_04_05 = new DateTime("2011-04-05"), 
-            D_2011_04_06 = new DateTime("2011-04-06"),
-            D_2011_04_08 = new DateTime("2011-04-08"), 
-            D_2011_04_11 = new DateTime("2011-04-11"),
-            D_2011_04_13 = new DateTime("2011-04-13");
-    // @formatter:on
-
     @Test
-    public void testIncludesStartDate() {
-        LeaveRequest request = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_08).build();
-        Assert.assertTrue(request.includesDay(D_2011_04_05));
+    @SuppressWarnings("PMD")
+    public void testIncludesDay() {
+        LeaveRequestDurationStrategy strategy = Mockito.mock(LeaveRequestDurationStrategy.class);
+        LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
+        request.includesDay(D_2011_04_13);
+        Mockito.verify(strategy).includesDay(D_2011_04_13);
     }
 
     @Test
-    public void testIncludesEndDate() {
-        LeaveRequest request = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_08).build();
-        Assert.assertTrue(request.includesDay(D_2011_04_08));
-    }
-
-    @Test
-    public void testIncludesIntermediateDate() {
-        LeaveRequest request = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_08).build();
-        DateTime middle1 = new DateTime("2011-04-06");
-        DateTime middle2 = new DateTime("2011-04-06");
-        Assert.assertTrue(request.includesDay(middle1));
-        Assert.assertTrue(request.includesDay(middle2));
-    }
-
-    @Test
+    @SuppressWarnings("PMD")
     public void testAmountOfDays() {
-        LeaveRequest request = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_08).build();
-        Assert.assertEquals("La cantidad de dias fallo", 4, request.getAmountOfDays());
+        LeaveRequestDurationStrategy strategy = Mockito.mock(LeaveRequestDurationStrategy.class);
+        LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
+        request.getAmountOfDays();
+        Mockito.verify(strategy).getAmountOfDays();
+    }
+
+    @Test
+    @SuppressWarnings("PMD")
+    public void testOverlapsAssignment() {
+        Interval interval = new Interval(D_2011_04_05, D_2011_04_06);
+        LeaveRequestDurationStrategy strategy = Mockito.mock(LeaveRequestDurationStrategy.class);
+        LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
+        request.overlapsAssignment(interval);
+        Mockito.verify(strategy).overlapsInterval(interval);
     }
 
     @Test
@@ -110,7 +110,7 @@ public class LeaveRequestTest {
     public void testValidateEmployeeWhenAlreadyRequestedAllPossibleDays() {
         int maxDays = 15;
         Employee empl = Mockito.mock(Employee.class);
-        LeaveRequestType leaveReqType = new LeaveRequestTypeBuilder().withMaxDaysInYear(maxDays).build();
+        LeaveRequestCustomType leaveReqType = new LeaveRequestTypeBuilder().withMaxDaysInYear(maxDays).build();
         LeaveRequest request = new LeaveRequestBuilder().withType(leaveReqType)
                 .withInterval(D_2011_04_05, D_2011_04_08).build();
         Mockito.when(empl.daysRequestedInYear(leaveReqType, 2011)).thenReturn(maxDays);
@@ -129,6 +129,12 @@ public class LeaveRequestTest {
         Mockito.when(empl.getLeaveRequests()).thenReturn(reqs);
         Assert.assertFalse("la validacion de la licencia fallo", request2.isValidFor(empl));
         Mockito.verify(empl).getLeaveRequests();
+    }
+
+    @Test
+    public void testIsLeaveRequest() {
+        LeaveRequest anyLeaveRequest = new LeaveRequestBuilder().build();
+        Assert.assertTrue("", anyLeaveRequest.isLeaveRequest());
     }
 
     @Test
@@ -157,11 +163,5 @@ public class LeaveRequestTest {
         LeaveRequest req1 = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_06).build();
         LeaveRequest req2 = new LeaveRequestBuilder().withInterval(D_2011_04_08, D_2011_04_11).build();
         Assert.assertFalse("las licencias NO deberian superponerse", req1.overlapsWith(req2));
-    }
-
-    @Test
-    public void testIsLeaveRequest() {
-        LeaveRequest request = new LeaveRequestBuilder().build();
-        Assert.assertTrue("", request.isLeaveRequest());
     }
 }

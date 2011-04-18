@@ -1,6 +1,5 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import org.apache.commons.collections15.CollectionUtils;
 import org.apache.commons.collections15.Predicate;
 
 /**

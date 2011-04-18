@@ -8,8 +8,6 @@ import org.joda.time.Months;
 import org.joda.time.Years;
 import org.junit.Test;
 
-import ar.edu.unq.dopplereffect.calendar.WeekdayWrapper;
-
 public class WeekDayWrappertest {
 
     private final Days day = Days.ONE;
@@ -28,7 +26,7 @@ public class WeekDayWrappertest {
         final WeekdayWrapper weekday = this.getWeekday();
         DateTime next;
         for (int i = 1; i < 3; i++) {
-             next = weekday.next();
+            next = weekday.next();
             Assert.assertSame("", day.getDays() + 7 * i, next.getDayOfMonth());
         }
     }

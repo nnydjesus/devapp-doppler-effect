@@ -1,8 +1,10 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.leaverequests;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 import org.joda.time.Interval;
+
+import ar.edu.unq.dopplereffect.bean.Assignable;
+import ar.edu.unq.dopplereffect.bean.Employee;
 
 /**
  * Representa pedidos de licencia adquiridos por los empleados.
@@ -11,36 +13,28 @@ public class LeaveRequest implements Assignable {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    private Interval interval;
-
     private LeaveRequestType type;
+
+    private LeaveRequestDurationStrategy durationStrategy;
 
     /* *************************** CONSTRUCTORS *************************** */
 
     /* **************************** ACCESSORS ***************************** */
 
-    public Interval getInterval() {
-        return interval;
-    }
-
-    public void setInterval(final Interval interval) {
-        this.interval = interval;
-    }
-
-    public DateTime getStartDate() {
-        return this.getInterval().getStart();
-    }
-
-    public DateTime getEndDate() {
-        return this.getInterval().getEnd();
-    }
-
     public LeaveRequestType getType() {
         return type;
     }
 
-    public void setType(final LeaveRequestType leaveRequestType) {
+    public void setType(final LeaveRequestCustomType leaveRequestType) {
         type = leaveRequestType;
+    }
+
+    public LeaveRequestDurationStrategy getDurationStrategy() {
+        return durationStrategy;
+    }
+
+    public void setDurationStrategy(final LeaveRequestDurationStrategy durationStrategy) {
+        this.durationStrategy = durationStrategy;
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -50,10 +44,14 @@ public class LeaveRequest implements Assignable {
         return true;
     }
 
+    /**
+     * Verifica si el tiempo definido de la licencia se superpone en algun
+     * instante con un intervalo pasado como parametro. Dias bordes (inicio y
+     * fin) son ambos contemplados.
+     */
     @Override
     public boolean overlapsAssignment(final Interval interv) {
-        // TODO testear!
-        return interv.contains(this.getStartDate()) || interv.contains(this.getEndDate());
+        return this.getDurationStrategy().overlapsInterval(interv);
     }
 
     /**
@@ -66,10 +64,7 @@ public class LeaveRequest implements Assignable {
      */
     @Override
     public boolean includesDay(final DateTime date) {
-        boolean isInTheStart = date.equals(this.getStartDate());
-        boolean isInTheEnd = date.equals(this.getEndDate());
-        boolean isInTheMiddle = date.isAfter(this.getStartDate()) && date.isBefore(this.getEndDate());
-        return isInTheStart || isInTheEnd || isInTheMiddle;
+        return this.getDurationStrategy().includesDay(date);
     }
 
     /**
@@ -77,7 +72,7 @@ public class LeaveRequest implements Assignable {
      *         laborables y no laborables).
      */
     public int getAmountOfDays() {
-        return Days.daysBetween(this.getStartDate(), this.getEndDate()).getDays() + 1;
+        return this.getDurationStrategy().getAmountOfDays();
     }
 
     /**
@@ -116,12 +111,19 @@ public class LeaveRequest implements Assignable {
      * Verifica si la licencia se superpone con otra licencia pasada como
      * parametro. Se incluyen dias de inicio y fin para ambas.
      * 
-     * @param req
+     * @param leaveReq
      *            la licencia a verificar.
      * @return <code>true</code> si se superponen, <code>false</code> en caso
      *         contrario.
      */
-    public boolean overlapsWith(final LeaveRequest req) {
-        return !(req.getEndDate().isBefore(this.getStartDate()) || this.getEndDate().isBefore(req.getStartDate()));
+    public boolean overlapsWith(final LeaveRequest leaveReq) {
+        return this.getDurationStrategy().overlapsWith(leaveReq);
+    }
+
+    /**
+     * TODO
+     */
+    public int getYear() {
+        return this.getDurationStrategy().getYear();
     }
 }
