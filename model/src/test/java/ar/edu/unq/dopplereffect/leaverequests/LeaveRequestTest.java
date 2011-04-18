@@ -47,6 +47,16 @@ public class LeaveRequestTest {
     }
 
     @Test
+    @SuppressWarnings("PMD")
+    public void testOverlapsWithLeaveRequestIntersectingInTheEnd() {
+        LeaveRequestDurationStrategy strategy = Mockito.mock(LeaveRequestDurationStrategy.class);
+        LeaveRequest leaveReq1 = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
+        LeaveRequest leaveReq2 = new LeaveRequestBuilder().build();
+        leaveReq1.overlapsWith(leaveReq2);
+        Mockito.verify(strategy).overlapsWith(leaveReq2);
+    }
+
+    @Test
     public void testValidateEmployeeWhenRequestingLessDaysThanSpecified() {
         // @formatter:off
         LeaveRequest request = new LeaveRequestBuilder()
@@ -134,34 +144,6 @@ public class LeaveRequestTest {
     @Test
     public void testIsLeaveRequest() {
         LeaveRequest anyLeaveRequest = new LeaveRequestBuilder().build();
-        Assert.assertTrue("", anyLeaveRequest.isLeaveRequest());
-    }
-
-    @Test
-    public void testOverlapsWithLeaveRequestIntersectingInTheEnd() {
-        LeaveRequest req1 = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_08).build();
-        LeaveRequest req2 = new LeaveRequestBuilder().withInterval(D_2011_04_08, D_2011_04_11).build();
-        Assert.assertTrue("las licencias deberian superponerse", req1.overlapsWith(req2));
-    }
-
-    @Test
-    public void testOverlapsWithLeaveRequestIntersectingSomeDays() {
-        LeaveRequest req1 = new LeaveRequestBuilder().withInterval(D_2011_04_06, D_2011_04_11).build();
-        LeaveRequest req2 = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_08).build();
-        Assert.assertTrue("las licencias deberian superponerse", req1.overlapsWith(req2));
-    }
-
-    @Test
-    public void testOverlapsWithLeaveRequestIntersectingAllDays() {
-        LeaveRequest req1 = new LeaveRequestBuilder().withInterval(D_2011_04_06, D_2011_04_08).build();
-        LeaveRequest req2 = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11).build();
-        Assert.assertTrue("las licencias deberian superponerse", req1.overlapsWith(req2));
-    }
-
-    @Test
-    public void testOverlapsWithLeaveRequestDontIntersect() {
-        LeaveRequest req1 = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_06).build();
-        LeaveRequest req2 = new LeaveRequestBuilder().withInterval(D_2011_04_08, D_2011_04_11).build();
-        Assert.assertFalse("las licencias NO deberian superponerse", req1.overlapsWith(req2));
+        Assert.assertTrue("una licencia ES una licencia", anyLeaveRequest.isLeaveRequest());
     }
 }

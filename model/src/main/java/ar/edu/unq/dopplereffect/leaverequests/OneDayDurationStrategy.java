@@ -58,7 +58,7 @@ public class OneDayDurationStrategy extends LeaveRequestDurationStrategy {
 
     @Override
     public boolean overlapsWithIntervalDuration(final IntervalDurationStrategy intervalDuration) {
-        throw new UnsupportedOperationException();
+        return intervalDuration.overlapsWithOneDayDuration(this);
     }
 
     @Override

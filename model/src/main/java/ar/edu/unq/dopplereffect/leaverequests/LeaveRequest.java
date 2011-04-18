@@ -121,7 +121,7 @@ public class LeaveRequest implements Assignable {
     }
 
     /**
-     * TODO
+     * Retorna el año al que pertenece la licencia.
      */
     public int getYear() {
         return this.getDurationStrategy().getYear();
