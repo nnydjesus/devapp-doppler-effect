@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.employees;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -8,7 +8,7 @@ import java.util.Set;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
+import ar.edu.unq.dopplereffect.bean.Assignable;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;
 
@@ -83,10 +83,6 @@ public class Employee {
         this.getPersonalData().setEmail(email);
     }
 
-    public CareerPlan getCareerPlan() {
-        return this.getCareerData().getCareerPlan();
-    }
-
     public CareerData getCareerData() {
         return careerData;
     }
@@ -101,6 +97,14 @@ public class Employee {
 
     public void setPersonalData(final EmployeeData personalData) {
         this.personalData = personalData;
+    }
+
+    public CareerPlan getCareerPlan() {
+        return this.getCareerData().getCareerPlan();
+    }
+
+    public CareerPlanLevel getLevel() {
+        return this.getCareerData().getLevel();
     }
 
     public int getPercentage() {

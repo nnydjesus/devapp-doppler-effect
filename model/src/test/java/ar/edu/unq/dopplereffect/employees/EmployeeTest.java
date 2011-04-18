@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.employees;
 
 import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_01;
 import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
@@ -21,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import ar.edu.unq.dopplereffect.bean.ProjectAssignment;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestBuilder;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;

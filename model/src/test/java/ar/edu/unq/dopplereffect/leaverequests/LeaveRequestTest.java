@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import ar.edu.unq.dopplereffect.bean.Employee;
+import ar.edu.unq.dopplereffect.employees.Employee;
 
 public class LeaveRequestTest {
 

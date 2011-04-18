@@ -6,6 +6,8 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.junit.Test;
 
+import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.exception.UserException;
 
 public class ProjectTest {

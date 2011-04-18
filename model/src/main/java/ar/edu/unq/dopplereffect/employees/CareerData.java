@@ -1,7 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
-
-import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
-import ar.edu.unq.dopplereffect.bean.enums.CareerPlanLevel;
+package ar.edu.unq.dopplereffect.employees;
 
 /**
  * Esta clase provee los datos de empleo del empleado, como por ejemplo su plan

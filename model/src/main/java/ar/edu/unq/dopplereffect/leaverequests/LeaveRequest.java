@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import ar.edu.unq.dopplereffect.bean.Assignable;
-import ar.edu.unq.dopplereffect.bean.Employee;
+import ar.edu.unq.dopplereffect.employees.Employee;
 
 /**
  * Representa pedidos de licencia adquiridos por los empleados.

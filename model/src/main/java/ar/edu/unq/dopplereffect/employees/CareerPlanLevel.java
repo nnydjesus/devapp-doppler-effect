@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean.enums;
+package ar.edu.unq.dopplereffect.employees;
 
 /**
  * Representa el nivel (conocimientos y experiencia) que tiene un empleado. Por
@@ -6,11 +6,21 @@ package ar.edu.unq.dopplereffect.bean.enums;
  */
 public class CareerPlanLevel {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private String name;
 
     private CareerPlanLevel previous;
 
     private CareerPlanLevel next;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    public CareerPlanLevel(final String name) {
+        this.name = name;
+    }
+
+    /* **************************** ACCESSORS ***************************** */
 
     public String getName() {
         return name;
@@ -35,4 +45,6 @@ public class CareerPlanLevel {
     public void setNext(final CareerPlanLevel next) {
         this.next = next;
     }
+
+    /* **************************** OPERATIONS **************************** */
 }

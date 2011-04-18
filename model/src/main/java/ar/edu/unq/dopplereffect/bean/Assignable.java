@@ -4,8 +4,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 /**
- * Representa asignaciones, tanto licencias como participaciones en proyectos
- * son representados con asignaciones.
+ * Representa asignaciones a empleados, tanto licencias como participaciones en
+ * proyectos son representados con asignaciones.
  */
 public interface Assignable {
 

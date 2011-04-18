@@ -1,5 +1,8 @@
 package ar.edu.unq.dopplereffect.bean;
 
+/**
+ * TODO: description
+ */
 public class InformationClient {
 
     /* ************************ INSTANCE VARIABLES ************************ */

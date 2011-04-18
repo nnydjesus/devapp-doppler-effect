@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 
+import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exception.UserException;
 
 /**
@@ -15,6 +16,8 @@ import ar.edu.unq.dopplereffect.exception.UserException;
 public class Project {
 
     private static final Logger LOGGER = Logger.getLogger(Project.class);
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private String name;
 
@@ -28,6 +31,8 @@ public class Project {
 
     private List<ProjectAssignment> assignedEmployee = new ArrayList<ProjectAssignment>();
 
+    /* *************************** CONSTRUCTORS *************************** */
+
     public Project(final String name) {
         this();
         this.name = name;
@@ -36,6 +41,50 @@ public class Project {
     public Project() {
         super();
     }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public List<Skill> getSkils() {
+        return skils;
+    }
+
+    public void setSkils(final List<Skill> skils) {
+        this.skils = skils;
+    }
+
+    public Period getConsideredEffor() {
+        return consideredEffor;
+    }
+
+    public void setConsideredEffor(final Period consideredEffor) {
+        this.consideredEffor = consideredEffor;
+    }
+
+    public List<ProjectAssignment> getAssignedEmployee() {
+        return assignedEmployee;
+    }
+
+    public void setAssignedEmployee(final List<ProjectAssignment> assignedEmployee) {
+        this.assignedEmployee = assignedEmployee;
+    }
+
+    public InformationClient getInformationClient() {
+        return informationClient;
+    }
+
+    public void setInformationClient(final InformationClient informationClient) {
+        this.informationClient = informationClient;
+    }
+
+    /* **************************** OPERATIONS **************************** */
 
     // FIXME renombrarme
     public void manualAssignment(final Employee employee, final Interval interval) {
@@ -90,45 +139,4 @@ public class Project {
     public boolean isActidated() {
         return actidated;
     }
-
-    public InformationClient getInformationClient() {
-        return informationClient;
-    }
-
-    public void setInformationClient(final InformationClient informationClient) {
-        this.informationClient = informationClient;
-    }
-
-    public List<Skill> getSkils() {
-        return skils;
-    }
-
-    public void setSkils(final List<Skill> skils) {
-        this.skils = skils;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setAssignedEmployee(final List<ProjectAssignment> assignedEmployee) {
-        this.assignedEmployee = assignedEmployee;
-    }
-
-    public List<ProjectAssignment> getAssignedEmployee() {
-        return assignedEmployee;
-    }
-
-    public void setConsideredEffor(final Period consideredEffor) {
-        this.consideredEffor = consideredEffor;
-    }
-
-    public Period getConsideredEffor() {
-        return consideredEffor;
-    }
-
 }
