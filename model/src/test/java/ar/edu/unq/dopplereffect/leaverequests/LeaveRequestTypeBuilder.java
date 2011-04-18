@@ -1,10 +1,10 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.leaverequests;
 
 public class LeaveRequestTypeBuilder {
-    private transient LeaveRequestType leaveRequestType;
+    private transient LeaveRequestCustomType leaveRequestType;
 
     public LeaveRequestTypeBuilder() {
-        leaveRequestType = new LeaveRequestType();
+        leaveRequestType = new LeaveRequestCustomType();
     }
 
     public LeaveRequestTypeBuilder withMinLimit(final int limit) {
@@ -27,7 +27,7 @@ public class LeaveRequestTypeBuilder {
         return this;
     }
 
-    public LeaveRequestType build() {
+    public LeaveRequestCustomType build() {
         return leaveRequestType;
     }
 }

@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 import org.junit.Test;
 

@@ -9,6 +9,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
+import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
+import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;
 
 /**
  * Persona que trabaja en la empresa. Un empleado posee datos personales, como
@@ -130,7 +132,7 @@ public class Employee {
     /* **************************** OPERATIONS **************************** */
 
     /**
-     * Agrega una asignacion
+     * Agrega una asignacion.
      * 
      * @param assignable
      *            Asignacion a agregar.
@@ -168,12 +170,12 @@ public class Employee {
      *            el año por el que se desea averiguar.
      * @return la cantidad de dias que el empleado pidio hasta el momento.
      */
-    public int daysRequestedInYear(final LeaveRequestType leaveRequestType, final int year) {
+    public int daysRequestedInYear(final LeaveRequestCustomType leaveRequestType, final int year) {
         int days = 0;
         for (LeaveRequest leaveRequest : this.getLeaveRequests()) {
-            if (leaveRequest.getType().equals(leaveRequestType) && year == leaveRequest.getStartDate().getYear()) {
-                // TODO no se banca pedir una licencia en un año y terminarla en
-                // otro
+            if (leaveRequest.getType().equals(leaveRequestType) && year == leaveRequest.getYear()) {
+                // FIXME no se banca pedir una licencia en un año y terminarla
+                // en otro... o si?
                 days += leaveRequest.getAmountOfDays();
             }
         }
@@ -184,17 +186,13 @@ public class Employee {
      * Verifica si el empleado tiene una licencia en la fecha dada.
      * 
      * @param date
-     *            la fecha a verificar
+     *            la fecha a verificar.
      * @return <code>true</code> si tiene una licencia en la fecha dada,
      *         <code>false</code> en caso contrario.
      */
     public boolean hasLeaveRequestInDay(final DateTime date) {
-        for (LeaveRequest req : this.getLeaveRequests()) {
-            if (req.includesDay(date)) {
-                return true;
-            }
-        }
-        return false;
+        Assignable assignable = this.getAssignableForDay(date);
+        return assignable != null && assignable.isLeaveRequest();
     }
 
     /**
@@ -203,7 +201,6 @@ public class Employee {
      * asignado, en ese caso se retorna null.
      */
     public Assignable getAssignableForDay(final DateTime date) {
-        // TODO testear!
         for (Assignable assignable : this.getAssignments()) {
             if (assignable.includesDay(date)) {
                 return assignable;
@@ -213,7 +210,13 @@ public class Employee {
     }
 
     /**
-     * Retorna true si el empleado esta libre en el intervalo dado.
+     * Verifica si el empleado esta libre en el intervalo dado.
+     * 
+     * @param interval
+     *            el intervalo que se desea verificar.
+     * @return <code>true</code> si en ninguna de las fechas descriptas por el
+     *         intervalo el empleado esta asignado, <code>false</code> en caso
+     *         contrario.
      */
     public boolean isFreeAtInterval(final Interval interval) {
         // TODO testear!

@@ -46,10 +46,12 @@ public class Project {
     protected void validateAssignment(final Employee employee, final Interval interval) {
         LOGGER.info("\n validando en la asignacion el empleado:  " + employee + " con este intervalo: " + interval);
         ProjectAssignment assignment = this.getAssignment(employee);
-        if (assignment != null && assignment.overlapsAssignment(interval))
+        if (assignment != null && assignment.overlapsAssignment(interval)) {
             throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
-        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor)))
+        }
+        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor))) {
             throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
+        }
     }
 
     public boolean isAssigned(final Employee employee) {
