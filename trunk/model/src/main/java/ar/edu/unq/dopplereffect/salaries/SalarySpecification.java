@@ -1,18 +1,19 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.salaries;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import ar.edu.unq.dopplereffect.bean.enums.CareerPlan;
-import ar.edu.unq.dopplereffect.bean.enums.CareerPlanLevel;
+import ar.edu.unq.dopplereffect.employees.CareerPlan;
+import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
+import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exception.UserException;
 
 /**
  * Representa aquellos parametros que sirven para determinar el sueldo de un
  * empleado, como por ejemplo el monto minimo y maximo, y el plan de carrera.
  */
-public class SalaryConstraints {
+public class SalarySpecification {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -42,13 +43,13 @@ public class SalaryConstraints {
      *            el nivel del empleado al cual se le aplican los parametros del
      *            sueldo.
      */
-    public SalaryConstraints(final int year, final CareerPlan plan, final CareerPlanLevel level) {
+    public SalarySpecification(final int year, final CareerPlan plan, final CareerPlanLevel level) {
         this.year = year;
         this.plan = plan;
         this.level = level;
     }
 
-    public SalaryConstraints() {
+    public SalarySpecification() {
     }
 
     /* **************************** ACCESSORS ***************************** */

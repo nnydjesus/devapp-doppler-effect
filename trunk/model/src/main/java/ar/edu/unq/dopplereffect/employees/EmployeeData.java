@@ -1,4 +1,6 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.employees;
+
+import ar.edu.unq.dopplereffect.bean.PersonalData;
 
 /**
  * Datos personales propios del empleado.

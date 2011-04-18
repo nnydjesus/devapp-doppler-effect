@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import ar.edu.unq.dopplereffect.bean.Employee;
+import ar.edu.unq.dopplereffect.employees.Employee;
 
 /**
  * Representa un tipo de licencia personalizado. Un tipo de licencia posee un

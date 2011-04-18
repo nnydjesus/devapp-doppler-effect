@@ -62,4 +62,5 @@ public class PersonalData {
         this.email = email;
     }
 
+    /* **************************** OPERATIONS **************************** */
 }

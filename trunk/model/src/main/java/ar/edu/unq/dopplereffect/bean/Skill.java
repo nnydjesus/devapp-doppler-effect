@@ -33,4 +33,5 @@ public class Skill {
         this.type = type;
     }
 
+    /* **************************** OPERATIONS **************************** */
 }

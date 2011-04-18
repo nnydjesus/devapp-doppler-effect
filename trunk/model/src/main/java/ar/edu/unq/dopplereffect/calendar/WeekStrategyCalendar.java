@@ -7,7 +7,7 @@ import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Years;
 
-import ar.edu.unq.dopplereffect.bean.Employee;
+import ar.edu.unq.dopplereffect.employees.Employee;
 
 /**
  * Representa una calendario semanal para de los empleados

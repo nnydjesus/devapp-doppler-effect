@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean.enums;
+package ar.edu.unq.dopplereffect.employees;
 
 /**
  * Identifica el area de trabajo de un empleado.
