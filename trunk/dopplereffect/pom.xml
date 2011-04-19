@@ -18,7 +18,6 @@
 		<url>https://devapp-doppler-effect.googlecode.com/svn/trunk</url>
 	</scm>
 
-
 	<name>${artifactId}</name>
 	<url>http://maven.apache.org</url>
 
