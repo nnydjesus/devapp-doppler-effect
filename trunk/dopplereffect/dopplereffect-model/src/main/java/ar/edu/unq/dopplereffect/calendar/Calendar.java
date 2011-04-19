@@ -2,13 +2,13 @@ package ar.edu.unq.dopplereffect.calendar;
 
 public class Calendar {
 
-    private StrategyCalendar strategy;
+    private ICalendar strategy;
 
-    public void setStrategy(final StrategyCalendar strategy) {
+    public void setStrategy(final ICalendar strategy) {
         this.strategy = strategy;
     }
 
-    public StrategyCalendar getStrategy() {
+    public ICalendar getStrategy() {
         return strategy;
     }
 

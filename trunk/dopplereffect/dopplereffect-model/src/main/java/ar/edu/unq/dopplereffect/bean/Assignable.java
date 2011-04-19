@@ -3,6 +3,8 @@ package ar.edu.unq.dopplereffect.bean;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import ar.edu.unq.dopplereffect.leaverequests.IntervalDurationStrategy;
+
 /**
  * Representa asignaciones a empleados, tanto licencias como participaciones en
  * proyectos son representados con asignaciones.
@@ -25,4 +27,7 @@ public interface Assignable {
      * intervalo asignado y el intervalo por parametro
      */
     boolean overlapsAssignment(Interval interval);
+
+    boolean overlapsAssignment(IntervalDurationStrategy interval);
+
 }

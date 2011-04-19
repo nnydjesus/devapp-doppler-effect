@@ -7,7 +7,7 @@ import org.joda.time.Interval;
  * Tipos de duracion de las licencias, como por ejemplo licencias de un solo
  * dia, o licencias de un intervalo.
  */
-public abstract class LeaveRequestDurationStrategy {
+public abstract class DurationStrategy {
 
     /**
      * Chequea que una fecha dada este incluida en las fechas descriptas por la
@@ -52,7 +52,7 @@ public abstract class LeaveRequestDurationStrategy {
      */
     public abstract boolean overlapsWith(LeaveRequest leaveReq);
 
-    protected abstract boolean overlapsWithIntervalDuration(IntervalDurationStrategy intervalDuration);
+    protected abstract boolean overlapsInterval(IntervalDurationStrategy intervalDuration);
 
-    protected abstract boolean overlapsWithOneDayDuration(OneDayDurationStrategy oneDayDuration);
+    protected abstract boolean overlapsInterval(OneDayDurationStrategy oneDayDuration);
 }

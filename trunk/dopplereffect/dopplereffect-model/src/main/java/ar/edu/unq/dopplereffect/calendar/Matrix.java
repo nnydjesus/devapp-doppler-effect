@@ -32,6 +32,10 @@ public class Matrix<X, Y, V> {
         return matrix.get(x);
     }
 
+    public V getXY(final X x, final Y y) {
+        return matrix.get(x).get(y);
+    }
+
     public Set<X> keySet() {
         return matrix.keySet();
     }
@@ -46,6 +50,10 @@ public class Matrix<X, Y, V> {
 
     public boolean conteinsXY(final X x, final Y y) {
         return matrix.containsKey(x) && matrix.get(x).containsKey(y);
+    }
+
+    public boolean isEmpty() {
+        return matrix.isEmpty();
     }
 
     public void loggerMatrix() {

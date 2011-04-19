@@ -15,7 +15,7 @@ public class LeaveRequest implements Assignable {
 
     private LeaveRequestType type;
 
-    private LeaveRequestDurationStrategy durationStrategy;
+    private DurationStrategy durationStrategy;
 
     /* *************************** CONSTRUCTORS *************************** */
 
@@ -29,11 +29,11 @@ public class LeaveRequest implements Assignable {
         type = leaveRequestType;
     }
 
-    public LeaveRequestDurationStrategy getDurationStrategy() {
+    public DurationStrategy getDurationStrategy() {
         return durationStrategy;
     }
 
-    public void setDurationStrategy(final LeaveRequestDurationStrategy durationStrategy) {
+    public void setDurationStrategy(final DurationStrategy durationStrategy) {
         this.durationStrategy = durationStrategy;
     }
 
@@ -100,9 +100,8 @@ public class LeaveRequest implements Assignable {
      */
     public boolean overlapOtherLeaveRequest(final Employee employee) {
         for (LeaveRequest req : employee.getLeaveRequests()) {
-            if (this.overlapsWith(req)) {
+            if (this.overlapsWith(req))
                 return true;
-            }
         }
         return false;
     }
@@ -126,4 +125,10 @@ public class LeaveRequest implements Assignable {
     public int getYear() {
         return this.getDurationStrategy().getYear();
     }
+
+    @Override
+    public boolean overlapsAssignment(final IntervalDurationStrategy interval) {
+        return this.overlapsAssignment(interval.getInterval());
+    }
+
 }

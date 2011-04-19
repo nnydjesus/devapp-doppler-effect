@@ -21,7 +21,7 @@ public class LeaveRequestTest {
     @Test
     @SuppressWarnings("PMD")
     public void testIncludesDay() {
-        LeaveRequestDurationStrategy strategy = Mockito.mock(LeaveRequestDurationStrategy.class);
+        DurationStrategy strategy = Mockito.mock(DurationStrategy.class);
         LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
         request.includesDay(D_2011_04_13);
         Mockito.verify(strategy).includesDay(D_2011_04_13);
@@ -30,7 +30,7 @@ public class LeaveRequestTest {
     @Test
     @SuppressWarnings("PMD")
     public void testAmountOfDays() {
-        LeaveRequestDurationStrategy strategy = Mockito.mock(LeaveRequestDurationStrategy.class);
+        DurationStrategy strategy = Mockito.mock(DurationStrategy.class);
         LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
         request.getAmountOfDays();
         Mockito.verify(strategy).getAmountOfDays();
@@ -40,7 +40,7 @@ public class LeaveRequestTest {
     @SuppressWarnings("PMD")
     public void testOverlapsAssignment() {
         Interval interval = new Interval(D_2011_04_05, D_2011_04_06);
-        LeaveRequestDurationStrategy strategy = Mockito.mock(LeaveRequestDurationStrategy.class);
+        DurationStrategy strategy = Mockito.mock(DurationStrategy.class);
         LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
         request.overlapsAssignment(interval);
         Mockito.verify(strategy).overlapsInterval(interval);
@@ -49,7 +49,7 @@ public class LeaveRequestTest {
     @Test
     @SuppressWarnings("PMD")
     public void testOverlapsWithLeaveRequestIntersectingInTheEnd() {
-        LeaveRequestDurationStrategy strategy = Mockito.mock(LeaveRequestDurationStrategy.class);
+        DurationStrategy strategy = Mockito.mock(DurationStrategy.class);
         LeaveRequest leaveReq1 = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
         LeaveRequest leaveReq2 = new LeaveRequestBuilder().build();
         leaveReq1.overlapsWith(leaveReq2);

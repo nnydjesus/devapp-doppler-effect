@@ -4,7 +4,7 @@ import java.util.List;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
 
-public interface StrategyCalendar {
+public interface ICalendar {
 
     Matrix<?, ?, ?> getCalendar(final List<Employee> employee);
 }

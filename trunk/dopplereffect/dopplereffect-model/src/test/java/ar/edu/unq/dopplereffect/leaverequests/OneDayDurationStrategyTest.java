@@ -1,11 +1,6 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_06;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_08;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_09;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_11;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.getDates;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.*;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -65,8 +60,7 @@ public class OneDayDurationStrategyTest {
     public void testOverlapsWithOneDayLeaveRequest() {
         OneDayDurationStrategy strategy1 = new OneDayDurationStrategy(D_2011_04_05);
         OneDayDurationStrategy strategy2 = new OneDayDurationStrategy(D_2011_04_05);
-        Assert.assertTrue("las duraciones deben superponerse, son del mismo dia",
-                strategy1.overlapsWithOneDayDuration(strategy2));
+        Assert.assertTrue("las duraciones deben superponerse, son del mismo dia", strategy1.overlapsInterval(strategy2));
     }
 
     @Test
@@ -75,9 +69,9 @@ public class OneDayDurationStrategyTest {
         OneDayDurationStrategy strategy2 = new OneDayDurationStrategy(D_2011_04_05);
         OneDayDurationStrategy strategy3 = new OneDayDurationStrategy(D_2011_04_08);
         Assert.assertFalse("las duraciones no deben superponerse, son de dias diferentes",
-                strategy1.overlapsWithOneDayDuration(strategy2));
+                strategy1.overlapsInterval(strategy2));
         Assert.assertFalse("las duraciones no deben superponerse, son de dias diferentes",
-                strategy1.overlapsWithOneDayDuration(strategy3));
+                strategy1.overlapsInterval(strategy3));
     }
 
     @Test
@@ -85,7 +79,7 @@ public class OneDayDurationStrategyTest {
     public void testOverlapsWithIntervalLeaveRequest() {
         OneDayDurationStrategy oneDayStrategy = new OneDayDurationStrategy(D_2011_04_06);
         IntervalDurationStrategy intervalStrategy = Mockito.mock(IntervalDurationStrategy.class);
-        oneDayStrategy.overlapsWithIntervalDuration(intervalStrategy);
-        Mockito.verify(intervalStrategy).overlapsWithOneDayDuration(oneDayStrategy);
+        oneDayStrategy.overlapsInterval(intervalStrategy);
+        Mockito.verify(intervalStrategy).overlapsInterval(oneDayStrategy);
     }
 }

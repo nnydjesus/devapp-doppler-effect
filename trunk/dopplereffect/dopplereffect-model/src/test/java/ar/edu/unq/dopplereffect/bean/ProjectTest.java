@@ -9,6 +9,7 @@ import org.junit.Test;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.exception.UserException;
+import ar.edu.unq.dopplereffect.leaverequests.IntervalDurationStrategy;
 
 public class ProjectTest {
 
@@ -29,8 +30,8 @@ public class ProjectTest {
     public void manualAssignmentOk() {
         final Period period = Period.months(2).plusDays(3);
         final Project project = new ProjectBuilder().withConsideredEffor(period).build();
-        final Interval interval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(
-                YEAR, MONTH_BASE + 2, DAY_BASE));
+        final IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+                MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE)));
         final Employee employee = new EmployeeBuilder().build();
         project.manualAssignment(employee, interval);
 
@@ -42,8 +43,8 @@ public class ProjectTest {
     public void manualAssignmentSpendTimeOfProyect() {
         final Period period = Period.months(2).plusDays(1);
         final Project project = new ProjectBuilder().withConsideredEffor(period).build();
-        final Interval interval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(
-                YEAR, MONTH_BASE + 2, DAY_BASE + 2));
+        final IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+                MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE + 2)));
 
         project.manualAssignment(new EmployeeBuilder().build(), interval);
     }
@@ -52,10 +53,10 @@ public class ProjectTest {
     public void manualAssignmentTwoAssignment() {
         Period period = Period.months(4);
         Project project = new ProjectBuilder().withConsideredEffor(period).build();
-        Interval firstInterval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(
-                YEAR, MONTH_BASE + 1, DAY_BASE));
-        Interval secondInterval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE),
-                DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE));
+        final IntervalDurationStrategy firstInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
+                YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE)));
+        final IntervalDurationStrategy secondInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
+                YEAR, MONTH_BASE + 1, DAY_BASE + 1), DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE)));
 
         Employee employee1 = new EmployeeBuilder().build();
         project.manualAssignment(employee1, firstInterval);
@@ -69,10 +70,10 @@ public class ProjectTest {
     public void manualAssignmentOverlaps() {
         final Period period = Period.months(4);
         final Project project = new ProjectBuilder().withConsideredEffor(period).build();
-        final Interval firstInterval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE),
-                DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE));
-        final Interval secondInterval = new Interval(DateHelpers.getDate(YEAR, MONTH_BASE, 25), DateHelpers.getDate(
-                YEAR, MONTH_BASE + 1, 10));
+        final IntervalDurationStrategy firstInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
+                YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE)));
+        final IntervalDurationStrategy secondInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
+                YEAR, MONTH_BASE, 25), DateHelpers.getDate(YEAR, MONTH_BASE + 1, 10)));
 
         project.manualAssignment(new EmployeeBuilder().build(), firstInterval);
         project.manualAssignment(new EmployeeBuilder().build(), secondInterval);

@@ -5,20 +5,18 @@ import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Years;
 
-public class MonthWrapper extends CalendarWrapper {
+public class MonthStrategy extends CalendarStrategy {
 
-    public MonthWrapper(final Years year, final Months month) {
+    public MonthStrategy(final Years year, final Months month) {
         super(year, month, Days.ONE);
-        this.setPrintDay(new PrintMonthDay());
     }
 
-    public MonthWrapper(final Years year, final Months month, final Days day) {
+    public MonthStrategy(final Years year, final Months month, final Days day) {
         this(year, month);
     }
 
-    public MonthWrapper(final DateTime day) {
+    public MonthStrategy(final DateTime day) {
         super(day);
-        this.setPrintDay(new PrintMonthDay());
     }
 
     @Override
@@ -27,8 +25,8 @@ public class MonthWrapper extends CalendarWrapper {
     }
 
     @Override
-    public CalendarWrapper getCalendarDay() {
-        return new MonthWrapper(this.getDay());
+    public CalendarStrategy cloneStrategy() {
+        return new MonthStrategy(this.getDay());
     }
 
     @Override
