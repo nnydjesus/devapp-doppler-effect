@@ -17,8 +17,6 @@ public class Project {
 
     private static final Logger LOGGER = Logger.getLogger(Project.class);
 
-    /* ************************ INSTANCE VARIABLES ************************ */
-
     private String name;
 
     private InformationClient informationClient;
@@ -27,11 +25,7 @@ public class Project {
 
     private List<Skill> skils;
 
-    private boolean actidated;
-
     private List<ProjectAssignment> assignedEmployee = new ArrayList<ProjectAssignment>();
-
-    /* *************************** CONSTRUCTORS *************************** */
 
     public Project(final String name) {
         this();
@@ -42,65 +36,22 @@ public class Project {
         super();
     }
 
-    /* **************************** ACCESSORS ***************************** */
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public List<Skill> getSkils() {
-        return skils;
-    }
-
-    public void setSkils(final List<Skill> skils) {
-        this.skils = skils;
-    }
-
-    public Period getConsideredEffor() {
-        return consideredEffor;
-    }
-
-    public void setConsideredEffor(final Period consideredEffor) {
-        this.consideredEffor = consideredEffor;
-    }
-
-    public List<ProjectAssignment> getAssignedEmployee() {
-        return assignedEmployee;
-    }
-
-    public void setAssignedEmployee(final List<ProjectAssignment> assignedEmployee) {
-        this.assignedEmployee = assignedEmployee;
-    }
-
-    public InformationClient getInformationClient() {
-        return informationClient;
-    }
-
-    public void setInformationClient(final InformationClient informationClient) {
-        this.informationClient = informationClient;
-    }
-
-    /* **************************** OPERATIONS **************************** */
-
-    // FIXME renombrarme
     public void manualAssignment(final Employee employee, final Interval interval) {
         this.validateAssignment(employee, interval);
-        this.findOrCreateAssignment(employee).addInterval(interval);
+        ProjectAssignment projectAssignment = this.findOrCreateAssignment(employee);
+        projectAssignment.addInterval(interval);
+        employee.addAssignment(projectAssignment);
     }
 
     protected void validateAssignment(final Employee employee, final Interval interval) {
         LOGGER.info("\n validando en la asignacion el empleado:  " + employee + " con este intervalo: " + interval);
         ProjectAssignment assignment = this.getAssignment(employee);
-        if (assignment != null && assignment.overlapsAssignment(interval)) {
+        if (assignment != null && assignment.overlapsAssignment(interval))
             throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
-        }
-        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor))) {
+        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor)))
             throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
-        }
+        if (!employee.isFreeAtInterval(interval))
+            throw new UserException("El empleado no esta libre en el intervalo " + interval);
     }
 
     public boolean isAssigned(final Employee employee) {
@@ -111,8 +62,11 @@ public class Project {
         skils.add(skill);
     }
 
+    /**
+     * Busca la asignacion de un usuario
+     */
     public ProjectAssignment getAssignment(final Employee employee) {
-        return CollectionUtils.find(assignedEmployee, new ProyectAssignmentPredicate(employee));
+        return CollectionUtils.find(assignedEmployee, new ProjectAssignmentPredicate(employee));
     }
 
     /**
@@ -132,11 +86,44 @@ public class Project {
         return this.isAssigned(employee) && this.getAssignment(employee).containsInterval(interval);
     }
 
-    public void activated() {
-        actidated = true;
+    public InformationClient getInformationClient() {
+        return informationClient;
     }
 
-    public boolean isActidated() {
-        return actidated;
+    public void setInformationClient(final InformationClient informationClient) {
+        this.informationClient = informationClient;
     }
+
+    public List<Skill> getSkils() {
+        return skils;
+    }
+
+    public void setSkils(final List<Skill> skils) {
+        this.skils = skils;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setAssignedEmployee(final List<ProjectAssignment> assignedEmployee) {
+        this.assignedEmployee = assignedEmployee;
+    }
+
+    public List<ProjectAssignment> getAssignedEmployee() {
+        return assignedEmployee;
+    }
+
+    public void setConsideredEffor(final Period consideredEffor) {
+        this.consideredEffor = consideredEffor;
+    }
+
+    public Period getConsideredEffor() {
+        return consideredEffor;
+    }
+
 }
