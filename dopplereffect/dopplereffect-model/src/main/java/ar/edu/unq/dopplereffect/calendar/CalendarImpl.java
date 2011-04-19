@@ -13,9 +13,9 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 /**
  * Representa una calendario semanal para de los empleados
  */
-public class StrategyCalendarImpl extends AbstractStrategyCalendar {
+public class CalendarImpl extends AbstractCalendar {
 
-    public StrategyCalendarImpl(final CalendarWrapper week) {
+    public CalendarImpl(final CalendarStrategy week) {
         super(week);
     }
 
@@ -24,9 +24,9 @@ public class StrategyCalendarImpl extends AbstractStrategyCalendar {
         final Matrix<Employee, String, Assignable> matrix = new Matrix<Employee, String, Assignable>();
         String printDay;
         for (Employee employee : employees) {
-            CalendarWrapper day = this.getWeekday().getCalendarDay();
-            for (int i = 0; i < this.getWeekday().getTotalDays(); i++) {
-                printDay = this.getWeekday().getPrintDay().printDay(day.getDay());
+            CalendarStrategy day = this.getStrategy().cloneStrategy();
+            for (int i = 0; i < this.getStrategy().getTotalDays(); i++) {
+                printDay = PrintDay.printDay(day.getDay());
                 matrix.put(employee, printDay, employee.getAssignableForDay(day.getDay()));
 
                 day.plus();
@@ -37,8 +37,8 @@ public class StrategyCalendarImpl extends AbstractStrategyCalendar {
 
     public static void main(final String[] args) {
 
-        final StrategyCalendarImpl weekStrategyCalendar = new StrategyCalendarImpl(new MonthWrapper(Years.years(2011),
-                Months.FOUR, Days.FOUR));
+        final CalendarImpl weekStrategyCalendar = new CalendarImpl(new MonthStrategy(Years.years(2011), Months.FOUR,
+                Days.FOUR));
         final List<Employee> employees = Arrays.asList(new Employee(), new Employee());
 
         weekStrategyCalendar.getCalendar(employees).loggerMatrix();

@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.apache.commons.collections15.CollectionUtils;
 import org.apache.log4j.Logger;
-import org.joda.time.Interval;
 import org.joda.time.Period;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exception.UserException;
+import ar.edu.unq.dopplereffect.leaverequests.IntervalDurationStrategy;
 
 /**
  */
@@ -36,21 +36,21 @@ public class Project {
         super();
     }
 
-    public void manualAssignment(final Employee employee, final Interval interval) {
+    public void manualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
         this.validateAssignment(employee, interval);
         ProjectAssignment projectAssignment = this.findOrCreateAssignment(employee);
         projectAssignment.addInterval(interval);
         employee.addAssignment(projectAssignment);
     }
 
-    protected void validateAssignment(final Employee employee, final Interval interval) {
+    protected void validateAssignment(final Employee employee, final IntervalDurationStrategy interval) {
         LOGGER.info("\n validando en la asignacion el empleado:  " + employee + " con este intervalo: " + interval);
         ProjectAssignment assignment = this.getAssignment(employee);
         if (assignment != null && assignment.overlapsAssignment(interval))
             throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
-        if (interval.getEnd().isAfter(interval.getStart().plus(consideredEffor)))
+        if (interval.getEndDate().isAfter(interval.getStartDate().plus(consideredEffor)))
             throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
-        if (!employee.isFreeAtInterval(interval))
+        if (!employee.isFreeAtInterval(interval.getInterval()))
             throw new UserException("El empleado no esta libre en el intervalo " + interval);
     }
 
@@ -82,7 +82,7 @@ public class Project {
         return projectAssignment;
     }
 
-    public boolean isAssignedInInverval(final Employee employee, final Interval interval) {
+    public boolean isAssignedInInverval(final Employee employee, final IntervalDurationStrategy interval) {
         return this.isAssigned(employee) && this.getAssignment(employee).containsInterval(interval);
     }
 

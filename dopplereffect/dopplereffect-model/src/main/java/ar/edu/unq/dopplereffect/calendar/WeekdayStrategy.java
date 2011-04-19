@@ -5,16 +5,14 @@ import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Years;
 
-public class WeekdayWrapper extends CalendarWrapper {
+public class WeekdayStrategy extends CalendarStrategy {
 
-    public WeekdayWrapper(final Years year, final Months month, final Days day) {
+    public WeekdayStrategy(final Years year, final Months month, final Days day) {
         super(year, month, day);
-        this.setPrintDay(new PrintWeekDay());
     }
 
-    public WeekdayWrapper(final DateTime day) {
+    public WeekdayStrategy(final DateTime day) {
         super(day);
-        this.setPrintDay(new PrintWeekDay());
     }
 
     @Override
@@ -23,8 +21,8 @@ public class WeekdayWrapper extends CalendarWrapper {
     }
 
     @Override
-    public CalendarWrapper getCalendarDay() {
-        return new WeekdayWrapper(new DateTime(this.getDay()));
+    public CalendarStrategy cloneStrategy() {
+        return new WeekdayStrategy(new DateTime(this.getDay()));
     }
 
     @Override

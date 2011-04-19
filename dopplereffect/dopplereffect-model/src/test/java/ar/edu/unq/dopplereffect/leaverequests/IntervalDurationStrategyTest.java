@@ -1,12 +1,6 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_01;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_06;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_08;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_09;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_11;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.getDates;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.*;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -72,36 +66,36 @@ public class IntervalDurationStrategyTest {
         // los asserts son iguales, pero el mock retorna dos resultados
         // diferentes
         Assert.assertTrue("la duracion con intervalo deberia superponerse con la de un solo dia",
-                intervalStrategy.overlapsWithOneDayDuration(oneDayStrategy));
+                intervalStrategy.overlapsInterval(oneDayStrategy));
         Assert.assertTrue("la duracion con intervalo deberia superponerse con la de un solo dia",
-                intervalStrategy.overlapsWithOneDayDuration(oneDayStrategy));
+                intervalStrategy.overlapsInterval(oneDayStrategy));
     }
 
     @Test
     public void testOverlapsWithIntervalDurationIntersectingInTheEnd() {
         IntervalDurationStrategy req1 = new IntervalDurationStrategy(new Interval(D_2011_04_05, D_2011_04_08));
         IntervalDurationStrategy req2 = new IntervalDurationStrategy(new Interval(D_2011_04_08, D_2011_04_11));
-        Assert.assertTrue("las duraciones deberian superponerse", req1.overlapsWithIntervalDuration(req2));
+        Assert.assertTrue("las duraciones deberian superponerse", req1.overlapsInterval(req2));
     }
 
     @Test
     public void testOverlapsWithIntervalDurationIntersectingSomeDays() {
         IntervalDurationStrategy strategy1 = new IntervalDurationStrategy(new Interval(D_2011_04_06, D_2011_04_11));
         IntervalDurationStrategy strategy2 = new IntervalDurationStrategy(new Interval(D_2011_04_05, D_2011_04_08));
-        Assert.assertTrue("las duraciones deberian superponerse", strategy1.overlapsWithIntervalDuration(strategy2));
+        Assert.assertTrue("las duraciones deberian superponerse", strategy1.overlapsInterval(strategy2));
     }
 
     @Test
     public void testOverlapsWithIntervalDurationIntersectingAllDays() {
         IntervalDurationStrategy strategy1 = new IntervalDurationStrategy(new Interval(D_2011_04_06, D_2011_04_08));
         IntervalDurationStrategy strategy2 = new IntervalDurationStrategy(new Interval(D_2011_04_05, D_2011_04_11));
-        Assert.assertTrue("las duraciones deberian superponerse", strategy1.overlapsWithIntervalDuration(strategy2));
+        Assert.assertTrue("las duraciones deberian superponerse", strategy1.overlapsInterval(strategy2));
     }
 
     @Test
     public void testOverlapsWithIntervalDurationDontIntersect() {
         IntervalDurationStrategy strategy1 = new IntervalDurationStrategy(new Interval(D_2011_04_05, D_2011_04_06));
         IntervalDurationStrategy strategy2 = new IntervalDurationStrategy(new Interval(D_2011_04_08, D_2011_04_11));
-        Assert.assertFalse("las duraciones NO deberian superponerse", strategy1.overlapsWithIntervalDuration(strategy2));
+        Assert.assertFalse("las duraciones NO deberian superponerse", strategy1.overlapsInterval(strategy2));
     }
 }

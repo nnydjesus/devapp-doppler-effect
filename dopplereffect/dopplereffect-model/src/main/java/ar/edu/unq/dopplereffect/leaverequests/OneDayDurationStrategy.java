@@ -6,7 +6,7 @@ import org.joda.time.Interval;
 /**
  * Tipo de duracion de licencia de un unico dia.
  */
-public class OneDayDurationStrategy extends LeaveRequestDurationStrategy {
+public class OneDayDurationStrategy extends DurationStrategy {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -53,16 +53,16 @@ public class OneDayDurationStrategy extends LeaveRequestDurationStrategy {
 
     @Override
     public boolean overlapsWith(final LeaveRequest leaveReq) {
-        return leaveReq.getDurationStrategy().overlapsWithOneDayDuration(this);
+        return leaveReq.getDurationStrategy().overlapsInterval(this);
     }
 
     @Override
-    public boolean overlapsWithIntervalDuration(final IntervalDurationStrategy intervalDuration) {
-        return intervalDuration.overlapsWithOneDayDuration(this);
+    public boolean overlapsInterval(final IntervalDurationStrategy intervalDuration) {
+        return intervalDuration.overlapsInterval(this);
     }
 
     @Override
-    public boolean overlapsWithOneDayDuration(final OneDayDurationStrategy oneDayDuration) {
+    public boolean overlapsInterval(final OneDayDurationStrategy oneDayDuration) {
         return oneDayDuration.getDate().equals(this.getDate());
     }
 }

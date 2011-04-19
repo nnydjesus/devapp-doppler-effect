@@ -5,26 +5,24 @@ import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Years;
 
-public abstract class CalendarWrapper {
+public abstract class CalendarStrategy {
 
     private DateTime day;
 
-    private PrintDay printDay;
-
-    public CalendarWrapper(final int year, final int month, final int day) {
+    public CalendarStrategy(final int year, final int month, final int day) {
         this(new DateTime(year, month, day, 0, 0, 0, 0));
     }
 
-    public CalendarWrapper(final Years year, final Months month, final Days day) {
+    public CalendarStrategy(final Years year, final Months month, final Days day) {
         this(year.getYears(), month.getMonths(), day.getDays());
     }
 
-    public CalendarWrapper(final DateTime date) {
-        day = date;
+    public CalendarStrategy(final DateTime date) {
+        day = new DateTime(date);
     }
 
     public DateTime next() {
-        this.setDay(this.internalNext());
+        day = this.internalNext();
         return this.getDay();
     }
 
@@ -34,7 +32,7 @@ public abstract class CalendarWrapper {
 
     public abstract DateTime internalNext();
 
-    public abstract CalendarWrapper getCalendarDay();
+    public abstract CalendarStrategy cloneStrategy();
 
     public abstract int getTotalDays();
 
@@ -45,13 +43,4 @@ public abstract class CalendarWrapper {
     public DateTime getDay() {
         return day;
     }
-
-    public void setPrintDay(final PrintDay printDay) {
-        this.printDay = printDay;
-    }
-
-    public PrintDay getPrintDay() {
-        return printDay;
-    }
-
 }

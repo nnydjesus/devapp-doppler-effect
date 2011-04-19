@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.leaverequests.IntervalDurationStrategy;
 
 /**
  * Asignacion de un empleado a un proyecto. Posee una coleccion de intervalos en
@@ -18,7 +19,7 @@ public class ProjectAssignment implements Assignable {
 
     private Employee employee;
 
-    private List<Interval> intervals = new ArrayList<Interval>();
+    private List<IntervalDurationStrategy> intervals = new ArrayList<IntervalDurationStrategy>();
 
     /* *************************** CONSTRUCTORS *************************** */
 
@@ -28,11 +29,11 @@ public class ProjectAssignment implements Assignable {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public List<Interval> getIntervals() {
+    public List<IntervalDurationStrategy> getIntervals() {
         return intervals;
     }
 
-    public void setIntervals(final List<Interval> intervals) {
+    public void setIntervals(final List<IntervalDurationStrategy> intervals) {
         this.intervals = intervals;
     }
 
@@ -54,15 +55,14 @@ public class ProjectAssignment implements Assignable {
     @Override
     public boolean includesDay(final DateTime date) {
         // TODO testear!
-        for (Interval interval : this.getIntervals()) {
-            if (interval.contains(date)) {
+        for (IntervalDurationStrategy interval : this.getIntervals()) {
+            if (interval.includesDay(date))
                 return true;
-            }
         }
         return false;
     }
 
-    public void addInterval(final Interval interval) {
+    public void addInterval(final IntervalDurationStrategy interval) {
         intervals.add(interval);
     }
 
@@ -70,7 +70,7 @@ public class ProjectAssignment implements Assignable {
         return employee.equals(anEmployee);
     }
 
-    public boolean containsInterval(final Interval interval) {
+    public boolean containsInterval(final IntervalDurationStrategy interval) {
         return intervals.contains(interval);
     }
 
@@ -80,11 +80,15 @@ public class ProjectAssignment implements Assignable {
      * intervalo asignado y el intervalo por parametro
      */
     @Override
+    public boolean overlapsAssignment(final IntervalDurationStrategy interval) {
+        return this.overlapsAssignment(interval.getInterval());
+    }
+
+    @Override
     public boolean overlapsAssignment(final Interval interval) {
-        for (Interval assignment : intervals) {
-            if (assignment.overlaps(interval)) {
+        for (IntervalDurationStrategy assignment : intervals) {
+            if (assignment.overlapsInterval(interval))
                 return true;
-            }
         }
         return false;
     }

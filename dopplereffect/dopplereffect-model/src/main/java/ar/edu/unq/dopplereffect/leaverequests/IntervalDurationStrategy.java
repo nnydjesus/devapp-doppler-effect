@@ -8,7 +8,7 @@ import org.joda.time.Interval;
  * Tipo de duracion de una licencia que consiste en un intervalo, en el que su
  * inicio, su fin y todos sus dias intermedios estan contemplados.
  */
-public class IntervalDurationStrategy extends LeaveRequestDurationStrategy {
+public class IntervalDurationStrategy extends DurationStrategy {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -66,17 +66,17 @@ public class IntervalDurationStrategy extends LeaveRequestDurationStrategy {
 
     @Override
     public boolean overlapsWith(final LeaveRequest leaveReq) {
-        return leaveReq.getDurationStrategy().overlapsWithIntervalDuration(this);
+        return leaveReq.getDurationStrategy().overlapsInterval(this);
     }
 
     @Override
-    public boolean overlapsWithIntervalDuration(final IntervalDurationStrategy intervalDuration) {
+    public boolean overlapsInterval(final IntervalDurationStrategy intervalDuration) {
         return !(intervalDuration.getEndDate().isBefore(this.getStartDate()) || this.getEndDate().isBefore(
                 intervalDuration.getStartDate()));
     }
 
     @Override
-    public boolean overlapsWithOneDayDuration(final OneDayDurationStrategy oneDayDuration) {
+    public boolean overlapsInterval(final OneDayDurationStrategy oneDayDuration) {
         return this.getInterval().contains(oneDayDuration.getDate())
                 || this.getInterval().getEnd().equals(oneDayDuration.getDate());
     }

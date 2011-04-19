@@ -28,7 +28,7 @@ public class LeaveRequestBuilder {
         return this;
     }
 
-    public LeaveRequestBuilder withDurationStrategy(final LeaveRequestDurationStrategy strategy) {
+    public LeaveRequestBuilder withDurationStrategy(final DurationStrategy strategy) {
         leaveRequest.setDurationStrategy(strategy);
         return this;
     }
