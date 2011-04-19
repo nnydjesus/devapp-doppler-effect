@@ -9,19 +9,49 @@ public abstract class CalendarWrapper {
 
     private DateTime day;
 
+    private PrintDay printDay;
+
+    public CalendarWrapper(final int year, final int month, final int day) {
+        this(new DateTime(year, month, day, 0, 0, 0, 0));
+    }
+
     public CalendarWrapper(final Years year, final Months month, final Days day) {
-        this.day = new DateTime(year.getYears(), month.getMonths(), day.getDays(), 0, 0, 0, 0);
+        this(year.getYears(), month.getMonths(), day.getDays());
+    }
+
+    public CalendarWrapper(final DateTime date) {
+        day = date;
     }
 
     public DateTime next() {
-        day = this.internalNext();
-        return day;
+        this.setDay(this.internalNext());
+        return this.getDay();
+    }
+
+    public void plus() {
+        day = day.plusDays(1);
     }
 
     public abstract DateTime internalNext();
 
+    public abstract CalendarWrapper getCalendarDay();
+
+    public abstract int getTotalDays();
+
+    protected void setDay(final DateTime day) {
+        this.day = day;
+    }
+
     public DateTime getDay() {
         return day;
+    }
+
+    public void setPrintDay(final PrintDay printDay) {
+        this.printDay = printDay;
+    }
+
+    public PrintDay getPrintDay() {
+        return printDay;
     }
 
 }
