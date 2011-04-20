@@ -13,9 +13,18 @@ import org.slf4j.LoggerFactory;
  */
 public class Matrix<X, Y, V> {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Matrix.class);
 
-    private Map<X, Map<Y, V>> matrix = new LinkedMap<X, Map<Y, V>>();
+    private LinkedMap<X, Map<Y, V>> matrix = new LinkedMap<X, Map<Y, V>>();
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    public Matrix() {
+    }
+
+    /* **************************** OPERATIONS **************************** */
 
     public void put(final X x, final Y y, final V v) {
         if (!matrix.containsKey(x)) {
@@ -73,11 +82,13 @@ public class Matrix<X, Y, V> {
         LOGGER.info(sBuilder.toString());
     }
 
-    public void setMatrix(final Map<X, Map<Y, V>> matrix) {
+    /* **************************** ACCESSORS ***************************** */
+
+    public void setMatrix(final LinkedMap<X, Map<Y, V>> matrix) {
         this.matrix = matrix;
     }
 
-    public Map<X, Map<Y, V>> getMatrix() {
+    public LinkedMap<X, Map<Y, V>> getMatrix() {
         return matrix;
     }
 

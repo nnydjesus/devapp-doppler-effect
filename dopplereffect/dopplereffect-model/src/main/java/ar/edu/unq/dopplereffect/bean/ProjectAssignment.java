@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.leaverequests.IntervalDurationStrategy;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
  * Asignacion de un empleado a un proyecto. Posee una coleccion de intervalos en

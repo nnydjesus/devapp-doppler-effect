@@ -5,6 +5,8 @@ import org.joda.time.Interval;
 
 import ar.edu.unq.dopplereffect.bean.Assignable;
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.time.DurationStrategy;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
  * Representa pedidos de licencia adquiridos por los empleados.

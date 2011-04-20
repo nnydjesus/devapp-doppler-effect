@@ -206,9 +206,8 @@ public class Employee {
      */
     public Assignable getAssignableForDay(final DateTime date) {
         for (Assignable assignable : this.getAssignments()) {
-            if (assignable.includesDay(date)) {
+            if (assignable.includesDay(date))
                 return assignable;
-            }
         }
         return null;
     }
@@ -225,9 +224,8 @@ public class Employee {
     public boolean isFreeAtInterval(final Interval interval) {
         for (Assignable assignable : this.getAssignments()) {
             // si alguna asignacion se pisa, entonces no esta libre
-            if (assignable.overlapsAssignment(interval)) {
+            if (assignable.overlapsAssignment(interval))
                 return false;
-            }
         }
         return true;
     }
@@ -240,23 +238,18 @@ public class Employee {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (this.getClass() != obj.getClass()) {
+        if (this.getClass() != obj.getClass())
             return false;
-        }
         Employee other = (Employee) obj;
         if (this.getPersonalData() == null) {
-            if (other.getPersonalData() != null) {
+            if (other.getPersonalData() != null)
                 return false;
-            }
-        } else if (!this.getPersonalData().equals(other.getPersonalData())) {
+        } else if (!this.getPersonalData().equals(other.getPersonalData()))
             return false;
-        }
         return true;
     }
 

@@ -1,7 +1,7 @@
 package ar.edu.unq.dopplereffect.bean.enums;
 
 /**
- * TODO: description
+ * Niveles de los Skills
  */
 public enum LevelSkill {
     EXPERTO, MEDIO, BASICO;

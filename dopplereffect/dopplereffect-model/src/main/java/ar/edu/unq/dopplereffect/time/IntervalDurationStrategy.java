@@ -1,8 +1,10 @@
-package ar.edu.unq.dopplereffect.leaverequests;
+package ar.edu.unq.dopplereffect.time;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
+
+import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 
 /**
  * Tipo de duracion de una licencia que consiste en un intervalo, en el que su
