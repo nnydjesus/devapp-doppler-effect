@@ -1,7 +1,7 @@
 package ar.edu.unq.dopplereffect.bean;
 
 /**
- * TODO: description
+ * Provee la informacion de un cliente de la empresa
  */
 public class InformationClient {
 

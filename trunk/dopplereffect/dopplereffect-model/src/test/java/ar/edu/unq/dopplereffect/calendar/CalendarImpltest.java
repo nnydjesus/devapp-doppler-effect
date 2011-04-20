@@ -42,8 +42,8 @@ public class CalendarImpltest {
         return employees;
     }
 
-    protected CalendarImpl getCalendar() {
-        return new CalendarImpl(calendarStrategy);
+    protected Calendar getCalendar() {
+        return new Calendar(calendarStrategy);
     }
 
     @Test

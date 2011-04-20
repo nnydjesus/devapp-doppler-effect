@@ -7,6 +7,10 @@ import org.joda.time.Years;
 
 public class WeekdayStrategy extends CalendarStrategy {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
+    /* *************************** CONSTRUCTORS *************************** */
+
     public WeekdayStrategy(final Years year, final Months month, final Days day) {
         super(year, month, day);
     }
@@ -14,6 +18,8 @@ public class WeekdayStrategy extends CalendarStrategy {
     public WeekdayStrategy(final DateTime day) {
         super(day);
     }
+
+    /* **************************** OPERATIONS **************************** */
 
     @Override
     public DateTime internalNext() {
@@ -30,4 +36,5 @@ public class WeekdayStrategy extends CalendarStrategy {
         return 7;
     }
 
+    /* **************************** ACCESSORS ***************************** */
 }

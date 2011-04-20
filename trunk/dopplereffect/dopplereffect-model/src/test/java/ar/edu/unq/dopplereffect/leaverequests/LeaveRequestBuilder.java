@@ -3,6 +3,10 @@ package ar.edu.unq.dopplereffect.leaverequests;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import ar.edu.unq.dopplereffect.time.DurationStrategy;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
+import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
+
 public class LeaveRequestBuilder {
 
     private transient LeaveRequest leaveRequest;

@@ -1,18 +1,19 @@
 package ar.edu.unq.dopplereffect.calendar;
 
 /**
+ * Enum Que contiene el nombre del dia
  */
 
 //@formatter:off
 public enum WeekDayName {
     
-    Monday("Lunes"),     
-    Tuesday("Martes"),
-    Wednesday("Miércoles"), 
-    Thursday("Jueves") ,
-    Friday("Viernes"), 
-    Saturday("Sábado"), 
-    Sunday("Domingo");
+    Monday("Monday"),     
+    Tuesday("Tuesday"),
+    Wednesday("Wednesday"), 
+    Thursday("Thursday") ,
+    Friday("Friday"), 
+    Saturday("Saturday"), 
+    Sunday("Sunday");
     
   //@formatter:on
 

@@ -3,7 +3,7 @@ package ar.edu.unq.dopplereffect.bean;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import ar.edu.unq.dopplereffect.leaverequests.IntervalDurationStrategy;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
  * Representa asignaciones a empleados, tanto licencias como participaciones en

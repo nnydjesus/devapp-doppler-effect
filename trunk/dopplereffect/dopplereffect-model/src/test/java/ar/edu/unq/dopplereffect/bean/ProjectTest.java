@@ -9,7 +9,7 @@ import org.junit.Test;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.exception.UserException;
-import ar.edu.unq.dopplereffect.leaverequests.IntervalDurationStrategy;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class ProjectTest {
 

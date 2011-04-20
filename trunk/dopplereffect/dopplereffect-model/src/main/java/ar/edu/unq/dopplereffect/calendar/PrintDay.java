@@ -3,7 +3,7 @@ package ar.edu.unq.dopplereffect.calendar;
 import org.joda.time.DateTime;
 
 /**
- * TODO: description
+ * Imprime un dia ejemplo Lunes 4/5
  */
 public class PrintDay {
 

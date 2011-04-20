@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.time.DurationStrategy;
 
 public class LeaveRequestTest {
 

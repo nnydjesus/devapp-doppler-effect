@@ -7,6 +7,10 @@ import org.joda.time.Years;
 
 public class MonthStrategy extends CalendarStrategy {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
+    /* *************************** CONSTRUCTORS *************************** */
+
     public MonthStrategy(final Years year, final Months month) {
         super(year, month, Days.ONE);
     }
@@ -18,6 +22,8 @@ public class MonthStrategy extends CalendarStrategy {
     public MonthStrategy(final DateTime day) {
         super(day);
     }
+
+    /* **************************** OPERATIONS **************************** */
 
     @Override
     public DateTime internalNext() {
@@ -33,5 +39,7 @@ public class MonthStrategy extends CalendarStrategy {
     public int getTotalDays() {
         return this.getDay().dayOfMonth().getMaximumValue();
     }
+
+    /* **************************** ACCESSORS ***************************** */
 
 }

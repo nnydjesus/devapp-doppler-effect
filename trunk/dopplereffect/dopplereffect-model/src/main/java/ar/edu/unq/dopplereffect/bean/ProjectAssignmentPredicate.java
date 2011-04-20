@@ -10,8 +10,13 @@ import ar.edu.unq.dopplereffect.employees.Employee;
  * para {@link CollectionUtils}
  */
 public class ProjectAssignmentPredicate implements Predicate<ProjectAssignment> {
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private Employee employee;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    /* **************************** OPERATIONS **************************** */
 
     public ProjectAssignmentPredicate(final Employee anEmployee) {
         employee = anEmployee;

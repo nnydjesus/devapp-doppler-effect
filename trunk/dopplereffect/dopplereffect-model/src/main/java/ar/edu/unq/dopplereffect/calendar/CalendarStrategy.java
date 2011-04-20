@@ -7,8 +7,11 @@ import org.joda.time.Years;
 
 public abstract class CalendarStrategy {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private DateTime day;
 
+    /* *************************** CONSTRUCTORS *************************** */
     public CalendarStrategy(final int year, final int month, final int day) {
         this(new DateTime(year, month, day, 0, 0, 0, 0));
     }
@@ -21,6 +24,8 @@ public abstract class CalendarStrategy {
         day = new DateTime(date);
     }
 
+    /* **************************** OPERATIONS **************************** */
+
     public DateTime next() {
         day = this.internalNext();
         return this.getDay();
@@ -30,11 +35,18 @@ public abstract class CalendarStrategy {
         day = day.plusDays(1);
     }
 
+    /*
+     *  **************************** ABSTRACT METHODS
+     * *****************************
+     */
+
     public abstract DateTime internalNext();
 
     public abstract CalendarStrategy cloneStrategy();
 
     public abstract int getTotalDays();
+
+    /* **************************** ACCESSORS ***************************** */
 
     protected void setDay(final DateTime day) {
         this.day = day;

@@ -1,7 +1,7 @@
 package ar.edu.unq.dopplereffect.exception;
 
 /**
- * TODO: description
+ * Exepcion de negocio.
  */
 public class UserException extends RuntimeException {
     private static final long serialVersionUID = 1L;

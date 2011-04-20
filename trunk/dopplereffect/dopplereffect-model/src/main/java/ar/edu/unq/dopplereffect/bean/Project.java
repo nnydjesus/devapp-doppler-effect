@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections15.CollectionUtils;
-import org.apache.log4j.Logger;
 import org.joda.time.Period;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exception.UserException;
-import ar.edu.unq.dopplereffect.leaverequests.IntervalDurationStrategy;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
  */
 public class Project {
 
-    private static final Logger LOGGER = Logger.getLogger(Project.class);
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private String name;
 
@@ -27,6 +26,8 @@ public class Project {
 
     private List<ProjectAssignment> assignedEmployee = new ArrayList<ProjectAssignment>();
 
+    /* *************************** CONSTRUCTORS *************************** */
+
     public Project(final String name) {
         this();
         this.name = name;
@@ -36,6 +37,8 @@ public class Project {
         super();
     }
 
+    /* **************************** OPERATIONS **************************** */
+
     public void manualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
         this.validateAssignment(employee, interval);
         ProjectAssignment projectAssignment = this.findOrCreateAssignment(employee);
@@ -44,7 +47,6 @@ public class Project {
     }
 
     protected void validateAssignment(final Employee employee, final IntervalDurationStrategy interval) {
-        LOGGER.info("\n validando en la asignacion el empleado:  " + employee + " con este intervalo: " + interval);
         ProjectAssignment assignment = this.getAssignment(employee);
         if (assignment != null && assignment.overlapsAssignment(interval))
             throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
@@ -85,6 +87,8 @@ public class Project {
     public boolean isAssignedInInverval(final Employee employee, final IntervalDurationStrategy interval) {
         return this.isAssigned(employee) && this.getAssignment(employee).containsInterval(interval);
     }
+
+    /* **************************** ACCESSORS ***************************** */
 
     public InformationClient getInformationClient() {
         return informationClient;
