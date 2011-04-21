@@ -7,10 +7,11 @@ import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.Years;
 
 import ar.edu.unq.dopplereffect.bean.Assignable;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;
+import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 
 /**
  * Persona que trabaja en la empresa. Un empleado posee datos personales, como
@@ -133,6 +134,14 @@ public class Employee {
         return leaveRequests;
     }
 
+    public DateTime getJoinDate() {
+        return this.getCareerData().getJoinDate();
+    }
+
+    public void setJoinDate(final DateTime date) {
+        this.getCareerData().setJoinDate(date);
+    }
+
     /* **************************** OPERATIONS **************************** */
 
     /**
@@ -174,12 +183,11 @@ public class Employee {
      *            el año por el que se desea averiguar.
      * @return la cantidad de dias que el empleado pidio hasta el momento.
      */
-    public int daysRequestedInYear(final LeaveRequestCustomType leaveRequestType, final int year) {
+    public int daysRequestedInYear(final LeaveRequestType leaveRequestType, final int year) {
         int days = 0;
         for (LeaveRequest leaveRequest : this.getLeaveRequests()) {
-            if (leaveRequest.getType().equals(leaveRequestType) && year == leaveRequest.getYear()) {
-                // FIXME no se banca pedir una licencia en un año y terminarla
-                // en otro... o si?
+            if (leaveRequest.getType().getReason().equals(leaveRequestType.getReason())
+                    && year == leaveRequest.getYear()) {
                 days += leaveRequest.getAmountOfDays();
             }
         }
@@ -206,8 +214,9 @@ public class Employee {
      */
     public Assignable getAssignableForDay(final DateTime date) {
         for (Assignable assignable : this.getAssignments()) {
-            if (assignable.includesDay(date))
+            if (assignable.includesDay(date)) {
                 return assignable;
+            }
         }
         return null;
     }
@@ -224,10 +233,23 @@ public class Employee {
     public boolean isFreeAtInterval(final Interval interval) {
         for (Assignable assignable : this.getAssignments()) {
             // si alguna asignacion se pisa, entonces no esta libre
-            if (assignable.overlapsAssignment(interval))
+            if (assignable.overlapsAssignment(interval)) {
                 return false;
+            }
         }
         return true;
+    }
+
+    /**
+     * Retorna la antiguedad del empleado, en cantidad de años.
+     */
+    public int getSeniority() {
+        return Years.yearsBetween(this.getJoinDate(), new DateTime()).getYears();
+    }
+
+    @Override
+    public String toString() {
+        return "employee";
     }
 
     @Override
@@ -238,23 +260,23 @@ public class Employee {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (this.getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
+        }
         Employee other = (Employee) obj;
         if (this.getPersonalData() == null) {
-            if (other.getPersonalData() != null)
+            if (other.getPersonalData() != null) {
                 return false;
-        } else if (!this.getPersonalData().equals(other.getPersonalData()))
+            }
+        } else if (!this.getPersonalData().equals(other.getPersonalData())) {
             return false;
+        }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "employee";
     }
 }
