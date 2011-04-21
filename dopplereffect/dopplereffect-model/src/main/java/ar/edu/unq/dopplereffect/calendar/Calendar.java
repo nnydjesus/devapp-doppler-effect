@@ -3,6 +3,7 @@ package ar.edu.unq.dopplereffect.calendar;
 import java.util.Arrays;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Years;
@@ -26,15 +27,12 @@ public class Calendar extends AbstractCalendar {
     /* **************************** OPERATIONS **************************** */
 
     @Override
-    public Matrix<Employee, String, Assignable> getCalendar(final List<Employee> employees) {
-        final Matrix<Employee, String, Assignable> matrix = new Matrix<Employee, String, Assignable>();
-        String printDay;
+    public Matrix<Employee, DateTime, Assignable> getCalendar(final List<Employee> employees) {
+        final Matrix<Employee, DateTime, Assignable> matrix = new Matrix<Employee, DateTime, Assignable>();
         for (Employee employee : employees) {
             CalendarStrategy day = this.getStrategy().cloneStrategy();
             for (int i = 0; i < this.getStrategy().getTotalDays(); i++) {
-                printDay = PrintDay.printDay(day.getDay());
-                matrix.put(employee, printDay, employee.getAssignableForDay(day.getDay()));
-
+                matrix.put(employee, day.getDay(), employee.getAssignableForDay(day.getDay()));
                 day.plus();
             }
         }
@@ -43,12 +41,11 @@ public class Calendar extends AbstractCalendar {
 
     public static void main(final String[] args) {
 
-        final Calendar weekStrategyCalendar = new Calendar(new MonthStrategy(Years.years(2011), Months.FOUR,
-                Days.FOUR));
+        final Calendar weekStrategyCalendar = new Calendar(new MonthStrategy(Years.years(2011), Months.FOUR, Days.FOUR));
         final List<Employee> employees = Arrays.asList(new Employee(), new Employee());
 
-        weekStrategyCalendar.getCalendar(employees).loggerMatrix();
+        weekStrategyCalendar.getCalendar(employees).loggerMatrixCalendar();
         weekStrategyCalendar.next();
-        weekStrategyCalendar.getCalendar(employees).loggerMatrix();
+        weekStrategyCalendar.getCalendar(employees).loggerMatrixCalendar();
     }
 }
