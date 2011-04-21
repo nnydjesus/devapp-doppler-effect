@@ -31,8 +31,7 @@ public class SalariesControllerTest {
     }
 
     @Test
-    @SuppressWarnings("PMD")
-    public void testGetSalary() {
+    public void testGetSalary() { // NOPMD
         SalariesController controller = new SalariesController();
         SalarySpecification spec = Mockito.mock(SalarySpecification.class);
         CareerPlanLevel juniorLevel = new CareerPlanLevel("Junior");

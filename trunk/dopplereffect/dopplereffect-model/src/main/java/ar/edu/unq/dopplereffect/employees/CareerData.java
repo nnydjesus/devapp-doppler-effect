@@ -1,5 +1,7 @@
 package ar.edu.unq.dopplereffect.employees;
 
+import org.joda.time.DateTime;
+
 /**
  * Esta clase provee los datos de empleo del empleado, como por ejemplo su plan
  * de carrera, su nivel y su porcentaje de sueldo.
@@ -7,6 +9,8 @@ package ar.edu.unq.dopplereffect.employees;
 public class CareerData {
 
     /* ************************ INSTANCE VARIABLES ************************ */
+
+    private DateTime joinDate;
 
     private CareerPlan careerPlan;
 
@@ -41,4 +45,14 @@ public class CareerData {
     public void setPercentage(final int percentage) {
         this.percentage = percentage;
     }
+
+    public DateTime getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(final DateTime joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    /* **************************** OPERATIONS **************************** */
 }

@@ -133,7 +133,7 @@ public class EmployeeTest {
     public void testGetAssignableForDayWhenThereAreNotAssignables() {
         Employee empl = new EmployeeBuilder().build();
         DateTime anyDate = new DateTime();
-        Assert.assertNull("", empl.getAssignableForDay(anyDate));
+        Assert.assertNull("el empleado no deberia tener ninguna asignacion", empl.getAssignableForDay(anyDate));
     }
 
     @Test
@@ -153,5 +153,15 @@ public class EmployeeTest {
         Assert.assertFalse("", empl.isFreeAtInterval(new Interval(D_2011_04_05, D_2011_04_13)));
         Assert.assertFalse("", empl.isFreeAtInterval(new Interval(D_2011_04_05, D_2011_04_08)));
         Assert.assertFalse("", empl.isFreeAtInterval(new Interval(D_2011_04_11, D_2011_04_13)));
+    }
+
+    @Test
+    public void testGetSeniority() {
+        Employee empl1 = new EmployeeBuilder().withJoinDate(new DateTime().minusYears(2).minusDays(1)).build();
+        Employee empl2 = new EmployeeBuilder().withJoinDate(new DateTime().minusYears(2)).build();
+        Employee empl3 = new EmployeeBuilder().withJoinDate(new DateTime().minusYears(2).plusDays(1)).build();
+        Assert.assertEquals("", 2, empl1.getSeniority());
+        Assert.assertEquals("", 2, empl2.getSeniority());
+        Assert.assertEquals("", 1, empl3.getSeniority());
     }
 }

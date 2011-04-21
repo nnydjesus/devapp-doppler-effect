@@ -16,7 +16,7 @@ import ar.edu.unq.dopplereffect.bean.Helpers;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exception.UserException;
 
-public class SalaryConstraintTest {
+public class SalarySpecificationTest {
 
     // @formatter:off
     private static final List<Integer> 
@@ -31,21 +31,20 @@ public class SalaryConstraintTest {
 
     @Test
     public void testGetMinSalary() {
-        SalarySpecification base = new SalaryConstraintBuilder().withMinSalary(MIN_SALARY).build();
+        SalarySpecification base = new SalarySpecificationBuilder().withMinSalary(MIN_SALARY).build();
         Assert.assertEquals("El sueldo minimo debe ser 3000", MIN_SALARY, base.getMinSalary());
     }
 
     @Test
     public void testGetMaxSalary() {
-        SalarySpecification base = new SalaryConstraintBuilder().withMaxSalary(MAX_SALARY).build();
+        SalarySpecification base = new SalarySpecificationBuilder().withMaxSalary(MAX_SALARY).build();
         Assert.assertEquals("El sueldo maximo debe ser 4500", MAX_SALARY, base.getMaxSalary());
     }
 
     @Test
-    @SuppressWarnings("PMD")
-    public void testGetSalaryForExistingPercentage() {
+    public void testGetSalaryForExistingPercentage() { // NOPMD
         // @formatter:off
-        SalarySpecification base = new SalaryConstraintBuilder()
+        SalarySpecification base = new SalarySpecificationBuilder()
             .withMinSalary(MIN_SALARY)
             .withMaxSalary(MAX_SALARY)
             .withPercentages(P_0_33_66_100)
@@ -58,7 +57,7 @@ public class SalaryConstraintTest {
     @Test(expected = UserException.class)
     public void testGetSalaryForNonValidPercentage() {
         // @formatter:off
-        SalarySpecification base = new SalaryConstraintBuilder()
+        SalarySpecification base = new SalarySpecificationBuilder()
             .withMinSalary(MIN_SALARY)
             .withMaxSalary(MAX_SALARY)
             .withPercentages(P_0_33_66_100)
@@ -70,10 +69,9 @@ public class SalaryConstraintTest {
     }
 
     @Test
-    @SuppressWarnings("PMD")
-    public void testHasPercentage() {
+    public void testHasPercentage() { // NOPMD
         // @formatter:off
-        SalarySpecification base = new SalaryConstraintBuilder()
+        SalarySpecification base = new SalarySpecificationBuilder()
             .withMinSalary(MIN_SALARY)
             .withMaxSalary(MAX_SALARY)
             .withPercentages(P_0_33_66_100)
@@ -83,10 +81,9 @@ public class SalaryConstraintTest {
     }
 
     @Test
-    @SuppressWarnings("PMD")
-    public void testHasntPercentage() {
+    public void testHasntPercentage() { // NOPMD
         // @formatter:off
-        SalarySpecification base = new SalaryConstraintBuilder()
+        SalarySpecification base = new SalarySpecificationBuilder()
             .withMinSalary(MIN_SALARY)
             .withMaxSalary(MAX_SALARY)
             .withPercentages(P_0_33_66_100)
@@ -97,7 +94,7 @@ public class SalaryConstraintTest {
 
     @Test
     public void percentageChangeAffectsEmployee() {
-        SalarySpecification base = new SalaryConstraintBuilder().withPercentages(P_0_33_66_100).build();
+        SalarySpecification base = new SalarySpecificationBuilder().withPercentages(P_0_33_66_100).build();
         Employee affected = mock(Employee.class);
         when(affected.getPercentage()).thenReturn(33).thenReturn(50);
         Set<Employee> employees = new HashSet<Employee>();
@@ -109,7 +106,7 @@ public class SalaryConstraintTest {
 
     @Test
     public void precentageChangeDoesNotAffectEmployee() {
-        SalarySpecification base = new SalaryConstraintBuilder().withPercentages(P_0_50_100).build();
+        SalarySpecification base = new SalarySpecificationBuilder().withPercentages(P_0_50_100).build();
         Employee notAffected = mock(Employee.class);
         when(notAffected.getPercentage()).thenReturn(50);
         Set<Employee> employees = new HashSet<Employee>();
@@ -120,14 +117,14 @@ public class SalaryConstraintTest {
 
     @Test(expected = UserException.class)
     public void percentagesChangeWithout0() {
-        SalarySpecification base = new SalaryConstraintBuilder().build();
+        SalarySpecification base = new SalarySpecificationBuilder().build();
         List<Integer> newPercentages = Arrays.asList(33, 66, 100);
         base.changePecentages(newPercentages, new HashSet<Employee>());
     }
 
     @Test(expected = UserException.class)
     public void percentagesChangeWithout100() {
-        SalarySpecification base = new SalaryConstraintBuilder().build();
+        SalarySpecification base = new SalarySpecificationBuilder().build();
         List<Integer> newPercentages = Arrays.asList(0, 25, 50, 75);
         base.changePecentages(newPercentages, new HashSet<Employee>());
     }

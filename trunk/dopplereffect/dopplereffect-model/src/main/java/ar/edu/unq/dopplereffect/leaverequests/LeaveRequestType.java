@@ -22,4 +22,11 @@ public interface LeaveRequestType {
      */
     boolean isValidFor(LeaveRequest leaveRequest, Employee employee);
 
+    /**
+     * Obtiene el motivo de la licencia. Usado para agrupar licencias en los
+     * empleados por su motivo.
+     * 
+     * @return un String representando el motivo del tipo de licencia.
+     */
+    String getReason();
 }

@@ -1,6 +1,11 @@
 package ar.edu.unq.dopplereffect.time;
 
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.*;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_06;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_08;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_09;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_11;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.getDates;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -78,8 +83,7 @@ public class OneDayDurationStrategyTest {
     }
 
     @Test
-    @SuppressWarnings("PMD")
-    public void testOverlapsWithIntervalLeaveRequest() {
+    public void testOverlapsWithIntervalLeaveRequest() { // NOPMD
         OneDayDurationStrategy oneDayStrategy = new OneDayDurationStrategy(D_2011_04_06);
         IntervalDurationStrategy intervalStrategy = Mockito.mock(IntervalDurationStrategy.class);
         oneDayStrategy.overlapsInterval(intervalStrategy);
