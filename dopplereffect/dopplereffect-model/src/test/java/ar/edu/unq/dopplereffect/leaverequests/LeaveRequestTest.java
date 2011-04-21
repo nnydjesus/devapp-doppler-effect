@@ -20,8 +20,7 @@ import ar.edu.unq.dopplereffect.time.DurationStrategy;
 public class LeaveRequestTest {
 
     @Test
-    @SuppressWarnings("PMD")
-    public void testIncludesDay() {
+    public void testIncludesDay() { // NOPMD
         DurationStrategy strategy = Mockito.mock(DurationStrategy.class);
         LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
         request.includesDay(D_2011_04_13);
@@ -29,8 +28,7 @@ public class LeaveRequestTest {
     }
 
     @Test
-    @SuppressWarnings("PMD")
-    public void testAmountOfDays() {
+    public void testAmountOfDays() { // NOPMD
         DurationStrategy strategy = Mockito.mock(DurationStrategy.class);
         LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
         request.getAmountOfDays();
@@ -38,8 +36,7 @@ public class LeaveRequestTest {
     }
 
     @Test
-    @SuppressWarnings("PMD")
-    public void testOverlapsAssignment() {
+    public void testOverlapsAssignment() { // NOPMD
         Interval interval = new Interval(D_2011_04_05, D_2011_04_06);
         DurationStrategy strategy = Mockito.mock(DurationStrategy.class);
         LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
@@ -48,8 +45,7 @@ public class LeaveRequestTest {
     }
 
     @Test
-    @SuppressWarnings("PMD")
-    public void testOverlapsWithLeaveRequestIntersectingInTheEnd() {
+    public void testOverlapsWithLeaveRequestIntersectingInTheEnd() { // NOPMD
         DurationStrategy strategy = Mockito.mock(DurationStrategy.class);
         LeaveRequest leaveReq1 = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
         LeaveRequest leaveReq2 = new LeaveRequestBuilder().build();

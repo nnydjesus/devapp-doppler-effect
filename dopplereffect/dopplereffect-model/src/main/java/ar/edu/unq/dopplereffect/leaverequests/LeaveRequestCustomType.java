@@ -41,6 +41,7 @@ public class LeaveRequestCustomType implements LeaveRequestType {
         this.maxLimit = maxLimit;
     }
 
+    @Override
     public String getReason() {
         return reason;
     }

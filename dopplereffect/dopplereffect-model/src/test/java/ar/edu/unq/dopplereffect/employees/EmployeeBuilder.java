@@ -1,5 +1,7 @@
 package ar.edu.unq.dopplereffect.employees;
 
+import org.joda.time.DateTime;
+
 public class EmployeeBuilder {
 
     private transient Employee employee;
@@ -35,6 +37,11 @@ public class EmployeeBuilder {
 
     public EmployeeBuilder withPercentage(final int percentage) {
         employee.setPercentage(percentage);
+        return this;
+    }
+
+    public EmployeeBuilder withJoinDate(final DateTime date) {
+        employee.setJoinDate(date);
         return this;
     }
 

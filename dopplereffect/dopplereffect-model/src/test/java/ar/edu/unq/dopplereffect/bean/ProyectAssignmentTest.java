@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import junit.framework.Assert;
 
 import org.joda.time.Interval;
