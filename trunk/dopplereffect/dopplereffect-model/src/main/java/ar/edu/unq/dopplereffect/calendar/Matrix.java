@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections15.map.LinkedMap;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,11 +66,15 @@ public class Matrix<X, Y, V> {
         return matrix.isEmpty();
     }
 
-    public void loggerMatrix() {
+    /**
+     * Metodo que no es del modelo!!! Solo esta para poder ver el calendario.
+     * Una vez termidado el modelo este metodo sera eliminado
+     */
+    public void loggerMatrixCalendar() {
         final StringBuilder sBuilder = new StringBuilder();
         sBuilder.append("\n            ");
         for (Object map : this.values().iterator().next().keySet()) {
-            sBuilder.append(map + "       ");
+            sBuilder.append(PrintDay.printDay((DateTime) map) + "       ");
         }
         sBuilder.append("\n");
         for (X x : this.keySet()) {
