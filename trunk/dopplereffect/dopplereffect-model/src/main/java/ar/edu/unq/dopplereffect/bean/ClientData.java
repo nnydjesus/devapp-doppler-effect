@@ -1,9 +1,9 @@
 package ar.edu.unq.dopplereffect.bean;
 
 /**
- * Provee la informacion de un cliente de la empresa
+ * Provee la informacion de un cliente de la empresa.
  */
-public class InformationClient {
+public class ClientData {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -13,12 +13,12 @@ public class InformationClient {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public String getRazonSocial() {
+    public String getName() {
         return personalData.getFirstName();
     }
 
-    public void setRazonSocial(final String razonSocial) {
-        personalData.setFirstName(razonSocial);
+    public void setName(final String name) {
+        personalData.setFirstName(name);
     }
 
     public PersonalData getPersonalData() {

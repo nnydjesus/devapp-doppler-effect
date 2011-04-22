@@ -11,15 +11,17 @@ import static ar.edu.unq.dopplereffect.bean.DateHelpers.getDate;
 import static ar.edu.unq.dopplereffect.bean.DateHelpers.getDates;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import ar.edu.unq.dopplereffect.bean.ProjectAssignment;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
@@ -90,50 +92,42 @@ public class EmployeeTest {
     @Test
     public void testHasLeaveRequestInADay() {
         Employee empl = new EmployeeBuilder().build();
-        // @formatter:off
-        LeaveRequest leaveReq = new LeaveRequestBuilder()
-            .withInterval(D_2011_04_05, D_2011_04_11)
-            .withType(new LeaveRequestTypeBuilder().build())
-            .build();
-        // @formatter:on
+        LeaveRequest leaveReq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11)
+                .withType(new LeaveRequestTypeBuilder().build()).build();
         empl.addAssignment(leaveReq);
         for (DateTime date : getDates(D_2011_04_05, D_2011_04_11)) {
-            Assert.assertTrue("el empleado deberia tener una licencia ese dia", empl.hasLeaveRequestInDay(date));
+            assertTrue("el empleado deberia tener una licencia ese dia", empl.hasLeaveRequestInDay(date));
         }
     }
 
     @Test
     public void testHasntLeaveRequestInADay() {
         Employee empl = new EmployeeBuilder().build();
-        // @formatter:off
-        LeaveRequest leaveReq = new LeaveRequestBuilder()
-            .withInterval(D_2011_04_06, D_2011_04_08)
-            .withType(new LeaveRequestTypeBuilder().build())
-            .build();
-        // @formatter:on
+        LeaveRequest leaveReq = new LeaveRequestBuilder().withInterval(D_2011_04_06, D_2011_04_08)
+                .withType(new LeaveRequestTypeBuilder().build()).build();
         empl.addAssignment(leaveReq);
-        Assert.assertFalse("el empleado NO deberia tener una licencia ese dia", empl.hasLeaveRequestInDay(D_2011_04_05));
-        Assert.assertFalse("el empleado NO deberia tener una licencia ese dia", empl.hasLeaveRequestInDay(D_2011_04_09));
+        assertFalse("el empleado NO deberia tener una licencia ese dia", empl.hasLeaveRequestInDay(D_2011_04_05));
+        assertFalse("el empleado NO deberia tener una licencia ese dia", empl.hasLeaveRequestInDay(D_2011_04_09));
     }
 
     @Test
     public void testGetAssignableForDayWhenThereAreAssignables() {
         Employee empl = new EmployeeBuilder().build();
-        LeaveRequest leaveReq = Mockito.mock(LeaveRequest.class);
-        ProjectAssignment projAssignment = Mockito.mock(ProjectAssignment.class);
+        LeaveRequest leaveReq = mock(LeaveRequest.class);
+        ProjectAssignment projAssignment = mock(ProjectAssignment.class);
         empl.addAssignment(leaveReq);
         empl.addAssignment(projAssignment);
-        Mockito.when(leaveReq.includesDay(D_2011_04_11)).thenReturn(true);
-        Mockito.when(projAssignment.includesDay(D_2011_04_13)).thenReturn(true);
-        Assert.assertEquals("", leaveReq, empl.getAssignableForDay(D_2011_04_11));
-        Assert.assertEquals("", projAssignment, empl.getAssignableForDay(D_2011_04_13));
+        when(leaveReq.includesDay(D_2011_04_11)).thenReturn(true);
+        when(projAssignment.includesDay(D_2011_04_13)).thenReturn(true);
+        assertEquals("", leaveReq, empl.getAssignableForDay(D_2011_04_11));
+        assertEquals("", projAssignment, empl.getAssignableForDay(D_2011_04_13));
     }
 
     @Test
     public void testGetAssignableForDayWhenThereAreNotAssignables() {
         Employee empl = new EmployeeBuilder().build();
         DateTime anyDate = new DateTime();
-        Assert.assertNull("el empleado no deberia tener ninguna asignacion", empl.getAssignableForDay(anyDate));
+        assertNull("el empleado NO deberia tener ninguna asignacion", empl.getAssignableForDay(anyDate));
     }
 
     @Test
@@ -141,8 +135,10 @@ public class EmployeeTest {
         Employee empl = new EmployeeBuilder().build();
         LeaveRequest req = new LeaveRequestBuilder().withInterval(D_2011_04_06, D_2011_04_08).build();
         empl.addAssignment(req);
-        Assert.assertTrue("", empl.isFreeAtInterval(new Interval(D_2011_04_01, D_2011_04_05)));
-        Assert.assertTrue("", empl.isFreeAtInterval(new Interval(D_2011_04_09, D_2011_04_13)));
+        assertTrue("el empleado deberia estar libre en el intervalo dado",
+                empl.isFreeAtInterval(new Interval(D_2011_04_01, D_2011_04_05)));
+        assertTrue("el empleado deberia estar libre en el intervalo dado",
+                empl.isFreeAtInterval(new Interval(D_2011_04_09, D_2011_04_13)));
     }
 
     @Test
@@ -150,9 +146,12 @@ public class EmployeeTest {
         Employee empl = new EmployeeBuilder().build();
         LeaveRequest req = new LeaveRequestBuilder().withInterval(D_2011_04_08, D_2011_04_11).build();
         empl.addAssignment(req);
-        Assert.assertFalse("", empl.isFreeAtInterval(new Interval(D_2011_04_05, D_2011_04_13)));
-        Assert.assertFalse("", empl.isFreeAtInterval(new Interval(D_2011_04_05, D_2011_04_08)));
-        Assert.assertFalse("", empl.isFreeAtInterval(new Interval(D_2011_04_11, D_2011_04_13)));
+        assertFalse("el empleado NO deberia estar libre en el intervalo dado",
+                empl.isFreeAtInterval(new Interval(D_2011_04_05, D_2011_04_13)));
+        assertFalse("el empleado NO deberia estar libre en el intervalo dado",
+                empl.isFreeAtInterval(new Interval(D_2011_04_05, D_2011_04_08)));
+        assertFalse("el empleado NO deberia estar libre en el intervalo dado",
+                empl.isFreeAtInterval(new Interval(D_2011_04_11, D_2011_04_13)));
     }
 
     @Test
@@ -160,8 +159,8 @@ public class EmployeeTest {
         Employee empl1 = new EmployeeBuilder().withJoinDate(new DateTime().minusYears(2).minusDays(1)).build();
         Employee empl2 = new EmployeeBuilder().withJoinDate(new DateTime().minusYears(2)).build();
         Employee empl3 = new EmployeeBuilder().withJoinDate(new DateTime().minusYears(2).plusDays(1)).build();
-        Assert.assertEquals("", 2, empl1.getSeniority());
-        Assert.assertEquals("", 2, empl2.getSeniority());
-        Assert.assertEquals("", 1, empl3.getSeniority());
+        assertEquals("la antiguedad del empleado deberia ser de 2 años", 2, empl1.getSeniority());
+        assertEquals("la antiguedad del empleado deberia ser de 2 años", 2, empl2.getSeniority());
+        assertEquals("la antiguedad del empleado deberia ser de 1 año", 1, empl3.getSeniority());
     }
 }

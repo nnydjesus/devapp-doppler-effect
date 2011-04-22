@@ -54,7 +54,6 @@ public class ProjectAssignment implements Assignable {
 
     @Override
     public boolean includesDay(final DateTime date) {
-        // TODO testear!
         for (IntervalDurationStrategy interval : this.getIntervals()) {
             if (interval.includesDay(date)) {
                 return true;

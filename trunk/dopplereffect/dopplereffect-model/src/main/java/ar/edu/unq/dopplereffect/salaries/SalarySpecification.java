@@ -50,6 +50,7 @@ public class SalarySpecification {
     }
 
     public SalarySpecification() {
+        super();
     }
 
     /* **************************** ACCESSORS ***************************** */
@@ -147,7 +148,7 @@ public class SalarySpecification {
      *            los empleados que pueden estar afectados y deben actualizarse
      *            sus sueldos.
      */
-    public void changePecentages(final List<Integer> newPercentages, final Set<Employee> employees) {
+    public void changePercentages(final List<Integer> newPercentages, final Set<Employee> employees) {
         Collections.sort(newPercentages);
         if (newPercentages.get(0) != 0 || newPercentages.get(newPercentages.size() - 1) != 100) {
             throw new UserException("La banda debe contener 0 y 100");

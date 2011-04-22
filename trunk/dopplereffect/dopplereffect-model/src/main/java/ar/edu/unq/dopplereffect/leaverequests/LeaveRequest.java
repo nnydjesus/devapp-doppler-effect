@@ -102,8 +102,9 @@ public class LeaveRequest implements Assignable {
      */
     public boolean overlapOtherLeaveRequest(final Employee employee) {
         for (LeaveRequest req : employee.getLeaveRequests()) {
-            if (this.overlapsWith(req))
+            if (this.overlapsWith(req)) {
                 return true;
+            }
         }
         return false;
     }

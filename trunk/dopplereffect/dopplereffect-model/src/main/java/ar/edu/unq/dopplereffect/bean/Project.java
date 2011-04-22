@@ -18,7 +18,7 @@ public class Project {
 
     private String name;
 
-    private InformationClient informationClient;
+    private ClientData clientData;
 
     private Period consideredEffor;
 
@@ -93,12 +93,12 @@ public class Project {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public InformationClient getInformationClient() {
-        return informationClient;
+    public ClientData getClientData() {
+        return clientData;
     }
 
-    public void setInformationClient(final InformationClient informationClient) {
-        this.informationClient = informationClient;
+    public void setClientData(final ClientData clientData) {
+        this.clientData = clientData;
     }
 
     public List<Skill> getSkils() {

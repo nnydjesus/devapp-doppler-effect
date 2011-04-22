@@ -15,8 +15,8 @@ public class ProjectBuilder {
         return this;
     }
 
-    public ProjectBuilder withInformationClient(final InformationClient information) {
-        this.getProyect().setInformationClient(information);
+    public ProjectBuilder withInformationClient(final ClientData information) {
+        this.getProyect().setClientData(information);
         return this;
     }
 

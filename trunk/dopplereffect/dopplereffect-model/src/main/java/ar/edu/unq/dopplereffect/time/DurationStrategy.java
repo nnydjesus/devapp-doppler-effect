@@ -9,7 +9,7 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
  * Tipos de duracion de las licencias, como por ejemplo licencias de un solo
  * dia, o licencias de un intervalo.
  */
-public abstract class DurationStrategy {
+public interface DurationStrategy {
 
     /**
      * Chequea que una fecha dada este incluida en las fechas descriptas por la
@@ -20,17 +20,17 @@ public abstract class DurationStrategy {
      * @return <code>true</code> si esta incluida, <code>false</code> en caso
      *         contrario.
      */
-    public abstract boolean includesDay(DateTime day);
+    boolean includesDay(DateTime day);
 
     /**
      * Retorna la cantidad de dias que la duracion de licencia abarca.
      */
-    public abstract int getAmountOfDays();
+    int getAmountOfDays();
 
     /**
      * Retorna el año al cual la duracion de la licencia pertenece.
      */
-    public abstract int getYear();
+    int getYear();
 
     /**
      * Verifica si la duracion se superpone con un intervalo de tiempo dado.
@@ -41,7 +41,7 @@ public abstract class DurationStrategy {
      * @return <code>true</code> si existe una superposicion, <code>false</code>
      *         en caso contrario.
      */
-    public abstract boolean overlapsInterval(Interval interv);
+    boolean overlapsInterval(Interval interv);
 
     /**
      * Verifica que el objeto receptor se superpone con otra duracion recibida
@@ -52,9 +52,9 @@ public abstract class DurationStrategy {
      * @return <code>true</code> si se superponen, <code>false</code> en caso
      *         contrario.
      */
-    public abstract boolean overlapsWith(LeaveRequest leaveReq);
+    boolean overlapsWith(LeaveRequest leaveReq);
 
-    protected abstract boolean overlapsInterval(IntervalDurationStrategy intervalDuration);
+    boolean overlapsInterval(IntervalDurationStrategy intervalDuration);
 
-    protected abstract boolean overlapsInterval(OneDayDurationStrategy oneDayDuration);
+    boolean overlapsInterval(OneDayDurationStrategy oneDayDuration);
 }

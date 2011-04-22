@@ -1,5 +1,9 @@
 package ar.edu.unq.dopplereffect.salaries;
 
+import static ar.edu.unq.dopplereffect.bean.Helpers.assertGetSalary;
+import static ar.edu.unq.dopplereffect.bean.Helpers.assertSalaryHasPercentages;
+import static ar.edu.unq.dopplereffect.bean.Helpers.assertSalaryHasntPercentages;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,10 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-import ar.edu.unq.dopplereffect.bean.Helpers;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exception.UserException;
 
@@ -32,13 +34,13 @@ public class SalarySpecificationTest {
     @Test
     public void testGetMinSalary() {
         SalarySpecification base = new SalarySpecificationBuilder().withMinSalary(MIN_SALARY).build();
-        Assert.assertEquals("El sueldo minimo debe ser 3000", MIN_SALARY, base.getMinSalary());
+        assertEquals("El sueldo minimo debe ser 3000", MIN_SALARY, base.getMinSalary());
     }
 
     @Test
     public void testGetMaxSalary() {
         SalarySpecification base = new SalarySpecificationBuilder().withMaxSalary(MAX_SALARY).build();
-        Assert.assertEquals("El sueldo maximo debe ser 4500", MAX_SALARY, base.getMaxSalary());
+        assertEquals("El sueldo maximo debe ser 4500", MAX_SALARY, base.getMaxSalary());
     }
 
     @Test
@@ -51,7 +53,7 @@ public class SalarySpecificationTest {
             .build();
         // @formatter:on
         int[] values = { 3000, 3495, 3990, 4500 };
-        Helpers.assertGetSalary(base, P_0_33_66_100, values);
+        assertGetSalary(base, P_0_33_66_100, values);
     }
 
     @Test(expected = UserException.class)
@@ -77,7 +79,7 @@ public class SalarySpecificationTest {
             .withPercentages(P_0_33_66_100)
             .build();
         // @formatter:on
-        Helpers.assertSalaryHasPercentages(base, P_0_33_66_100);
+        assertSalaryHasPercentages(base, P_0_33_66_100);
     }
 
     @Test
@@ -89,7 +91,7 @@ public class SalarySpecificationTest {
             .withPercentages(P_0_33_66_100)
             .build();
         // @formatter:on
-        Helpers.assertSalaryHasntPercentages(base, 10, 50, 78, 99);
+        assertSalaryHasntPercentages(base, 10, 50, 78, 99);
     }
 
     @Test
@@ -99,9 +101,9 @@ public class SalarySpecificationTest {
         when(affected.getPercentage()).thenReturn(33).thenReturn(50);
         Set<Employee> employees = new HashSet<Employee>();
         employees.add(affected);
-        base.changePecentages(P_0_50_100, employees);
+        base.changePercentages(P_0_50_100, employees);
         verify(affected).changeSalaryPercentage(P_0_50_100);
-        Assert.assertEquals("El porcentaje del empleado debe haber cambiado de 33 a 50", 50, affected.getPercentage());
+        assertEquals("El porcentaje del empleado debe haber cambiado de 33 a 50", 50, affected.getPercentage());
     }
 
     @Test
@@ -111,21 +113,21 @@ public class SalarySpecificationTest {
         when(notAffected.getPercentage()).thenReturn(50);
         Set<Employee> employees = new HashSet<Employee>();
         employees.add(notAffected);
-        base.changePecentages(P_0_25_50_75_100, employees);
-        Assert.assertEquals("El porcentaje del empleado debe permanecer en 50", 50, notAffected.getPercentage());
+        base.changePercentages(P_0_25_50_75_100, employees);
+        assertEquals("El porcentaje del empleado debe permanecer en 50", 50, notAffected.getPercentage());
     }
 
     @Test(expected = UserException.class)
     public void percentagesChangeWithout0() {
         SalarySpecification base = new SalarySpecificationBuilder().build();
         List<Integer> newPercentages = Arrays.asList(33, 66, 100);
-        base.changePecentages(newPercentages, new HashSet<Employee>());
+        base.changePercentages(newPercentages, new HashSet<Employee>());
     }
 
     @Test(expected = UserException.class)
     public void percentagesChangeWithout100() {
         SalarySpecification base = new SalarySpecificationBuilder().build();
         List<Integer> newPercentages = Arrays.asList(0, 25, 50, 75);
-        base.changePecentages(newPercentages, new HashSet<Employee>());
+        base.changePercentages(newPercentages, new HashSet<Employee>());
     }
 }
