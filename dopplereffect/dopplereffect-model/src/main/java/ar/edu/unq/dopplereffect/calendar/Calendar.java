@@ -1,11 +1,8 @@
 package ar.edu.unq.dopplereffect.calendar;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.joda.time.Months;
-import org.joda.time.Years;
 
 import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.employees.Employee;
@@ -37,18 +34,5 @@ public class Calendar extends AbstractCalendar {
             }
         }
         return matrix;
-    }
-
-    public static void main(final String[] args) {
-
-        final Calendar calendar = new Calendar(new MonthStrategy(Years.years(2011), Months.FOUR));
-        final List<Employee> employees = Arrays.asList(new Employee(), new Employee());
-        calendar.getCalendar(employees).loggerMatrixCalendar();
-        calendar.next();
-        calendar.getCalendar(employees).loggerMatrixCalendar();
-        calendar.setStrategy(new WeekdayStrategy(calendar.getStrategy().getDay()));
-        calendar.getCalendar(employees).loggerMatrixCalendar();
-        calendar.next();
-        calendar.getCalendar(employees).loggerMatrixCalendar();
     }
 }
