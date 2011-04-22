@@ -41,19 +41,22 @@ public class Project {
 
     public void manualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
         this.validateAssignment(employee, interval);
-        ProjectAssignment projectAssignment = this.findOrCreateAssignment(employee);
+        final ProjectAssignment projectAssignment = this.findOrCreateAssignment(employee);
         projectAssignment.addInterval(interval);
         employee.addAssignment(projectAssignment);
     }
 
     protected void validateAssignment(final Employee employee, final IntervalDurationStrategy interval) {
-        ProjectAssignment assignment = this.getAssignment(employee);
-        if (assignment != null && assignment.overlapsAssignment(interval))
+        final ProjectAssignment assignment = this.getAssignment(employee);
+        if (assignment != null && assignment.overlapsAssignment(interval)) {
             throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
-        if (interval.getEndDate().isAfter(interval.getStartDate().plus(consideredEffor)))
+        }
+        if (interval.getEndDate().isAfter(interval.getStartDate().plus(consideredEffor))) {
             throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
-        if (!employee.isFreeAtInterval(interval.getInterval()))
+        }
+        if (!employee.isFreeAtInterval(interval.getInterval())) {
             throw new UserException("El empleado no esta libre en el intervalo " + interval);
+        }
     }
 
     public boolean isAssigned(final Employee employee) {

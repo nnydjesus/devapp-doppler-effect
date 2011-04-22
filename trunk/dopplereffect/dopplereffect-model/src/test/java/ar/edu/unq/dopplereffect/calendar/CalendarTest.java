@@ -1,7 +1,8 @@
 package ar.edu.unq.dopplereffect.calendar;
 
 import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,36 +29,68 @@ public class CalendarTest {
 
     @Before
     public void startUp() {
-        calendarStrategy = mock(WeekdayStrategy.class);
-        employee = mock(Employee.class);
-        assignable = mock(Assignable.class);
-        employees = new ArrayList<Employee>();
-        when(calendarStrategy.cloneStrategy()).thenReturn(calendarStrategy);
-        when(calendarStrategy.getDay()).thenReturn(D_2011_04_05);
-        when(calendarStrategy.getTotalDays()).thenReturn(1);
-        when(employee.getAssignableForDay(D_2011_04_05)).thenReturn(assignable);
+        this.setCalendarStrategy(mock(WeekdayStrategy.class));
+        this.setEmployee(mock(Employee.class));
+        this.setAssignable(mock(Assignable.class));
+        this.setEmployees(new ArrayList<Employee>());
+        when(this.getCalendarStrategy().cloneStrategy()).thenReturn(this.getCalendarStrategy());
+        when(this.getCalendarStrategy().getDay()).thenReturn(D_2011_04_05);
+        when(this.getCalendarStrategy().getTotalDays()).thenReturn(1);
+        when(this.getEmployee().getAssignableForDay(D_2011_04_05)).thenReturn(this.getAssignable());
     }
 
     protected List<Employee> getListWithOneElement() {
-        employees.add(employee);
-        return employees;
+        this.getEmployees().add(this.getEmployee());
+        return this.getEmployees();
     }
 
     protected Calendar getCalendar() {
-        return new Calendar(calendarStrategy);
+        return new Calendar(this.getCalendarStrategy());
     }
 
     @Test
     public void testGetCalendarEmptyList() {
-        Assert.assertTrue(this.getCalendar().getCalendar(employees).isEmpty());
+        Assert.assertTrue(this.getCalendar().getCalendar(this.getEmployees()).isEmpty());
     }
 
     @Test
     public void testGetCalendarOneElement() {
         Matrix<Employee, DateTime, Assignable> calendar = this.getCalendar().getCalendar(this.getListWithOneElement());
-        Assert.assertTrue(calendar.conteinsX(employee));
-        Assert.assertTrue(calendar.conteinsXY(employee, D_2011_04_05));
-        Assert.assertEquals(assignable, calendar.getXY(employee, D_2011_04_05));
+        Assert.assertTrue(calendar.conteinsX(this.getEmployee()));
+        Assert.assertTrue(calendar.conteinsXY(this.getEmployee(), D_2011_04_05));
+        Assert.assertEquals(this.getAssignable(), calendar.getXY(this.getEmployee(), D_2011_04_05));
 
+    }
+
+    protected void setAssignable(final Assignable assignable) {
+        this.assignable = assignable;
+    }
+
+    protected Assignable getAssignable() {
+        return assignable;
+    }
+
+    protected void setEmployee(final Employee employee) {
+        this.employee = employee;
+    }
+
+    protected Employee getEmployee() {
+        return employee;
+    }
+
+    protected void setEmployees(final List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    protected List<Employee> getEmployees() {
+        return employees;
+    }
+
+    protected void setCalendarStrategy(final CalendarStrategy calendarStrategy) {
+        this.calendarStrategy = calendarStrategy;
+    }
+
+    protected CalendarStrategy getCalendarStrategy() {
+        return calendarStrategy;
     }
 }

@@ -7,6 +7,9 @@ import org.joda.time.DateTime;
  */
 public class PrintDay {
 
+    private PrintDay() {
+    }
+
     public static String printDay(final DateTime date) {
         return WeekDayName.valueOf(date.getDayOfWeek()) + " " + date.getDayOfMonth() + "/" + date.getMonthOfYear();
     }

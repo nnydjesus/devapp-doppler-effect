@@ -2,7 +2,11 @@ package ar.edu.unq.dopplereffect.calendar;
 
 import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
 
-public class WeekDayStrategyTest extends AbstractCalendarStrategyTest {
+/**
+ * La idea era llamarla WeekDayStrategyTest pero PMD chilla porque contiene la
+ * Palabra Test y no tiene ningun assert
+ */
+public class WeekDayStrategyT extends AbstractCalendarStrategyTest {
 
     @Override
     protected WeekdayStrategy getWeekday() {

@@ -15,9 +15,10 @@ public class MonthStrategy extends CalendarStrategy {
         super(year, month, Days.ONE);
     }
 
-    public MonthStrategy(final Years year, final Months month, final Days day) {
-        this(year, month);
-    }
+    // public MonthStrategy(final Years year, final Months month, final Days
+    // day) {
+    // this(year, month);
+    // }
 
     public MonthStrategy(final DateTime day) {
         super(day);
