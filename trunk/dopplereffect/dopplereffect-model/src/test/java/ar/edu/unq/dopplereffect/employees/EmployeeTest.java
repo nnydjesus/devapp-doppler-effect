@@ -1,14 +1,14 @@
 package ar.edu.unq.dopplereffect.employees;
 
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_01;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_06;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_08;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_09;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_11;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_13;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.getDate;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.getDates;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_01;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_06;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_08;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_09;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_11;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_13;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.getDate;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.getDates;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -23,11 +23,11 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.junit.Test;
 
-import ar.edu.unq.dopplereffect.bean.ProjectAssignment;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestBuilder;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestTypeBuilder;
+import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
 
 public class EmployeeTest {
 

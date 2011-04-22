@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.projects;
 
 import junit.framework.Assert;
 
@@ -8,7 +8,8 @@ import org.junit.Test;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeBuilder;
-import ar.edu.unq.dopplereffect.exception.UserException;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
+import ar.edu.unq.dopplereffect.helpers.DateHelpers;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class ProjectTest {
@@ -23,7 +24,7 @@ public class ProjectTest {
     public void setConsideratedTime() {
         final Period consideredEfforr = Period.months(2).plusDays(3);
         final Project project = new ProjectBuilder().withConsideredEffor(consideredEfforr).build();
-        Assert.assertEquals(consideredEfforr, project.getConsideredEffor());
+        Assert.assertEquals(consideredEfforr, project.getConsideredEffort());
     }
 
     @Test
@@ -62,8 +63,8 @@ public class ProjectTest {
         project.manualAssignment(employee1, firstInterval);
         project.manualAssignment(employee1, secondInterval);
 
-        Assert.assertTrue(project.isAssignedInInverval(employee1, firstInterval));
-        Assert.assertTrue(project.isAssignedInInverval(employee1, secondInterval));
+        Assert.assertTrue(project.isAssignedInInterval(employee1, firstInterval));
+        Assert.assertTrue(project.isAssignedInInterval(employee1, secondInterval));
     }
 
     @Test(expected = UserException.class)

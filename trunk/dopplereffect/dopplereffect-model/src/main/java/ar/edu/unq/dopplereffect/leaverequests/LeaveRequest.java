@@ -3,7 +3,7 @@ package ar.edu.unq.dopplereffect.leaverequests;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import ar.edu.unq.dopplereffect.bean.Assignable;
+import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
@@ -133,5 +133,4 @@ public class LeaveRequest implements Assignable {
     public boolean overlapsAssignment(final IntervalDurationStrategy interval) {
         return this.overlapsAssignment(interval.getInterval());
     }
-
 }

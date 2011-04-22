@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.projects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
@@ -62,16 +63,25 @@ public class ProjectAssignment implements Assignable {
         return false;
     }
 
+    /**
+     *
+     */
     public void addInterval(final IntervalDurationStrategy interval) {
-        intervals.add(interval);
+        this.getIntervals().add(interval);
     }
 
+    /**
+     *
+     */
     public boolean isAssigned(final Employee anEmployee) {
-        return employee.equals(anEmployee);
+        return this.getEmployee().equals(anEmployee);
     }
 
+    /**
+     *
+     */
     public boolean containsInterval(final IntervalDurationStrategy interval) {
-        return intervals.contains(interval);
+        return this.getIntervals().contains(interval);
     }
 
     /**
@@ -86,7 +96,7 @@ public class ProjectAssignment implements Assignable {
 
     @Override
     public boolean overlapsAssignment(final Interval interval) {
-        for (IntervalDurationStrategy assignment : intervals) {
+        for (IntervalDurationStrategy assignment : this.getIntervals()) {
             if (assignment.overlapsInterval(interval)) {
                 return true;
             }

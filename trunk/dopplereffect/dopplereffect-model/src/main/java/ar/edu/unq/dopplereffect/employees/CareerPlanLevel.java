@@ -10,10 +10,6 @@ public class CareerPlanLevel {
 
     private String name;
 
-    private CareerPlanLevel previous;
-
-    private CareerPlanLevel next;
-
     /* *************************** CONSTRUCTORS *************************** */
 
     public CareerPlanLevel(final String name) {
@@ -28,22 +24,6 @@ public class CareerPlanLevel {
 
     public void setName(final String name) {
         this.name = name;
-    }
-
-    public CareerPlanLevel getPrevious() {
-        return previous;
-    }
-
-    public void setPrevious(final CareerPlanLevel previous) {
-        this.previous = previous;
-    }
-
-    public CareerPlanLevel getNext() {
-        return next;
-    }
-
-    public void setNext(final CareerPlanLevel next) {
-        this.next = next;
     }
 
     /* **************************** OPERATIONS **************************** */

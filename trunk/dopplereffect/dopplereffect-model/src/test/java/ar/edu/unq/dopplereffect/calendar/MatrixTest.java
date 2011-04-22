@@ -1,10 +1,8 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.calendar;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
-
-import ar.edu.unq.dopplereffect.calendar.Matrix;
 
 public class MatrixTest {
 
@@ -34,6 +32,7 @@ public class MatrixTest {
     public void testConteinsXY() {
         final Matrix<String, String, Integer> matrix = this.getMatrix();
         matrix.put(CORRDINATE_X, CORRDINATE_Y, VALUE);
-        Assert.assertTrue("Ma matriz deberia tener como clave a X  dentro de X commo clave a Y ", matrix.conteinsXY(CORRDINATE_X, CORRDINATE_Y));
+        Assert.assertTrue("Ma matriz deberia tener como clave a X  dentro de X commo clave a Y ",
+                matrix.conteinsXY(CORRDINATE_X, CORRDINATE_Y));
     }
 }

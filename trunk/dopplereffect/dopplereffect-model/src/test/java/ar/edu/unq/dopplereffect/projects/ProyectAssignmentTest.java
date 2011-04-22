@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.projects;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.exception;
+package ar.edu.unq.dopplereffect.exceptions;
 
 /**
  * Exepcion de negocio.

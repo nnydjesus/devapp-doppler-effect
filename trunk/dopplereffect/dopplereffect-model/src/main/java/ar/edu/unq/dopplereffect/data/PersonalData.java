@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.data;
 
 /**
  * Representa aquellos datos que identifican y caracterizan a una persona, como

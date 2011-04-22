@@ -1,13 +1,13 @@
-package ar.edu.unq.dopplereffect.bean.enums;
+package ar.edu.unq.dopplereffect.projects;
 
 /**
  * Tipos para los skills
  */
-public class TypeSkill {
+public class SkillType {
 
     private String name;
 
-    public TypeSkill(final String name) {
+    public SkillType(final String name) {
         this.setName(name);
     }
 

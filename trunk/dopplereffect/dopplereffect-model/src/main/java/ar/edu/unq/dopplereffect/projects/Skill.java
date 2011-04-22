@@ -1,35 +1,35 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.projects;
 
-import ar.edu.unq.dopplereffect.bean.enums.LevelSkill;
-import ar.edu.unq.dopplereffect.bean.enums.TypeSkill;
 
 /**
+ * Representa aquellos requerimientos (en materia de conocimientos/habilidades)
+ * de un proyecto.
  */
 public class Skill {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    private TypeSkill type;
+    private SkillType type;
 
-    private LevelSkill level;
+    private SkillLevel level;
 
     /* *************************** CONSTRUCTORS *************************** */
 
     /* **************************** ACCESSORS ***************************** */
 
-    public LevelSkill getLevel() {
+    public SkillLevel getLevel() {
         return level;
     }
 
-    public void setLevel(final LevelSkill level) {
+    public void setLevel(final SkillLevel level) {
         this.level = level;
     }
 
-    public TypeSkill getType() {
+    public SkillType getType() {
         return type;
     }
 
-    public void setType(final TypeSkill type) {
+    public void setType(final SkillType type) {
         this.type = type;
     }
 

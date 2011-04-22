@@ -1,4 +1,6 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.projects;
+
+import ar.edu.unq.dopplereffect.data.PersonalData;
 
 /**
  * Provee la informacion de un cliente de la empresa.

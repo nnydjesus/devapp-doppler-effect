@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.calendar;
 
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
 import junit.framework.Assert;
 
 import org.junit.Test;

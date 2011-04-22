@@ -9,7 +9,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Years;
 
-import ar.edu.unq.dopplereffect.bean.Assignable;
+import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 
@@ -177,18 +177,18 @@ public class Employee {
      * Calcula la cantidad de dias que el empleado pidio en un año, para un
      * determinado tipo de licencia.
      * 
-     * @param leaveRequestType
+     * @param type
      *            el tipo de licencia por el que se desea buscar.
      * @param year
      *            el año por el que se desea averiguar.
      * @return la cantidad de dias que el empleado pidio hasta el momento.
      */
-    public int daysRequestedInYear(final LeaveRequestType leaveRequestType, final int year) {
+    public int daysRequestedInYear(final LeaveRequestType type, final int year) {
         int days = 0;
-        for (LeaveRequest leaveRequest : this.getLeaveRequests()) {
-            if (leaveRequest.getType().getReason().equals(leaveRequestType.getReason())
-                    && year == leaveRequest.getYear()) {
-                days += leaveRequest.getAmountOfDays();
+        for (LeaveRequest leaveReq : this.getLeaveRequests()) {
+            if (leaveReq.getType().getReason().equals(type.getReason())
+                    && year == leaveReq.getYear()) {
+                days += leaveReq.getAmountOfDays();
             }
         }
         return days;

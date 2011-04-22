@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.projects;
 
 import org.joda.time.Period;
 
@@ -21,7 +21,7 @@ public class ProjectBuilder {
     }
 
     public ProjectBuilder withConsideredEffor(final Period period) {
-        this.getProyect().setConsideredEffor(period);
+        this.getProyect().setConsideredEffort(period);
         return this;
     }
 

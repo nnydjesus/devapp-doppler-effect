@@ -6,9 +6,6 @@ package ar.edu.unq.dopplereffect.employees;
 public enum CareerPlan {
     TECHNICIAN, TESTER, FUNCTIONAL, DESIGNER;
 
-    /**
-     * TODO
-     */
     public CareerPlan getPrevious() {
         switch (this) {
         case TECHNICIAN:
@@ -24,9 +21,6 @@ public enum CareerPlan {
         }
     }
 
-    /**
-     * TODO
-     */
     public CareerPlan getNext() {
         switch (this) {
         case TECHNICIAN:
