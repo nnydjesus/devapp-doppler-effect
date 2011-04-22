@@ -56,8 +56,9 @@ public class ProjectAssignment implements Assignable {
     public boolean includesDay(final DateTime date) {
         // TODO testear!
         for (IntervalDurationStrategy interval : this.getIntervals()) {
-            if (interval.includesDay(date))
+            if (interval.includesDay(date)) {
                 return true;
+            }
         }
         return false;
     }
@@ -87,8 +88,9 @@ public class ProjectAssignment implements Assignable {
     @Override
     public boolean overlapsAssignment(final Interval interval) {
         for (IntervalDurationStrategy assignment : intervals) {
-            if (assignment.overlapsInterval(interval))
+            if (assignment.overlapsInterval(interval)) {
                 return true;
+            }
         }
         return false;
     }

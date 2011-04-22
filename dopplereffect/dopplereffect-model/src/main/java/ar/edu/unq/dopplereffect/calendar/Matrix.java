@@ -18,52 +18,49 @@ public class Matrix<X, Y, V> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Matrix.class);
 
-    private LinkedMap<X, Map<Y, V>> matrix = new LinkedMap<X, Map<Y, V>>();
+    private LinkedMap<X, Map<Y, V>> map = new LinkedMap<X, Map<Y, V>>();
 
     /* *************************** CONSTRUCTORS *************************** */
 
-    public Matrix() {
-    }
-
     /* **************************** OPERATIONS **************************** */
 
-    public void put(final X x, final Y y, final V v) {
-        if (!matrix.containsKey(x)) {
-            matrix.put(x, new LinkedMap<Y, V>());
+    public void put(final X coordinateX, final Y coordinateY, final V value) {
+        if (!this.getMap().containsKey(coordinateX)) {
+            this.getMap().put(coordinateX, new LinkedMap<Y, V>());
         }
-        matrix.get(x).put(y, v);
+        this.getMap().get(coordinateX).put(coordinateY, value);
     }
 
-    public V get(final X x, final Y y) {
-        return matrix.get(x).get(y);
+    public V get(final X coordinateX, final Y coordinateY) {
+        return this.getMap().get(coordinateX).get(coordinateY);
     }
 
-    public Map<Y, V> getX(final X x) {
-        return matrix.get(x);
+    public Map<Y, V> getX(final X coordinateX) {
+        return this.getMap().get(coordinateX);
     }
 
-    public V getXY(final X x, final Y y) {
-        return matrix.get(x).get(y);
+    public V getXY(final X coordinateX, final Y coordinateY) {
+        return this.getMap().get(coordinateX).get(coordinateY);
     }
 
     public Set<X> keySet() {
-        return matrix.keySet();
+        return this.getMap().keySet();
     }
 
     public Collection<Map<Y, V>> values() {
-        return matrix.values();
+        return this.getMap().values();
     }
 
-    public boolean conteinsX(final X x) {
-        return matrix.containsKey(x);
+    public boolean conteinsX(final X coordinateX) {
+        return this.getMap().containsKey(coordinateX);
     }
 
-    public boolean conteinsXY(final X x, final Y y) {
-        return matrix.containsKey(x) && matrix.get(x).containsKey(y);
+    public boolean conteinsXY(final X coordinateX, final Y coordinateY) {
+        return this.getMap().containsKey(coordinateX) && this.getMap().get(coordinateX).containsKey(coordinateY);
     }
 
     public boolean isEmpty() {
-        return matrix.isEmpty();
+        return this.getMap().isEmpty();
     }
 
     /**
@@ -73,8 +70,8 @@ public class Matrix<X, Y, V> {
     public void loggerMatrixCalendar() {
         final StringBuilder sBuilder = new StringBuilder();
         sBuilder.append("\n            ");
-        for (Object map : this.values().iterator().next().keySet()) {
-            sBuilder.append(PrintDay.printDay((DateTime) map) + "       ");
+        for (Object object : this.values().iterator().next().keySet()) {
+            sBuilder.append(PrintDay.printDay((DateTime) object) + "       ");
         }
         sBuilder.append("\n");
         for (X x : this.keySet()) {
@@ -90,11 +87,19 @@ public class Matrix<X, Y, V> {
     /* **************************** ACCESSORS ***************************** */
 
     public void setMatrix(final LinkedMap<X, Map<Y, V>> matrix) {
-        this.matrix = matrix;
+        this.setMap(matrix);
     }
 
     public LinkedMap<X, Map<Y, V>> getMatrix() {
-        return matrix;
+        return this.getMap();
+    }
+
+    public void setMap(final LinkedMap<X, Map<Y, V>> map) {
+        this.map = map;
+    }
+
+    public LinkedMap<X, Map<Y, V>> getMap() {
+        return map;
     }
 
 }

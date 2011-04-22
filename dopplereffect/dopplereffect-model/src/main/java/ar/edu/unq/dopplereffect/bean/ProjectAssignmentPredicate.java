@@ -1,6 +1,5 @@
 package ar.edu.unq.dopplereffect.bean;
 
-import org.apache.commons.collections15.CollectionUtils;
 import org.apache.commons.collections15.Predicate;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
@@ -19,12 +18,20 @@ public class ProjectAssignmentPredicate implements Predicate<ProjectAssignment> 
     /* **************************** OPERATIONS **************************** */
 
     public ProjectAssignmentPredicate(final Employee anEmployee) {
-        employee = anEmployee;
+        this.setEmployee(anEmployee);
     }
 
     @Override
     public boolean evaluate(final ProjectAssignment assignment) {
-        return assignment.isAssigned(employee);
+        return assignment.isAssigned(this.getEmployee());
+    }
+
+    public void setEmployee(final Employee employee) {
+        this.employee = employee;
+    }
+
+    public Employee getEmployee() {
+        return employee;
     }
 
 }

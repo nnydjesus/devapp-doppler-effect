@@ -13,7 +13,7 @@ public abstract class AbstractCalendarStrategyTest {
     public void testNext() {
         final CalendarStrategy weekday = this.getWeekday();
         Assert.assertEquals("", D_2011_04_05, weekday.getDay());
-        int totalDays = weekday.getTotalDays();
+        final int totalDays = weekday.getTotalDays();
         weekday.next();
         Assert.assertEquals("Fallo en avanzar al siguiente ", D_2011_04_05.plusDays(totalDays), weekday.getDay());
     }

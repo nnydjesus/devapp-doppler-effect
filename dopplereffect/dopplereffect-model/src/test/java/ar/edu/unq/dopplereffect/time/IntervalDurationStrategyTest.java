@@ -1,21 +1,12 @@
 package ar.edu.unq.dopplereffect.time;
 
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_01;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_06;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_08;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_09;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_11;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.getDates;
+import static ar.edu.unq.dopplereffect.bean.DateHelpers.*;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
-import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
 
 public class IntervalDurationStrategyTest {
 

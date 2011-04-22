@@ -4,29 +4,37 @@ import org.joda.time.Period;
 
 public class ProjectBuilder {
 
-    private final Project proyect;
+    private Project proyect;
 
     public ProjectBuilder() {
-        proyect = new Project();
+        this.setProyect(new Project());
     }
 
     public ProjectBuilder withName(final String name) {
-        proyect.setName(name);
+        this.getProyect().setName(name);
         return this;
     }
 
     public ProjectBuilder withInformationClient(final InformationClient information) {
-        proyect.setInformationClient(information);
+        this.getProyect().setInformationClient(information);
         return this;
     }
 
     public ProjectBuilder withConsideredEffor(final Period period) {
-        proyect.setConsideredEffor(period);
+        this.getProyect().setConsideredEffor(period);
         return this;
     }
 
     public Project build() {
+        return this.getProyect();
+    }
+
+    protected Project getProyect() {
         return proyect;
+    }
+
+    protected void setProyect(final Project proyect) {
+        this.proyect = proyect;
     }
 
 }
