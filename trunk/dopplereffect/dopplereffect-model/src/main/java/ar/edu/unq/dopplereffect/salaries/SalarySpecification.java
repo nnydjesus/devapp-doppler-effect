@@ -110,7 +110,8 @@ public class SalarySpecification {
      * 
      * @param percentage
      *            el porcentaje que se desea comprobar.
-     * @return true si el porcentaje es valido, false en caso contrario.
+     * @return <code>true</code> si el porcentaje es valido, <code>false</code>
+     *         en caso contrario.
      */
     public boolean hasPercentage(final int percentage) {
         for (int porc : this.getPercentages()) {

@@ -34,12 +34,12 @@ public class Employee {
 
     public Employee() {
         this(new EmployeeData(), new CareerData());
-        assignments = new HashSet<Assignable>();
     }
 
     public Employee(final EmployeeData personalData, final CareerData careerData) {
         this.personalData = personalData;
         this.careerData = careerData;
+        assignments = new HashSet<Assignable>();
     }
 
     /* **************************** ACCESSORS ***************************** */
@@ -186,8 +186,7 @@ public class Employee {
     public int daysRequestedInYear(final LeaveRequestType type, final int year) {
         int days = 0;
         for (LeaveRequest leaveReq : this.getLeaveRequests()) {
-            if (leaveReq.getType().getReason().equals(type.getReason())
-                    && year == leaveReq.getYear()) {
+            if (leaveReq.getType().getReason().equals(type.getReason()) && year == leaveReq.getYear()) {
                 days += leaveReq.getAmountOfDays();
             }
         }

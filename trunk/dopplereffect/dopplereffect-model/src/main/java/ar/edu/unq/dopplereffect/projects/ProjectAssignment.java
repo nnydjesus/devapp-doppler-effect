@@ -48,11 +48,17 @@ public class ProjectAssignment implements Assignable {
 
     /* **************************** OPERATIONS **************************** */
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isLeaveRequest() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean includesDay(final DateTime date) {
         for (IntervalDurationStrategy interval : this.getIntervals()) {
@@ -64,21 +70,35 @@ public class ProjectAssignment implements Assignable {
     }
 
     /**
-     *
+     * Agrega un intervalo a la asignacion.
+     * 
+     * @param interval
+     *            el intervalo a agregar.
      */
     public void addInterval(final IntervalDurationStrategy interval) {
         this.getIntervals().add(interval);
     }
 
     /**
-     *
+     * Verifica que la asignacion se corresponda con un empleado dado.
+     * 
+     * @param anEmployee
+     *            el empleado.
+     * @return <code>true</code> si la asignacion es del empleado,
+     *         <code>false</code> en caso contrario.
      */
     public boolean isAssigned(final Employee anEmployee) {
         return this.getEmployee().equals(anEmployee);
     }
 
     /**
-     *
+     * Verifica que el objeto receptor contenga (dentro de alguno de sus
+     * intervalos) a otro intervalo recibido como parametro.
+     * 
+     * @param interval
+     *            el intervalo que se desea comprobar.
+     * @return <code>true</code> si contiene al intervalo, <code>false</code> en
+     *         caso contrario.
      */
     public boolean containsInterval(final IntervalDurationStrategy interval) {
         return this.getIntervals().contains(interval);
@@ -94,6 +114,9 @@ public class ProjectAssignment implements Assignable {
         return this.overlapsAssignment(interval.getInterval());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean overlapsAssignment(final Interval interval) {
         for (IntervalDurationStrategy assignment : this.getIntervals()) {

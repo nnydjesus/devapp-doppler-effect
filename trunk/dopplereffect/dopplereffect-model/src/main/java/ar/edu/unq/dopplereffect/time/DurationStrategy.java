@@ -36,15 +36,15 @@ public interface DurationStrategy {
      * Verifica si la duracion se superpone con un intervalo de tiempo dado.
      * Cada implementacion definira la superposicion a su manera.
      * 
-     * @param interv
+     * @param interval
      *            el intervalo que se desea verificar.
      * @return <code>true</code> si existe una superposicion, <code>false</code>
      *         en caso contrario.
      */
-    boolean overlapsInterval(Interval interv);
+    boolean overlapsInterval(Interval interval);
 
     /**
-     * Verifica que el objeto receptor se superpone con otra duracion recibida
+     * Verifica si el objeto receptor se superpone con otra duracion recibida
      * como parametro.
      * 
      * @param leaveReq
