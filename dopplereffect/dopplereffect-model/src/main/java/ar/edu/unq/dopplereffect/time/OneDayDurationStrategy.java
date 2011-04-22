@@ -8,7 +8,7 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 /**
  * Tipo de duracion de licencia de un unico dia.
  */
-public class OneDayDurationStrategy extends DurationStrategy {
+public class OneDayDurationStrategy implements DurationStrategy {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 

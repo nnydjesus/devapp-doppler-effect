@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
 public class LeaveRequestTypeBuilder {
+
     private transient LeaveRequestCustomType leaveRequestType;
 
     public LeaveRequestTypeBuilder() {

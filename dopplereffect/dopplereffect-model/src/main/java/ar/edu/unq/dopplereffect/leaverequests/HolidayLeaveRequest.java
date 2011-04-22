@@ -32,6 +32,10 @@ public class HolidayLeaveRequest extends LeaveRequestCustomType {
         return configuration;
     }
 
+    public void setConfiguration(final OrderedMap<Integer, Integer> configuration) {
+        this.configuration = configuration;
+    }
+
     /* **************************** OPERATIONS **************************** */
 
     @Override

@@ -10,7 +10,7 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
  * Tipo de duracion de una licencia que consiste en un intervalo, en el que su
  * inicio, su fin y todos sus dias intermedios estan contemplados.
  */
-public class IntervalDurationStrategy extends DurationStrategy {
+public class IntervalDurationStrategy implements DurationStrategy {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 

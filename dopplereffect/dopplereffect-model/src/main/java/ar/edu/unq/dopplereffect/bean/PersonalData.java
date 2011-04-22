@@ -10,9 +10,7 @@ public class PersonalData {
 
     private String firstName;
 
-    private String address;
-
-    private String locality;
+    private Address address;
 
     private String phoneNumber;
 
@@ -30,20 +28,12 @@ public class PersonalData {
         this.firstName = firstName;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(final String address) {
+    public void setAddress(final Address address) {
         this.address = address;
-    }
-
-    public String getLocality() {
-        return locality;
-    }
-
-    public void setLocality(final String locality) {
-        this.locality = locality;
     }
 
     public String getPhoneNumber() {
