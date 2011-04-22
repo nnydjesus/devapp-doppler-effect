@@ -1,10 +1,10 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_06;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_08;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_11;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_13;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_06;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_08;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_11;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_13;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;

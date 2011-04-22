@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.helpers;
 
 import java.util.List;
 

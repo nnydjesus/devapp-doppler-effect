@@ -1,11 +1,11 @@
 package ar.edu.unq.dopplereffect.time;
 
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_06;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_08;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_09;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_11;
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.getDates;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_06;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_08;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_09;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_11;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.getDates;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

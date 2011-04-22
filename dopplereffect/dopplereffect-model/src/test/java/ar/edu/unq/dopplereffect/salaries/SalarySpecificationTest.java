@@ -1,8 +1,8 @@
 package ar.edu.unq.dopplereffect.salaries;
 
-import static ar.edu.unq.dopplereffect.bean.Helpers.assertGetSalary;
-import static ar.edu.unq.dopplereffect.bean.Helpers.assertSalaryHasPercentages;
-import static ar.edu.unq.dopplereffect.bean.Helpers.assertSalaryHasntPercentages;
+import static ar.edu.unq.dopplereffect.helpers.Helpers.assertGetSalary;
+import static ar.edu.unq.dopplereffect.helpers.Helpers.assertSalaryHasPercentages;
+import static ar.edu.unq.dopplereffect.helpers.Helpers.assertSalaryHasntPercentages;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -16,7 +16,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.exception.UserException;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
 
 public class SalarySpecificationTest {
 

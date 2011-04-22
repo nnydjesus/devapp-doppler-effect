@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.projects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.apache.commons.collections15.CollectionUtils;
 import org.joda.time.Period;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.exception.UserException;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
@@ -20,11 +20,11 @@ public class Project {
 
     private ClientData clientData;
 
-    private Period consideredEffor;
+    private Period consideredEffort;
 
     private List<Skill> skils;
 
-    private List<ProjectAssignment> assignedEmployee = new ArrayList<ProjectAssignment>();
+    private List<ProjectAssignment> assignedEmployees = new ArrayList<ProjectAssignment>();
 
     /* *************************** CONSTRUCTORS *************************** */
 
@@ -51,7 +51,7 @@ public class Project {
         if (assignment != null && assignment.overlapsAssignment(interval)) {
             throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
         }
-        if (interval.getEndDate().isAfter(interval.getStartDate().plus(consideredEffor))) {
+        if (interval.getEndDate().isAfter(interval.getStartDate().plus(consideredEffort))) {
             throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
         }
         if (!employee.isFreeAtInterval(interval.getInterval())) {
@@ -71,7 +71,7 @@ public class Project {
      * Busca la asignacion de un usuario
      */
     public ProjectAssignment getAssignment(final Employee employee) {
-        return CollectionUtils.find(assignedEmployee, new ProjectAssignmentPredicate(employee));
+        return CollectionUtils.find(assignedEmployees, new ProjectAssignmentPredicate(employee));
     }
 
     /**
@@ -82,12 +82,12 @@ public class Project {
         ProjectAssignment projectAssignment = this.getAssignment(employee);
         if (projectAssignment == null) {
             projectAssignment = new ProjectAssignment(employee);
-            assignedEmployee.add(projectAssignment);
+            assignedEmployees.add(projectAssignment);
         }
         return projectAssignment;
     }
 
-    public boolean isAssignedInInverval(final Employee employee, final IntervalDurationStrategy interval) {
+    public boolean isAssignedInInterval(final Employee employee, final IntervalDurationStrategy interval) {
         return this.isAssigned(employee) && this.getAssignment(employee).containsInterval(interval);
     }
 
@@ -117,20 +117,20 @@ public class Project {
         return name;
     }
 
-    public void setAssignedEmployee(final List<ProjectAssignment> assignedEmployee) {
-        this.assignedEmployee = assignedEmployee;
+    public void setAssignedEmployees(final List<ProjectAssignment> assignedEmployees) {
+        this.assignedEmployees = assignedEmployees;
     }
 
-    public List<ProjectAssignment> getAssignedEmployee() {
-        return assignedEmployee;
+    public List<ProjectAssignment> getAssignedEmployees() {
+        return assignedEmployees;
     }
 
-    public void setConsideredEffor(final Period consideredEffor) {
-        this.consideredEffor = consideredEffor;
+    public void setConsideredEffort(final Period consideredEffort) {
+        this.consideredEffort = consideredEffort;
     }
 
-    public Period getConsideredEffor() {
-        return consideredEffor;
+    public Period getConsideredEffort() {
+        return consideredEffort;
     }
 
 }

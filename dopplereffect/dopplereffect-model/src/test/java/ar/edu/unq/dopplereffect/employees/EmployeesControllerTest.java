@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import ar.edu.unq.dopplereffect.exception.UserException;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
 
 public class EmployeesControllerTest {

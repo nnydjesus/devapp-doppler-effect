@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.bean;
+package ar.edu.unq.dopplereffect.assignments;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;

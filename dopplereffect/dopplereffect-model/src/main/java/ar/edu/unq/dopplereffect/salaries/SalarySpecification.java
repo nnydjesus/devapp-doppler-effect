@@ -7,7 +7,7 @@ import java.util.Set;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.exception.UserException;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
 
 /**
  * Representa aquellos parametros que sirven para determinar el sueldo de un

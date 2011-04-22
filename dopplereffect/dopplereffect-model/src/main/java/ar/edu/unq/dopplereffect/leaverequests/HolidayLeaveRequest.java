@@ -4,7 +4,7 @@ import org.apache.commons.collections15.OrderedMap;
 import org.apache.commons.collections15.map.ListOrderedMap;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.exception.UserException;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
 
 /**
  * Pedido de vacaciones, que contempla la antiguedad del empleado a la hora de

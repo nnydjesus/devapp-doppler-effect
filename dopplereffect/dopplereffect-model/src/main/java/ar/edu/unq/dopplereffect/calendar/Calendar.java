@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Months;
 import org.joda.time.Years;
 
-import ar.edu.unq.dopplereffect.bean.Assignable;
+import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.employees.Employee;
 
 /**

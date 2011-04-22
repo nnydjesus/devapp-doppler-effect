@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.calendar;
 
-import static ar.edu.unq.dopplereffect.bean.DateHelpers.D_2011_04_05;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ar.edu.unq.dopplereffect.bean.Assignable;
+import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.employees.Employee;
 
 /**
