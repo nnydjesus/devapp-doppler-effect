@@ -11,6 +11,9 @@ import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
+ * Representa los proyectos de la empresa. Un proyecto tiene un nombre, datos
+ * del cliente, un esfuerzo considerado, una serie de conocimientos necesarios
+ * para abordarlo, y por ultimo una lista de asignaciones de empleados.
  */
 public class Project {
 
@@ -22,7 +25,7 @@ public class Project {
 
     private Period consideredEffort;
 
-    private List<Skill> skils;
+    private List<Skill> skills;
 
     private List<ProjectAssignment> assignedEmployees = new ArrayList<ProjectAssignment>();
 
@@ -39,6 +42,10 @@ public class Project {
 
     /* **************************** OPERATIONS **************************** */
 
+    /**
+     * Lleva a cabo una asignacion, para lo cual recibe el empleado a asignar y
+     * el intervalo de la asignacion.
+     */
     public void manualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
         this.validateAssignment(employee, interval);
         final ProjectAssignment projectAssignment = this.findOrCreateAssignment(employee);
@@ -59,34 +66,55 @@ public class Project {
         }
     }
 
+    /**
+     * Verifica si un empleado esta asignado en este proyecto.
+     */
     public boolean isAssigned(final Employee employee) {
         return this.getAssignment(employee) != null;
     }
 
+    /**
+     * Agrega un skill a la lista de skills del proyecto.
+     */
     public void addSkill(final Skill skill) {
-        skils.add(skill);
+        this.getSkills().add(skill);
     }
 
     /**
-     * Busca la asignacion de un usuario
+     * Busca la asignacion de un empleado dado.
+     * 
+     * @param employee
+     *            el empleado.
+     * @return la asignacion correspondiente al empleado, o <code>null</code> si
+     *         no existe tal asignacion.
      */
     public ProjectAssignment getAssignment(final Employee employee) {
-        return CollectionUtils.find(assignedEmployees, new ProjectAssignmentPredicate(employee));
+        return CollectionUtils.find(this.getAssignedEmployees(), new ProjectAssignmentPredicate(employee));
     }
 
     /**
      * Busca la asignacion de un empleado, en caso de que no tenga crea una y se
-     * la guarda
+     * la guarda.
      */
     public ProjectAssignment findOrCreateAssignment(final Employee employee) {
         ProjectAssignment projectAssignment = this.getAssignment(employee);
         if (projectAssignment == null) {
             projectAssignment = new ProjectAssignment(employee);
-            assignedEmployees.add(projectAssignment);
+            this.getAssignedEmployees().add(projectAssignment);
         }
         return projectAssignment;
     }
 
+    /**
+     * Verifica si un empleado esta asignado en un intervalo dado.
+     * 
+     * @param employee
+     *            el empleado que se desea verificar.
+     * @param interval
+     *            el intervalo que se desea verificar.
+     * @return <code>true</code> si esta asignado, <code>false</code> en caso
+     *         contrario.
+     */
     public boolean isAssignedInInterval(final Employee employee, final IntervalDurationStrategy interval) {
         return this.isAssigned(employee) && this.getAssignment(employee).containsInterval(interval);
     }
@@ -101,36 +129,35 @@ public class Project {
         this.clientData = clientData;
     }
 
-    public List<Skill> getSkils() {
-        return skils;
+    public List<Skill> getSkills() {
+        return skills;
     }
 
-    public void setSkils(final List<Skill> skils) {
-        this.skils = skils;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
+    public void setSkills(final List<Skill> skills) {
+        this.skills = skills;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setAssignedEmployees(final List<ProjectAssignment> assignedEmployees) {
-        this.assignedEmployees = assignedEmployees;
+    public void setName(final String name) {
+        this.name = name;
     }
 
     public List<ProjectAssignment> getAssignedEmployees() {
         return assignedEmployees;
     }
 
-    public void setConsideredEffort(final Period consideredEffort) {
-        this.consideredEffort = consideredEffort;
+    public void setAssignedEmployees(final List<ProjectAssignment> assignedEmployees) {
+        this.assignedEmployees = assignedEmployees;
     }
 
     public Period getConsideredEffort() {
         return consideredEffort;
     }
 
+    public void setConsideredEffort(final Period consideredEffort) {
+        this.consideredEffort = consideredEffort;
+    }
 }

@@ -12,6 +12,7 @@ public abstract class CalendarStrategy {
     private DateTime day;
 
     /* *************************** CONSTRUCTORS *************************** */
+
     public CalendarStrategy(final int year, final int month, final int day) {
         this(new DateTime(year, month, day, 0, 0, 0, 0));
     }
@@ -35,10 +36,7 @@ public abstract class CalendarStrategy {
         day = day.plusDays(1);
     }
 
-    /*
-     *  **************************** ABSTRACT METHODS
-     * *****************************
-     */
+    /* ************************* ABSTRACT METHODS ************************* */
 
     public abstract DateTime internalNext();
 

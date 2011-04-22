@@ -7,8 +7,9 @@ import org.joda.time.Interval;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 
 /**
- * Tipo de duracion de una licencia que consiste en un intervalo, en el que su
- * inicio, su fin y todos sus dias intermedios estan contemplados.
+ * Tipo de duracion que consiste en un intervalo, en el que su inicio, su fin y
+ * todos sus dias intermedios estan contemplados. Aplicable a licencias y
+ * asignaciones de proyectos.
  */
 public class IntervalDurationStrategy implements DurationStrategy {
 
@@ -43,29 +44,41 @@ public class IntervalDurationStrategy implements DurationStrategy {
 
     /* **************************** OPERATIONS **************************** */
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean includesDay(final DateTime day) {
-        boolean isInTheStart = day.equals(this.getStartDate());
-        boolean isInTheEnd = day.equals(this.getEndDate());
-        boolean isInTheMiddle = day.isAfter(this.getStartDate()) && day.isBefore(this.getEndDate());
-        return isInTheStart || isInTheEnd || isInTheMiddle;
+        return this.getInterval().contains(day) || this.getEndDate().equals(day);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getAmountOfDays() {
         return Days.daysBetween(this.getStartDate(), this.getEndDate()).getDays() + 1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean overlapsInterval(final Interval interv) {
         return interv.contains(this.getStartDate().minusDays(1)) || interv.contains(this.getEndDate());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getYear() {
         return this.getStartDate().getYear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean overlapsWith(final LeaveRequest leaveReq) {
         return leaveReq.getDurationStrategy().overlapsInterval(this);

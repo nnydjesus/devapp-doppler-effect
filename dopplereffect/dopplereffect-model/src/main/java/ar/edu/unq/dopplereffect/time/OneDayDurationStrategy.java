@@ -6,7 +6,7 @@ import org.joda.time.Interval;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 
 /**
- * Tipo de duracion de licencia de un unico dia.
+ * Tipo de duracion de un unico dia. Aplicable a licencias.
  */
 public class OneDayDurationStrategy implements DurationStrategy {
 
@@ -33,26 +33,42 @@ public class OneDayDurationStrategy implements DurationStrategy {
 
     /* **************************** OPERATIONS **************************** */
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean includesDay(final DateTime day) {
         return this.getDate().equals(day);
     }
 
+    /**
+     * {@inheritDoc} En este caso, es siempre 1.
+     */
     @Override
     public int getAmountOfDays() {
         return 1;
     }
 
+    /**
+     * {@inheritDoc} En este caso se verifica que la fecha este dentro del
+     * intervalo, dias de inicio y fin incluidos.
+     */
     @Override
     public boolean overlapsInterval(final Interval interv) {
         return interv.contains(this.getDate()) || interv.getEnd().equals(this.getDate());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getYear() {
         return this.getDate().getYear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean overlapsWith(final LeaveRequest leaveReq) {
         return leaveReq.getDurationStrategy().overlapsInterval(this);
