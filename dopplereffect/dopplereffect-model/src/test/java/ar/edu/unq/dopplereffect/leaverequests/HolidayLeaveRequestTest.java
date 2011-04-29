@@ -16,18 +16,22 @@ public class HolidayLeaveRequestTest {
 
     @Test
     public void testIsntValidForEmployeeRequestMoreDaysThanPermitted() {
+        // GIVEN
         HolidayLeaveRequest leaveReqType = new HolidayLeaveRequest(7, 15);
         leaveReqType.configure(1, 7);
         LeaveRequest leaveReq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11)
                 .withType(leaveReqType).build();
         Employee employee = mock(Employee.class);
+
         when(employee.getSeniority()).thenReturn(1);
         when(employee.daysRequestedInYear(leaveReqType, 2011)).thenReturn(2);
+        // THEN
         assertFalse("la validacion de las vacaciones fallo", leaveReqType.isValidFor(leaveReq, employee));
     }
 
     @Test
     public void testIsValidForEmployeeRequestRightDays() {
+        // WHEN
         HolidayLeaveRequest leaveReqType = new HolidayLeaveRequest(7, 15);
         leaveReqType.configure(1, 7);
         LeaveRequest leaveReq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11)
@@ -35,6 +39,8 @@ public class HolidayLeaveRequestTest {
         Employee employee = mock(Employee.class);
         when(employee.getSeniority()).thenReturn(1);
         when(employee.daysRequestedInYear(leaveReqType, 2011)).thenReturn(0);
+        // THEN (esta es una notación muy comun cuando se hacen test ...
+        // GIVEN,WHEN,THEN)
         assertTrue("la validacion de las vacaciones fallo", leaveReqType.isValidFor(leaveReq, employee));
     }
 
