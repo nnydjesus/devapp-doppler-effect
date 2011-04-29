@@ -246,6 +246,8 @@ public class Employee {
         return Years.yearsBetween(this.getJoinDate(), new DateTime()).getYears();
     }
 
+    // TODO quizas les convenga hacer in toString que muestre un poco mas de
+    // employee sobre todo para fines de testing
     @Override
     public String toString() {
         return "employee";
