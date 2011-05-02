@@ -23,14 +23,14 @@ public class ProjectTest {
     @Test
     public void setConsideratedTime() {
         final Period consideredEfforr = Period.months(2).plusDays(3);
-        final Project project = new ProjectBuilder().withConsideredEffor(consideredEfforr).build();
-        Assert.assertEquals(consideredEfforr, project.getConsideredEffort());
+        final Project project = this.getBuilderWithMoreEffort().withConsideredEffor(consideredEfforr).build();
+        Assert.assertEquals(consideredEfforr, project.getTimeProyect());
     }
 
     @Test
     public void manualAssignmentOk() {
         final Period period = Period.months(2).plusDays(3);
-        final Project project = new ProjectBuilder().withConsideredEffor(period).build();
+        final Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
         final IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
                 MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE)));
         final Employee employee = new EmployeeBuilder().build();
@@ -43,17 +43,21 @@ public class ProjectTest {
     @Test(expected = UserException.class)
     public void manualAssignmentSpendTimeOfProyect() {
         final Period period = Period.months(2).plusDays(1);
-        final Project project = new ProjectBuilder().withConsideredEffor(period).build();
+        final Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
         final IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
                 MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE + 2)));
 
         project.manualAssignment(new EmployeeBuilder().build(), interval);
     }
 
+    private ProjectBuilder getBuilderWithMoreEffort() {
+        return new ProjectBuilder().withEstimatedEffort(1000000);
+    }
+
     @Test
     public void manualAssignmentTwoAssignment() {
         Period period = Period.months(4);
-        Project project = new ProjectBuilder().withConsideredEffor(period).build();
+        Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
         final IntervalDurationStrategy firstInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
                 YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE)));
         final IntervalDurationStrategy secondInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
@@ -70,7 +74,7 @@ public class ProjectTest {
     @Test(expected = UserException.class)
     public void manualAssignmentOverlaps() {
         final Period period = Period.months(4);
-        final Project project = new ProjectBuilder().withConsideredEffor(period).build();
+        final Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
         final IntervalDurationStrategy firstInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
                 YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE)));
         final IntervalDurationStrategy secondInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
@@ -79,4 +83,16 @@ public class ProjectTest {
         project.manualAssignment(new EmployeeBuilder().build(), firstInterval);
         project.manualAssignment(new EmployeeBuilder().build(), secondInterval);
     }
+
+    @Test(expected = UserException.class)
+    public void validateEffort() {
+        final Period days = Period.days(2);
+        final Project project = new ProjectBuilder().withEstimatedEffort(30).withConsideredEffor(days).build();
+        final IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+                MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE + 1)));
+        project.manualAssignment(new EmployeeBuilder().build(), interval);// 16
+        project.manualAssignment(new EmployeeBuilder().build(), interval);// 24
+        project.manualAssignment(new EmployeeBuilder().build(), interval);// 32BOOM
+    }
+
 }

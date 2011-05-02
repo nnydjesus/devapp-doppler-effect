@@ -10,6 +10,11 @@ public class ProjectBuilder {
         this.setProyect(new Project());
     }
 
+    public ProjectBuilder withEstimatedEffort(final int effort) {
+        proyect.setMaxEffort(effort);
+        return this;
+    }
+
     public ProjectBuilder withName(final String name) {
         this.getProyect().setName(name);
         return this;

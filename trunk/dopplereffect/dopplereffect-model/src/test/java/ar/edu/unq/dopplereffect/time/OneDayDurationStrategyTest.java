@@ -40,8 +40,9 @@ public class OneDayDurationStrategyTest {
     @Test
     public void testOverlapsInterval() {
         Interval interv = new Interval(D_2011_04_08, D_2011_04_11);
+        OneDayDurationStrategy strategy;
         for (DateTime date : getDates(D_2011_04_08, D_2011_04_11)) {
-            OneDayDurationStrategy strategy = new OneDayDurationStrategy(date);
+            strategy = new OneDayDurationStrategy(date);
             assertTrue("la duracion de la licencia deberia superponerse con el intervalo",
                     strategy.overlapsInterval(interv));
         }
