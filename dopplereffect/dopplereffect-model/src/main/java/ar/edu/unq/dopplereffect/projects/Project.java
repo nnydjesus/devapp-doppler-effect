@@ -23,9 +23,13 @@ public class Project {
 
     private ClientData clientData;
 
-    private Period consideredEffort;
+    private Period timeProyect;
 
     private List<Skill> skills;
+
+    private Integer maxEffort;
+
+    private Integer currentEffort;
 
     private List<ProjectAssignment> assignedEmployees = new ArrayList<ProjectAssignment>();
 
@@ -38,6 +42,7 @@ public class Project {
 
     public Project() {
         super();
+        currentEffort = 0;
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -54,16 +59,25 @@ public class Project {
     }
 
     protected void validateAssignment(final Employee employee, final IntervalDurationStrategy interval) {
+        this.validateEffort(interval);
         final ProjectAssignment assignment = this.getAssignment(employee);
         if (assignment != null && assignment.overlapsAssignment(interval)) {
             throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
         }
-        if (interval.getEndDate().isAfter(interval.getStartDate().plus(consideredEffort))) {
+        if (interval.getEndDate().isAfter(interval.getStartDate().plus(this.getTimeProyect()))) {
             throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
         }
         if (!employee.isFreeAtInterval(interval.getInterval())) {
             throw new UserException("El empleado no esta libre en el intervalo " + interval);
         }
+    }
+
+    protected void validateEffort(final IntervalDurationStrategy interval) {
+        int hoursAssignment = ProjectHelper.getHoursOfEffort(interval.getAmountOfDays());
+        if (maxEffort < currentEffort + hoursAssignment) {
+            throw new UserException("Se ha alcanzado el maximo de horas de esfuerzo del proyecto");
+        }
+        currentEffort += hoursAssignment;
     }
 
     /**
@@ -149,15 +163,27 @@ public class Project {
         return assignedEmployees;
     }
 
-    public void setAssignedEmployees(final List<ProjectAssignment> assignedEmployees) {
-        this.assignedEmployees = assignedEmployees;
-    }
-
-    public Period getConsideredEffort() {
-        return consideredEffort;
-    }
-
     public void setConsideredEffort(final Period consideredEffort) {
-        this.consideredEffort = consideredEffort;
+        this.setTimeProyect(consideredEffort);
+    }
+
+    public Integer getCurrentEffort() {
+        return currentEffort;
+    }
+
+    public void setMaxEffort(final Integer maxEffort) {
+        this.maxEffort = maxEffort;
+    }
+
+    public Integer getMaxEffort() {
+        return maxEffort;
+    }
+
+    public void setTimeProyect(final Period timeProyect) {
+        this.timeProyect = timeProyect;
+    }
+
+    public Period getTimeProyect() {
+        return timeProyect;
     }
 }
