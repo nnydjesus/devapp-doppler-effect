@@ -1,6 +1,5 @@
 package ar.edu.unq.dopplereffect.projects;
 
-
 /**
  * Representa aquellos requerimientos (en materia de conocimientos/habilidades)
  * de un proyecto.
@@ -14,6 +13,11 @@ public class Skill {
     private SkillLevel level;
 
     /* *************************** CONSTRUCTORS *************************** */
+
+    public Skill(final SkillType type, final SkillLevel level) {
+        this.level = level;
+        this.type = type;
+    }
 
     /* **************************** ACCESSORS ***************************** */
 

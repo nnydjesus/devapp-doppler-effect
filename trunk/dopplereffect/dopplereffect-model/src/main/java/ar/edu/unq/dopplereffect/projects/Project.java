@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections15.CollectionUtils;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.Period;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
@@ -33,16 +34,19 @@ public class Project {
 
     private List<ProjectAssignment> assignedEmployees = new ArrayList<ProjectAssignment>();
 
+    private ProjectAssignmentStrategy projectAssignmentStrategy;
+
     /* *************************** CONSTRUCTORS *************************** */
 
-    public Project(final String name) {
+    public Project(final ProjectAssignmentStrategy strategy) {
         this();
-        this.name = name;
+        this.setProjectAssignmentStrategy(strategy);
+        this.getProjectAssignmentStrategy().setProject(this);
     }
 
     public Project() {
         super();
-        currentEffort = 0;
+        this.setCurrentEffort(0);
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -52,32 +56,31 @@ public class Project {
      * el intervalo de la asignacion.
      */
     public void manualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
-        this.validateAssignment(employee, interval);
-        final ProjectAssignment projectAssignment = this.findOrCreateAssignment(employee);
-        projectAssignment.addInterval(interval);
-        employee.addAssignment(projectAssignment);
+        this.getProjectAssignmentStrategy().manualAssignment(employee, interval);
     }
 
-    protected void validateAssignment(final Employee employee, final IntervalDurationStrategy interval) {
-        this.validateEffort(interval);
-        final ProjectAssignment assignment = this.getAssignment(employee);
-        if (assignment != null && assignment.overlapsAssignment(interval)) {
-            throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
-        }
-        if (interval.getEndDate().isAfter(interval.getStartDate().plus(this.getTimeProyect()))) {
-            throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
-        }
-        if (!employee.isFreeAtInterval(interval.getInterval())) {
-            throw new UserException("El empleado no esta libre en el intervalo " + interval);
-        }
+    /**
+     * @param date
+     *            es el dia en el que se quiere asignar y abrir el proyecto, pro
+     *            ejemplo: yo creo el proyecto ahora y qiero que se haga la
+     *            asignacion automatica, pero lo voy abrir dentro de 2 semanas,
+     *            entonces quiero que se realize todas las verificaciones a
+     *            partir de esa fecha
+     * 
+     */
+    public void automaticAssignment(final List<Employee> employees, final DateTime date) {
+        IntervalDurationStrategy intervalDurationStrategy = new IntervalDurationStrategy(new Interval(date,
+                date.plus(this.getTimeProyect())));
+        this.getProjectAssignmentStrategy().automaticAssignment(employees, intervalDurationStrategy);
     }
 
-    protected void validateEffort(final IntervalDurationStrategy interval) {
-        int hoursAssignment = ProjectHelper.getHoursOfEffort(interval.getAmountOfDays());
-        if (maxEffort < currentEffort + hoursAssignment) {
-            throw new UserException("Se ha alcanzado el maximo de horas de esfuerzo del proyecto");
-        }
-        currentEffort += hoursAssignment;
+    protected boolean validateEffort(final IntervalDurationStrategy interval) {
+        int hoursAssignment = this.getHoursOfEffort(interval);
+        return maxEffort >= this.getCurrentEffort() + hoursAssignment;
+    }
+
+    protected int getHoursOfEffort(final IntervalDurationStrategy interval) {
+        return ProjectHelper.daysToHoursEffort(interval.getAmountOfDays());
     }
 
     /**
@@ -185,5 +188,25 @@ public class Project {
 
     public Period getTimeProyect() {
         return timeProyect;
+    }
+
+    public void setAssignedEmployees(final List<ProjectAssignment> assignedEmployees) {
+        this.assignedEmployees = assignedEmployees;
+    }
+
+    public void setProjectAssignmentStrategy(final ProjectAssignmentStrategy projectAssignmentStrategy) {
+        this.projectAssignmentStrategy = projectAssignmentStrategy;
+    }
+
+    public ProjectAssignmentStrategy getProjectAssignmentStrategy() {
+        return projectAssignmentStrategy;
+    }
+
+    public void setCurrentEffort(final Integer currentEffort) {
+        this.currentEffort = currentEffort;
+    }
+
+    public void plusEffort(final int hoursAssignment) {
+        this.setCurrentEffort(this.getCurrentEffort() + hoursAssignment);
     }
 }

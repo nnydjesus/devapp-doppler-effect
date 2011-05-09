@@ -95,4 +95,34 @@ public class IntervalDurationStrategy implements DurationStrategy {
         return this.getInterval().contains(oneDayDuration.getDate())
                 || this.getInterval().getEnd().equals(oneDayDuration.getDate());
     }
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+        result = prime * result + (interval == null ? 0 : interval.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        IntervalDurationStrategy other = (IntervalDurationStrategy) obj;
+        if (interval == null) {
+            if (other.interval != null) {
+                return false;
+            }
+        } else if (!interval.equals(other.interval)) {
+            return false;
+        }
+        return true;
+    }
 }

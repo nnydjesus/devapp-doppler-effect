@@ -12,6 +12,8 @@ import org.joda.time.Years;
 import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
+import ar.edu.unq.dopplereffect.projects.Skill;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
  * Persona que trabaja en la empresa. Un empleado posee datos personales, como
@@ -246,6 +248,18 @@ public class Employee {
         return Years.yearsBetween(this.getJoinDate(), new DateTime()).getYears();
     }
 
+    public int sastisfaccionLevelOfSkills(final List<Skill> skills) {
+        throw new UnsupportedOperationException();
+    }
+
+    public int availabilityLevel(final IntervalDurationStrategy intervalDurationStrategy) {
+        throw new UnsupportedOperationException();
+    }
+
+    public IntervalDurationStrategy getAvailableInterval(final IntervalDurationStrategy intervalDurationStrategy) {
+        throw new UnsupportedOperationException();
+    }
+
     // TODO quizas les convenga hacer in toString que muestre un poco mas de
     // employee sobre todo para fines de testing
     @Override
@@ -280,4 +294,5 @@ public class Employee {
         }
         return true;
     }
+
 }
