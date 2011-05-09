@@ -11,7 +11,7 @@ import org.junit.Test;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
-public class ProyectAssignmentTest {
+public class ProjectAssignmentTest {
 
     private Employee employee1;
 

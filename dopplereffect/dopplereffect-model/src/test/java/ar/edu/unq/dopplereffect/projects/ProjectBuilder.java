@@ -1,5 +1,7 @@
 package ar.edu.unq.dopplereffect.projects;
 
+import java.util.List;
+
 import org.joda.time.Period;
 
 public class ProjectBuilder {
@@ -7,7 +9,7 @@ public class ProjectBuilder {
     private Project proyect;
 
     public ProjectBuilder() {
-        this.setProyect(new Project());
+        this.setProyect(new Project(new ProjectAssignmentStrategy()));
     }
 
     public ProjectBuilder withEstimatedEffort(final int effort) {
@@ -17,6 +19,11 @@ public class ProjectBuilder {
 
     public ProjectBuilder withName(final String name) {
         this.getProyect().setName(name);
+        return this;
+    }
+
+    public ProjectBuilder withSkills(final List<Skill> skills) {
+        this.getProyect().setSkills(skills);
         return this;
     }
 
