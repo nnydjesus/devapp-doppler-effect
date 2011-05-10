@@ -2,9 +2,7 @@ package ar.edu.unq.dopplereffect.employees;
 
 import static ar.edu.unq.dopplereffect.employees.CareerPlan.TESTER;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -37,7 +35,7 @@ public class EmployeesControllerTest {
     }
 
     @Test
-    public void testGetSalary() { // NOPMD
+    public void testGetSalary() {
         EmployeesController controller = new EmployeesController();
         SalarySpecification spec = this.mockSalarySpecification();
         controller.addSalarySpecification(spec);
@@ -50,7 +48,7 @@ public class EmployeesControllerTest {
     }
 
     @Test
-    public void testChangePercentages() { // NOPMD
+    public void testChangePercentages() {
         EmployeesController controller = new EmployeesController();
         SalarySpecification spec = this.mockSalarySpecification();
         controller.addSalarySpecification(spec);

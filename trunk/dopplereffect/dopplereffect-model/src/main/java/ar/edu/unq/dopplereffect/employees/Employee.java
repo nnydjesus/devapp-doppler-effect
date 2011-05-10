@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Years;
 
+import ar.edu.unq.dopplereffect.Entity;
 import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
@@ -22,7 +23,7 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
  * 
  * Ademas el empleado tiene asignaciones, ya sean a licencias o a proyectos.
  */
-public class Employee {
+public class Employee extends Entity {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -39,6 +40,7 @@ public class Employee {
     }
 
     public Employee(final EmployeeData personalData, final CareerData careerData) {
+        super();
         this.personalData = personalData;
         this.careerData = careerData;
         assignments = new HashSet<Assignable>();
@@ -260,11 +262,9 @@ public class Employee {
         throw new UnsupportedOperationException();
     }
 
-    // TODO quizas les convenga hacer in toString que muestre un poco mas de
-    // employee sobre todo para fines de testing
     @Override
     public String toString() {
-        return "employee";
+        return "Employee" + this.getFirstName() + " " + this.getLastName();
     }
 
     @Override

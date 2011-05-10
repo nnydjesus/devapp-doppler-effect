@@ -1,15 +1,8 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_06;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_08;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_11;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_13;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,36 +16,48 @@ import ar.edu.unq.dopplereffect.time.DurationStrategy;
 public class LeaveRequestTest {
 
     @Test
-    public void testIncludesDay() { // NOPMD
+    public void testIncludesDay() {
+        // GIVEN
         DurationStrategy strategy = mock(DurationStrategy.class);
         LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
+        // WHEN
         request.includesDay(D_2011_04_13);
+        // THEN
         verify(strategy).includesDay(D_2011_04_13);
     }
 
     @Test
-    public void testAmountOfDays() { // NOPMD
+    public void testAmountOfDays() {
+        // GIVEN
         DurationStrategy strategy = mock(DurationStrategy.class);
         LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
+        // WHEN
         request.getAmountOfDays();
+        // THEN
         verify(strategy).getAmountOfDays();
     }
 
     @Test
-    public void testOverlapsAssignment() { // NOPMD
+    public void testOverlapsAssignment() {
+        // GIVEN
         Interval interval = new Interval(D_2011_04_05, D_2011_04_06);
         DurationStrategy strategy = mock(DurationStrategy.class);
         LeaveRequest request = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
+        // WHEN
         request.overlapsAssignment(interval);
+        // THEN
         verify(strategy).overlapsInterval(interval);
     }
 
     @Test
-    public void testOverlapsWithLeaveRequestIntersectingInTheEnd() { // NOPMD
+    public void testOverlapsWithLeaveRequestIntersectingInTheEnd() {
+        // GIVEN
         DurationStrategy strategy = mock(DurationStrategy.class);
         LeaveRequest leaveReq1 = new LeaveRequestBuilder().withDurationStrategy(strategy).build();
         LeaveRequest leaveReq2 = new LeaveRequestBuilder().build();
+        // WHEN
         leaveReq1.overlapsWith(leaveReq2);
+        // THEN
         verify(strategy).overlapsWith(leaveReq2);
     }
 

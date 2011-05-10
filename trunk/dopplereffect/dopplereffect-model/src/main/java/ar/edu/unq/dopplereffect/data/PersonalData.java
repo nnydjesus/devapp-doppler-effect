@@ -1,22 +1,43 @@
 package ar.edu.unq.dopplereffect.data;
 
+import ar.edu.unq.dopplereffect.Entity;
+
 /**
  * Representa aquellos datos que identifican y caracterizan a una persona, como
  * por ejemplo su nombre o su direccion.
  */
-public class PersonalData {
+public class PersonalData extends Entity {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
     private String firstName;
 
-    private Address address;
-
     private String phoneNumber;
 
     private String email;
 
+    private Address address;
+
     /* *************************** CONSTRUCTORS *************************** */
+
+    public PersonalData(final String firstName, final Address address) {
+        super();
+        this.firstName = firstName;
+        this.address = address;
+    }
+
+    public PersonalData(final String firstName, final String phoneNumber, final String email, final Address address) {
+        super();
+        this.firstName = firstName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+    }
+
+    public PersonalData() {
+        // Usado unicamente por Hibernate
+        super();
+    }
 
     /* **************************** ACCESSORS ***************************** */
 
@@ -26,14 +47,6 @@ public class PersonalData {
 
     public void setFirstName(final String firstName) {
         this.firstName = firstName;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(final Address address) {
-        this.address = address;
     }
 
     public String getPhoneNumber() {
@@ -50,6 +63,14 @@ public class PersonalData {
 
     public void setEmail(final String email) {
         this.email = email;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(final Address address) {
+        this.address = address;
     }
 
     /* **************************** OPERATIONS **************************** */
