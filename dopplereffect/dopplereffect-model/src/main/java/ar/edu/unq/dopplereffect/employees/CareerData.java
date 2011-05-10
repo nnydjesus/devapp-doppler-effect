@@ -2,11 +2,13 @@ package ar.edu.unq.dopplereffect.employees;
 
 import org.joda.time.DateTime;
 
+import ar.edu.unq.dopplereffect.Entity;
+
 /**
  * Esta clase provee los datos de empleo del empleado, como por ejemplo su plan
  * de carrera, su nivel y su porcentaje de sueldo.
  */
-public class CareerData {
+public class CareerData extends Entity {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -20,7 +22,29 @@ public class CareerData {
 
     /* *************************** CONSTRUCTORS *************************** */
 
+    public CareerData() {
+        // solo debe ser utilizado por Hibernate
+        super();
+    }
+
+    public CareerData(final DateTime joinDate, final CareerPlan careerPlan, final CareerPlanLevel level,
+            final int percentage) {
+        super();
+        this.joinDate = joinDate;
+        this.careerPlan = careerPlan;
+        this.level = level;
+        this.percentage = percentage;
+    }
+
     /* **************************** ACCESSORS ***************************** */
+
+    public DateTime getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(final DateTime joinDate) {
+        this.joinDate = joinDate;
+    }
 
     public CareerPlan getCareerPlan() {
         return careerPlan;
@@ -46,12 +70,12 @@ public class CareerData {
         this.percentage = percentage;
     }
 
-    public DateTime getJoinDate() {
-        return joinDate;
+    public String getLevelName() {
+        return this.getLevel().getName();
     }
 
-    public void setJoinDate(final DateTime joinDate) {
-        this.joinDate = joinDate;
+    public void setLevelName(final String levelName) {
+        this.getLevel().setName(levelName);
     }
 
     /* **************************** OPERATIONS **************************** */

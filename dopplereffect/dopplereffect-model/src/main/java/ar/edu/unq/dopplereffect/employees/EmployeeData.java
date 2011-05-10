@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.employees;
 
+import ar.edu.unq.dopplereffect.data.Address;
 import ar.edu.unq.dopplereffect.data.PersonalData;
 
 /**
@@ -14,6 +15,24 @@ public class EmployeeData extends PersonalData {
     private String lastName;
 
     /* *************************** CONSTRUCTORS *************************** */
+
+    public EmployeeData(final int dni, final String firstName, final String lastName, final Address address) {
+        super(firstName, address);
+        this.dni = dni;
+        this.lastName = lastName;
+    }
+
+    public EmployeeData(final int dni, final String firstName, final String lastName, final String phoneNumber,
+            final String email, final Address address) {
+        super(firstName, phoneNumber, email, address);
+        this.dni = dni;
+        this.lastName = lastName;
+    }
+
+    public EmployeeData() {
+        // solo utilizado por Hibernate
+        super();
+    }
 
     /* **************************** ACCESSORS ***************************** */
 

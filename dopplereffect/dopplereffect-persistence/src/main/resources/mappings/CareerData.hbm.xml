@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ar.edu.unq.dopplereffect.employees" >
+
+	<class name="CareerData" table="career_data" >
+	
+		<id name="id" type="java.lang.Long" >
+			<generator class="native" />
+		</id>
+		
+		<property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="joinDate" column="join_date" not-null="true" />
+		
+		<property name="careerPlan" type="ar.edu.unq.dopplereffect.util.CareerPlanEnumType" column="career_plan" not-null="true" />
+		
+		<property name="levelName" column="level" not-null="true" />
+		
+		<property name="percentage" not-null="true" />
+		
+	</class>
+
+</hibernate-mapping>
