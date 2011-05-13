@@ -1,9 +1,11 @@
-package ar.edu.unq.dopplereffect.repositories;
+package ar.edu.unq.dopplereffect.persistence.repositories;
 
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
+
+import ar.edu.unq.dopplereffect.repositories.Repository;
 
 @org.springframework.stereotype.Repository
 public class PersistentRepository<T> extends HibernateDaoSupport implements Repository<T> {

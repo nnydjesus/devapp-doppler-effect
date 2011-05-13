@@ -26,6 +26,9 @@
 		<mapping resource="mappings/Address.hbm.xml" />
 		<mapping resource="mappings/PersonalData.hbm.xml" />
 		<mapping resource="mappings/Employee.hbm.xml" />
+		<mapping resource="mappings/LeaveRequestType.hbm.xml" />
+		<mapping resource="mappings/DurationStrategy.hbm.xml" />
+		<mapping resource="mappings/Assignable.hbm.xml" />
 
 	</session-factory>
 

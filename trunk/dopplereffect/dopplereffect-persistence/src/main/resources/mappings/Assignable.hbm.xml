@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ar.edu.unq.dopplereffect.assignments">
+
+	<class name="Assignable" table="assignable" >
+
+		<id name="id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		
+		<joined-subclass name="ar.edu.unq.dopplereffect.leaverequests.LeaveRequest" table="leave_request" >
+			
+			<key column="assignable_id" not-null="true" />
+				
+			<many-to-one name="type" class="ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType"
+			column="type_id" unique="true" not-null="true" cascade="all" />
+			
+			<many-to-one name="durationStrategy" class="ar.edu.unq.dopplereffect.time.DurationStrategy"
+			column="duration_strategy_id" unique="true" not-null="true" cascade="all" />
+			
+		</joined-subclass>
+		
+		<!-- TODO mapear asignaciones de proyectos -->
+
+	</class>
+
+</hibernate-mapping>

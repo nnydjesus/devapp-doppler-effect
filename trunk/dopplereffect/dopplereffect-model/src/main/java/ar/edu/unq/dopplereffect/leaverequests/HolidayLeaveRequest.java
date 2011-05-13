@@ -26,6 +26,10 @@ public class HolidayLeaveRequest extends LeaveRequestCustomType {
         this.setMaxLimit(maxLimit);
     }
 
+    public HolidayLeaveRequest() {
+        super();
+    }
+
     /* **************************** ACCESSORS ***************************** */
 
     public OrderedMap<Integer, Integer> getConfiguration() {

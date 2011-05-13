@@ -57,6 +57,51 @@ CREATE TABLE `dopplereffect`.`employee` (
     FOREIGN KEY (`career_data_id`) REFERENCES `career_data` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `dopplereffect`.`leave_request_type` (
+  `id`                int(11)       NOT NULL AUTO_INCREMENT,
+  `subclass_type`     varchar(100)  NOT NULL,
+  `reason`            varchar(100)  DEFAULT NULL,
+  `max_days_in_year`  int(11)       DEFAULT NULL,
+  `min_limit`         int(11)       DEFAULT NULL,
+  `max_limit`         int(11)       DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `dopplereffect`.`duration_strategy` (
+  `id`            int(11)       NOT NULL AUTO_INCREMENT,
+  `subclass_type` varchar(100)  NOT NULL,
+  `date`          timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `start_date`    timestamp     NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `end_date`      timestamp     NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE  `dopplereffect`.`assignable` (
+  `id`          int(11) NOT NULL AUTO_INCREMENT,
+  `employee_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `assignable_employee_fk` (`employee_id`),
+  CONSTRAINT `assignable_employee_fk`
+    FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE  `dopplereffect`.`leave_request` (
+  `id`                    int(11) NOT NULL AUTO_INCREMENT,
+  `assignable_id`         int(11) NOT NULL,
+  `type_id`               int(11) NOT NULL,
+  `duration_strategy_id`  int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `leave_request_assignable_fk` (`assignable_id`),
+  KEY `leave_request_type_fk` (`type_id`),
+  KEY `leave_request_duration_strategy_id` (`duration_strategy_id`),
+  CONSTRAINT `leave_request_assignable_fk`
+    FOREIGN KEY (`assignable_id`) REFERENCES `assignable` (`id`),
+  CONSTRAINT `leave_request_type_fk`
+    FOREIGN KEY (`type_id`) REFERENCES `leave_request_type` (`id`),
+  CONSTRAINT `leave_request_duration_strategy_id`
+    FOREIGN KEY (`duration_strategy_id`) REFERENCES `duration_strategy` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- ***********************************************************
 -- Al ejecutar por primera vez, descomentar lo siguiente
 -- y correr como root

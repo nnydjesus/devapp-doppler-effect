@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.util;
+package ar.edu.unq.dopplereffect.persistence.util;
 
 import java.io.Serializable;
 import java.sql.PreparedStatement;
@@ -13,8 +13,8 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
 
     private Class<E> clazz = null;
 
-    protected EnumUserType(final Class<E> c) {
-        this.clazz = c;
+    protected EnumUserType(final Class<E> clazz) {
+        this.clazz = clazz;
     }
 
     private static final int[] SQL_TYPES = { Types.VARCHAR };
@@ -78,18 +78,18 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     }
 
     @Override
-    public int hashCode(final Object x) throws HibernateException {
-        return x.hashCode();
+    public int hashCode(final Object object) throws HibernateException {
+        return object.hashCode();
     }
 
     @Override
-    public boolean equals(final Object x, final Object y) throws HibernateException {
-        if (x == y) {
+    public boolean equals(final Object object1, final Object object2) throws HibernateException {
+        if (object1 == object2) {
             return true;
         }
-        if (null == x || null == y) {
+        if (null == object1 || null == object2) {
             return false;
         }
-        return x.equals(y);
+        return object1.equals(object2);
     }
 }

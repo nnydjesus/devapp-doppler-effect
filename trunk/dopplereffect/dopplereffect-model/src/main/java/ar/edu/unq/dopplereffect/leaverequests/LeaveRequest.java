@@ -5,13 +5,14 @@ import org.joda.time.Interval;
 
 import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
  * Representa pedidos de licencia adquiridos por los empleados.
  */
-public class LeaveRequest implements Assignable {
+public class LeaveRequest extends Entity implements Assignable {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -20,6 +21,16 @@ public class LeaveRequest implements Assignable {
     private DurationStrategy durationStrategy;
 
     /* *************************** CONSTRUCTORS *************************** */
+
+    public LeaveRequest() {
+        super();
+    }
+
+    public LeaveRequest(final LeaveRequestType type, final DurationStrategy durationStrategy) {
+        super();
+        this.type = type;
+        this.durationStrategy = durationStrategy;
+    }
 
     /* **************************** ACCESSORS ***************************** */
 

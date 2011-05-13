@@ -1,8 +1,12 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_11;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 

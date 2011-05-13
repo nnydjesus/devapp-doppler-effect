@@ -8,13 +8,14 @@ import org.joda.time.Interval;
 
 import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
  * Asignacion de un empleado a un proyecto. Posee una coleccion de intervalos en
  * los cuales vale la asignacion.
  */
-public class ProjectAssignment implements Assignable {
+public class ProjectAssignment extends Entity implements Assignable {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -25,6 +26,7 @@ public class ProjectAssignment implements Assignable {
     /* *************************** CONSTRUCTORS *************************** */
 
     public ProjectAssignment(final Employee anEmployee) {
+        super();
         employee = anEmployee;
     }
 

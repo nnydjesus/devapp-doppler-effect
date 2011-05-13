@@ -9,8 +9,9 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Years;
 
-import ar.edu.unq.dopplereffect.Entity;
 import ar.edu.unq.dopplereffect.assignments.Assignable;
+import ar.edu.unq.dopplereffect.entity.Entity;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.projects.Skill;
@@ -250,6 +251,24 @@ public class Employee extends Entity {
         return Years.yearsBetween(this.getJoinDate(), new DateTime()).getYears();
     }
 
+    public void changeCareerPlan(final EmployeesController employeesController, final CareerPlan careerPlan,
+            final CareerPlanLevel level, final int percentage) {
+        CareerPlanLevel oldLevel = this.getLevel();
+        CareerPlan oldPlan = this.getCareerPlan();
+        int oldPercentage = this.getPercentage();
+        int oldSalary = employeesController.getSalary(this);
+        this.getCareerData().setCareerPlan(careerPlan);
+        this.getCareerData().setLevel(level);
+        this.setPercentage(percentage);
+        int newSalary = employeesController.getSalary(this);
+        if (newSalary < oldSalary) {
+            this.getCareerData().setCareerPlan(oldPlan);
+            this.getCareerData().setLevel(oldLevel);
+            this.setPercentage(oldPercentage);
+            throw new UserException("el salario nuevo es menor al que tenia anteriormente");
+        }
+    }
+
     public int sastisfaccionLevelOfSkills(final List<Skill> skills) {
         throw new UnsupportedOperationException();
     }
@@ -294,5 +313,4 @@ public class Employee extends Entity {
         }
         return true;
     }
-
 }

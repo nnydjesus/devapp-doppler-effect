@@ -3,13 +3,14 @@ package ar.edu.unq.dopplereffect.time;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import ar.edu.unq.dopplereffect.entity.IEntity;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 
 /**
  * Tipos de duracion de las licencias, como por ejemplo licencias de un solo
  * dia, o licencias de un intervalo.
  */
-public interface DurationStrategy {
+public interface DurationStrategy extends IEntity {
 
     /**
      * Chequea que una fecha dada este incluida en las fechas descriptas por la
