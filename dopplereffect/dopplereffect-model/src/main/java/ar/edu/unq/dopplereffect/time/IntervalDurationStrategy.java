@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
 
+import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 
 /**
@@ -11,7 +12,7 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
  * todos sus dias intermedios estan contemplados. Aplicable a licencias y
  * asignaciones de proyectos.
  */
-public class IntervalDurationStrategy implements DurationStrategy {
+public class IntervalDurationStrategy extends Entity implements DurationStrategy {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -22,6 +23,14 @@ public class IntervalDurationStrategy implements DurationStrategy {
     public IntervalDurationStrategy(final Interval interval) {
         super();
         this.interval = interval;
+    }
+
+    public IntervalDurationStrategy(final DateTime start, final DateTime end) {
+        this(new Interval(start, end));
+    }
+
+    public IntervalDurationStrategy() {
+        super();
     }
 
     /* **************************** ACCESSORS ***************************** */

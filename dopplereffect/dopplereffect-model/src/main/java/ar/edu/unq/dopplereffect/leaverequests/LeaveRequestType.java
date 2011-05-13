@@ -1,12 +1,13 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.entity.IEntity;
 
 /**
  * Representa un tipo de licencia. Cada tipo de licencia se valida de diferente
  * manera.
  */
-public interface LeaveRequestType {
+public interface LeaveRequestType extends IEntity {
 
     /**
      * Valida la licencia contra un empleado recibido. Las licencias que tiene

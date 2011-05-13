@@ -184,23 +184,9 @@ public class EmployeesController {
      * @param level
      *            el nuevo nivel que se desea asignar.
      */
-    // TODO no se parece a un feature envy ???
     public void changeCareerPlan(final Employee employee, final CareerPlan careerPlan, final CareerPlanLevel level,
             final int percentage) {
-        CareerPlanLevel oldLevel = employee.getLevel();
-        CareerPlan oldPlan = employee.getCareerPlan();
-        int oldPercentage = employee.getPercentage();
-        int oldSalary = this.getSalary(employee);
-        employee.getCareerData().setCareerPlan(careerPlan);
-        employee.getCareerData().setLevel(level);
-        employee.setPercentage(percentage);
-        int newSalary = this.getSalary(employee);
-        if (newSalary < oldSalary) {
-            employee.getCareerData().setCareerPlan(oldPlan);
-            employee.getCareerData().setLevel(oldLevel);
-            employee.setPercentage(oldPercentage);
-            throw new UserException("el salario nuevo es menor al que tenia anteriormente");
-        }
+        employee.changeCareerPlan(this, careerPlan, level, percentage);
     }
 
     /**

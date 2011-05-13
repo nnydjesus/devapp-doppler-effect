@@ -3,12 +3,13 @@ package ar.edu.unq.dopplereffect.time;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 
 /**
  * Tipo de duracion de un unico dia. Aplicable a licencias.
  */
-public class OneDayDurationStrategy implements DurationStrategy {
+public class OneDayDurationStrategy extends Entity implements DurationStrategy {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -19,6 +20,10 @@ public class OneDayDurationStrategy implements DurationStrategy {
     public OneDayDurationStrategy(final DateTime aDate) {
         super();
         date = aDate;
+    }
+
+    public OneDayDurationStrategy() {
+        super();
     }
 
     /* **************************** ACCESSORS ***************************** */

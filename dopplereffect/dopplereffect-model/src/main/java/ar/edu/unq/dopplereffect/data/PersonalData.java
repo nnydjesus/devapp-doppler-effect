@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.data;
 
-import ar.edu.unq.dopplereffect.Entity;
+import ar.edu.unq.dopplereffect.entity.Entity;
 
 /**
  * Representa aquellos datos que identifican y caracterizan a una persona, como

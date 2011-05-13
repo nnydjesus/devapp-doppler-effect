@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.util;
+package ar.edu.unq.dopplereffect.persistence.util;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 

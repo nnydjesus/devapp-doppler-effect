@@ -2,7 +2,7 @@ package ar.edu.unq.dopplereffect.employees;
 
 import org.joda.time.DateTime;
 
-import ar.edu.unq.dopplereffect.Entity;
+import ar.edu.unq.dopplereffect.entity.Entity;
 
 /**
  * Esta clase provee los datos de empleo del empleado, como por ejemplo su plan

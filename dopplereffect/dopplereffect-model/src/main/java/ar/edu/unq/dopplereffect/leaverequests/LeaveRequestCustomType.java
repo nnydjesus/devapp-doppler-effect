@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.entity.Entity;
 
 /**
  * Representa un tipo de licencia personalizado. Un tipo de licencia posee un
@@ -9,7 +10,7 @@ import ar.edu.unq.dopplereffect.employees.Employee;
  * vez), y la cantidad total de dias por año que se puede tomar. Ademas posee
  * una razon, un motivo que identifica a cada tipo de licencia.
  */
-public class LeaveRequestCustomType implements LeaveRequestType {
+public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
 
     /* ************************ INSTANCE VARIABLES ************************* */
 
@@ -22,6 +23,22 @@ public class LeaveRequestCustomType implements LeaveRequestType {
     private int maxLimit;
 
     /* *************************** CONSTRUCTORS **************************** */
+
+    public LeaveRequestCustomType() {
+        super();
+    }
+
+    public LeaveRequestCustomType(final String reason) {
+        this(reason, 0, 0, 0);
+    }
+
+    public LeaveRequestCustomType(final String reason, final int maxDaysInYear, final int minLimit, final int maxLimit) {
+        super();
+        this.reason = reason;
+        this.maxDaysInYear = maxDaysInYear;
+        this.minLimit = minLimit;
+        this.maxLimit = maxLimit;
+    }
 
     /* **************************** ACCESSORS ***************************** */
 
