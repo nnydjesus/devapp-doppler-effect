@@ -3,6 +3,7 @@ package ar.edu.unq.dopplereffect.data;
 import ar.edu.unq.dopplereffect.entity.Entity;
 
 public class Address extends Entity {
+    private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unq.dopplereffect.repositories.Repository;
+import ar.edu.unq.dopplereffect.repository.Repository;
 
 @org.springframework.stereotype.Repository
 public class PersistentRepository<T> extends HibernateDaoSupport implements Repository<T> {
@@ -31,6 +31,11 @@ public class PersistentRepository<T> extends HibernateDaoSupport implements Repo
     @Override
     @Transactional
     public List<T> searchAll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public T getByName(final String name) {
         throw new UnsupportedOperationException();
     }
 }

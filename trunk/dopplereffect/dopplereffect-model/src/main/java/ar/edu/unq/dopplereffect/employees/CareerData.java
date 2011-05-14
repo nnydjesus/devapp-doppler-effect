@@ -9,6 +9,7 @@ import ar.edu.unq.dopplereffect.entity.Entity;
  * de carrera, su nivel y su porcentaje de sueldo.
  */
 public class CareerData extends Entity {
+    private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 

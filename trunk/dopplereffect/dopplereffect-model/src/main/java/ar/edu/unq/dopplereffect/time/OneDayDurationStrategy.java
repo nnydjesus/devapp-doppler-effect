@@ -10,6 +10,7 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
  * Tipo de duracion de un unico dia. Aplicable a licencias.
  */
 public class OneDayDurationStrategy extends Entity implements DurationStrategy {
+    private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 

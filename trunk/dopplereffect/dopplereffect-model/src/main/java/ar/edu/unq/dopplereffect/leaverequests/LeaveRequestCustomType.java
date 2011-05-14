@@ -11,6 +11,7 @@ import ar.edu.unq.dopplereffect.entity.Entity;
  * una razon, un motivo que identifica a cada tipo de licencia.
  */
 public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
+    private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************* */
 

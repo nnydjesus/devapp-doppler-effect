@@ -1,10 +1,13 @@
 package ar.edu.unq.dopplereffect.employees;
 
+import java.io.Serializable;
+
 /**
  * Representa el nivel (conocimientos y experiencia) que tiene un empleado. Por
  * ejemplo: Junior, Senior, etc.
  */
-public class CareerPlanLevel {
+public class CareerPlanLevel implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 

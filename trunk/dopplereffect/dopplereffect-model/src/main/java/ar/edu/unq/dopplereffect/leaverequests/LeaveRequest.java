@@ -13,6 +13,7 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
  * Representa pedidos de licencia adquiridos por los empleados.
  */
 public class LeaveRequest extends Entity implements Assignable {
+    private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
