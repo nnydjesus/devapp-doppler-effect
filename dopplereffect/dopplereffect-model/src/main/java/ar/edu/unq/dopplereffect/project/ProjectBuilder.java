@@ -1,6 +1,6 @@
-package ar.edu.unq.dopplereffect.projects;
+package ar.edu.unq.dopplereffect.project;
 
-import java.util.List;
+import java.util.Set;
 
 import org.joda.time.Period;
 
@@ -22,7 +22,7 @@ public class ProjectBuilder {
         return this;
     }
 
-    public ProjectBuilder withSkills(final List<Skill> skills) {
+    public ProjectBuilder withSkills(final Set<Skill> skills) {
         this.getProyect().setSkills(skills);
         return this;
     }

@@ -4,7 +4,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.Assert;
 
@@ -17,6 +19,12 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.helpers.DateHelpers;
+import ar.edu.unq.dopplereffect.project.Project;
+import ar.edu.unq.dopplereffect.project.ProjectBuilder;
+import ar.edu.unq.dopplereffect.project.ProjectHelper;
+import ar.edu.unq.dopplereffect.project.Skill;
+import ar.edu.unq.dopplereffect.project.SkillLevel;
+import ar.edu.unq.dopplereffect.project.SkillType;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class ProjectTest {
@@ -27,10 +35,10 @@ public class ProjectTest {
 
     private static final int DAY_BASE = 4;
 
-    private static List<Skill> skills;
+    private static Set<Skill> skills = new HashSet<Skill>();
     static {
-        skills = Arrays.asList(createSkill("Hibernate", SkillLevel.EXPERT), createSkill("POO", SkillLevel.EXPERT),
-                createSkill("Wicket", SkillLevel.MEDIUM));
+        skills.addAll(Arrays.asList(createSkill("Hibernate", SkillLevel.EXPERT), createSkill("POO", SkillLevel.EXPERT),
+                createSkill("Wicket", SkillLevel.MEDIUM)));
     }
 
     @Test

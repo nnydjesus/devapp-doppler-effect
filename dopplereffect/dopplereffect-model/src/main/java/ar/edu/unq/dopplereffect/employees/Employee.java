@@ -14,7 +14,7 @@ import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
-import ar.edu.unq.dopplereffect.projects.Skill;
+import ar.edu.unq.dopplereffect.project.Skill;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
@@ -25,6 +25,7 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
  * Ademas el empleado tiene asignaciones, ya sean a licencias o a proyectos.
  */
 public class Employee extends Entity {
+    private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -269,7 +270,7 @@ public class Employee extends Entity {
         }
     }
 
-    public int sastisfaccionLevelOfSkills(final List<Skill> skills) {
+    public int sastisfaccionLevelOfSkills(final Set<Skill> skills) {
         throw new UnsupportedOperationException();
     }
 

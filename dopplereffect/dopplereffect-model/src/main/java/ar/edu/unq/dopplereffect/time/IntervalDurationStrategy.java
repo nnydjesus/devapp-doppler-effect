@@ -13,6 +13,7 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
  * asignaciones de proyectos.
  */
 public class IntervalDurationStrategy extends Entity implements DurationStrategy {
+    private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 

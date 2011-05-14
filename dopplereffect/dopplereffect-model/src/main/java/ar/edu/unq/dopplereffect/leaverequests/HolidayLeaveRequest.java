@@ -11,6 +11,7 @@ import ar.edu.unq.dopplereffect.exceptions.UserException;
  * validar.
  */
 public class HolidayLeaveRequest extends LeaveRequestCustomType {
+    private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 

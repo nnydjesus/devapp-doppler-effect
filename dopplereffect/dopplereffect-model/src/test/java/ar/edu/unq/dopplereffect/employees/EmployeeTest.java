@@ -27,7 +27,7 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestBuilder;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestTypeBuilder;
-import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
+import ar.edu.unq.dopplereffect.project.ProjectAssignment;
 
 public class EmployeeTest {
 

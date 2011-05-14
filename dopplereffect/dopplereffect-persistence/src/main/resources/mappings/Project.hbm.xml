@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ar.edu.unq.dopplereffect.project">
+
+	<class name="Project" table="project">
+
+		<id name="id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+
+		<property name="name" not-null="true" />
+		<property name="maxEffort" />
+		<property name="currentEffort" />
+
+		<many-to-one name="clientData" class="ClientData" column="client_data_id"
+			not-null="true" cascade="all" unique="true" />
+
+		<set name="skills" table="project_skill" cascade="all, delete-orphan">
+			<key column="project_id" />
+			<one-to-many class="ar.edu.unq.dopplereffect.project.Skill" />
+		</set>
+
+		<set name="projectAssignment" table="project_assignment" cascade="all, delete-orphan">
+			<key column="project_id" />
+			<one-to-many class="ar.edu.unq.dopplereffect.project.ProjectAssignment" />
+		</set>
+
+		<many-to-one name="projectAssignmentStrategy" class="ProjectAssignmentStrategy"
+			column="project_assignment_strategy" not-null="true" cascade="all"	unique="true" />
+
+		<property type="org.joda.time.contrib.hibernate.PersistentPeriod"
+			name="timeProyect" />
+
+	</class>
+
+</hibernate-mapping>

@@ -29,6 +29,11 @@
 		<mapping resource="mappings/LeaveRequestType.hbm.xml" />
 		<mapping resource="mappings/DurationStrategy.hbm.xml" />
 		<mapping resource="mappings/Assignable.hbm.xml" />
+		<mapping resource="mappings/SkillType.hbm.xml" />
+		<mapping resource="mappings/Skill.hbm.xml" />
+		<mapping resource="mappings/ProjectAssignmentStrategy.hbm.xml" />
+		<mapping resource="mappings/ClientData.hbm.xml" />
+		<mapping resource="mappings/Project.hbm.xml" />
 
 	</session-factory>
 
