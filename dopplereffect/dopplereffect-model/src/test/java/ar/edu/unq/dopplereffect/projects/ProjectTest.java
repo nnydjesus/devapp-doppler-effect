@@ -144,43 +144,43 @@ public class ProjectTest {
         IntervalDurationStrategy intervalDurationStrategy = new IntervalDurationStrategy(new Interval(datebase,
                 datebase.plus(project.getTimeProyect())));
 
-        when(employee1.sastisfaccionLevelOfSkills(skills)).thenReturn(2);
+        when(employee1.satisfactionLevelOfSkills(skills)).thenReturn(2);
         when(employee1.getAvailableInterval(intervalDurationStrategy)).thenReturn(intervalOneMonth);
         when(employee1.availabilityLevel(intervalDurationStrategy)).thenReturn(2);
         when(employee1.isFreeAtInterval(intervalOneMonth.getInterval())).thenReturn(true);
         when(employee1.toString()).thenReturn("empleado1"); // para testing
 
-        when(employee2.sastisfaccionLevelOfSkills(skills)).thenReturn(1);
+        when(employee2.satisfactionLevelOfSkills(skills)).thenReturn(1);
         when(employee2.getAvailableInterval(intervalDurationStrategy)).thenReturn(intervalTwoMonth);
         when(employee2.availabilityLevel(intervalDurationStrategy)).thenReturn(2);
         when(employee2.isFreeAtInterval(intervalTwoMonth.getInterval())).thenReturn(true);
         when(employee2.toString()).thenReturn("empleado2");
 
-        when(employee3.sastisfaccionLevelOfSkills(skills)).thenReturn(4);
+        when(employee3.satisfactionLevelOfSkills(skills)).thenReturn(4);
         when(employee3.getAvailableInterval(intervalDurationStrategy)).thenReturn(intervalTwoMonth);
         when(employee3.availabilityLevel(intervalDurationStrategy)).thenReturn(1);
         when(employee3.isFreeAtInterval(intervalOneMonth.getInterval())).thenReturn(true);
         when(employee3.toString()).thenReturn("empleado3");
 
-        when(employee4.sastisfaccionLevelOfSkills(skills)).thenReturn(2);
+        when(employee4.satisfactionLevelOfSkills(skills)).thenReturn(2);
         when(employee4.getAvailableInterval(intervalDurationStrategy)).thenReturn(intervalTwoMonth);
         when(employee4.availabilityLevel(intervalDurationStrategy)).thenReturn(2);
         when(employee4.isFreeAtInterval(intervalTwoMonth.getInterval())).thenReturn(true);
         when(employee4.toString()).thenReturn("empleado4");
 
-        when(employee5.sastisfaccionLevelOfSkills(skills)).thenReturn(4);
+        when(employee5.satisfactionLevelOfSkills(skills)).thenReturn(4);
         when(employee5.getAvailableInterval(intervalDurationStrategy)).thenReturn(intervalOneMonth);
         when(employee5.availabilityLevel(intervalDurationStrategy)).thenReturn(5);
         when(employee5.isFreeAtInterval(intervalOneMonth.getInterval())).thenReturn(true);
         when(employee5.toString()).thenReturn("empleado5");
 
-        when(employee6.sastisfaccionLevelOfSkills(skills)).thenReturn(5);
+        when(employee6.satisfactionLevelOfSkills(skills)).thenReturn(5);
         when(employee6.getAvailableInterval(intervalDurationStrategy)).thenReturn(intervalOneMonth);
         when(employee6.availabilityLevel(intervalDurationStrategy)).thenReturn(2);
         when(employee6.isFreeAtInterval(intervalOneMonth.getInterval())).thenReturn(true);
         when(employee6.toString()).thenReturn("empleado6");
 
-        when(employee7.sastisfaccionLevelOfSkills(skills)).thenReturn(1);
+        when(employee7.satisfactionLevelOfSkills(skills)).thenReturn(1);
         when(employee7.getAvailableInterval(intervalDurationStrategy)).thenReturn(intervalTwoMonth);
         when(employee7.availabilityLevel(intervalDurationStrategy)).thenReturn(1);
         when(employee7.isFreeAtInterval(intervalTwoMonth.getInterval())).thenReturn(true);
