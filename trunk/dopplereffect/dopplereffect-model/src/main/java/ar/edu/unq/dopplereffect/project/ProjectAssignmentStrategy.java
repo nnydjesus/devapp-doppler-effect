@@ -90,7 +90,7 @@ public class ProjectAssignmentStrategy extends Entity {
     protected int getpriorityLevelEmployee(final Employee employee,
             final IntervalDurationStrategy intervalDurationStrategy) {
         return employee.availabilityLevel(intervalDurationStrategy)
-                + employee.sastisfaccionLevelOfSkills(project.getSkills());
+                + employee.satisfactionLevelOfSkills(project.getSkills());
     }
 
     protected Comparator<Employee> getComparatorBySkills(final IntervalDurationStrategy intervalDurationStrategy) {

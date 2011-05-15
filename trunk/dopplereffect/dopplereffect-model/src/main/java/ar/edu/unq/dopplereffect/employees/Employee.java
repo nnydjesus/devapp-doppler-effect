@@ -15,6 +15,8 @@ import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.project.Skill;
+import ar.edu.unq.dopplereffect.project.SkillLevel;
+import ar.edu.unq.dopplereffect.project.SkillType;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
@@ -35,6 +37,8 @@ public class Employee extends Entity {
 
     private Set<Assignable> assignments;
 
+    private Set<Skill> skills;
+
     /* *************************** CONSTRUCTORS *************************** */
 
     public Employee() {
@@ -46,6 +50,7 @@ public class Employee extends Entity {
         this.personalData = personalData;
         this.careerData = careerData;
         assignments = new HashSet<Assignable>();
+        skills = new HashSet<Skill>();
     }
 
     /* **************************** ACCESSORS ***************************** */
@@ -146,6 +151,14 @@ public class Employee extends Entity {
 
     public void setJoinDate(final DateTime date) {
         this.getCareerData().setJoinDate(date);
+    }
+
+    public Set<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(final Set<Skill> skills) {
+        this.skills = skills;
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -270,8 +283,70 @@ public class Employee extends Entity {
         }
     }
 
-    public int sastisfaccionLevelOfSkills(final Set<Skill> skills) {
-        throw new UnsupportedOperationException();
+    /**
+     * Le agrega un {@link Skill} al empleado. Si un skill de ese tipo ya
+     * existe, actualiza el nivel.
+     */
+    public void addSkill(final Skill skill) {
+        for (Skill sk : this.getSkills()) {
+            if (sk.getType().equals(skill.getType())) {
+                this.getSkills().remove(sk);
+                this.getSkills().add(new Skill(sk.getType(), skill.getLevel())); // NOPMD
+                return;
+            }
+        }
+        this.getSkills().add(skill);
+    }
+
+    /**
+     * Retorna el nivel correspondiente al tipo de skill dado. Retorna
+     * <code>null</code> si el empleado no posee ese skill.
+     */
+    public SkillLevel getLevelOfSkill(final SkillType type) {
+        for (Skill skill : this.getSkills()) {
+            if (skill.getType().equals(type)) {
+                return skill.getLevel();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Retorna un porcentaje que indica cuanto satisface el empleado a un
+     * conjunto dado de skills.
+     */
+    public int satisfactionLevelOfSkills(final Set<Skill> skillSet) {
+        int result = 0;
+        for (Skill skill : skillSet) {
+            result += this.skillSatifactionLevel(skill);
+        }
+        return result / skillSet.size();
+    }
+
+    /**
+     * Retorna un porcentaje que indica que tanto satisface un empleado a un
+     * skill;
+     */
+    public int skillSatifactionLevel(final Skill skill) {
+        for (Skill sk : this.getSkills()) {
+            if (sk.getType().equals(skill.getType())) {
+                return Math.min(sk.getLevel().satisfactionPercentage(skill.getLevel()), 100);
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Retorna <code>true</code> si el empleado tiene algun skill igual o mejor
+     * al skill dado como parametro, <code>false</code> en caso contrario.
+     */
+    public boolean satisfySkill(final Skill skill) {
+        for (Skill sk : this.getSkills()) {
+            if (sk.betterOrEqual(skill)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int availabilityLevel(final IntervalDurationStrategy intervalDurationStrategy) {
@@ -284,7 +359,7 @@ public class Employee extends Entity {
 
     @Override
     public String toString() {
-        return "Employee" + this.getFirstName() + " " + this.getLastName();
+        return "Employee " + this.getFirstName() + " " + this.getLastName();
     }
 
     @Override
