@@ -21,13 +21,13 @@
 
 		<subclass name="IntervalDurationStrategy" discriminator-value="IntervalDurationStrategy">
 		
-			<property type="org.joda.time.contrib.hibernate.PersistentInterval" name="interval" >
+<!-- 			<property type="org.joda.time.contrib.hibernate.PersistentInterval" name="interval" > -->
 			
-				<column name="start_date" />
+<!-- 				<column name="start_date" /> -->
 				
-				<column name="end_date" />
+<!-- 				<column name="end_date" /> -->
 				
-			</property>
+<!-- 			</property> -->
 
 		</subclass>
 

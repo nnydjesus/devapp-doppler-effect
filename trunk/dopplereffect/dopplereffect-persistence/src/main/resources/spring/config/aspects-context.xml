@@ -20,4 +20,8 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
+<!-- 	<bean id="persistentRepository" -->
+<!-- 		class="ar.edu.unq.dopplereffect.persistence.repositories.PersistentRepository"> -->
+<!-- 		<property name="sessionFactory" ref="sessionFactory" /> -->
+<!-- 	</bean> -->
 </beans>
