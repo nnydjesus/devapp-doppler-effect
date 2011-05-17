@@ -28,8 +28,8 @@ public class App {
         projectService.save(project);
 
         /** select **/
-        // Project project2 = projectService.getByName("Devapp");
-        // System.out.println(project2);
+        Project project2 = projectService.getByName("Devapp");
+        System.out.println(project2);
 
         /** update **/
         // project2.setName("DopplerEffect");
@@ -38,6 +38,6 @@ public class App {
         /** delete **/
         // projectService.delete(project2);
 
-        // System.out.println("Done");
+        System.out.println("Done");
     }
 }

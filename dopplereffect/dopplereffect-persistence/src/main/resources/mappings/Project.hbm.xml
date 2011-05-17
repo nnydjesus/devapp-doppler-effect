@@ -16,11 +16,11 @@
 		<property name="currentEffort" />
 
 		<many-to-one name="clientData" class="ClientData" column="client_data_id"
-			not-null="true" cascade="all" unique="true" />
+			 cascade="all" unique="true" />
 
 		<set name="skills" table="project_skill" cascade="all, delete-orphan">
 			<key column="project_id" />
-			<one-to-many class="ar.edu.unq.dopplereffect.project.Skill" />
+			<many-to-many column="skill_id" class="ar.edu.unq.dopplereffect.project.Skill" />
 		</set>
 
 		<set name="projectAssignment" table="project_assignment" cascade="all, delete-orphan">
@@ -29,10 +29,10 @@
 		</set>
 
 		<many-to-one name="projectAssignmentStrategy" class="ProjectAssignmentStrategy"
-			column="project_assignment_strategy" not-null="true" cascade="all"	unique="true" />
+			column="project_assignment_strategy_id"  cascade="all"	unique="true" />
 
-		<property type="org.joda.time.contrib.hibernate.PersistentPeriod"
-			name="timeProyect" />
+<!-- 		<property type="org.joda.time.contrib.hibernate.PersistentPeriod" -->
+<!-- 			name="timeProyect" /> -->
 
 	</class>
 

@@ -10,49 +10,25 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
-<!-- 		<property name="hibernateProperties"> -->
-<!-- 			<props> -->
-<!-- 				<prop key="hbm2ddl.auto">create</prop> -->
-<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> -->
-<!-- 				<prop key="hibernate.show_sql">true</prop> -->
-<!-- 				<prop key="current_session_context_class">thread</prop> -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hbm2ddl.auto">update</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="current_session_context_class">thread</prop>
 <!-- 				Disable the second-level cache -->
-<!-- 				<prop key="cache.provider_class"> org.hibernate.cache.NoCacheProvider</prop> -->
-<!-- 				<prop key="hibernate.connection.isolation">4 </prop> -->
-<!-- 				<prop key="connection.pool_size">1</prop> -->
+				<prop key="cache.provider_class"> org.hibernate.cache.NoCacheProvider</prop>
+				<prop key="hibernate.connection.isolation">4 </prop>
+				<prop key="connection.pool_size">1</prop>
 
-<!-- 			</props> -->
-<!-- 		</property> -->
-		<property name="configLocation">
-			<value>classpath:hibernate.cfg.xml</value>
+			</props>
 		</property>
-<!-- 		<property name="mappingResources"> -->
-<!-- 			<list> -->
+		<property name="mappingLocations">
+			<list>
 <!-- 				Agregar los mappings necesarios -->
-<!-- 				<value>"mappings/CareerData.hbm.xml</value> -->
-<!-- 				<value>"mappings/Address.hbm.xml</value> -->
-<!-- 				<value>"mappings/PersonalData.hbm.xml</value> -->
-<!-- 				<value>"mappings/Employee.hbm.xml</value> -->
-<!-- 				<value>"mappings/LeaveRequestType.hbm.xml</value> -->
-<!-- 				<value>"mappings/DurationStrategy.hbm.xml</value> -->
-<!-- 				<value>"mappings/Assignable.hbm.xml</value> -->
-<!-- 				<value>"mappings/Skill.hbm.xml</value> -->
-<!-- 				<value>"mappings/Project.hbm.xml</value> -->
-<!-- 				<value>"mappings/ProjectAssingmentStrategy.hbm.xml</value> -->
-<!-- 				<value>"mappings/SkillType.hbm.xml</value> -->
-<!-- 			</list> -->
-<!-- 		</property> -->
-
-		<!-- <property name="annotatedClasses"> -->
-		<!-- <list> -->
-		<!-- <value>ar.edu.unq.dopplereffect.project.Project</value> -->
-		<!-- <value>ar.edu.unq.dopplereffect.project.Skill</value> -->
-		<!-- <value>ar.edu.unq.dopplereffect.project.SkillLevel</value> -->
-		<!-- <value>ar.edu.unq.dopplereffect.project.SkillType</value> -->
-		<!-- <value>ar.edu.unq.dopplereffect.project.ProjectAssignmentStrategy</value> -->
-
-		<!-- </list> -->
-		<!-- </property> -->
+				<value>classpath*:mappings/*.hbm.xml</value>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="transactionManager"
