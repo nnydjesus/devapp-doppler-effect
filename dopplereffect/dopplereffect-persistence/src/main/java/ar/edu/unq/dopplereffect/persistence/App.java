@@ -1,9 +1,9 @@
-package ar.edu.unq.dopplereffect.persistence.repository;
+package ar.edu.unq.dopplereffect.persistence;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import ar.edu.unq.dopplereffect.persistence.sevice.ServiceImpl;
+import ar.edu.unq.dopplereffect.persistence.service.ServiceImpl;
 import ar.edu.unq.dopplereffect.project.Project;
 import ar.edu.unq.dopplereffect.project.Skill;
 import ar.edu.unq.dopplereffect.project.SkillLevel;
@@ -14,6 +14,7 @@ public class App {
     public static void main(final String[] args) {
         ApplicationContext appContext = new ClassPathXmlApplicationContext("spring/config/aspects-context.xml");
 
+        @SuppressWarnings("unchecked")
         ServiceImpl<Project> projectService = (ServiceImpl<Project>) appContext.getBean("service");
 
         /** insert **/

@@ -35,6 +35,10 @@ public class ProjectAssignment extends Entity implements Assignable {
         employee = anEmployee;
     }
 
+    public ProjectAssignment() {
+        super();
+    }
+
     /* **************************** ACCESSORS ***************************** */
 
     public Set<IntervalDurationStrategy> getIntervals() {
@@ -69,9 +73,8 @@ public class ProjectAssignment extends Entity implements Assignable {
     @Override
     public boolean includesDay(final DateTime date) {
         for (IntervalDurationStrategy interval : this.getIntervals()) {
-            if (interval.includesDay(date)) {
+            if (interval.includesDay(date))
                 return true;
-            }
         }
         return false;
     }
@@ -127,9 +130,8 @@ public class ProjectAssignment extends Entity implements Assignable {
     @Override
     public boolean overlapsAssignment(final Interval interval) {
         for (IntervalDurationStrategy assignment : this.getIntervals()) {
-            if (assignment.overlapsInterval(interval)) {
+            if (assignment.overlapsInterval(interval))
                 return true;
-            }
         }
         return false;
     }
