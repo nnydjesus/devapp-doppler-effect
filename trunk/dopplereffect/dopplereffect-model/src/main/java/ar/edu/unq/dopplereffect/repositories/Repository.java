@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.repository;
+package ar.edu.unq.dopplereffect.repositories;
 
 import java.util.List;
 

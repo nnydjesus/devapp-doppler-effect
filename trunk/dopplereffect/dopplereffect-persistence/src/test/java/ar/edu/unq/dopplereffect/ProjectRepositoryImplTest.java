@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
-import ar.edu.unq.dopplereffect.persistence.repository.ProjectRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.repositories.ProjectRepositoryImpl;
 import ar.edu.unq.dopplereffect.project.Project;
 import ar.edu.unq.dopplereffect.project.ProjectBuilder;
 
@@ -86,9 +86,7 @@ public class ProjectRepositoryImplTest extends AbstractTransactionalDataSourceSp
 
     @Override
     protected String[] getConfigLocations() {
-        return new String[] { "classpath:spring/config/aspects-context.xml" };
-        // return new String[] { "classpath:application-context.xml" };
-
+        return new String[] { "/spring/data-source.xml", "/spring/transactions.xml", "/spring/repositories.xml" };
     }
 
 }

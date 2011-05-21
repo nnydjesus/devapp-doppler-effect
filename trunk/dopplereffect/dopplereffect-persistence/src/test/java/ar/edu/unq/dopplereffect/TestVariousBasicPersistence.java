@@ -1,23 +1,28 @@
 package ar.edu.unq.dopplereffect;
 
-import org.hibernate.SessionFactory;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import javax.annotation.Resource;
 
-public class TestPersistiendoAlgo extends AbstractDependencyInjectionSpringContextTests {
+import org.joda.time.DateTime;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
-    private transient SessionFactory sessionFactory;
+import ar.edu.unq.dopplereffect.employees.CareerData;
+import ar.edu.unq.dopplereffect.employees.CareerPlan;
+import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
+import ar.edu.unq.dopplereffect.persistence.repositories.CareerDataRepositoryImpl;
 
-    public void setSessionFactory(final SessionFactory anSessionFactory) {
-        sessionFactory = anSessionFactory;
+public class TestVariousBasicPersistence extends AbstractTransactionalDataSourceSpringContextTests {
+
+    @Resource
+    private CareerDataRepositoryImpl careerDataRepo;
+
+    public void setCareerDataRepo(final CareerDataRepositoryImpl careerDataRepo) {
+        this.careerDataRepo = careerDataRepo;
     }
 
-    public void testPersistiendoAlgo() {
-        // PersistentRepository<CareerData> careerDataRepository = new
-        // PersistentRepository<CareerData>();
-        // careerDataRepository.setSessionFactory(sessionFactory);
-        // CareerData cd = new CareerData(new DateTime(), CareerPlan.TESTER, new
-        // CareerPlanLevel("EL MAS CAPO"), 50);
-        // careerDataRepository.save(cd);
+    public void testX() {
+        CareerData cd = new CareerData(new DateTime(), CareerPlan.TESTER, new CareerPlanLevel("EL MAS CAPO"), 50);
+        careerDataRepo.save(cd);
+
         //
         // PersistentRepository<Address> addressRepository = new
         // PersistentRepository<Address>();
@@ -55,7 +60,8 @@ public class TestPersistiendoAlgo extends AbstractDependencyInjectionSpringConte
 
     @Override
     protected String[] getConfigLocations() {
-        // return new String[] { "" };
-        return new String[] {};
+        return new String[] { "/spring/data-source.xml", "/spring/transactions.xml", "/spring/repositories.xml" };
+        // return new String[] { "/spring/data-source.xml",
+        // "/spring/transactions.xml" };
     }
 }

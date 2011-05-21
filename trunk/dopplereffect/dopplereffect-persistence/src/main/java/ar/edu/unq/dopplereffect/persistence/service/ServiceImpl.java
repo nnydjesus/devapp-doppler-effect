@@ -1,16 +1,13 @@
-package ar.edu.unq.dopplereffect.persistence.sevice;
+package ar.edu.unq.dopplereffect.persistence.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import ar.edu.unq.dopplereffect.repository.Repository;
+import ar.edu.unq.dopplereffect.repositories.Repository;
 import ar.edu.unq.dopplereffect.service.Service;
 
 @org.springframework.stereotype.Service("service")
 public class ServiceImpl<T> implements Service<T> {
 
-    @Autowired
     private Repository<T> repository;
 
     public void setStockDao(final Repository<T> stockDao) {

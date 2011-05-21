@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.dopplereffect.persistence.util.CustomHibernateRepositorySupport;
-import ar.edu.unq.dopplereffect.repository.Repository;
+import ar.edu.unq.dopplereffect.repositories.Repository;
 
-public class PersistentRepository<T> extends CustomHibernateRepositorySupport implements Repository<T> {
+public class HibernatePersistentRepository<T> extends CustomHibernateRepositorySupport implements Repository<T> {
 
     @Override
     @Transactional

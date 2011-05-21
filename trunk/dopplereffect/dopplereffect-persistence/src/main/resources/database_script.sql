@@ -103,8 +103,8 @@ CREATE TABLE  `dopplereffect`.`leave_request` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `dopplereffect`.`client_data` (
-  `id`            int(11)       NOT NULL AUTO_INCREMENT,
-  `personal_data_id`    int(11)       NOT NULL,
+  `id`               int(11)       NOT NULL AUTO_INCREMENT,
+  `personal_data_id` int(11)       NOT NULL,
   PRIMARY KEY (`id`),
   KEY `personal_data_fk` (`personal_data_id`),
   CONSTRAINT `personal_data_fk`
@@ -118,13 +118,13 @@ CREATE TABLE `dopplereffect`.`project_assignment_strategy` (
 
 
 CREATE TABLE `dopplereffect`.`project` (
-  `id`                int(11) NOT NULL AUTO_INCREMENT,
-  `name`  VARCHAR(45) ,
-  `maxEffort`    int(11) ,
-  `currentEffort`    int(11),
-  `timeProyect`    VARCHAR(255),
-  `project_assignment_strategy_id`    int(11),
-  `client_data_id`    int(11),
+  `id`                             int(11) NOT NULL AUTO_INCREMENT,
+  `name`                           VARCHAR(45) ,
+  `maxEffort`                      int(11) ,
+  `currentEffort`                  int(11),
+  `timeProyect`                    VARCHAR(255),
+  `project_assignment_strategy_id` int(11),
+  `client_data_id`                 int(11),
   PRIMARY KEY (`id`),
   KEY `project_assignment_strategy_fk` (`project_assignment_strategy_id`),
   KEY `client_data_fk` (`client_data_id`),
@@ -150,11 +150,10 @@ CREATE TABLE `dopplereffect`.`skill_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `dopplereffect`.`skill` (
-  `id`                int(11) NOT NULL AUTO_INCREMENT,
-  `level`  VARCHAR(45) ,
-  `type_id`    int(11) NOT NULL,
+  `id`       int(11) NOT NULL AUTO_INCREMENT,
+  `level`    VARCHAR(45) ,
+  `type_id`  int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  
   KEY `skill_type_fk` (`type_id`),
   CONSTRAINT `skill_type_fk`
     FOREIGN KEY (`type_id`) REFERENCES `skill_type` (`id`)
@@ -164,11 +163,12 @@ CREATE TABLE `dopplereffect`.`project_skill` (
   `project_id`  int(11) NOT NULL,
   `skill_id` 	int(11) NOT NULL,
   PRIMARY KEY (`project_id` , `skill_id`),
-  
   KEY `project_fk` (`project_id`),
   KEY `skill_fk` (`skill_id`),
-  CONSTRAINT `project_fk` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`),
-  CONSTRAINT `skill_fk` FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`)
+  CONSTRAINT `project_fk`
+    FOREIGN KEY (`project_id`) REFERENCES `project` (`id`),
+  CONSTRAINT `skill_fk`
+    FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ***********************************************************
@@ -177,4 +177,3 @@ CREATE TABLE `dopplereffect`.`project_skill` (
 -- ***********************************************************
 -- CREATE USER 'dopplereffect' IDENTIFIED BY 'dopplereffect';
 -- GRANT ALL ON dopplereffect.* TO 'dopplereffect';
-
