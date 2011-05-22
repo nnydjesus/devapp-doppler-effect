@@ -4,6 +4,7 @@
   <head>  
 		<link rel="stylesheet" type="text/css" href="styles/style.css" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.js"></script> -->
 		<title>Doopler effect</title>
  	</head>
   
@@ -23,19 +24,17 @@
       </table>
     </form>
     
-          
-    
+   
     <br/><br/>
     
-    <div wicket:id="resultSecction" class="resultSecction">
+    <div wicket:id="resultSecction"  class="resultSecction">
       <table align="center" id="tabla" BORDER>
-        <th id="main"  >Name</th>    
-        <th id="main" >Max Effort</th>        
-        <th id="main" >Current Effort</th>       
-        <th id="main" >Edit</th>       
-        <th id="main" >Delete</th>       
-
-        
+	        <th>Name</th>    
+	        <th>Max Effort</th>        
+	        <th>Current Effort</th>       
+	        <th>Edit</th>       
+	        <th>Delete</th>       
+	        
         <tr align="center" wicket:id="results" id="main" width="90%" >
           <td id="main"><span wicket:id="name"  ></span> </td>
           <td id="main" ><span wicket:id="maxEffort" /></td>          
@@ -53,6 +52,7 @@
            </td>
         </tr>
       </table>
-    </div>  
+    </div>
+
   </body>
 </html>
