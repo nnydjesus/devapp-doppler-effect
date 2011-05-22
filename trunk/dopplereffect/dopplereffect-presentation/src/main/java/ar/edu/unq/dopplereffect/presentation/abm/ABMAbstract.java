@@ -6,20 +6,23 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 
+import ar.edu.unq.dopplereffect.exceptions.UserException;
+import ar.edu.unq.dopplereffect.presentation.search.Search;
+
 public abstract class ABMAbstract<T> extends WebPage {
 
     private FeedbackPanel feedbackPanel;
 
-    private WebPage laPaginaDeLaQueMeLlamaron;
+    private WebPage parentPage;
 
     private T model;
 
-    public WebPage getLaPaginaDeLaQueMeLlamaron() {
-        return laPaginaDeLaQueMeLlamaron;
+    public WebPage getParentPage() {
+        return parentPage;
     }
 
     public void setLaPaginaDeLaQueMeLlamaron(final WebPage laPaginaDeLaQueMeLlamaron) {
-        this.laPaginaDeLaQueMeLlamaron = laPaginaDeLaQueMeLlamaron;
+        this.parentPage = laPaginaDeLaQueMeLlamaron;
     }
 
     /**
@@ -65,6 +68,16 @@ public abstract class ABMAbstract<T> extends WebPage {
 
             @Override
             public void onSubmit() {
+                try {
+                    // invoca la logica de negocio
+                    ((Search<T>) ABMAbstract.this.getParentPage().getDefaultModelObject()).update(model);
+                    // navegacion: vuelve a la pagina de busqueda.
+                    this.setResponsePage(ABMAbstract.this.getParentPage());
+                } catch (UserException e) {
+                    // en caso de excepcion de negocio muestra el mensaje como
+                    // un error.
+                    ABMAbstract.this.getFeedbackPanel().error(e.getMessage());
+                }
             }
         });
 
@@ -73,7 +86,7 @@ public abstract class ABMAbstract<T> extends WebPage {
 
             @Override
             public void onSubmit() {
-                this.setResponsePage(ABMAbstract.this.getLaPaginaDeLaQueMeLlamaron());
+                this.setResponsePage(ABMAbstract.this.getParentPage());
             }
         };
         button.setDefaultFormProcessing(false);

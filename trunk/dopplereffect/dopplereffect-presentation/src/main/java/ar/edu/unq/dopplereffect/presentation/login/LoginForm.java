@@ -40,22 +40,6 @@ public class LoginForm extends Form {
         this.add(passField);
     }
 
-    // @Override
-    // protected void onSubmit() {
-    // AuthenticatedWebSession session = AuthenticatedWebSession.get();
-    // if(session.signIn(username, password)) {
-    // setDefaultResponsePageIfNecessary();
-    // } else {
-    // error(getString("login.failed"));
-    // }
-    // }
-
-    private void setDefaultResponsePageIfNecessary() {
-        if (!this.continueToOriginalDestination()) {
-            this.setResponsePage(this.getApplication().getHomePage());
-        }
-    }
-
     @Override
     public void onSubmit() {
         User user = service.login(userIdField.getDefaultModelObjectAsString(),
