@@ -36,13 +36,11 @@ public class ProjectRepositoryImplTest extends AbstractTransactionalDataSourceSp
     @Test
     public void testSave() {
         repository.save(this.createProject(PROJECT_NAME));
-        // repository.save(project);
         Project project = repository.getByName(PROJECT_NAME);
 
         Assert.assertNotNull(project);
         Assert.assertEquals(PROJECT_NAME, project.getName());
         Assert.assertEquals(EFFORT, project.getMaxEffort());
-        // Assert.assertTrue(true);
     }
 
     @Test
@@ -56,15 +54,11 @@ public class ProjectRepositoryImplTest extends AbstractTransactionalDataSourceSp
         Project project2 = repository.getByName(PROJECT_NAME + "sa");
 
         Assert.assertNull(project2);
-        // Assert.assertTrue(true);
-        // Assert.assertTrue(true);
-
     }
 
     @Test
     public void testUpdate() {
         repository.save(this.createProject(PROJECT_NAME));
-        // repository.save(project);
         Project project = repository.getByName(PROJECT_NAME);
 
         Assert.assertNotNull(project);
@@ -75,11 +69,9 @@ public class ProjectRepositoryImplTest extends AbstractTransactionalDataSourceSp
         Project project2 = repository.getByName(UPDATE_PROJECT_NAME);
 
         Assert.assertNotNull(project2);
-        // Assert.assertTrue(true);
     }
 
     private Project createProject(final String name) {
-        // return new
         return new ProjectBuilder().withName(name).withEstimatedEffort(EFFORT).build();
 
     }

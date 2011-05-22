@@ -171,6 +171,13 @@ CREATE TABLE `dopplereffect`.`project_skill` (
     FOREIGN KEY (`skill_id`) REFERENCES `skill` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `dopplereffect`.`user` (
+  `id`       int(11) NOT NULL AUTO_INCREMENT,
+  `name`    VARCHAR(45) ,
+  `password`    VARCHAR(45) ,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- ***********************************************************
 -- Al ejecutar por primera vez, descomentar lo siguiente
 -- y correr como root

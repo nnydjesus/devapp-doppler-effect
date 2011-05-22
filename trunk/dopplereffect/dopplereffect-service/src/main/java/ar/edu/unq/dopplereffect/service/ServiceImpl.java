@@ -1,18 +1,18 @@
-package ar.edu.unq.dopplereffect.persistence.service;
+package ar.edu.unq.dopplereffect.service;
 
+import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import ar.edu.unq.dopplereffect.repositories.Repository;
-import ar.edu.unq.dopplereffect.service.Service;
 
 @org.springframework.stereotype.Service("service")
-public class ServiceImpl<T> implements Service<T> {
+public class ServiceImpl<T> implements Service<T>, Serializable {
+    private static final long serialVersionUID = 1L;
 
+    @Autowired
     private Repository<T> repository;
-
-    public void setStockDao(final Repository<T> stockDao) {
-        this.setRepository(stockDao);
-    }
 
     @Override
     public void save(final T stock) {
@@ -39,7 +39,7 @@ public class ServiceImpl<T> implements Service<T> {
         return this.getRepository().searchAll();
     }
 
-    private void setRepository(final Repository<T> repository) {
+    public void setRepository(final Repository<T> repository) {
         this.repository = repository;
     }
 
