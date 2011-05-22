@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="styles/styles.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script> -->
+		<title>Doopler effect</title>
+	</head>
+	<body>
+		<form wicket:id="projectForm">
+			<table align="center" width="80%">
+				<tr>
+					<td align="right">Name:</td>
+					<td align="left"><input wicket:id="name" type="text" /></td>
+				</tr>
+				<tr>
+					<td align="right">Max Effort:</td>
+					<td align="left"><input wicket:id="maxEffort" type="text" />
+					</td>
+				</tr>
+				<tr>
+					<td height="20" colspan="2">
+					<div wicket:id="feedbackPanel"></div></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><input wicket:id="acept"
+						type="submit" name="aceptar" value="Aceptar" /> <input
+						wicket:id="cancel" type="submit" name="cancelar" value="Cancelar" />
+					</td>
+				</tr>
+			</table>
+			<br />
+		</form>
+
+</body>
+</html>

@@ -11,7 +11,7 @@
 			<generator class="native" />
 		</id>
 		
-		<property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="joinDate" column="join_date" not-null="true" />
+<!-- 		<property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="joinDate" column="join_date" not-null="true" /> -->
 		
 		<property name="careerPlan" type="ar.edu.unq.dopplereffect.persistence.util.CareerPlanEnumType" column="career_plan" not-null="true" />
 		

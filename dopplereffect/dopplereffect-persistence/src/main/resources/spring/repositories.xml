@@ -10,5 +10,5 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="careerDataRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.CareerDataRepositoryImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
+	
 </beans>
