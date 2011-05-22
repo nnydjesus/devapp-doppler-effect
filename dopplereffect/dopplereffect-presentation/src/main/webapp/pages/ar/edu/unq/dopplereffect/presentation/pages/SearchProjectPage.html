@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd" >
+  <head>  
+		<link rel="stylesheet" type="text/css" href="styles/style.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Doopler effect</title>
+ 	</head>
+  
+  <body>
+    <a align="right" wicket:id="back" href="#" >logout</a>    
+    <form wicket:id="searchProjectForm">
+      <table align="center" id="panel">
+	    <tr>
+          <td align="right">Name::</td>
+          <td align="left"> <input wicket:id="searchByName" type="text" name="name"/> </td>
+        </tr>
+        
+        <tr>
+          <td colspan="2"><input type="submit" wicket:id="search" value="Buscar" />          
+          <input type="submit" wicket:id="newProject" value="Nueva Persona" /></td>
+        </tr>
+      </table>
+    </form>
+    
+          
+    
+    <br/><br/>
+    
+    <div wicket:id="resultSecction" class="resultSecction">
+      <table align="center" id="tabla" BORDER>
+        <th id="main"  >Name</th>    
+        <th id="main" >Max Effort</th>        
+        <th id="main" >Current Effort</th>       
+        <th id="main" >Edit</th>       
+        <th id="main" >Delete</th>       
+
+        
+        <tr align="center" wicket:id="results" id="main" width="90%" >
+          <td id="main"><span wicket:id="name"  ></span> </td>
+          <td id="main" ><span wicket:id="maxEffort" /></td>          
+          <td id="main" ><span wicket:id="currentEffort" /></td>
+        
+	      <td>
+          		<a wicket:id="edit" href="#" >
+                	<image src="Images/edit.png" alt="modificar datos del cliente" />
+                </a> 
+          </td>
+          <td>
+          		<a wicket:id="delete" href="#" >
+            		<image src="Images/delete.png" alt="eliminar el cliente" />
+                </a>
+           </td>
+        </tr>
+      </table>
+    </div>  
+  </body>
+</html>

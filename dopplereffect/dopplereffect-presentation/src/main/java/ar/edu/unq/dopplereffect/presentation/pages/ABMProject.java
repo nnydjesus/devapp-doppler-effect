@@ -1,6 +1,5 @@
 package ar.edu.unq.dopplereffect.presentation.pages;
 
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
@@ -10,14 +9,13 @@ import ar.edu.unq.dopplereffect.presentation.abm.ABMAbstract;
 import ar.edu.unq.dopplereffect.project.Project;
 
 /**
- * TODO: description
  */
 
 public class ABMProject extends ABMAbstract<Project> {
 
-    public ABMProject(final WebPage laPaginaDeLaQueMeLlamaron, final Project project) {
+    public ABMProject(final SearchProjectPage parent, final Project project) {
         super();
-        this.setLaPaginaDeLaQueMeLlamaron(laPaginaDeLaQueMeLlamaron);
+        this.setLaPaginaDeLaQueMeLlamaron(parent);
         this.setModel(project);
         Form<Project> form = new Form<Project>("projectForm", this.createModel());
         this.add(form);
@@ -28,8 +26,8 @@ public class ABMProject extends ABMAbstract<Project> {
 
     }
 
-    public ABMProject(final WebPage laPaginaDeLaQueMeLlamaron) {
-        this(laPaginaDeLaQueMeLlamaron, new Project());
+    public ABMProject(final SearchProjectPage parent) {
+        this(parent, new Project());
 
     }
 

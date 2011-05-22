@@ -5,7 +5,7 @@ import org.apache.wicket.markup.html.WebPage;
 import ar.edu.unq.dopplereffect.presentation.login.LoginForm;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 
-public class Login extends WebPage {
+public class Login extends StylePage {
 
     /**
      * Login page constituents are the same as Login.html except that it is made
@@ -19,7 +19,7 @@ public class Login extends WebPage {
     public Login() {
         form = new LoginForm("loginForm", this);
         form.setCallBack(this.getCallBack());
-        pageXXX = new ABMProject(this);
+        pageXXX = new SearchProjectPage(this);
         this.add(form);
     }
 
