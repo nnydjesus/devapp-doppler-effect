@@ -31,9 +31,9 @@ public class Project extends Entity {
 
     private Set<Skill> skills = new HashSet<Skill>();
 
-    private Integer maxEffort;
+    private Long maxEffort;
 
-    private Integer currentEffort;
+    private Long currentEffort;
 
     private Set<ProjectAssignment> projectAssignment = new HashSet<ProjectAssignment>();
 
@@ -41,14 +41,14 @@ public class Project extends Entity {
 
     /* *************************** CONSTRUCTORS *************************** */
 
+    public Project() {
+        super();
+        this.setCurrentEffort(0L);
+    }
+
     public Project(final ProjectAssignmentStrategy strategy) {
         this();
         this.setProjectAssignmentStrategy(strategy);
-    }
-
-    public Project() {
-        super();
-        this.setCurrentEffort(0);
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -77,11 +77,11 @@ public class Project extends Entity {
     }
 
     protected boolean validateEffort(final IntervalDurationStrategy interval) {
-        int hoursAssignment = this.getHoursOfEffort(interval);
+        long hoursAssignment = this.getHoursOfEffort(interval);
         return maxEffort >= this.getCurrentEffort() + hoursAssignment;
     }
 
-    protected int getHoursOfEffort(final IntervalDurationStrategy interval) {
+    protected long getHoursOfEffort(final IntervalDurationStrategy interval) {
         return ProjectHelper.daysToHoursEffort(interval.getAmountOfDays());
     }
 
@@ -172,15 +172,15 @@ public class Project extends Entity {
         this.setTimeProyect(consideredEffort);
     }
 
-    public Integer getCurrentEffort() {
+    public Long getCurrentEffort() {
         return currentEffort;
     }
 
-    public void setMaxEffort(final Integer maxEffort) {
+    public void setMaxEffort(final Long maxEffort) {
         this.maxEffort = maxEffort;
     }
 
-    public Integer getMaxEffort() {
+    public Long getMaxEffort() {
         return maxEffort;
     }
 
@@ -200,15 +200,15 @@ public class Project extends Entity {
         this.projectAssignmentStrategy = projectAssignmentStrategy;
     }
 
-    public ProjectAssignmentStrategy getProjectAssignmentStrategy() {
+    public IProjectAssignmentStrategy getProjectAssignmentStrategy() {
         return projectAssignmentStrategy;
     }
 
-    public void setCurrentEffort(final Integer currentEffort) {
+    public void setCurrentEffort(final Long currentEffort) {
         this.currentEffort = currentEffort;
     }
 
-    public void plusEffort(final int hoursAssignment) {
+    public void plusEffort(final long hoursAssignment) {
         this.setCurrentEffort(this.getCurrentEffort() + hoursAssignment);
     }
 

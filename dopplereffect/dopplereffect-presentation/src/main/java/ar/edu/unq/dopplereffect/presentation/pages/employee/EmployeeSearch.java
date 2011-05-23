@@ -15,7 +15,8 @@ public class EmployeeSearch extends Search<Employee> {
     private EmployeeSearchPage sourcePage;
 
     public EmployeeSearch() {
-        this.setSearchName("");
+    	super(Employee.class);
+        this.setSearchByName("");
     }
 
     public void setSourcePage(final EmployeeSearchPage page) {
@@ -26,12 +27,12 @@ public class EmployeeSearch extends Search<Employee> {
         return ((App) sourcePage.getApplication()).getEmployeeService();
     }
 
-    public String getSearchName() {
+    public String getSearchByName() {
         return searchName;
     }
 
-    public void setSearchName(final String searchName) {
-        this.searchName = searchName;
+    public void setSearchByName(final String aName) {
+    	searchName = aName;
     }
 
     @Override

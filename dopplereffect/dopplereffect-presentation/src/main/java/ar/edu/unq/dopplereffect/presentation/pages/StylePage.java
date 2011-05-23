@@ -1,10 +1,10 @@
 package ar.edu.unq.dopplereffect.presentation.pages;
 
-import org.apache.wicket.markup.html.WebPage;
+import ar.edu.unq.dopplereffect.presentation.component.AbstractWebPage;
 
 /**
  * Pagina para probar el wicket extend
  */
-public class StylePage extends WebPage {
+public class StylePage<T> extends AbstractWebPage<T> {
 
 }

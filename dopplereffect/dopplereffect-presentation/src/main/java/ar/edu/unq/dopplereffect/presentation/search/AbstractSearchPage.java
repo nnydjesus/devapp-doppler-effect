@@ -10,8 +10,8 @@ import org.apache.wicket.markup.html.form.TextField;
 
 import ar.edu.unq.dopplereffect.presentation.component.AbstractWebPage;
 import ar.edu.unq.dopplereffect.presentation.component.PageLink;
-import ar.edu.unq.dopplereffect.presentation.component.SuperAjaxButton;
-import ar.edu.unq.dopplereffect.presentation.pages.WebPageFactory;
+import ar.edu.unq.dopplereffect.presentation.component.ReflectionAjaxButton;
+import ar.edu.unq.dopplereffect.presentation.pages.basic.WebPageFactory;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
@@ -33,8 +33,9 @@ public class AbstractSearchPage<T extends Search> extends AbstractWebPage<T> {
         super(parentPage, model);
         this.fields = fields;
         this.abm = abm;
-        this.init(this.createForm("search" + this.getBeanName() + "Form", this.getModelObject()));
+        this.init(this.createForm(getFormWicketID(), this.getModelObject()));
     }
+
 
     protected void init(final Form<T> formulario) {
         this.armarFormulario(formulario);
@@ -45,8 +46,8 @@ public class AbstractSearchPage<T extends Search> extends AbstractWebPage<T> {
     }
 
     protected void addButton(final Form<T> form) {
-        form.add(new SuperAjaxButton<T>("search", form, this.getAjaxSectionResult()));
-        form.add(new PageLink("new" + this.getBeanName(), new WebPageFactory() {
+        form.add(new ReflectionAjaxButton(getSubmitButtonWicketId(), form, this.getAjaxSectionResult()));
+        form.add(new PageLink(getNewFromBeanWicketId(), new WebPageFactory() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -54,26 +55,26 @@ public class AbstractSearchPage<T extends Search> extends AbstractWebPage<T> {
                 return ReflectionUtils.instanciate(abm, AbstractSearchPage.this);
             }
         }));
-        this.add(new PageLink("back", this.getParentPage()));
+        this.add(new PageLink(getBackButtonWicketId(), this.getParentPage()));
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+
+    @SuppressWarnings({ "unchecked" })
     protected void addResultSection(final Form<T> formulario) {
-        this.addGeneralResultSection(new AjaxDataTablePage<T, AbstractSearchPage>("results", ((Search<T>) this
+        this.addGeneralResultSection(new AjaxDataTablePage<T, WebPage>(getTableWicketId(), getSortName(), ((Search<T>) this
                 .getDefaultModelObject()), fields, abm));
-        // this.addGeneralResultSection(new AbstractListView("results",
-        // ((Search<T>) this.getDefaultModelObject())
-        // .getEntityType(), fields, abm));
-
     }
+
 
     protected void armarFormulario(final Form<T> formulario) {
-        formulario.add(new TextField<String>("searchByName"));
+        formulario.add(new TextField<String>(getDefaultImputSearchWicketId()));
         // formulario.add(new TextField<String>("busquedaDireccion"));
     }
 
-    protected void addGeneralResultSection(final AjaxDataTablePage<T, AbstractSearchPage> listView) {
-        WebMarkupContainer panel = new WebMarkupContainer("resultSecction");
+
+
+    protected void addGeneralResultSection(final AjaxDataTablePage<T, WebPage> listView) {
+		WebMarkupContainer panel = new WebMarkupContainer(getResultSectionWicketId());
         // para que refresque por Ajax
         panel.setOutputMarkupId(true);
         listView.setResultSection(panel);
@@ -83,6 +84,40 @@ public class AbstractSearchPage<T extends Search> extends AbstractWebPage<T> {
         this.setAjaxSectionResult(panel);
 
     }
+    
+	protected String getFormWicketID() {
+		return getSubmitButtonWicketId() + this.getBeanName() + "Form";
+	}
+	
+	protected String getBackButtonWicketId() {
+		return "back";
+	}
+	
+	protected String getResultSectionWicketId() {
+		return "resultSecction";
+	}
+	
+	protected String getTableWicketId() {
+		return "results";
+	}
+
+	protected String getSubmitButtonWicketId() {
+		return "search";
+	}
+
+
+	protected String getNewFromBeanWicketId() {
+		return "new" + this.getBeanName();
+	}
+
+
+	protected String getDefaultImputSearchWicketId() {
+		return "searchByName";
+	}
+	
+	protected String getSortName() {
+		return "name";
+	}
 
     protected String getBeanName() {
         return ((Search<T>) this.getDefaultModelObject()).getEntityType().getSimpleName();

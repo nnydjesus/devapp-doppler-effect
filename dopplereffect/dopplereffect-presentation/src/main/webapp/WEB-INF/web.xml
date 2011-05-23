@@ -28,9 +28,13 @@
 	<filter>
 		<filter-name>wicket.dopplereffect-ui-wicket</filter-name>
 		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+<!-- 		<init-param> -->
+<!-- 			<param-name>applicationFactoryClassName</param-name> -->
+<!-- 			<param-value>org.apache.wicket.spring.SpringWebApplicationFactory</param-value> -->
+<!-- 		</init-param> -->
 		<init-param>
-			<param-name>applicationFactoryClassName</param-name>
-			<param-value>org.apache.wicket.spring.SpringWebApplicationFactory</param-value>
+			<param-name>applicationClassName</param-name>
+			<param-value>ar.edu.unq.dopplereffect.presentation.App</param-value>
 		</init-param>
 	</filter>
 

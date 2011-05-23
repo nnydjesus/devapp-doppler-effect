@@ -3,6 +3,8 @@ package ar.edu.unq.dopplereffect.presentation.component;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEventSink;
 import org.apache.wicket.markup.html.form.Form;
 
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
@@ -25,6 +27,11 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
     private final Component ajaxTarget;
 
     private T model;
+    
+    public ReflectionAjaxButton(final String id, final Form<T> form, final Component ajaxTarget) {
+    	this(id, id, form, ajaxTarget);
+    	
+    }
 
     public ReflectionAjaxButton(final String id, final String action, final Form<T> form, final Component ajaxTarget) {
         super(id);
@@ -42,4 +49,10 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
     protected void execute() {
         ReflectionUtils.invokeMethod(this.model, this.action);
     }
+
+	@Override
+	protected void onError(AjaxRequestTarget arg0, Form<?> arg1) {
+		//Hacer algo cuando hay un error
+		
+	}
 }

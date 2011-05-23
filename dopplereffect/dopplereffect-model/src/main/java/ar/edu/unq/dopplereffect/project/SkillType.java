@@ -29,6 +29,11 @@ public class SkillType extends Entity {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public int hashCode() {
         int prime = 31;
         int result = 1;
@@ -37,18 +42,23 @@ public class SkillType extends Entity {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (this.getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
+        }
         SkillType other = (SkillType) obj;
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
+        }
         return true;
     }
 }

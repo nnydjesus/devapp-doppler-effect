@@ -124,7 +124,7 @@ public class ProjectTest {
         final IntervalDurationStrategy intervalTwoMonth = new IntervalDurationStrategy(new Interval(datebase,
                 DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE)));
 
-        int effortByEmployee = ProjectHelper.daysToHoursEffort(intervalTwoMonth.getAmountOfDays());
+        long effortByEmployee = ProjectHelper.daysToHoursEffort(intervalTwoMonth.getAmountOfDays());
 
         final IntervalDurationStrategy intervalOneMonth = new IntervalDurationStrategy(new Interval(datebase,
                 DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE).plusDays((intervalTwoMonth.getAmountOfDays() - 1) / 2)));

@@ -12,7 +12,7 @@ public class ProjectBuilder {
         this.setProyect(new Project(new ProjectAssignmentStrategy()));
     }
 
-    public ProjectBuilder withEstimatedEffort(final int effort) {
+    public ProjectBuilder withEstimatedEffort(final long effort) {
         proyect.setMaxEffort(effort);
         return this;
     }

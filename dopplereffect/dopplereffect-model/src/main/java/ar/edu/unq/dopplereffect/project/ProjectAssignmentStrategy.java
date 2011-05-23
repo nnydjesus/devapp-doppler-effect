@@ -13,11 +13,12 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
  */
-public class ProjectAssignmentStrategy extends Entity {
+public class ProjectAssignmentStrategy extends Entity implements IProjectAssignmentStrategy {
     private static final long serialVersionUID = 1L;
 
     private transient Project project;
 
+    @Override
     public void manualAssignment(final Project anProject, final Employee employee,
             final IntervalDurationStrategy interval) {
         project = anProject;
@@ -32,6 +33,7 @@ public class ProjectAssignmentStrategy extends Entity {
         employee.addAssignment(projectAssignment);
     }
 
+    @Override
     public void automaticAssignment(final Project anProject, final List<Employee> employees,
             final IntervalDurationStrategy intervalDurationStrategy) {
 
@@ -74,7 +76,7 @@ public class ProjectAssignmentStrategy extends Entity {
             throw new UserException("El empleado no esta libre en el intervalo " + interval);
         }
         if (project.validateEffort(interval)) {
-            int hoursAssignment = project.getHoursOfEffort(interval);
+            long hoursAssignment = project.getHoursOfEffort(interval);
             project.plusEffort(hoursAssignment);
         } else {
             throw new UserException("Se ha alcanzado el maximo de horas de esfuerzo del proyecto");

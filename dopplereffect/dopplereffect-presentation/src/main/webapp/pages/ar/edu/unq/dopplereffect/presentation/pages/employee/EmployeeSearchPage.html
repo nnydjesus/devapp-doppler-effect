@@ -9,16 +9,16 @@
   
   <body>
     <a wicket:id="back" href="#" >Atrás</a>    
-    <form wicket:id="searchForm">
+    <form wicket:id="searchEmployeeForm">
       <table align="center" id="panel">
 	    <tr>
           <td align="right">Name::</td>
-          <td align="left"> <input wicket:id="searchName" type="text" name="name"/> </td>
+          <td align="left"> <input wicket:id="searchByName" type="text" name="name"/> </td>
         </tr>
         
         <tr>
           <td colspan="2"><input type="submit" wicket:id="search" value="Buscar" />          
-          <input type="submit" wicket:id="newEmployeeLink" value="Nuevo Empleado" /></td>
+          <input type="submit" wicket:id="newEmployee" value="Nuevo Empleado" /></td>
         </tr>
       </table>
     </form>
@@ -26,37 +26,8 @@
    
     <br/><br/>
     
-    <div wicket:id="resultSection"  class="resultSecction">
-      <table align="center" id="tabla" BORDER>
-	        <th>First Name</th>
-	        <th>Last Name</th>
-	        <th>DNI</th>
-	        <th>Phone Number</th>
-	        <th>Email</th>
-	        <th>Join Date</th>
-	        <th>Edit</th>
-	        <th>Delete</th>
-	        
-        <tr align="center" wicket:id="results" id="main" width="90%" >
-          <td id="main"><span wicket:id="firstName"  ></span> </td>
-          <td id="main"><span wicket:id="lastName"></span></td>          
-          <td id="main"><span wicket:id="dni"></span></td>
-          <td id="main"><span wicket:id="phoneNumber"  ></span> </td>
-          <td id="main"><span wicket:id="email"></span></td>          
-          <td id="main"><span wicket:id="joinDate"></span></td>
-        
-	      <td>
-          		<a wicket:id="edit" href="#" >
-                	<image src="Images/edit.png" alt="modificar datos del cliente" />
-                </a> 
-          </td>
-          <td>
-          		<a wicket:id="delete" href="#" >
-            		<image src="Images/delete.png" alt="eliminar el cliente" />
-                </a>
-           </td>
-        </tr>
-      </table>
+        <div wicket:id="resultSecction"  class="resultSecction">
+   			 <table class="tabla" align="center" id="tabla" BORDER wicket:id="results">[table]</table>
     </div>
 
   </body>
