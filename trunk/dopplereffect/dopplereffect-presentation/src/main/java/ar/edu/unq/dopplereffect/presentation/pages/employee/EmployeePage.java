@@ -28,8 +28,4 @@ public class EmployeePage extends EntityPage<Employee> {
         form.add(new TextField<String>("dni"));
     }
 
-    @Override
-    protected String getFormWicketId() {
-        return "employeeForm";
-    }
 }

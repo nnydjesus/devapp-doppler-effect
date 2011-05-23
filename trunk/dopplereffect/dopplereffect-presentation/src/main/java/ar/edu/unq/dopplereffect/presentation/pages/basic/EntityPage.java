@@ -1,12 +1,12 @@
 package ar.edu.unq.dopplereffect.presentation.pages.basic;
 
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
-import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPage2;
 import ar.edu.unq.dopplereffect.presentation.search.Search;
 
 public abstract class EntityPage<T> extends NavigableWebPage<T> {
@@ -15,7 +15,7 @@ public abstract class EntityPage<T> extends NavigableWebPage<T> {
 
     private boolean editMode;
 
-    public EntityPage(final T model, final AbstractSearchPage2<T, ? extends Search<T>> previousPage,
+    public EntityPage(final T model, final WebPage previousPage,
             final boolean editMode) {
         super(model, previousPage);
         this.editMode = editMode;
@@ -26,7 +26,7 @@ public abstract class EntityPage<T> extends NavigableWebPage<T> {
         this.addButtons(form);
     }
 
-    public EntityPage(final T model, final AbstractSearchPage2<T, ? extends Search<T>> previousPage) {
+    public EntityPage(final T model, final WebPage previousPage) {
         this(model, previousPage, false);
     }
 
@@ -98,7 +98,7 @@ public abstract class EntityPage<T> extends NavigableWebPage<T> {
     }
 
     protected String getFormWicketId() {
-        return "form"; // default value
+        return getModelObject().getClass().getSimpleName().toLowerCase()+"Form"; // default value
     }
 
     /**

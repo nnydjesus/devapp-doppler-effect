@@ -5,6 +5,8 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
 
 import ar.edu.unq.dopplereffect.presentation.pages.employee.EmployeeSearchPage;
+import ar.edu.unq.dopplereffect.presentation.pages.project.ProjectPage;
+import ar.edu.unq.dopplereffect.presentation.pages.project.ProjectSearchPage;
 
 /**
  * Pagina de inicio de la aplicacion, que contiene los links a todas las otras
@@ -44,7 +46,7 @@ public class MainPage extends WebPage {
 
             @Override
             public void onClick() {
-                MainPage.this.setResponsePage(new ABMProject(new SearchProjectPage(MainPage.this)));
+                MainPage.this.setResponsePage(new ProjectPage(new ProjectSearchPage(MainPage.this)));
             }
         };
     }
