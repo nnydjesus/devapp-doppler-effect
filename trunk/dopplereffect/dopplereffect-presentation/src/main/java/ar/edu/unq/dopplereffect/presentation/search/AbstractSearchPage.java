@@ -4,7 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 
-import ar.edu.unq.dopplereffect.presentation.abm.AbstractWebPage;
+import ar.edu.unq.dopplereffect.presentation.pages.basic.AbstractWebPage;
 
 public abstract class AbstractSearchPage<T> extends AbstractWebPage<T> {
 

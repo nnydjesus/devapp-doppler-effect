@@ -3,15 +3,13 @@ package ar.edu.unq.dopplereffect.service;
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import ar.edu.unq.dopplereffect.repositories.Repository;
 
-@org.springframework.stereotype.Service("service")
+@org.springframework.stereotype.Service
 public class ServiceImpl<T> implements Service<T>, Serializable {
-    private static final long serialVersionUID = 1L;
 
-    @Autowired
+    private static final long serialVersionUID = -806879556462184789L;
+
     private Repository<T> repository;
 
     @Override

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public abstract class Search<T> implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private Collection<T> results = new ArrayList<T>();

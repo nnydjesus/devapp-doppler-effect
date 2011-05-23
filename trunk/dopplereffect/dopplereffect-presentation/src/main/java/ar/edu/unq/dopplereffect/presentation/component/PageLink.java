@@ -3,7 +3,7 @@ package ar.edu.unq.dopplereffect.presentation.component;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
 
-import ar.edu.unq.dopplereffect.presentation.pages.WebPageFactory;
+import ar.edu.unq.dopplereffect.presentation.pages.basic.WebPageFactory;
 
 public class PageLink extends Link {
     private static final long serialVersionUID = 1L;

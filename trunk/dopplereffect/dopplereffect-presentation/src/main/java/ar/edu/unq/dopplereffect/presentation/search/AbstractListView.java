@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -12,8 +13,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 
-import ar.edu.unq.dopplereffect.presentation.abm.ABMAbstract;
-import ar.edu.unq.dopplereffect.presentation.abm.AbstractWebPage;
+import ar.edu.unq.dopplereffect.presentation.pages.basic.AbstractWebPage;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
@@ -32,10 +32,10 @@ public class AbstractListView<T, B> extends ListView<T> {
 
     private List<String> fields;
 
-    private Class<? extends ABMAbstract<T>> abmClass;
+    private Class<? extends WebPage> abmClass;
 
     public AbstractListView(final String id, final Class<T> clazz, final List<String> fields,
-            final Class<? extends ABMAbstract<T>> abm) {
+            final Class<? extends WebPage> abm) {
         super(id);
         this.setClassModel(clazz);
         this.fields = fields;
@@ -43,12 +43,13 @@ public class AbstractListView<T, B> extends ListView<T> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected IModel getListItemModel(final IModel listViewModel, final int index) {
         return new CompoundPropertyModel(((List<?>) listViewModel.getObject()).get(index));
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     protected void populateItem(final ListItem<T> item) {
 
         for (String field : fields) {
@@ -60,7 +61,7 @@ public class AbstractListView<T, B> extends ListView<T> {
 
             @Override
             public void onClick() {
-                ABMAbstract<T> page = ReflectionUtils.instanciate(abmClass, AbstractListView.this.getParentPage(), this
+                WebPage page = ReflectionUtils.instanciate(abmClass, AbstractListView.this.getParentPage(), this
                         .getParent().getDefaultModelObject());
                 this.setResponsePage(page);
             }
@@ -103,7 +104,7 @@ public class AbstractListView<T, B> extends ListView<T> {
         this.search = search;
     }
 
-    public void setClassModel(Class<T> classModel) {
+    public void setClassModel(final Class<T> classModel) {
         this.classModel = classModel;
     }
 

@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.presentation.pages;
+package ar.edu.unq.dopplereffect.presentation.pages.basic;
 
 import java.io.Serializable;
 
