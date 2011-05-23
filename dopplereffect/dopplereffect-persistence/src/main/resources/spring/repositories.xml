@@ -11,4 +11,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean id="employeeRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.EmployeeRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 </beans>

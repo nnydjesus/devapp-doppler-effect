@@ -7,32 +7,39 @@ import org.apache.wicket.markup.html.form.Form;
 
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-public class SuperAjaxButton<T> extends AjaxButton {
+/**
+ * Boton Ajax que ejecuta un metodo dado en el modelo cuando es presionado.
+ */
+public class ReflectionAjaxButton<T> extends AjaxButton {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 8596073328172540060L;
 
+    /**
+     * Metodo a ejecutarse en el modelo.
+     */
     private String action;
 
+    /**
+     * Componente a agregar via Ajax.
+     */
     private final Component ajaxTarget;
 
     private T model;
 
-    public SuperAjaxButton(final String id, final Form<T> form, final Component ajaxTarget) {
+    public ReflectionAjaxButton(final String id, final String action, final Form<T> form, final Component ajaxTarget) {
         super(id);
-        this.action = id;
+        this.action = action;
         this.ajaxTarget = ajaxTarget;
         this.model = form.getModel().getObject();
     }
 
     @Override
     protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-        // logica de negocio.
-        this.execute(this.model);
-        // actualizar la seccion de resultado en el cliente.
+        this.execute();
         target.addComponent(this.ajaxTarget);
     }
 
-    protected void execute(final T model) {
-        ReflectionUtils.invokeMethod(model, this.action);
+    protected void execute() {
+        ReflectionUtils.invokeMethod(this.model, this.action);
     }
 }

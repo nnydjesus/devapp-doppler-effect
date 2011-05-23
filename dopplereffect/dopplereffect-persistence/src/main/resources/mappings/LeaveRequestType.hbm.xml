@@ -10,7 +10,7 @@
 		<id name="id" type="java.lang.Long" >
 			<generator class="native" />
 		</id>
-		
+				
 		<discriminator column="subclass_type" type="string"	/>
 		
 		<subclass name="LeaveRequestCustomType" discriminator-value="LeaveRequestCustomType" >

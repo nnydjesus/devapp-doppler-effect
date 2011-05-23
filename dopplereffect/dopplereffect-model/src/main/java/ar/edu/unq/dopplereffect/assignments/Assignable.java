@@ -29,6 +29,9 @@ public interface Assignable extends IEntity {
      */
     boolean overlapsAssignment(Interval interval);
 
+    /**
+     * Similar a {@code overlapsAssignment } pero verifica que no haya
+     * interseccion con un {@link IntervalDurationStrategy}.
+     */
     boolean overlapsAssignment(IntervalDurationStrategy interval);
-
 }

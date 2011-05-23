@@ -10,8 +10,13 @@ public class User extends Entity {
     private String password;
 
     public User(final String userName, final String password2) {
+        super();
         name = userName;
         password = password2;
+    }
+
+    public User() {
+        super();
     }
 
     public void setName(final String name) {

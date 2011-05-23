@@ -19,7 +19,7 @@ public class Login extends StylePage {
     public Login() {
         form = new LoginForm("loginForm", this);
         form.setCallBack(this.getCallBack());
-        pageXXX = new SearchProjectPage(this);
+        pageXXX = new MainPage();
         this.add(form);
     }
 

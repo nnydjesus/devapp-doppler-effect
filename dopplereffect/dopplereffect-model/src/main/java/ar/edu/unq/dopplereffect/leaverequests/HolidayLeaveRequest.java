@@ -1,7 +1,7 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import org.apache.commons.collections15.OrderedMap;
-import org.apache.commons.collections15.map.ListOrderedMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
@@ -11,17 +11,18 @@ import ar.edu.unq.dopplereffect.exceptions.UserException;
  * validar.
  */
 public class HolidayLeaveRequest extends LeaveRequestCustomType {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 772168027727676027L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    private OrderedMap<Integer, Integer> configuration;
+    private List<HolidayDaysConfiguration> configuration;
 
     /* *************************** CONSTRUCTORS *************************** */
 
     public HolidayLeaveRequest(final int minLimit, final int maxLimit) {
         super();
-        configuration = new ListOrderedMap<Integer, Integer>();
+        configuration = new LinkedList<HolidayDaysConfiguration>();
         this.setReason("Holiday");
         this.setMinLimit(minLimit);
         this.setMaxLimit(maxLimit);
@@ -33,11 +34,11 @@ public class HolidayLeaveRequest extends LeaveRequestCustomType {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public OrderedMap<Integer, Integer> getConfiguration() {
+    public List<HolidayDaysConfiguration> getConfiguration() {
         return configuration;
     }
 
-    public void setConfiguration(final OrderedMap<Integer, Integer> configuration) {
+    public void setConfiguration(final List<HolidayDaysConfiguration> configuration) {
         this.configuration = configuration;
     }
 
@@ -50,29 +51,52 @@ public class HolidayLeaveRequest extends LeaveRequestCustomType {
 
     /**
      * Configura los dias correspondientes de vacaciones a cada año de
-     * antiguedad.
+     * antiguedad. Esta es la unica forma permitida de configurar esta licencia,
+     * puesto que mantiene un orden para determinar luego los dias
+     * correspondientes.
      */
     public void configure(final int minYear, final int correspondingDays) {
-        this.getConfiguration().put(minYear, correspondingDays);
+        HolidayDaysConfiguration newConfig = new HolidayDaysConfiguration(minYear, correspondingDays);
+        for (int i = 0; i < this.getConfiguration().size(); i++) {
+            if (this.getConfiguration().get(i).getMinYear() == minYear) {
+                // si ya existe la conf, la reemplaza
+                this.getConfiguration().set(i, newConfig);
+            }
+            if (this.getConfiguration().get(i).getMinYear() > minYear) {
+                // inserta de manera ordenada
+                this.getConfiguration().add(i, newConfig);
+            }
+        }
+        // si no hay ninguna, se agrega directamente
+        this.getConfiguration().add(newConfig);
     }
 
     /**
      * Dado un año de antiguedad, retorna los dias correspondientes de
-     * vacaciones.
+     * vacaciones que corresponden. Precondicion: asume que la configuracion de
+     * dias se encuentra ordenada, satisfecho por el metodo configure();
      */
     public int getCorrespondingDays(final int year) {
-        for (int y : this.getConfiguration().keySet()) {
-            if (y == year) {
-                return this.getConfiguration().get(y);
+        HolidayDaysConfiguration previous = null;
+        for (HolidayDaysConfiguration config : this.getConfiguration()) {
+            if (config.getMinYear() == year) {
+                // si el año coincide exactamente
+                return config.getCorrespondingDays();
             }
-            if (y > year) {
-                return this.getConfiguration().get(this.getConfiguration().previousKey(y));
+            if (config.getMinYear() > year) {
+                // si se paso, retorna el anterior
+                if (previous == null) {
+                    throw new UserException("No existe configuracion para el año dado");
+                } else {
+                    return previous.getCorrespondingDays();
+                }
             }
+            previous = config;
         }
         if (this.getConfiguration().isEmpty()) {
             throw new UserException("No existe configuracion para el año dado");
         } else {
-            return this.getConfiguration().get(this.getConfiguration().lastKey());
+            return this.getConfiguration().get(this.getConfiguration().size() - 1).getCorrespondingDays();
         }
     }
 
