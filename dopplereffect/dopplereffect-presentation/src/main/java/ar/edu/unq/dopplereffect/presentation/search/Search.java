@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.unq.dopplereffect.service.Service;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-public class Search<T> implements Serializable {
+public abstract class Search<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final int PAGE_SIZE = 4;
@@ -24,30 +25,35 @@ public class Search<T> implements Serializable {
     }
 
     public void setResults(final List<T> resultado) {
+        results.removeAll(results);
+        results.addAll(resultado);
         this.results = resultado;
     }
 
     public void save(final T entity) {
-        // entityHome.getInstance().agregar(entity);
+        this.getService().save(entity);
         this.getResults().add(entity);
         this.search();
     }
 
     public void search() {
-        this.getResults();
+        this.setResults(this.getService().searchAll());
         // this.setResultado(entityHome.getInstance().buscarByExample(this.crearExample()));
     }
 
     public void remove(final T entity) {
+        this.getService().delete(entity);
         // entityHome.getInstance().eliminar(entity);
         this.getResults().remove(entity);
     }
 
     public void update(final T entity) {
+        this.getService().update(entity);
         // entityHome.getInstance().actualizar(entity);
-        this.remove(entity);
-        this.save(entity);
-        this.search();
+        // this.remove(entity);
+        // this.save(entity);
+        this.results.remove(entity);
+        this.results.add(entity);
     }
 
     public T createExample() {
@@ -61,5 +67,9 @@ public class Search<T> implements Serializable {
     public void setEntityType(final Class<T> entityType) {
         this.entityType = entityType;
     }
+
+    public abstract void setService(Service<T> service);
+
+    public abstract Service<T> getService();
 
 }
