@@ -2,6 +2,7 @@ package ar.edu.unq.dopplereffect.presentation.panel.utils;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.link.Link;
+import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
@@ -30,6 +31,7 @@ public class PanelCallbackLink extends Link<Object> {
     public PanelCallbackLink(final String id, final CallBack<Component> callBack,
             final WebComponentFactory<Component> component) {
         super(id);
+        this.add(new ButtonBehavior());
         this.setComponent(component);
         this.setCallBack(callBack);
     }

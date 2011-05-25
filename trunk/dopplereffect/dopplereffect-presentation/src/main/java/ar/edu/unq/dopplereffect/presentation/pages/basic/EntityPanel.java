@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
@@ -36,8 +37,8 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
     }
 
     protected void addButtons(final Form<T> form) {
-        form.add(this.makeAcceptButton());
-        form.add(this.makeCancelButton());
+        form.add(this.makeAcceptButton().add(new ButtonBehavior().setLabel("Aceptar")));
+        form.add(this.makeCancelButton().add(new ButtonBehavior().setLabel("Cancelar")));
     }
 
     private Button makeAcceptButton() {

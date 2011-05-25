@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.presentation.pages.Home;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
@@ -55,7 +56,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         form.add(this.getUserIdField());
         form.add(this.getPassField());
         form.add(this.setFeedbackPanel(new FeedbackPanel("feedbackPanel")));
-        form.add(this.createSubmitButton());
+        form.add(this.createSubmitButton().add(new ButtonBehavior()));
         return form;
     }
 
@@ -77,7 +78,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
             @Override
             protected void onError(final AjaxRequestTarget target, final Form<?> form) {
-                target.add(LoginPanel.this.getFeedbackPanel());
+                target.addComponent(LoginPanel.this.getFeedbackPanel());
             }
         };
     }
