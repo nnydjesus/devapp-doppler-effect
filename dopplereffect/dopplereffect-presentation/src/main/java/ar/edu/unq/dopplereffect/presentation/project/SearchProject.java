@@ -19,11 +19,19 @@ public class SearchProject extends Search<Project> {
     }
 
     public String getSearchByName() {
-        return name;
+        return getName();
     }
 
     public void setSearchByName(final String aName) {
-        name = aName;
+        setName(aName);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

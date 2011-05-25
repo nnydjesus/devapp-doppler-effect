@@ -4,6 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Form;
+import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
@@ -28,6 +29,7 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
 
     public ReflectionAjaxButton(final String id, final Form<T> form, final Component ajaxTarget) {
         this(id, id, form, ajaxTarget);
+        this.add(new ButtonBehavior());
 
     }
 
@@ -41,7 +43,7 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
     @Override
     protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
         this.execute();
-        target.add(this.getAjaxTarget());
+        target.addComponent(this.getAjaxTarget());
     }
 
     protected void execute() {

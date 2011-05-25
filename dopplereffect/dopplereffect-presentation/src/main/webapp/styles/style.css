@@ -162,6 +162,16 @@ body {
 	height: 400px;
 	padding-left: 15px;
 	padding-right: 15px;
+	font-size: 15px;
+	color: #003366;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#login {
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 25px;
+	color: #003366;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 #content_bottom {
@@ -240,90 +250,135 @@ table.dataview {
 	border-bottom: 1px solid #0079d6;
 	font-size: 1em;
 	font-family: arial;
-	border:1px solid #CCC;
-	}
-	
-table.dataview caption { text-align: left; }
-table.dataview tr { padding-top: 2px; padding-bottom: 2px; }
-table.dataview tr.even { background-color: #ffebcd; }
-table.dataview tr.odd { background-color: #fff; }
-table.dataview tr td { 
-	padding-left: 8px; padding-right: 30px; 
- 	border : 1px solid #CCC;
-	border-collapse  : collapse;
- 	font: small/1.5 "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
+	border: 1px solid #CCC;
 }
 
-table.dataview tr th { color: black; padding-top: 3px; padding-bottom: 3px; padding-left: 8px; padding-right: 30px; background-color: #c1e4ff; border-bottom: 1px solid #0079d6; border-top: 1px solid #0079d6; text-align: left; white-space: nowrap; vertical-align: middle;}
+table.dataview caption {
+	text-align: left;
+}
 
-table.dataview tr th { background-position: right; background-repeat:no-repeat; }
+table.dataview tr {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+table.dataview tr.even {
+	background-color: #ffebcd;
+}
+
+table.dataview tr.odd {
+	background-color: #fff;
+}
+
+table.dataview tr td {
+	padding-left: 8px;
+	padding-right: 30px;
+	border: 1px solid #CCC;
+	border-collapse: collapse;
+	font: small/1.5 "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica,
+		sans-serif;
+}
+
+table.dataview tr th {
+	color: black;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 8px;
+	padding-right: 30px;
+	background-color: #c1e4ff;
+	border-bottom: 1px solid #0079d6;
+	border-top: 1px solid #0079d6;
+	text-align: left;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+table.dataview tr th {
+	background-position: right;
+	background-repeat: no-repeat;
+}
+
 table.dataview tr th.wicket_orderDown {
-	background-color: #87cbff; background-image: url(displaytag/img/arrow_down.png); }
+	background-color: #87cbff;
+	background-image: url(displaytag/img/arrow_down.png);
+}
+
 table.dataview tr th.wicket_orderUp {
-	background-color: #87cbff; background-image: url(displaytag/img/arrow_up.png); }
+	background-color: #87cbff;
+	background-image: url(displaytag/img/arrow_up.png);
+}
+
 table.dataview tr th.wicket_orderNone {
 	background-image: url(displaytag/img/arrow_off.png);
 }
-table.dataview tr th a { font-weight: normal; }
-table.dataview #message { padding-left: 3px; }
-table.dataview caption { padding-bottom: 2px; }
 
+table.dataview tr th a {
+	font-weight: normal;
+}
 
-table.dataview thead th, tbody th{
-	background : #FFF url(th_bck.gif) repeat-x;
-	color: #666;  
+table.dataview #message {
+	padding-left: 3px;
+}
+
+table.dataview caption {
+	padding-bottom: 2px;
+}
+
+table.dataview thead th,tbody th {
+	background: #FFF url(th_bck.gif) repeat-x;
+	color: #666;
 	padding: 5px 10px;
 	border-left: 1px solid #CCC;
 }
 
-table.dataview tbody th{
-  background: #fafafb;
-  border-top: 1px solid #CCC;
-  text-align: left;
-  font-weight: normal;
-}
-
-table.dataview tbody tr td{
-	padding: 5px 10px;
-  	color: #666;
-}
-
-table.dataview tbody tr:hover{
-  background: #FFF url(tr_bck.gif) repeat;
-}
-
-table.dataview tbody tr:hover td{
-  color: #454545;
-}
-table.dataview tfoot td,tfoot th{
- 	border-left: none;
+table.dataview tbody th {
+	background: #fafafb;
 	border-top: 1px solid #CCC;
-	padding: 4px;
-  	background: #FFF url(foot_bck.gif) repeat;
- 	color: #666;
+	text-align: left;
+	font-weight: normal;
 }
-caption{
-	text-align            : left;
-	font-size             : 120%;
-	padding               : 10px 0;
-	color                 : #666;
-}
-table.dataview tr th a:link{
+
+table.dataview tbody tr td {
+	padding: 5px 10px;
 	color: #666;
 }
-table.dataview tr th a:visited{
-	color #666;
+
+table.dataview tbody tr:hover {
+	background: #FFF url(tr_bck.gif) repeat;
 }
-table.dataview tr th a:hover{
-	color : #003366;
+
+table.dataview tbody tr:hover td {
+	color: #454545;
+}
+
+table.dataview tfoot td,tfoot th {
+	border-left: none;
+	border-top: 1px solid #CCC;
+	padding: 4px;
+	background: #FFF url(foot_bck.gif) repeat;
+	color: #666;
+}
+
+caption {
+	text-align: left;
+	font-size: 120%;
+	padding: 10px 0;
+	color: #666;
+}
+
+table.dataview tr th a:link {
+	color: #666;
+}
+
+table.dataview tr th a:visited {color #666;
+	
+}
+
+table.dataview tr th a:hover {
+	color: #003366;
 	text-decoration: none;
 }
-table.dataview tr th a:active{
+
+table.dataview tr th a:active {
 	color: #003366;
-}
-#panel  {
-	font-size:0.825em;
-	color:#003366;
-	background-color:#355664;
-	font-family:Arial, Helvetica, sans-serif;
 }

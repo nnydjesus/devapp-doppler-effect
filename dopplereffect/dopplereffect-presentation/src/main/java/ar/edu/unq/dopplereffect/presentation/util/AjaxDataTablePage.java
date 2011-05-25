@@ -12,12 +12,14 @@ import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulato
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import ar.edu.unq.dopplereffect.presentation.panel.ActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.SortableAjax;
 import ar.edu.unq.dopplereffect.presentation.search.Search;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
@@ -39,6 +41,8 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
 
     private AjaxFallbackDefaultDataTable<T> ajaxdataTable;
 
+    private WebMarkupContainer sortableAjaxWicket;
+
     public AjaxDataTablePage(final String id, final String sortName, final Search<T> aSearch,
             final CallBack<Component> aCallBack, final List<String> fields, final Class<? extends Component> abm) {
 
@@ -50,7 +54,7 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
         ArrayList<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
         for (String field : fields) {
-            columns.add(new PropertyColumn<T>(new Model<String>(StringUtils.capitalize(field)), field));
+            columns.add(createPropertyColumn(field));
         }
 
         columns.add(new AbstractColumn<T>(new Model<String>("Edit")) {
@@ -86,15 +90,28 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
 
                     @Override
                     public void onAction(final AjaxRequestTarget target) {
-                        AjaxDataTablePage.this.getBuscador().remove(rowModel.getObject());
-                        target.add(AjaxDataTablePage.this.getAjaxdataTable());
+                        AjaxDataTablePage.this.getSearch().remove(rowModel.getObject());
+                        target.addComponent(AjaxDataTablePage.this.getAjaxdataTable());
                     }
                 });
             }
         });
+        //
 
         this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(id, columns, new GenericSortableDataProvider<T>(this
-                .getBuscador().getResults(), sortName), Search.PAGE_SIZE));
+                .getSearch().getResults(), sortName), Search.PAGE_SIZE));
+
+        this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
+        SortableAjax sortableAjaxBehavior = new SortableAjax();
+        sortableAjaxBehavior.getSortableBehavior().setConnectWith(".mark");
+
+        this.getSortableAjaxWicket().add(sortableAjaxBehavior);
+        this.getSortableAjaxWicket().add(this.getAjaxdataTable());
+
+    }
+
+    private PropertyColumn<T> createPropertyColumn(String field) {
+        return new PropertyColumn<T>(new Model<String>(StringUtils.capitalize(field)), field);
     }
 
     public Component getResultSection() {
@@ -113,7 +130,7 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
         this.parentPage = page;
     }
 
-    public Search<T> getBuscador() {
+    public Search<T> getSearch() {
         return search;
     }
 
@@ -143,6 +160,14 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
 
     public Class<? extends Component> getAbmClass() {
         return abmClass;
+    }
+
+    public void setSortableAjaxWicket(final WebMarkupContainer sortableAjaxWicket) {
+        this.sortableAjaxWicket = sortableAjaxWicket;
+    }
+
+    public WebMarkupContainer getSortableAjaxWicket() {
+        return sortableAjaxWicket;
     }
 
 }

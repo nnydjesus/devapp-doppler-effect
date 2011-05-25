@@ -20,7 +20,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<wicket.version>1.5-M3</wicket.version>
+		<wicket.version>1.4.17</wicket.version>
 		<jetty.version>6.1.4</jetty.version>
 	</properties>
 
@@ -107,25 +107,38 @@
 			<artifactId>wicket</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.wicket</groupId> -->
-<!-- 			<artifactId>wicket-spring</artifactId> -->
-<!-- 			<version>${wicket.version}</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.apache.wicket</groupId> -->
+		<!-- <artifactId>wicket-spring</artifactId> -->
+		<!-- <version>${wicket.version}</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
 
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.apache.wicket</groupId> -->
+<!-- 			<artifactId>wicket-util</artifactId> -->
+<!-- 			<version>${wicket.version}</version> -->
+<!-- 		</dependency> -->
+
 		<dependency>
-			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket-util</artifactId>
-			<version>${wicket.version}</version>
+			<groupId>org.odlabs.wiquery</groupId>
+			<artifactId>wiquery</artifactId>
+			<version>1.2.3</version>
 		</dependency>
 
 	</dependencies>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>wiquery-maven-repo</id>
+			<url>http://wiquery.googlecode.com/svn/repo</url>
+		</pluginRepository>
+	</pluginRepositories>
+	
 	<repositories>
 		<repository>
 			<id>sonatype-nexus-snapshots</id>
@@ -133,6 +146,11 @@
 			<releases>
 				<enabled>false</enabled>
 			</releases>
+		</repository>
+		<repository>
+			<id>wiquery-maven-repo</id>
+			<name>WiQuery repository</name>
+			<url>https://wiquery.googlecode.com/svn/repo/</url>
 		</repository>
 	</repositories>
 </project>

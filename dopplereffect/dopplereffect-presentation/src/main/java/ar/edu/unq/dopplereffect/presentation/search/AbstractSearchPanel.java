@@ -80,7 +80,7 @@ public class AbstractSearchPanel<T extends Search> extends AbstractCallbackPanel
         listView.setResultSection(panel);
         // listView.setSearch(this.getModelObject());
         listView.setParentPage(this);
-        panel.add(listView.getAjaxdataTable());
+        panel.add(listView.getSortableAjaxWicket());
         this.setAjaxSectionResult(panel);
     }
 
