@@ -12,24 +12,22 @@ import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulato
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import ar.edu.unq.dopplereffect.presentation.component.AbstractWebPage;
-import ar.edu.unq.dopplereffect.presentation.pages.ActionPanel;
-import ar.edu.unq.dopplereffect.presentation.pages.AjaxActionPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.ActionPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.search.Search;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
  */
-public class AjaxDataTablePage<T, B extends WebPage> implements Serializable{
+public class AjaxDataTablePage<T, B extends Component> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Component resultSection;
+    private Component resultSection;
 
     private B parentPage;
 
@@ -37,13 +35,16 @@ public class AjaxDataTablePage<T, B extends WebPage> implements Serializable{
 
     private List<String> fields;
 
-    private Class<? extends WebPage> abmClass;
+    private Class<? extends Component> abmClass;
 
     private AjaxFallbackDefaultDataTable<T> ajaxdataTable;
 
-    public AjaxDataTablePage(final String id, final String sortName,  final Search<T> search, final List<String> fields,
-            final Class<? extends WebPage> abm) {
+    private CallBack callBack;
 
+    public AjaxDataTablePage(final String id, final String sortName, final Search<T> search, final CallBack callBack,
+            final List<String> fields, final Class<? extends Component> abm) {
+
+        this.callBack = callBack;
         this.search = search;
         this.setFields(fields);
         this.abmClass = abm;
@@ -53,7 +54,7 @@ public class AjaxDataTablePage<T, B extends WebPage> implements Serializable{
         for (String field : fields) {
             columns.add(new PropertyColumn<T>(new Model<String>(StringUtils.capitalize(field)), field));
         }
-        
+
         columns.add(new AbstractColumn<T>(new Model<String>("Edit")) {
             private static final long serialVersionUID = 1L;
 
@@ -66,9 +67,10 @@ public class AjaxDataTablePage<T, B extends WebPage> implements Serializable{
 
                     @Override
                     public void onAction() {
-                    	WebPage page = ReflectionUtils.instanciate(abmClass,
+                        Component page = ReflectionUtils.instanciate(abmClass, "body",
                                 AjaxDataTablePage.this.getParentPage(), model.getObject(), true);
-                        this.setResponsePage(page);
+                        callBack.execute(page);
+                        // this.setResponsePage(page);
                     }
 
                 });
@@ -125,12 +127,12 @@ public class AjaxDataTablePage<T, B extends WebPage> implements Serializable{
         return ajaxdataTable;
     }
 
-	public void setFields(List<String> fields) {
-		this.fields = fields;
-	}
+    public void setFields(final List<String> fields) {
+        this.fields = fields;
+    }
 
-	public List<String> getFields() {
-		return fields;
-	}
+    public List<String> getFields() {
+        return fields;
+    }
 
 }

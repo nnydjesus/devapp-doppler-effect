@@ -1,39 +1,57 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements. See the NOTICE file distributed with this
- * work for additional information regarding copyright ownership. The ASF
- * licenses this file to You under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
 package ar.edu.unq.dopplereffect.presentation.pages;
 
-import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.Component;
+import org.apache.wicket.Page;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.panel.Panel;
 
-import ar.edu.unq.dopplereffect.presentation.component.PageLink;
-import ar.edu.unq.dopplereffect.presentation.pages.employee.EmployeeSearchPage;
-import ar.edu.unq.dopplereffect.presentation.pages.project.ProjectSearchPage;
-import ar.edu.unq.dopplereffect.presentation.pages.project.SkillSearchPage;
+import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.project.SkillSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.PageLink;
+import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 
 /**
  * Simple home page.
- * 
- * @author Jonathan Locke
  */
-public class Home extends WebPage {
+public class Home extends StylePage {
+    private static final long serialVersionUID = 1L;
 
-    public Home() {
-        this.add(new PageLink("projects", new ProjectSearchPage(this)));
-        this.add(new PageLink("skills", new SkillSearchPage(this)));
-        this.add(new PageLink("employee", new EmployeeSearchPage(this)));
+    public Home(final Page parent) {
+        CallBack callback = this.generateCallback(new AjaxRequestTarget(this));
+        this.add(this.createPanelLink("projects", new ProjectSearchPanel("body", callback)));
+        this.add(this.createPanelLink("skills", new SkillSearchPanel("body", callback)));
+        this.add(this.createPanelLink("employee", new EmployeeSearchPanel("body", callback)));
+        this.add(new PageLink("logout", parent));
     }
-    // Nothing in here.
+
+    private Component createPanelLink(final String id, final Panel panel) {
+        return new AjaxLink(id) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(final AjaxRequestTarget target) {
+                Home.this.generateCallback(target).execute(panel);
+            }
+
+        };
+    }
+
+    private CallBack generateCallback(final AjaxRequestTarget ajaxTarget) {
+        return new CallBack<Component>() {
+
+            private AjaxRequestTarget target = ajaxTarget;
+
+            @Override
+            public void execute(final Component component) {
+                if (component != null) {
+                    Home.this.setBody(component);
+                } else {
+                    Home.this.setDefaultBody();
+                }
+                target.add(Home.this.getAjaxPanel());
+            }
+        };
+    }
 }

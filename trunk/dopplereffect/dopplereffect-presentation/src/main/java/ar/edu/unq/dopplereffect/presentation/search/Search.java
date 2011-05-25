@@ -9,7 +9,7 @@ import ar.edu.unq.tpi.util.common.ReflectionUtils;
 public abstract class Search<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public static final int PAGE_SIZE = 2;
+    public static final int PAGE_SIZE = 4;
 
     private List<T> results = new ArrayList<T>();
 
