@@ -18,11 +18,19 @@ public class SearchSkill extends Search<Skill> {
     }
 
     public String getSearchByName() {
-        return name;
+        return this.getName();
     }
 
     public void setSearchByName(final String aName) {
-        name = aName;
+        this.setName(aName);
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

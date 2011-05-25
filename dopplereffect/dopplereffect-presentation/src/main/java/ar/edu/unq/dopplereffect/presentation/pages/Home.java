@@ -15,11 +15,12 @@ import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 /**
  * Simple home page.
  */
-public class Home extends StylePage {
+public class Home extends StylePage<Component> {
     private static final long serialVersionUID = 1L;
 
     public Home(final Page parent) {
-        CallBack callback = this.generateCallback(new AjaxRequestTarget(this));
+        super();
+        final CallBack<Component> callback = this.generateCallback(new AjaxRequestTarget(this));
         this.add(this.createPanelLink("projects", new ProjectSearchPanel("body", callback)));
         this.add(this.createPanelLink("skills", new SkillSearchPanel("body", callback)));
         this.add(this.createPanelLink("employee", new EmployeeSearchPanel("body", callback)));
@@ -27,7 +28,7 @@ public class Home extends StylePage {
     }
 
     private Component createPanelLink(final String id, final Panel panel) {
-        return new AjaxLink(id) {
+        return new AjaxLink<Object>(id) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -38,8 +39,9 @@ public class Home extends StylePage {
         };
     }
 
-    private CallBack generateCallback(final AjaxRequestTarget ajaxTarget) {
+    protected CallBack<Component> generateCallback(final AjaxRequestTarget ajaxTarget) {
         return new CallBack<Component>() {
+            private static final long serialVersionUID = 1L;
 
             private AjaxRequestTarget target = ajaxTarget;
 

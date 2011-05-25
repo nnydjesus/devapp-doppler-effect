@@ -1,25 +1,33 @@
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="styles/style.css" />
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Login</title>
-	</head>
-	
-	<body>
-		<form wicket:id="loginForm">
-			User Name <input type="text" wicket:id="name" /><br/>
-			Password <input	type="password" wicket:id="password" /><br/>
-			<div wicket:id="feedbackPanel" class="feedbackPanelERROR"></div>
-			<input type="submit" value="Login" wicket:id="submit"/>
-		</form>
-	</body>
-</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="styles/style.css" />
+<title>doopler-effect</title>
+</head>
 
-<!-- Funciona pero no me muesta con el css -->
-<!-- <wicket:extend> -->
-<!-- 	<form wicket:id="loginForm"> -->
-<!-- 		User Name <input type="text" wicket:id="userId" /><br/> -->
-<!-- 		Password <input	type="password" wicket:id="password" /><br/> -->
-<!-- 		<input type="submit" value="Login" /> -->
-<!-- 	</form> -->
-<!-- </wicket:extend> -->
+<body>
+	<div id="container">
+		<div id="header">
+			<h1>
+				<span wicket:id="header" /><span class="off"><span
+					wicket:id="header2" /></span>
+			</h1>
+		</div>
+
+		<div id="menu"></div>
+
+		<div id="leftmenu"></div>
+
+
+		<div id="content">
+
+			<div id="content_top"></div>
+			<div id="content_main" wicket:id="body">adsad</div>
+			<div id="content_bottom"></div>
+
+			<div id="footer" wicket:id="footer"></div>
+		</div>
+	</div>
+</body>
+</html>

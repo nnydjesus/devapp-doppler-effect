@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.link.Link;
 public class MainPage extends WebPage {
 
     public MainPage() {
+        super();
         this.add(this.createProjectLink());
         // this.add(new Label("projectABMLinkText", "GSHIFGUSD"));
         this.add(this.createEmployeeLink());
