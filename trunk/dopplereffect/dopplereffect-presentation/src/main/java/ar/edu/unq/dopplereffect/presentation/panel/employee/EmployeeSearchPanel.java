@@ -16,10 +16,10 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<EmployeeSearch> {
         super(id, parentPage, new EmployeeSearch(), Arrays.asList("firstName", "lastName", "dni", "phoneNumber",
                 "email"), EmployeePanel.class);
     }
-    
+
     @Override
     protected String getSortName() {
-    	return "personalData.firstName";
+        return "personalData.firstName";
     }
 
 }

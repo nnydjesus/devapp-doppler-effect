@@ -2,6 +2,7 @@ package ar.edu.unq.dopplereffect.presentation.pages.basic;
 
 import java.io.Serializable;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.link.Link;
 
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
@@ -25,8 +26,8 @@ public class NavigablePanel<T> extends AbstractPanel<T> {
         return previousPage;
     }
 
-    public void back() {
-        this.getPreviousPage().back();
+    public void back(final AjaxRequestTarget ajaxTarget) {
+        this.getPreviousPage().back(ajaxTarget);
     }
 
     public Link<Object> getBackLink(final String wicketId) {

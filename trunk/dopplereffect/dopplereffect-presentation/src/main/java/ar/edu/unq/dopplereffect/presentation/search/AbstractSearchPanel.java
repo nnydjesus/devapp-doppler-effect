@@ -13,10 +13,11 @@ import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
+import ar.edu.unq.dopplereffect.presentation.util.ITable;
 import ar.edu.unq.dopplereffect.presentation.util.ReflectionAjaxButton;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-public class AbstractSearchPanel<T extends Search> extends AbstractCallbackPanel<T> {
+public abstract class AbstractSearchPanel<T extends Search> extends AbstractCallbackPanel<T> {
     private static final long serialVersionUID = 1L;
 
     private Component ajaxSectionResult;
@@ -41,7 +42,7 @@ public class AbstractSearchPanel<T extends Search> extends AbstractCallbackPanel
 
     protected void init(final Form<T> formulario) {
         this.armarFormulario(formulario);
-        this.addResultSection();
+        this.addResultSection(this.selectITable());
         this.addButton(formulario);
         this.add(formulario);
         this.add(this.getAjaxSectionResult());
@@ -62,10 +63,28 @@ public class AbstractSearchPanel<T extends Search> extends AbstractCallbackPanel
         this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), (Component) null));
     }
 
-    @SuppressWarnings({ "unchecked" })
-    protected void addResultSection() {
-        this.addGeneralResultSection(new AjaxDataTablePage<T, Panel>(this.getTableWicketId(), this.getSortName(),
-                ((Search<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm()));
+    protected void addResultSection(final ITable iTable) {
+        this.addGeneralResultSection(iTable);
+        // this.addGeneralResultSection(this.createListView());
+        // this.addGeneralResultSection(createAjaxTable());
+    }
+
+    /**
+     * Selected in *createAjaxTable() *createListView()
+     */
+    protected ITable selectITable() {
+        return this.createAjaxTable();
+    }
+
+    protected CustomListView<T, Class<Component>> createListView() {
+        return new CustomListView<T, Class<Component>>(this.getTableWicketId(), this.getFields(), this.getAbm(),
+                this.getCallback());
+    }
+
+    @SuppressWarnings("unchecked")
+    protected AjaxDataTablePage<T, Panel> createAjaxTable() {
+        return new AjaxDataTablePage<T, Panel>(this.getTableWicketId(), this.getSortName(),
+                ((Search<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm());
     }
 
     protected void armarFormulario(final Form<T> formulario) {
@@ -73,7 +92,7 @@ public class AbstractSearchPanel<T extends Search> extends AbstractCallbackPanel
         // formulario.add(new TextField<String>("busquedaDireccion"));
     }
 
-    protected void addGeneralResultSection(final AjaxDataTablePage<T, Panel> listView) {
+    protected void addGeneralResultSection(final ITable listView) {
         WebMarkupContainer panel = new WebMarkupContainer(this.getResultSectionWicketId());
         // para que refresque por Ajax
         panel.setOutputMarkupId(true);

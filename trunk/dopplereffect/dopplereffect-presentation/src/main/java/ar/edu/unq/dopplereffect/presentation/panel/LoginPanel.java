@@ -52,7 +52,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
         this.getPassField().setResetPassword(true);
 
-        this.setDafaultPage(new Home(this.getPage()));
+        this.setDafaultPage(new Home());
         form.add(this.getUserIdField());
         form.add(this.getPassField());
         form.add(this.setFeedbackPanel(new FeedbackPanel("feedbackPanel")));
@@ -72,7 +72,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
                 User user = LoginPanel.this.getService().login(userName, password);
                 if (LoginPanel.this.getCallBack() != null) {
-                    LoginPanel.this.getCallBack().execute(user);
+                    LoginPanel.this.getCallBack().execute(target, user);
                 }
             }
 
@@ -88,7 +88,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void execute(final Object args) {
+            public void execute(final AjaxRequestTarget ajaxTarget, final Object component) {
                 LoginPanel.this.setResponsePage(LoginPanel.this.getDafaultPage());
             }
         };

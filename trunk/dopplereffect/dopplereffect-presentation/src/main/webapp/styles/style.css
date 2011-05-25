@@ -24,9 +24,13 @@ body {
 }
 
 #header {
-	height: 85px;
+	height: 95px;
 	width: 960px;
 	text-align: center;
+}
+
+#content_main feedbackPanelERROR {
+	font-color: red;
 }
 
 #header h1 {

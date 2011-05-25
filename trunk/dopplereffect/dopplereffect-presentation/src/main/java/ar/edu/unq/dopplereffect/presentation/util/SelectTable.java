@@ -12,21 +12,21 @@ public class SelectTable extends SelectableAjaxBehavior {
 
     private Component componentModel;
 
-    public SelectTable(final Component aComponent) {
-        super();
-        this.setComponentModel(aComponent);
-    }
+    // public SelectTable() {
+    // super();
+    // // this.setComponentModel(aComponent);
+    // }
 
     @Override
     public void onSelection(final Component[] components, final AjaxRequestTarget ajaxRequestTarget) {
-        StringBuffer buffer = new StringBuffer();
-        for (Component c : components) {
-            buffer.append("[");
-            buffer.append(c.getDefaultModelObject().toString());
-            buffer.append("]");
-        }
-        this.getComponentModel().setDefaultModelObject(buffer.toString());
-        ajaxRequestTarget.addComponent(this.getComponentModel());
+        // StringBuffer buffer = new StringBuffer();
+        // for (Component c : components) {
+        // buffer.append("[");
+        // buffer.append(c.getDefaultModelObject().toString());
+        // buffer.append("]");
+        // }
+        // this.getComponentModel().setDefaultModelObject(buffer.toString());
+        // ajaxRequestTarget.addComponent(this.getComponentModel());
     }
 
     public void setComponentModel(final Component componentModel) {
