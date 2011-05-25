@@ -1,7 +1,8 @@
 package ar.edu.unq.dopplereffect.presentation.panel.utils;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
@@ -10,7 +11,7 @@ import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 /**
  * TODO: description
  */
-public class PanelCallbackLink extends Link<Object> {
+public class PanelCallbackLink extends AjaxLink<Object> {
     private static final long serialVersionUID = 1L;
 
     private WebComponentFactory<Component> component;
@@ -37,8 +38,8 @@ public class PanelCallbackLink extends Link<Object> {
     }
 
     @Override
-    public void onClick() {
-        this.getCallBack().execute(this.getComponent().createPage());
+    public void onClick(final AjaxRequestTarget target) {
+        this.getCallBack().execute(target, this.getComponent().createPage());
     }
 
     public void setCallBack(final CallBack<Component> callBack) {

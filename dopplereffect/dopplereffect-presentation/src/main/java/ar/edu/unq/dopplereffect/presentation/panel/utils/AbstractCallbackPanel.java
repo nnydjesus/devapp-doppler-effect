@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.presentation.panel.utils;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 
@@ -29,8 +30,8 @@ public abstract class AbstractCallbackPanel<T> extends AbstractPanel<T> {
         this.callback = callback;
     }
 
-    public void back() {
-        callback.execute(this);
+    public void back(final AjaxRequestTarget ajaxTarget) {
+        callback.execute(ajaxTarget, this);
     }
 
 }

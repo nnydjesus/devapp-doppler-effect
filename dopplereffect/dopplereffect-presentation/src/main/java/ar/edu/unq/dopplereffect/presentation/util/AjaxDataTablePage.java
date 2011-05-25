@@ -17,7 +17,6 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import ar.edu.unq.dopplereffect.presentation.panel.ActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.SortableAjax;
 import ar.edu.unq.dopplereffect.presentation.search.Search;
@@ -25,13 +24,13 @@ import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
  */
-public class AjaxDataTablePage<T extends Serializable, B extends Component> implements Serializable {
+public class AjaxDataTablePage<T extends Serializable, B extends Component> implements Serializable, ITable {
 
     private static final long serialVersionUID = 1L;
 
     private Component resultSection;
 
-    private B parentPage;
+    private Component parentPage;
 
     private Search<T> search;
 
@@ -54,7 +53,7 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
         ArrayList<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
         for (String field : fields) {
-            columns.add(createPropertyColumn(field));
+            columns.add(this.createPropertyColumn(field));
         }
 
         columns.add(new AbstractColumn<T>(new Model<String>("Edit")) {
@@ -64,14 +63,14 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
             public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
                     final IModel<T> model) {
                 // cellItem.add(new Label(componentId, new Model("")));
-                cellItem.add(new ActionPanel(componentId) {
+                cellItem.add(new AjaxActionPanel(componentId, "edit.png") {
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public void onAction() {
+                    public void onAction(final AjaxRequestTarget target) {
                         Component page = ReflectionUtils.instanciate(AjaxDataTablePage.this.getAbmClass(), "body",
                                 AjaxDataTablePage.this.getParentPage(), model.getObject(), true);
-                        callBack.execute(page);
+                        callBack.execute(target, page);
                         // this.setResponsePage(page);
                     }
 
@@ -85,7 +84,7 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
             @Override
             public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
                     final IModel<T> rowModel) {
-                cellItem.add(new AjaxActionPanel(componentId) {
+                cellItem.add(new AjaxActionPanel(componentId, "delete.png") {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -103,14 +102,14 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
 
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
         SortableAjax sortableAjaxBehavior = new SortableAjax();
-        sortableAjaxBehavior.getSortableBehavior().setConnectWith(".mark");
+        sortableAjaxBehavior.getSortableBehavior().setConnectWith(".dataview.tr");
 
         this.getSortableAjaxWicket().add(sortableAjaxBehavior);
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
 
     }
 
-    private PropertyColumn<T> createPropertyColumn(String field) {
+    private PropertyColumn<T> createPropertyColumn(final String field) {
         return new PropertyColumn<T>(new Model<String>(StringUtils.capitalize(field)), field);
     }
 
@@ -118,15 +117,17 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
         return resultSection;
     }
 
+    @Override
     public void setResultSection(final Component resultSection) {
         this.resultSection = resultSection;
     }
 
-    public B getParentPage() {
+    public Component getParentPage() {
         return parentPage;
     }
 
-    public void setParentPage(final B page) {
+    @Override
+    public void setParentPage(final Component page) {
         this.parentPage = page;
     }
 

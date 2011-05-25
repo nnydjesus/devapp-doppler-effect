@@ -34,7 +34,7 @@ public class SkillPanel extends EntityPanel<Skill> {
     protected void addFields(final Form<Skill> form) {
         form.add(this.getFeedbackPanel());
         SkillType type = ((Skill) this.getDefaultModelObject()).getType();
-        form.add(new RequiredTextField<SkillType>("type", new CompoundPropertyModel<SkillType>(type)));
+        form.add(new RequiredTextField<SkillType>("name", new CompoundPropertyModel<SkillType>(type)));
         form.add(new DropDownChoice<SkillLevel>("level", Arrays.asList(SkillLevel.values())));
 
     }

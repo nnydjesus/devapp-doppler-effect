@@ -14,10 +14,12 @@ public class App extends WebApplication {
         super.init();
         this.getResourceSettings().addResourceFolder("pages");
         this.getResourceSettings().addResourceFolder("panel");
+        this.getResourceSettings().addResourceFolder("Images");
     }
 
     @Override
     public Class<? extends Page> getHomePage() {
+
         return Login.class;
 
     }

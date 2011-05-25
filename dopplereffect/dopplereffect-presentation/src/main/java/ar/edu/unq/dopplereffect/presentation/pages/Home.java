@@ -1,13 +1,16 @@
 package ar.edu.unq.dopplereffect.presentation.pages;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.odlabs.wiquery.core.commons.IWiQueryPlugin;
 import org.odlabs.wiquery.core.commons.WiQueryResourceManager;
+import org.odlabs.wiquery.core.effects.EffectBehavior;
+import org.odlabs.wiquery.core.effects.basic.Show;
 import org.odlabs.wiquery.core.javascript.JsStatement;
+import org.odlabs.wiquery.ui.effects.PulsateEffect;
+import org.odlabs.wiquery.ui.effects.PulsateEffect.PulsateMode;
 import org.odlabs.wiquery.ui.themes.ThemeUiHelper;
 import org.odlabs.wiquery.ui.themes.WiQueryCoreThemeResourceReference;
 
@@ -23,13 +26,20 @@ import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 public class Home extends StylePage<Component> implements IWiQueryPlugin {
     private static final long serialVersionUID = 1L;
 
-    public Home(final Page parent) {
+    private EffectBehavior effect1;
+
+    private EffectBehavior effect2;
+
+    public Home() {
         super();
-        final CallBack<Component> callback = this.generateCallback(new AjaxRequestTarget(this));
+        effect1 = new EffectBehavior(new PulsateEffect(PulsateMode.show, 10, 1000));
+        effect2 = new EffectBehavior(new Show());
+        this.add(effect1);
+        final CallBack<Component> callback = this.generateCallback();
         this.add(this.createPanelLink("projects", new ProjectSearchPanel("body", callback)));
         this.add(this.createPanelLink("skills", new SkillSearchPanel("body", callback)));
         this.add(this.createPanelLink("employee", new EmployeeSearchPanel("body", callback)));
-        this.add(new HeaderPanel("items", parent));
+        this.add(new HeaderPanel("items"));
         // this.add(new PageLink("logout", parent));
     }
 
@@ -39,26 +49,24 @@ public class Home extends StylePage<Component> implements IWiQueryPlugin {
 
             @Override
             public void onClick(final AjaxRequestTarget target) {
-                Home.this.generateCallback(target).execute(panel);
+                Home.this.generateCallback().execute(target, panel);
             }
 
         };
     }
 
-    protected CallBack<Component> generateCallback(final AjaxRequestTarget ajaxTarget) {
+    protected CallBack<Component> generateCallback() {
         return new CallBack<Component>() {
             private static final long serialVersionUID = 1L;
 
-            private AjaxRequestTarget target = ajaxTarget;
-
             @Override
-            public void execute(final Component component) {
+            public void execute(final AjaxRequestTarget ajaxTarget, final Component component) {
                 if (component != null) {
                     Home.this.setBody(component);
                 } else {
                     Home.this.setDefaultBody();
                 }
-                target.addComponent(Home.this.getAjaxPanel());
+                ajaxTarget.addComponent(Home.this.getAjaxPanel());
             }
         };
     }

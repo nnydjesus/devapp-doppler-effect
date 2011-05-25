@@ -2,6 +2,8 @@ package ar.edu.unq.dopplereffect.presentation.pages.basic;
 
 import java.io.Serializable;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -42,13 +44,13 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
     }
 
     private Button makeAcceptButton() {
-        return new Button(this.getAcceptButtonWicketId()) {
+        return new AjaxButton(this.getAcceptButtonWicketId()) {
 
             private static final long serialVersionUID = 3631325660303690307L;
 
             @Override
             @SuppressWarnings("unchecked")
-            public void onSubmit() {
+            protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
                 try {
                     // invoca la logica de negocio
                     T object = EntityPanel.this.getModelObject();
@@ -59,9 +61,9 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
                         search.save(object);
                     }
                     // navegacion: vuelve a la pagina de busqueda.
-                    EntityPanel.this.back();
+                    EntityPanel.this.back(target);
                     // this.setResponsePage(EntityPage.this.getPreviousPage());
-                    EntityPanel.this.getPreviousPage().back();
+                    // EntityPanel.this.getPreviousPage().back();
                 } catch (UserException e) {
                     // en caso de excepcion de negocio muestra el mensaje como
                     // un error.
@@ -72,13 +74,14 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
     }
 
     private Button makeCancelButton() {
-        Button button = new Button(this.getCancelButtonWicketId()) {
+        Button button = new AjaxButton(this.getCancelButtonWicketId()) {
 
             private static final long serialVersionUID = -3180010882527791755L;
 
             @Override
-            public void onSubmit() {
-                EntityPanel.this.back();
+            protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
+                // target.addComponent(form);
+                EntityPanel.this.back(target);
                 // this.setResponsePage(EntityPage.this.getPreviousPage());
             }
         };
