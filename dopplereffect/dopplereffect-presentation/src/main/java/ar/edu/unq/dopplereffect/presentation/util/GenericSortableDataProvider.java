@@ -1,19 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements. See the NOTICE file distributed with this
- * work for additional information regarding copyright ownership. The ASF
- * licenses this file to You under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
 package ar.edu.unq.dopplereffect.presentation.util;
 
 import java.io.Serializable;
@@ -39,13 +23,13 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> {
     private static final long serialVersionUID = 1L;
 
     private List<T> list;
-	private SortableDataProviderComparator comparator = new SortableDataProviderComparator();
 
+    private SortableDataProviderComparator comparator = new SortableDataProviderComparator();
 
     /**
      * constructor
      */
-    public GenericSortableDataProvider(final List<T> results, String sortName) {
+    public GenericSortableDataProvider(final List<T> results, final String sortName) {
         this.list = results;
         this.setSort(sortName, true);
     }
@@ -69,7 +53,7 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> {
         if (toIndex > list.size()) {
             toIndex = list.size();
         }
-		Collections.sort(list, comparator);
+        Collections.sort(list, comparator);
 
         return list.subList(first, toIndex).listIterator();
     }
@@ -94,21 +78,25 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> {
     @Override
     public void detach() {
     }
-    
-	class SortableDataProviderComparator implements Comparator<T>, Serializable {
-		public int compare(final T o1, final T o2) {
-			PropertyModel<Comparable> model1 = new PropertyModel<Comparable>(o1, getSort().getProperty());
-			PropertyModel<Comparable> model2 = new PropertyModel<Comparable>(o2, getSort().getProperty());
 
-			int result = model1.getObject().compareTo(model2.getObject());
+    class SortableDataProviderComparator implements Comparator<T>, Serializable {
+        private static final long serialVersionUID = 1L;
 
-			if (!getSort().isAscending()) {
-				result = -result;
-			}
+        public int compare(final T o1, final T o2) {
+            PropertyModel<Comparable> model1 = new PropertyModel<Comparable>(o1, GenericSortableDataProvider.this
+                    .getSort().getProperty());
+            PropertyModel<Comparable> model2 = new PropertyModel<Comparable>(o2, GenericSortableDataProvider.this
+                    .getSort().getProperty());
 
-			return result;
-		}
+            int result = model1.getObject().compareTo(model2.getObject());
 
-	}
+            if (!GenericSortableDataProvider.this.getSort().isAscending()) {
+                result = -result;
+            }
+
+            return result;
+        }
+
+    }
 
 }

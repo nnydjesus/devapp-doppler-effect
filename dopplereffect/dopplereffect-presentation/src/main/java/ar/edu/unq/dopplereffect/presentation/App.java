@@ -8,24 +8,26 @@ import ar.edu.unq.dopplereffect.service.EmployeeServiceImpl;
 
 public class App extends WebApplication {
 
-    private EmployeeServiceImpl employeeService;
+//    private EmployeeServiceImpl employeeService;
 
     @Override
     protected void init() {
         super.init();
         this.getResourceSettings().addResourceFolder("pages");
+        this.getResourceSettings().addResourceFolder("panel");
     }
 
     @Override
     public Class<? extends Page> getHomePage() {
         return Login.class;
+
     }
 
-    public EmployeeServiceImpl getEmployeeService() {
-        return employeeService;
-    }
-
-    public void setEmployeeService(final EmployeeServiceImpl employeeService) {
-        this.employeeService = employeeService;
-    }
+//    public EmployeeServiceImpl getEmployeeService() {
+//        return employeeService;
+//    }
+//
+//    public void setEmployeeService(final EmployeeServiceImpl employeeService) {
+//        this.employeeService = employeeService;
+//    }
 }
