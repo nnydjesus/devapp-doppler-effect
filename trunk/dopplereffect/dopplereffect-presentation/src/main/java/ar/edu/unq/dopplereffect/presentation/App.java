@@ -1,13 +1,29 @@
 package ar.edu.unq.dopplereffect.presentation;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.Request;
+import org.apache.wicket.Response;
+import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.protocol.http.WebRequestCycleProcessor;
+import org.apache.wicket.protocol.http.request.CryptedUrlWebRequestCodingStrategy;
+import org.apache.wicket.protocol.http.request.WebRequestCodingStrategy;
+import org.apache.wicket.request.IRequestCodingStrategy;
+import org.apache.wicket.request.IRequestCycleProcessor;
 
 import ar.edu.unq.dopplereffect.presentation.pages.Login;
+import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearch;
+import ar.edu.unq.dopplereffect.presentation.project.SearchProject;
+import ar.edu.unq.dopplereffect.presentation.project.SearchSkill;
 
 public class App extends WebApplication {
 
     // private EmployeeServiceImpl employeeService;
+    public static SearchProject searchProject;
+
+    public static SearchSkill searchSkill;
+
+    public static EmployeeSearch employeeSearch;
 
     @Override
     protected void init() {
@@ -17,11 +33,39 @@ public class App extends WebApplication {
         this.getResourceSettings().addResourceFolder("Images");
     }
 
+    /**
+     * @see org.apache.wicket.protocol.http.WebApplication#newRequestCycleProcessor()
+     */
+    @Override
+    protected IRequestCycleProcessor newRequestCycleProcessor() {
+        return new WebRequestCycleProcessor() {
+            @Override
+            protected IRequestCodingStrategy newRequestCodingStrategy() {
+                return new CryptedUrlWebRequestCodingStrategy(new WebRequestCodingStrategy());
+            }
+        };
+    }
+
+    @Override
+    public Session newSession(final Request request, final Response response) {
+        return new WicketWebSession(request);
+    }
+
     @Override
     public Class<? extends Page> getHomePage() {
-
         return Login.class;
+    }
 
+    public String getContextPath() {
+        return this.getServletContext().getContextPath();
+    }
+
+    public void setSearchProject(final SearchProject searchProject) {
+        this.searchProject = searchProject;
+    }
+
+    public SearchProject getSearchProject() {
+        return searchProject;
     }
 
     // public EmployeeServiceImpl getEmployeeService() {

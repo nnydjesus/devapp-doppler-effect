@@ -2,6 +2,7 @@ package ar.edu.unq.dopplereffect.presentation.panel.employee;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.presentation.search.Search;
+import ar.edu.unq.dopplereffect.service.Service;
 
 public class EmployeeSearch extends Search<Employee> {
 
@@ -60,5 +61,16 @@ public class EmployeeSearch extends Search<Employee> {
 
     public String getSearchName() {
         return searchName;
+    }
+
+    @Override
+    public void setService(final Service<Employee> service) {
+        // throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Service<Employee> getService() {
+        return null;
+        // throw new UnsupportedOperationException();
     }
 }

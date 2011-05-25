@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.apache.wicket.Component;
 
+import ar.edu.unq.dopplereffect.presentation.App;
 import ar.edu.unq.dopplereffect.presentation.project.SearchProject;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
@@ -14,7 +15,7 @@ public class ProjectSearchPanel extends AbstractSearchPanel<SearchProject> {
     private static final long serialVersionUID = 1L;
 
     public ProjectSearchPanel(final String id, final CallBack<Component> parentPage) {
-        super(id, parentPage, new SearchProject(), Arrays.asList("name", "maxEffort", "currentEffort"),
+        super(id, parentPage, App.searchProject, Arrays.asList("name", "maxEffort", "currentEffort"),
                 ProjectPanel.class);
     }
 

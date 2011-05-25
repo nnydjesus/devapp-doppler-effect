@@ -14,6 +14,7 @@ import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeData;
 import ar.edu.unq.dopplereffect.persistence.repositories.CareerDataRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.repositories.EmployeeRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.repositories.HibernatePersistentRepository;
 
 public class TestVariousBasicPersistence extends AbstractTransactionalDataSourceSpringContextTests {
@@ -31,24 +32,27 @@ public class TestVariousBasicPersistence extends AbstractTransactionalDataSource
         careerDataRepo.save(cd);
 
         //
-        HibernatePersistentRepository<Address> addressRepository = new HibernatePersistentRepository<Address>();
+        HibernatePersistentRepository<Address> addressRepository = new HibernatePersistentRepository<Address>(
+                Address.class);
         // addressRepository.setSessionFactory(sessionFactory);
         Address address = new Address("Av. Wicket", 123, "Java Land");
         // addressRepository.save(address);
 
-        HibernatePersistentRepository<PersonalData> pdRepository = new HibernatePersistentRepository<PersonalData>();
+        HibernatePersistentRepository<PersonalData> pdRepository = new HibernatePersistentRepository<PersonalData>(
+                PersonalData.class);
         // pdRepository.setSessionFactory(sessionFactory);
         Address address1 = new Address("Calle falsa", 123, "Java Land");
         PersonalData pd = new PersonalData("Pepito", address1);
         // pdRepository.save(pd);
 
-        HibernatePersistentRepository<EmployeeData> edRepository = new HibernatePersistentRepository<EmployeeData>();
+        HibernatePersistentRepository<EmployeeData> edRepository = new HibernatePersistentRepository<EmployeeData>(
+                EmployeeData.class);
         // edRepository.setSessionFactory(sessionFactory);
         Address address2 = new Address("Av. Spring", 123, "Java Land");
         EmployeeData pd2 = new EmployeeData(21234567, "Perez", "Pepito", address2);
         // edRepository.save(pd2);
 
-        HibernatePersistentRepository<Employee> employeeRepo = new HibernatePersistentRepository<Employee>();
+        HibernatePersistentRepository<Employee> employeeRepo = new EmployeeRepositoryImpl();
         // employeeRepo.setSessionFactory(sessionFactory);
         Address address3 = new Address("Av. Hibernate", 123, "Java Land");
         EmployeeData ed = new EmployeeData(21234567, "El mejor", "Empleado", address3);

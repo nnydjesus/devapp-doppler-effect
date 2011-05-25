@@ -4,4 +4,8 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 
 public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employee> {
 
+    public EmployeeRepositoryImpl() {
+        super(Employee.class);
+    }
+
 }

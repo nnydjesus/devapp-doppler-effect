@@ -12,6 +12,8 @@ public interface Service<T> {
 
     List<T> searchAll();
 
+    List<T> searchByExample(T object);
+
     T getByName(String name);
 
 }

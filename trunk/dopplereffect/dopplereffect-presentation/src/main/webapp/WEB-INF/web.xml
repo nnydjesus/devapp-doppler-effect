@@ -4,44 +4,48 @@
 
 	<display-name>dopplereffect-ui-wicket</display-name>
 
-<!-- 	<context-param> -->
-<!-- 		<param-name>contextConfigLocation</param-name> -->
-<!-- 		<param-value> -->
-<!-- 			classpath*:/spring/data-source.xml, -->
-<!-- 			classpath*:/spring/repositories.xml, -->
-<!-- 			classpath*:/spring/services.xml, -->
-<!-- 			classpath*:/spring/transactions.xml, -->
-<!-- 			classpath*:/spring/presentation.xml, -->
-<!-- 			classpath*:/spring/internationalization.xml -->
-<!-- 		</param-value> -->
-<!-- 	</context-param> -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath*:/spring/data-source.xml,
+			classpath*:/spring/repositories.xml,
+			classpath*:/spring/services.xml,
+			classpath*:/spring/transactions.xml,
+			classpath*:/spring/presentation.xml,
+			classpath*:/spring/internationalization.xml
+		</param-value>
+	</context-param>
 
-<!-- 	<context-param> -->
-<!-- 		<param-name>configuration</param-name> -->
-<!-- 		<param-value>DEVELOPMENT</param-value> -->
-<!-- 	</context-param> -->
+	<context-param>
+		<param-name>configuration</param-name>
+		<param-value>DEVELOPMENT</param-value>
+	</context-param>
 
-<!-- 	<listener> -->
-<!-- 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
-<!-- 	</listener> -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
 
 	<filter>
 		<filter-name>wicket.dopplereffect-ui-wicket</filter-name>
 		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
-<!-- 		<init-param> -->
-<!-- 			<param-name>applicationFactoryClassName</param-name> -->
-<!-- 			<param-value>org.apache.wicket.spring.SpringWebApplicationFactory</param-value> -->
-<!-- 		</init-param> -->
 		<init-param>
 			<param-name>applicationClassName</param-name>
 			<param-value>ar.edu.unq.dopplereffect.presentation.App</param-value>
 		</init-param>
 	</filter>
 
+
 	<filter-mapping>
 		<filter-name>wicket.dopplereffect-ui-wicket</filter-name>
 		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
+
+	<session-config>
+		<session-timeout>7200</session-timeout>
+	</session-config>
+
 
 </web-app>

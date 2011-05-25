@@ -44,4 +44,9 @@ public class ServiceImpl<T> implements Service<T>, Serializable {
     private Repository<T> getRepository() {
         return repository;
     }
+
+    @Override
+    public List<T> searchByExample(final T object) {
+        return repository.searchByExample(object);
+    }
 }
