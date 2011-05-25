@@ -23,7 +23,7 @@ import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
  */
-public class AjaxDataTablePage<T, B extends Component> implements Serializable {
+public class AjaxDataTablePage<T extends Serializable, B extends Component> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,16 +39,14 @@ public class AjaxDataTablePage<T, B extends Component> implements Serializable {
 
     private AjaxFallbackDefaultDataTable<T> ajaxdataTable;
 
-    private CallBack callBack;
+    public AjaxDataTablePage(final String id, final String sortName, final Search<T> aSearch,
+            final CallBack<Component> aCallBack, final List<String> fields, final Class<? extends Component> abm) {
 
-    public AjaxDataTablePage(final String id, final String sortName, final Search<T> search, final CallBack callBack,
-            final List<String> fields, final Class<? extends Component> abm) {
-
-        this.callBack = callBack;
-        this.search = search;
         this.setFields(fields);
-        this.abmClass = abm;
+        this.setAbmClass(abm);
+        this.setSearch(aSearch);
 
+        final CallBack<Component> callBack = aCallBack;
         ArrayList<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
         for (String field : fields) {
@@ -67,7 +65,7 @@ public class AjaxDataTablePage<T, B extends Component> implements Serializable {
 
                     @Override
                     public void onAction() {
-                        Component page = ReflectionUtils.instanciate(abmClass, "body",
+                        Component page = ReflectionUtils.instanciate(AjaxDataTablePage.this.getAbmClass(), "body",
                                 AjaxDataTablePage.this.getParentPage(), model.getObject(), true);
                         callBack.execute(page);
                         // this.setResponsePage(page);
@@ -89,14 +87,14 @@ public class AjaxDataTablePage<T, B extends Component> implements Serializable {
                     @Override
                     public void onAction(final AjaxRequestTarget target) {
                         AjaxDataTablePage.this.getBuscador().remove(rowModel.getObject());
-                        target.addComponent(AjaxDataTablePage.this.ajaxdataTable);
+                        target.add(AjaxDataTablePage.this.getAjaxdataTable());
                     }
                 });
             }
         });
 
-        this.ajaxdataTable = new AjaxFallbackDefaultDataTable<T>(id, columns, new GenericSortableDataProvider<T>(this
-                .getBuscador().getResults(), sortName), Search.PAGE_SIZE);
+        this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(id, columns, new GenericSortableDataProvider<T>(this
+                .getBuscador().getResults(), sortName), Search.PAGE_SIZE));
     }
 
     public Component getResultSection() {
@@ -133,6 +131,18 @@ public class AjaxDataTablePage<T, B extends Component> implements Serializable {
 
     public List<String> getFields() {
         return fields;
+    }
+
+    public void setAjaxdataTable(final AjaxFallbackDefaultDataTable<T> ajaxdataTable) {
+        this.ajaxdataTable = ajaxdataTable;
+    }
+
+    public void setAbmClass(final Class<? extends Component> abmClass) {
+        this.abmClass = abmClass;
+    }
+
+    public Class<? extends Component> getAbmClass() {
+        return abmClass;
     }
 
 }

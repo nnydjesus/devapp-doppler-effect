@@ -4,11 +4,10 @@ import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 
 import ar.edu.unq.dopplereffect.presentation.pages.Login;
-import ar.edu.unq.dopplereffect.service.EmployeeServiceImpl;
 
 public class App extends WebApplication {
 
-//    private EmployeeServiceImpl employeeService;
+    // private EmployeeServiceImpl employeeService;
 
     @Override
     protected void init() {
@@ -23,11 +22,12 @@ public class App extends WebApplication {
 
     }
 
-//    public EmployeeServiceImpl getEmployeeService() {
-//        return employeeService;
-//    }
-//
-//    public void setEmployeeService(final EmployeeServiceImpl employeeService) {
-//        this.employeeService = employeeService;
-//    }
+    // public EmployeeServiceImpl getEmployeeService() {
+    // return employeeService;
+    // }
+    //
+    // public void setEmployeeService(final EmployeeServiceImpl employeeService)
+    // {
+    // this.employeeService = employeeService;
+    // }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-public abstract class Search<T> implements Serializable {
+public class Search<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final int PAGE_SIZE = 4;
@@ -16,7 +16,7 @@ public abstract class Search<T> implements Serializable {
     private Class<T> entityType;
 
     public Search(final Class<T> entityClass) {
-        this.entityType = entityClass;
+        this.setEntityType(entityClass);
     }
 
     public List<T> getResults() {
@@ -34,6 +34,7 @@ public abstract class Search<T> implements Serializable {
     }
 
     public void search() {
+        this.getResults();
         // this.setResultado(entityHome.getInstance().buscarByExample(this.crearExample()));
     }
 
@@ -50,11 +51,15 @@ public abstract class Search<T> implements Serializable {
     }
 
     public T createExample() {
-        return ReflectionUtils.instanciate(entityType);
+        return ReflectionUtils.instanciate(this.getEntityType());
     }
 
     public Class<T> getEntityType() {
         return entityType;
+    }
+
+    public void setEntityType(final Class<T> entityType) {
+        this.entityType = entityType;
     }
 
 }

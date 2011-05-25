@@ -19,7 +19,7 @@ import org.apache.wicket.model.PropertyModel;
  * @author igor
  * 
  */
-public class GenericSortableDataProvider<T> extends SortableDataProvider<T> {
+public class GenericSortableDataProvider<T extends Serializable> extends SortableDataProvider<T> {
     private static final long serialVersionUID = 1L;
 
     private List<T> list;
@@ -30,7 +30,8 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> {
      * constructor
      */
     public GenericSortableDataProvider(final List<T> results, final String sortName) {
-        this.list = results;
+        super();
+        this.setList(results);
         this.setSort(sortName, true);
     }
 
@@ -40,27 +41,29 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> {
      * @return The list
      */
     protected List<T> getData() {
-        return list;
+        return this.getList();
     }
 
     /**
      * @see IDataProvider#iterator(int, int)
      */
+    @Override
     public Iterator<? extends T> iterator(final int first, final int count) {
-        List<T> list = this.getData();
+        List<T> aList = this.getData();
 
         int toIndex = first + count;
-        if (toIndex > list.size()) {
-            toIndex = list.size();
+        if (toIndex > aList.size()) {
+            toIndex = aList.size();
         }
-        Collections.sort(list, comparator);
+        Collections.sort(aList, this.getComparator());
 
-        return list.subList(first, toIndex).listIterator();
+        return aList.subList(first, toIndex).listIterator();
     }
 
     /**
      * @see IDataProvider#size()
      */
+    @Override
     public int size() {
         return this.getData().size();
     }
@@ -68,25 +71,36 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> {
     /**
      * @see IDataProvider#model(Object)
      */
-    public IModel<T> model(final T object) {
-        return new Model((Serializable) object);
-    }
-
-    /**
-     * @see org.apache.wicket.model.IDetachable#detach()
-     */
     @Override
-    public void detach() {
+    public IModel<T> model(final T object) {
+        return new Model<T>(object);
     }
 
-    class SortableDataProviderComparator implements Comparator<T>, Serializable {
+    public void setList(final List<T> list) {
+        this.list = list;
+    }
+
+    public List<T> getList() {
+        return list;
+    }
+
+    public void setComparator(final SortableDataProviderComparator aComparator) {
+        this.comparator = aComparator;
+    }
+
+    public SortableDataProviderComparator getComparator() {
+        return comparator;
+    }
+
+    class SortableDataProviderComparator implements Comparator<T> {
         private static final long serialVersionUID = 1L;
 
+        @Override
         public int compare(final T o1, final T o2) {
-            PropertyModel<Comparable> model1 = new PropertyModel<Comparable>(o1, GenericSortableDataProvider.this
-                    .getSort().getProperty());
-            PropertyModel<Comparable> model2 = new PropertyModel<Comparable>(o2, GenericSortableDataProvider.this
-                    .getSort().getProperty());
+            PropertyModel<Comparable<Object>> model1 = new PropertyModel<Comparable<Object>>(o1,
+                    GenericSortableDataProvider.this.getSort().getProperty());
+            PropertyModel<Comparable<Object>> model2 = new PropertyModel<Comparable<Object>>(o2,
+                    GenericSortableDataProvider.this.getSort().getProperty());
 
             int result = model1.getObject().compareTo(model2.getObject());
 

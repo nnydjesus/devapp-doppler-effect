@@ -1,15 +1,70 @@
-<html xmlns:wicket="http://wicket.apache.org/">
-	<head>
-   		 <title>Doopler effect</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="styles/style.css" />
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	</head>
-	<body>
-    	<h2>Welcome to the dance of death!</h2>
-    	<a wicket:id="projects" href="#" > Projects</a>
-    	<p/>
-    	<a wicket:id="skills" href="#" > Skills</a>
-    	<p/>
-    	<a wicket:id="employee" href="#" > Employee</a>
-	</body>
+		<title>doopler-effect</title>
+</head>
+
+<body>
+<div id="container">
+		<div id="header">
+        	<h1>
+        	<span wicket:id="header"/><span class="off"><span wicket:id="header2"/></span></h1>
+        </div>   
+        
+        <div id="menu">
+        	<ul>
+            	<li class="menuitem"><a href="#">Home</a></li>
+                <li class="menuitem"><a href="#">About</a></li>
+                <li class="menuitem"><a href="#">Products</a></li>
+                <li class="menuitem"><a href="#">Services</a></li>
+                <li class="menuitem"><a href="#">Design</a></li>
+              <li class="menuitem"><a href="#">Contact</a></li>
+              <li class="menuitem"><a href="#" align="right" wicket:id="logout">logout</a></li>
+            </ul>
+        </div>
+        
+        <div id="leftmenu">
+
+        <div id="leftmenu_top"></div>
+
+				<div id="leftmenu_main">    
+                
+                <h3>Content</h3>
+                        
+                <ul>
+                    <li><a  wicket:id="projects" href="#">Projects</a></li>
+                    <li><a  wicket:id="skills"  href="#">Skills</a></li>
+                    <li><a  wicket:id="employee" href="#">Employee</a></li>
+                    <li><a href="#">Licencias</a></li>
+                    <li><a href="#">Calendario</a></li>
+                    <li><a href="#">Asignaciones</a></li>
+                    <li><a href="#">Vacaciones</a></li>
+                    <li><a href="#">Bandas</a></li>
+                </ul>
+</div>
+                
+        <!-- <wicket:panel> -->
+        <!-- </wicket:panel> -->
+         
+                  
+                
+              <div id="leftmenu_bottom"></div>
+        </div>
+        
+        
+        
+        
+		<div id="content">
+        
+        <div id="content_top"></div>
+        <div id="content_main" wicket:id="body">adsad  </div>
+        <div id="content_bottom"></div>
+            
+            <div id="footer" wicket:id="footer">
+            </div>
+      </div>
+   </div>
+</body>
 </html>
