@@ -19,12 +19,11 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.helpers.DateHelpers;
+import ar.edu.unq.dopplereffect.helpers.SkillHelpers;
 import ar.edu.unq.dopplereffect.project.Project;
 import ar.edu.unq.dopplereffect.project.ProjectBuilder;
 import ar.edu.unq.dopplereffect.project.ProjectHelper;
 import ar.edu.unq.dopplereffect.project.Skill;
-import ar.edu.unq.dopplereffect.project.SkillLevel;
-import ar.edu.unq.dopplereffect.project.SkillType;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class ProjectTest {
@@ -37,8 +36,13 @@ public class ProjectTest {
 
     private static Set<Skill> skills = new HashSet<Skill>();
     static {
-        skills.addAll(Arrays.asList(createSkill("Hibernate", SkillLevel.EXPERT), createSkill("POO", SkillLevel.EXPERT),
-                createSkill("Wicket", SkillLevel.MEDIUM)));
+        // @formatter:off
+        skills.addAll(Arrays.asList(
+                SkillHelpers.HIBERNATE_EXPERT, 
+                SkillHelpers.WICKET_EXPERT,
+                SkillHelpers.MYSQL_MEDIUM)
+        );
+        // @formatter:on
     }
 
     @Test
@@ -198,9 +202,5 @@ public class ProjectTest {
             Assert.assertTrue(project.isAssigned(employee));
         }
 
-    }
-
-    public static Skill createSkill(final String type, final SkillLevel level) {
-        return new Skill(new SkillType(type), level);
     }
 }

@@ -25,16 +25,6 @@ public class EmployeeBuilder {
         return this;
     }
 
-    public EmployeeBuilder withPhoneNumber(final String phone) {
-        employee.setPhoneNumber(phone);
-        return this;
-    }
-
-    public EmployeeBuilder withEmail(final String email) {
-        employee.setEmail(email);
-        return this;
-    }
-
     public EmployeeBuilder withPercentage(final int percentage) {
         employee.setPercentage(percentage);
         return this;

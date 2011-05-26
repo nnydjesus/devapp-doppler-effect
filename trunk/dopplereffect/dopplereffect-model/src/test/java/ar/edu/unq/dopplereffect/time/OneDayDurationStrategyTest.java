@@ -11,6 +11,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -88,10 +89,26 @@ public class OneDayDurationStrategyTest {
     }
 
     @Test
-    public void testOverlapsWithIntervalLeaveRequest() { // NOPMD
+    public void testOverlapsWithIntervalLeaveRequest() {
         OneDayDurationStrategy oneDayStrategy = this.createOneDayDurationStrategy(D_2011_04_06);
         IntervalDurationStrategy intervalStrategy = mock(IntervalDurationStrategy.class);
         oneDayStrategy.overlapsInterval(intervalStrategy);
         verify(intervalStrategy).overlapsInterval(oneDayStrategy);
+    }
+
+    @Test
+    public void testGetSuperpositionDays() {
+        OneDayDurationStrategy ods = this.createOneDayDurationStrategy(D_2011_04_08);
+        IntervalDurationStrategy ids = mock(IntervalDurationStrategy.class);
+        when(ids.includesDay(D_2011_04_08)).thenReturn(true);
+        assertEquals("la superposicion de dias fallo", 1, ods.getSuperpositionDaysWith(ids));
+    }
+
+    @Test
+    public void testGetSuperpositionDaysZeroResult() {
+        OneDayDurationStrategy ods = this.createOneDayDurationStrategy(D_2011_04_11);
+        IntervalDurationStrategy ids = mock(IntervalDurationStrategy.class);
+        when(ids.includesDay(D_2011_04_11)).thenReturn(false);
+        assertEquals("la superposicion de dias fallo", 0, ods.getSuperpositionDaysWith(ids));
     }
 }

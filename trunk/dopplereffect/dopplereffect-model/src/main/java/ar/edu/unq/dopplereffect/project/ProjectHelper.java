@@ -9,7 +9,7 @@ public class ProjectHelper {// NOPMD
     }
 
     public static long daysToHoursEffort(final int days) {
-        return days * HOURS_PER_DAY;
+        return (long) days * HOURS_PER_DAY;
     }
 
     public static int hoursEffortToDays(final Long effort) {

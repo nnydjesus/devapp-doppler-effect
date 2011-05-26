@@ -19,8 +19,6 @@ public class EmployeesControllerTest {
 
     private static final CareerPlanLevel JUNIOR = new CareerPlanLevel("Junior");
 
-    private static final CareerPlanLevel SENIOR = new CareerPlanLevel("Senior");
-
     @Test(expected = UserException.class)
     public void testSearchForNonExistingSalarySpecification() {
         EmployeesController controller = new EmployeesController();
@@ -57,38 +55,6 @@ public class EmployeesControllerTest {
         List<Integer> percentages = new LinkedList<Integer>();
         controller.changePercentages(TESTER, JUNIOR, percentages);
         verify(spec).changePercentages(percentages, new HashSet<Employee>());
-    }
-
-    @Test
-    public void testNewLevelInFirstPlace() {
-        EmployeesController controller = new EmployeesController();
-        CareerPlanLevel newLevel = new CareerPlanLevel("Pasante");
-        controller.newLevel(newLevel);
-        assertEquals("el nivel agregado deberia estar en primer lugar", newLevel, controller.getLevels().get(0));
-    }
-
-    @Test
-    public void testNewLevelInTheEnd() {
-        EmployeesController controller = new EmployeesController();
-        CareerPlanLevel newLevel = new CareerPlanLevel("Capo");
-        List<CareerPlanLevel> levels = new LinkedList<CareerPlanLevel>();
-        levels.add(JUNIOR);
-        levels.add(SENIOR);
-        controller.changeLevelsOrder(levels);
-        controller.newLevel(newLevel, SENIOR);
-        assertEquals("el nuevo nivel debe estar al final", newLevel, controller.getLevels().get(2));
-    }
-
-    @Test
-    public void testNewLevelInTheMiddle() {
-        EmployeesController controller = new EmployeesController();
-        CareerPlanLevel newLevel = new CareerPlanLevel("SemiSenior");
-        List<CareerPlanLevel> levels = new LinkedList<CareerPlanLevel>();
-        levels.add(JUNIOR);
-        levels.add(SENIOR);
-        controller.changeLevelsOrder(levels);
-        controller.newLevel(newLevel, JUNIOR);
-        assertEquals("el nuevo nivel debe estar en segundo lugar", newLevel, controller.getLevels().get(1));
     }
 
     private SalarySpecification mockSalarySpecification() {

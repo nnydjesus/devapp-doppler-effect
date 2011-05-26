@@ -4,10 +4,9 @@ import ar.edu.unq.dopplereffect.entity.Entity;
 
 /**
  * Representa una configuracion que determina la cantidad de dias permitidos en
- * concepto de vacaciones para una antiguedad dada. Estas configuraciones son
- * utilizadas desde {@link HolidayLeaveRequest}.
+ * concepto de cualquier licencia para una antiguedad dada.
  */
-public class HolidayDaysConfiguration extends Entity {
+public class LeaveRequestDaysConfiguration extends Entity {
 
     private static final long serialVersionUID = 2236550810291279606L;
 
@@ -19,13 +18,13 @@ public class HolidayDaysConfiguration extends Entity {
 
     /* *************************** CONSTRUCTORS *************************** */
 
-    public HolidayDaysConfiguration(final int minYear, final int correspondingDays) {
+    public LeaveRequestDaysConfiguration(final int minYear, final int correspondingDays) {
         super();
         this.minYear = minYear;
         this.correspondingDays = correspondingDays;
     }
 
-    public HolidayDaysConfiguration() {
+    public LeaveRequestDaysConfiguration() {
         super();
     }
 

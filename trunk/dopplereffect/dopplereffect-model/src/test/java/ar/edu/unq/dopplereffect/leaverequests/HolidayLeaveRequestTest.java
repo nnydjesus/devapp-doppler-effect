@@ -1,7 +1,5 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_11;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,53 +12,59 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 
 public class HolidayLeaveRequestTest {
 
+    private LeaveRequestCustomType createHolidayLeaveRequestType(final int minLimit, final int maxLimit) {
+        return new LeaveRequestCustomType("Holiday", 0, minLimit, maxLimit);
+    }
+
     @Test
     public void testIsntValidForEmployeeRequestMoreDaysThanPermitted() {
         // GIVEN
-        HolidayLeaveRequest leaveReqType = new HolidayLeaveRequest(7, 15);
-        leaveReqType.configure(0, 7);
-        leaveReqType.configure(1, 7);
-        LeaveRequest leaveReq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11)
-                .withType(leaveReqType).build();
+        LeaveRequestCustomType holidayType = this.createHolidayLeaveRequestType(7, 15);
+        holidayType.initialConfig(7);
+        holidayType.configure(1, 7);
         Employee employee = mock(Employee.class);
+        LeaveRequest leaveReq = mock(LeaveRequest.class);
         // WHEN
         when(employee.getSeniority()).thenReturn(1);
-        when(employee.daysRequestedInYear(leaveReqType, 2011)).thenReturn(2);
+        when(employee.daysRequestedInYear(holidayType, 2011)).thenReturn(2);
+        when(leaveReq.getAmountOfDays()).thenReturn(8);
+        when(leaveReq.getYear()).thenReturn(2011);
         // THEN
-        assertFalse("la validacion de las vacaciones fallo", leaveReqType.isValidFor(leaveReq, employee));
+        assertFalse("la validacion de las vacaciones fallo", holidayType.isValidFor(leaveReq, employee));
     }
 
     @Test
     public void testIsValidForEmployeeRequestRightDays() {
         // GIVEN
-        HolidayLeaveRequest leaveReqType = new HolidayLeaveRequest(7, 15);
-        LeaveRequest leaveReq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11)
-                .withType(leaveReqType).build();
+        LeaveRequestCustomType holidayType = this.createHolidayLeaveRequestType(7, 15);
         Employee employee = mock(Employee.class);
+        LeaveRequest leaveReq = mock(LeaveRequest.class);
         // WHEN
-        leaveReqType.configure(0, 7);
-        leaveReqType.configure(1, 7);
+        holidayType.initialConfig(7);
+        holidayType.configure(1, 7);
         when(employee.getSeniority()).thenReturn(1);
-        when(employee.daysRequestedInYear(leaveReqType, 2011)).thenReturn(0);
+        when(employee.daysRequestedInYear(holidayType, 2011)).thenReturn(0);
+        when(leaveReq.getAmountOfDays()).thenReturn(7);
+        when(leaveReq.getYear()).thenReturn(2011);
         // THEN
-        assertTrue("la validacion de las vacaciones fallo", leaveReqType.isValidFor(leaveReq, employee));
+        assertTrue("la validacion de las vacaciones fallo", holidayType.isValidFor(leaveReq, employee));
     }
 
     @Test
     public void testGetCorrespondingDays() {
         // GIVEN
-        HolidayLeaveRequest leaveReqType = new HolidayLeaveRequest(7, 15);
+        LeaveRequestCustomType holidayType = this.createHolidayLeaveRequestType(7, 15);
         // WHEN
-        leaveReqType.configure(0, 7);
-        leaveReqType.configure(1, 15);
-        leaveReqType.configure(5, 21);
+        holidayType.configure(0, 7);
+        holidayType.configure(1, 15);
+        holidayType.configure(5, 21);
         // THEN
-        assertEquals("la configuracion no retorno 7", 7, leaveReqType.getCorrespondingDays(0));
-        assertEquals("la configuracion no retorno 15", 15, leaveReqType.getCorrespondingDays(1));
-        assertEquals("la configuracion no retorno 15", 15, leaveReqType.getCorrespondingDays(2));
-        assertEquals("la configuracion no retorno 15", 15, leaveReqType.getCorrespondingDays(3));
-        assertEquals("la configuracion no retorno 15", 15, leaveReqType.getCorrespondingDays(4));
-        assertEquals("la configuracion no retorno 21", 21, leaveReqType.getCorrespondingDays(5));
-        assertEquals("la configuracion no retorno 21", 21, leaveReqType.getCorrespondingDays(6));
+        assertEquals("la configuracion no retorno 7", 7, holidayType.getCorrespondingDays(0));
+        assertEquals("la configuracion no retorno 15", 15, holidayType.getCorrespondingDays(1));
+        assertEquals("la configuracion no retorno 15", 15, holidayType.getCorrespondingDays(2));
+        assertEquals("la configuracion no retorno 15", 15, holidayType.getCorrespondingDays(3));
+        assertEquals("la configuracion no retorno 15", 15, holidayType.getCorrespondingDays(4));
+        assertEquals("la configuracion no retorno 21", 21, holidayType.getCorrespondingDays(5));
+        assertEquals("la configuracion no retorno 21", 21, holidayType.getCorrespondingDays(6));
     }
 }

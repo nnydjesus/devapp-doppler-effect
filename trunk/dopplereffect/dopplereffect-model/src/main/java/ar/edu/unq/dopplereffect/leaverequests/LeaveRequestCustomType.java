@@ -1,7 +1,11 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.entity.Entity;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
 
 /**
  * Representa un tipo de licencia personalizado. Un tipo de licencia posee un
@@ -23,10 +27,12 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
 
     private int maxLimit;
 
+    private List<LeaveRequestDaysConfiguration> configurations;
+
     /* *************************** CONSTRUCTORS **************************** */
 
     public LeaveRequestCustomType() {
-        super();
+        this("", 0, 0, 0);
     }
 
     public LeaveRequestCustomType(final String reason) {
@@ -39,6 +45,7 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
         this.maxDaysInYear = maxDaysInYear;
         this.minLimit = minLimit;
         this.maxLimit = maxLimit;
+        configurations = new LinkedList<LeaveRequestDaysConfiguration>();
     }
 
     /* **************************** ACCESSORS ***************************** */
@@ -76,6 +83,14 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
         this.maxDaysInYear = maxDaysInYear;
     }
 
+    public List<LeaveRequestDaysConfiguration> getConfigurations() {
+        return configurations;
+    }
+
+    public void setConfigurations(final List<LeaveRequestDaysConfiguration> configurations) {
+        this.configurations = configurations;
+    }
+
     /* **************************** OPERATIONS **************************** */
 
     /**
@@ -95,7 +110,61 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
         boolean satisfiesMaximum = this.isSpecifiedMaximum() ? leaveReq.getAmountOfDays() <= this.getMaxLimit() : true;
         boolean employeeCanRequestMoreDays = this.isSpecifiedMaxDaysInAYear() ? employee.daysRequestedInYear(this,
                 leaveReq.getYear()) + leaveReq.getAmountOfDays() <= this.getMaxDaysInYear() : true;
-        return satisfiesMinimum && satisfiesMaximum && employeeCanRequestMoreDays;
+        return satisfiesMinimum && satisfiesMaximum && employeeCanRequestMoreDays
+                && this.satisfiesConfiguration(leaveReq, employee);
+    }
+
+    public void initialConfig(final int days) {
+        this.configure(0, days);
+    }
+
+    /**
+     * Configura los dias correspondientes permitidos maximos de licencia a cada
+     * año de antiguedad.
+     */
+    public void configure(final int minYear, final int correspondingDays) {
+        LeaveRequestDaysConfiguration newConfig = new LeaveRequestDaysConfiguration(minYear, correspondingDays);
+        for (int i = 0; i < this.getConfigurations().size(); i++) {
+            if (this.getConfigurations().get(i).getMinYear() == minYear) {
+                // si ya existe la conf, la reemplaza
+                this.getConfigurations().set(i, newConfig);
+            }
+            if (this.getConfigurations().get(i).getMinYear() > minYear) {
+                // inserta de manera ordenada
+                this.getConfigurations().add(i, newConfig);
+            }
+        }
+        // si no hay ninguna, se agrega directamente
+        this.getConfigurations().add(newConfig);
+    }
+
+    /**
+     * Dado un año de antiguedad, retorna los dias correspondientes de
+     * vacaciones que corresponden. Precondicion: asume que la configuracion de
+     * dias se encuentra ordenada, satisfecho por el metodo configure();
+     */
+    public int getCorrespondingDays(final int year) {
+        LeaveRequestDaysConfiguration previous = null;
+        for (LeaveRequestDaysConfiguration config : this.getConfigurations()) {
+            if (config.getMinYear() == year) {
+                // si el año coincide exactamente
+                return config.getCorrespondingDays();
+            }
+            if (config.getMinYear() > year) {
+                // si se paso, retorna el anterior
+                if (previous == null) {
+                    throw new UserException("No existe configuracion para el año dado");
+                } else {
+                    return previous.getCorrespondingDays();
+                }
+            }
+            previous = config;
+        }
+        if (this.getConfigurations().isEmpty()) {
+            throw new UserException("No existe configuracion para el año dado");
+        } else {
+            return this.getConfigurations().get(this.getConfigurations().size() - 1).getCorrespondingDays();
+        }
     }
 
     /* ************************* PRIVATE METHODS ************************** */
@@ -110,5 +179,15 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
 
     private boolean isSpecifiedMaxDaysInAYear() {
         return this.getMaxDaysInYear() != 0;
+    }
+
+    private boolean satisfiesConfiguration(final LeaveRequest leaveReq, final Employee employee) {
+        if (this.getConfigurations().isEmpty()) {
+            return true;
+        }
+        int correspondingDays = this.getCorrespondingDays(leaveReq.getYear());
+        int daysThatCanRequest = correspondingDays
+                - employee.daysRequestedInYear(leaveReq.getType(), leaveReq.getYear());
+        return leaveReq.getAmountOfDays() <= daysThatCanRequest;
     }
 }

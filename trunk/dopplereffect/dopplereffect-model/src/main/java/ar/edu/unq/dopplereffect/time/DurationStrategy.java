@@ -58,4 +58,10 @@ public interface DurationStrategy extends IEntity {
     boolean overlapsInterval(IntervalDurationStrategy intervalDuration);
 
     boolean overlapsInterval(OneDayDurationStrategy oneDayDuration);
+
+    /**
+     * Retorna la cantidad de dias que la asignacion se superpone con un
+     * {@link IntervalDurationStrategy} pasado como parametro.
+     */
+    int getSuperpositionDaysWith(IntervalDurationStrategy interval);
 }

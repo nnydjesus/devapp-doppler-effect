@@ -13,7 +13,8 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
  * Representa pedidos de licencia adquiridos por los empleados.
  */
 public class LeaveRequest extends Entity implements Assignable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 1808322728843106503L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -144,5 +145,10 @@ public class LeaveRequest extends Entity implements Assignable {
     @Override
     public boolean overlapsAssignment(final IntervalDurationStrategy interval) {
         return this.overlapsAssignment(interval.getInterval());
+    }
+
+    @Override
+    public int getSuperpositionDaysWith(final IntervalDurationStrategy interval) {
+        return this.getDurationStrategy().getSuperpositionDaysWith(interval);
     }
 }
