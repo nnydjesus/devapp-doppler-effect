@@ -11,11 +11,12 @@
 			<generator class="native" />
 		</id>
 		
-<!-- 		<property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="joinDate" column="join_date" not-null="true" /> -->
+		<property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="joinDate" column="join_date" not-null="true" />
 		
 		<property name="careerPlan" type="ar.edu.unq.dopplereffect.persistence.util.CareerPlanEnumType" column="career_plan" not-null="true" />
 		
-		<property name="levelName" column="level" not-null="true" />
+		<many-to-one name="level" class="CareerPlanLevel" column="career_data_level_id"
+		unique="true" />
 		
 		<property name="percentage" not-null="true" />
 		

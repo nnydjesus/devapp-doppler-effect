@@ -15,7 +15,7 @@
 		not-null="true" cascade="all" unique="true" />
 		
 		<many-to-one name="careerData" class="CareerData" column="career_data_id"
-		not-null="true" cascade="all" unique="true" />
+		cascade="all" unique="true" />
 		
 		<set name="assignments" cascade="all, delete-orphan" >
 		
