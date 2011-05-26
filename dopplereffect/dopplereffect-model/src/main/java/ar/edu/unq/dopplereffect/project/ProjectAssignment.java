@@ -121,6 +121,15 @@ public class ProjectAssignment extends Entity implements Assignable {
         return this.overlapsAssignment(interval.getInterval());
     }
 
+    @Override
+    public int getSuperpositionDaysWith(final IntervalDurationStrategy intervalDS) {
+        int result = 0;
+        for (IntervalDurationStrategy interval : this.getIntervals()) {
+            result += interval.getSuperpositionDaysWith(intervalDS);
+        }
+        return result;
+    }
+
     /**
      * {@inheritDoc}
      */

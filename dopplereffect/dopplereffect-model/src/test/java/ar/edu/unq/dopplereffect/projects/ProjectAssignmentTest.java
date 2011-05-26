@@ -74,6 +74,20 @@ public class ProjectAssignmentTest {
                 this.createProyect().overlapsAssignment(this.getInterval2()));
     }
 
+    @Test
+    public void testGetSuperpositionDays() {
+        // GIVEN
+        ProjectAssignment projectA = new ProjectAssignment();
+        IntervalDurationStrategy int1 = mock(IntervalDurationStrategy.class), int2 = mock(IntervalDurationStrategy.class), int3 = mock(IntervalDurationStrategy.class);
+        // WHEN
+        projectA.addInterval(int1);
+        projectA.addInterval(int2);
+        when(int1.getSuperpositionDaysWith(int3)).thenReturn(2);
+        when(int2.getSuperpositionDaysWith(int3)).thenReturn(4);
+        // THEN
+        Assert.assertEquals("la superposicion de dias fallo", 6, projectA.getSuperpositionDaysWith(int3));
+    }
+
     protected void setInterval2(final IntervalDurationStrategy interval2) {
         this.interval2 = interval2;
     }

@@ -89,4 +89,9 @@ public class OneDayDurationStrategy extends Entity implements DurationStrategy {
     public boolean overlapsInterval(final OneDayDurationStrategy oneDayDuration) {
         return oneDayDuration.getDate().equals(this.getDate());
     }
+
+    @Override
+    public int getSuperpositionDaysWith(final IntervalDurationStrategy intervalDS) {
+        return intervalDS.includesDay(this.getDate()) ? 1 : 0;
+    }
 }

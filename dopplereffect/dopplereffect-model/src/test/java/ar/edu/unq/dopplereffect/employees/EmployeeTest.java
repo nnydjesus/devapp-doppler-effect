@@ -1,14 +1,6 @@
 package ar.edu.unq.dopplereffect.employees;
 
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_01;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_06;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_08;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_09;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_11;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_13;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.getDate;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.getDates;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -25,6 +17,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.junit.Test;
 
+import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.helpers.SkillHelpers;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestBuilder;
@@ -33,6 +26,7 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestTypeBuilder;
 import ar.edu.unq.dopplereffect.project.ProjectAssignment;
 import ar.edu.unq.dopplereffect.project.Skill;
 import ar.edu.unq.dopplereffect.project.SkillLevel;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class EmployeeTest {
 
@@ -258,5 +252,46 @@ public class EmployeeTest {
         Employee employee = new EmployeeBuilder().build();
         assertEquals("el empleado no deberia satisfacer el skill (0%)", 0,
                 employee.skillSatifactionLevel(SkillHelpers.MYSQL_BEGINNER));
+    }
+
+    @Test
+    public void testAvailabilityLevel() {
+        Employee employee = new EmployeeBuilder().build();
+        Assignable assignable1 = mock(Assignable.class);
+        Assignable assignable2 = mock(Assignable.class);
+        employee.addAssignment(assignable1);
+        employee.addAssignment(assignable2);
+        IntervalDurationStrategy intervalDS = mock(IntervalDurationStrategy.class);
+        when(assignable1.getSuperpositionDaysWith(intervalDS)).thenReturn(3);
+        when(assignable2.getSuperpositionDaysWith(intervalDS)).thenReturn(1);
+        when(intervalDS.getAmountOfDays()).thenReturn(5);
+        int expectedPercentage = 20; // 4 de 5 dias totales
+        assertEquals("el nivel de disponibilidad fallo", expectedPercentage, employee.availabilityLevel(intervalDS));
+    }
+
+    @Test
+    public void testAvailableIntervals() {
+        // ESCENARIO :
+        // * intervalo : del 1/4 al 13/4
+        // * licencia : del 6/4 al 8/4
+        // * proyecto : del 11/4 al 13/4
+        // * resultado esperado : [1/4~5/4, 9/4~10/4]
+        Employee employee = new EmployeeBuilder().build();
+        LeaveRequest lreq = mock(LeaveRequest.class);
+        ProjectAssignment pAssign = mock(ProjectAssignment.class);
+        IntervalDurationStrategy interval = new IntervalDurationStrategy(D_2011_04_01, D_2011_04_13);
+        when(lreq.includesDay(D_2011_04_06)).thenReturn(true);
+        when(lreq.includesDay(D_2011_04_07)).thenReturn(true);
+        when(lreq.includesDay(D_2011_04_08)).thenReturn(true);
+        when(pAssign.includesDay(D_2011_04_11)).thenReturn(true);
+        when(pAssign.includesDay(D_2011_04_12)).thenReturn(true);
+        when(pAssign.includesDay(D_2011_04_13)).thenReturn(true);
+        employee.addAssignment(lreq);
+        employee.addAssignment(pAssign);
+        IntervalDurationStrategy expInterval1 = new IntervalDurationStrategy(D_2011_04_01, D_2011_04_05);
+        IntervalDurationStrategy expInterval2 = new IntervalDurationStrategy(D_2011_04_09, D_2011_04_10);
+        List<IntervalDurationStrategy> result = employee.getAvailableIntervals(interval);
+        assertTrue("", result.contains(expInterval1));
+        assertTrue("", result.contains(expInterval2));
     }
 }

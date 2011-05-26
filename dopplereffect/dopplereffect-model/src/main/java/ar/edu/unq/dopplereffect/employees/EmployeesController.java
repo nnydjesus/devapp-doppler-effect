@@ -1,7 +1,6 @@
 package ar.edu.unq.dopplereffect.employees;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -9,9 +8,8 @@ import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
 
 /**
- * Encargado de gestionar los sueldos de los empleados, de cambiar de plan de
- * carrera a los mismos y de administrar el orden de los niveles de cada plan de
- * carrera.
+ * Encargado de gestionar los sueldos de los empleados, y de cambiar de plan de
+ * carrera a los mismos.
  */
 public class EmployeesController {
 
@@ -21,14 +19,11 @@ public class EmployeesController {
 
     private Set<SalarySpecification> salarySpecifications;
 
-    private List<CareerPlanLevel> levels;
-
     /* *************************** CONSTRUCTORS *************************** */
 
     public EmployeesController() {
         salarySpecifications = new HashSet<SalarySpecification>();
         employees = new HashSet<Employee>();
-        levels = new LinkedList<CareerPlanLevel>();
     }
 
     /* **************************** ACCESSORS ***************************** */
@@ -47,14 +42,6 @@ public class EmployeesController {
 
     public void setSalarySpecifications(final Set<SalarySpecification> salarySpecifications) {
         this.salarySpecifications = salarySpecifications;
-    }
-
-    public List<CareerPlanLevel> getLevels() {
-        return levels;
-    }
-
-    public void setLevels(final List<CareerPlanLevel> levels) {
-        this.levels = levels;
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -187,56 +174,5 @@ public class EmployeesController {
     public void changeCareerPlan(final Employee employee, final CareerPlan careerPlan, final CareerPlanLevel level,
             final int percentage) {
         employee.changeCareerPlan(this, careerPlan, level, percentage);
-    }
-
-    /**
-     * Reemplaza los niveles actuales por los niveles pasados como parametro.
-     */
-    public void changeLevelsOrder(final List<CareerPlanLevel> theLevels) {
-        levels = theLevels;
-    }
-
-    /**
-     * Agrega un nivel de plan de carrera. Recibe el nivel que debe estar
-     * inmediatamente anterior para poder ubicarlo en el orden adecuado.
-     * 
-     * @param newLevel
-     *            el nuevo nivel a agregar.
-     * @param prevLevel
-     *            el nivel que debe estar inmediatamente anterior del nuevo,
-     *            <code>null</code> si el nivel debe ir en primer lugar en el
-     *            orden de niveles.
-     */
-    public void newLevel(final CareerPlanLevel newLevel, final CareerPlanLevel prevLevel) {
-        if (prevLevel == null) { // se debe agregar al principio
-            if (this.getLevels().isEmpty()) {
-                this.getLevels().add(newLevel);
-            } else {
-                this.getLevels().set(0, newLevel);
-            }
-            return;
-        }
-        for (CareerPlanLevel level : this.getLevels()) {
-            if (level.equals(prevLevel)) {
-                int newIndex = this.getLevels().indexOf(prevLevel) + 1;
-                if (newIndex >= this.getLevels().size()) {
-                    this.getLevels().add(newLevel);
-                } else {
-                    this.getLevels().set(newIndex, newLevel);
-                }
-                return;
-            }
-        }
-    }
-
-    /**
-     * Agrega un nivel de plan de carrera, en el primer lugar en el orden de
-     * niveles.
-     * 
-     * @param newLevel
-     *            el nuevo nivel que se desea agregar.
-     */
-    public void newLevel(final CareerPlanLevel newLevel) {
-        this.newLevel(newLevel, null);
     }
 }

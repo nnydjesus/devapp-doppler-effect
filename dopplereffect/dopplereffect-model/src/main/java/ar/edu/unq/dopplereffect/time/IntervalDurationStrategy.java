@@ -1,5 +1,9 @@
 package ar.edu.unq.dopplereffect.time;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
@@ -12,7 +16,10 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
  * todos sus dias intermedios estan contemplados. Aplicable a licencias y
  * asignaciones de proyectos.
  */
-public class IntervalDurationStrategy extends Entity implements DurationStrategy {
+/**
+ * TODO: description
+ */
+public class IntervalDurationStrategy extends Entity implements DurationStrategy, Iterable<DateTime> {
     private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
@@ -103,8 +110,47 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
     @Override
     public boolean overlapsInterval(final OneDayDurationStrategy oneDayDuration) {
         return this.getInterval().contains(oneDayDuration.getDate())
-                || this.getInterval().getEnd().equals(oneDayDuration.getDate());
+                || this.getEndDate().equals(oneDayDuration.getDate());
     }
+
+    @Override
+    public int getSuperpositionDaysWith(final IntervalDurationStrategy intervalDS) {
+        if (this.overlapsInterval(intervalDS)) {
+            if (this.getStartDate().isBefore(intervalDS.getStartDate())) {
+                DateTime minDate = this.getEndDate().isBefore(intervalDS.getEndDate()) ? this.getEndDate() : intervalDS
+                        .getEndDate();
+                return Days.daysBetween(intervalDS.getStartDate(), minDate).getDays() + 1;
+            } else {
+                DateTime minDate = intervalDS.getEndDate().isBefore(this.getEndDate()) ? intervalDS.getEndDate() : this
+                        .getEndDate();
+                return Days.daysBetween(this.getStartDate(), minDate).getDays() + 1;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public Iterator<DateTime> iterator() {
+        return this.getAllDates().iterator();
+    }
+
+    /**
+     * Retorna todas las fechas (instancias de {@link DateTime}) comprendidas en
+     * el intervalo.
+     */
+    public List<DateTime> getAllDates() {
+        List<DateTime> result = new LinkedList<DateTime>();
+        DateTime current = new DateTime(this.getStartDate()); // es mutable
+        while (!current.equals(this.getEndDate())) {
+            result.add(current);
+            current = current.plusDays(1);
+        }
+        result.add(new DateTime(this.getEndDate())); // DateTime es mutable
+        return result;
+    }
+
+    /* ****************** EQUALS, HASHCODE, TOSTRING ********************** */
 
     @Override
     public int hashCode() {
@@ -134,5 +180,10 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return this.getStartDate().toString() + " ~ " + this.getEndDate().toString();
     }
 }

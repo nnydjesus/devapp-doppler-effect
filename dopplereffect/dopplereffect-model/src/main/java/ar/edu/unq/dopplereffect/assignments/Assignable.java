@@ -34,4 +34,10 @@ public interface Assignable extends IEntity {
      * interseccion con un {@link IntervalDurationStrategy}.
      */
     boolean overlapsAssignment(IntervalDurationStrategy interval);
+
+    /**
+     * Retorna la cantidad de dias que la asignacion se superpone con un
+     * {@link IntervalDurationStrategy} pasado como parametro.
+     */
+    int getSuperpositionDaysWith(IntervalDurationStrategy intervalDurationStrategy);
 }

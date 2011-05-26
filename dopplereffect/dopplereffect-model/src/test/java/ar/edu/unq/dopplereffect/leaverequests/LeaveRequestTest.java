@@ -5,6 +5,7 @@ import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_06;
 import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_08;
 import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_11;
 import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_13;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -19,6 +20,7 @@ import org.junit.Test;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class LeaveRequestTest {
 
@@ -139,14 +141,17 @@ public class LeaveRequestTest {
 
     @Test
     public void testValidateEmployeeWhenAlreadyRequestedForTheSameDays() {
+        // GIVEN
         Employee empl = mock(Employee.class);
         LeaveRequest request1 = new LeaveRequestBuilder().withType(new LeaveRequestTypeBuilder().build())
                 .withInterval(D_2011_04_05, D_2011_04_08).build();
         LeaveRequest request2 = new LeaveRequestBuilder().withType(new LeaveRequestTypeBuilder().build())
                 .withInterval(D_2011_04_06, D_2011_04_11).build();
         Set<LeaveRequest> reqs = new HashSet<LeaveRequest>();
+        // WHEN
         reqs.add(request1);
         when(empl.getLeaveRequests()).thenReturn(reqs);
+        // THEN
         assertFalse("la validacion de la licencia fallo", request2.isValidFor(empl));
         verify(empl).getLeaveRequests();
     }
@@ -155,5 +160,18 @@ public class LeaveRequestTest {
     public void testIsLeaveRequest() {
         LeaveRequest anyLeaveRequest = new LeaveRequestBuilder().build();
         assertTrue("una licencia ES una licencia", anyLeaveRequest.isLeaveRequest());
+    }
+
+    @Test
+    public void testGetSuperpositionDays() {
+        // GIVEN
+        LeaveRequest lreq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_08).build();
+        IntervalDurationStrategy ids = mock(IntervalDurationStrategy.class);
+        // WHEN
+        when(ids.getStartDate()).thenReturn(D_2011_04_05);
+        when(ids.getEndDate()).thenReturn(D_2011_04_08);
+        int superpositionDays = lreq.getSuperpositionDaysWith(ids);
+        // THEN
+        assertEquals("los dias superpuestos fallaron", 4, superpositionDays);
     }
 }

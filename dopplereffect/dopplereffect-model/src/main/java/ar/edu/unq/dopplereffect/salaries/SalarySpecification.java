@@ -1,19 +1,23 @@
 package ar.edu.unq.dopplereffect.salaries;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 
 /**
  * Representa aquellos parametros que sirven para determinar el sueldo de un
  * empleado, como por ejemplo el monto minimo y maximo, y el plan de carrera.
  */
-public class SalarySpecification {
+public class SalarySpecification extends Entity {
+
+    private static final long serialVersionUID = 5210798123849191719L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -47,6 +51,15 @@ public class SalarySpecification {
         this.year = year;
         this.plan = plan;
         this.level = level;
+    }
+
+    public SalarySpecification(final int year, final CareerPlan plan, final CareerPlanLevel level,
+            final Integer... percentages) {
+        this.year = year;
+        this.plan = plan;
+        this.level = level;
+        this.percentages = new LinkedList<Integer>();
+        Collections.addAll(this.percentages, percentages);
     }
 
     public SalarySpecification() {

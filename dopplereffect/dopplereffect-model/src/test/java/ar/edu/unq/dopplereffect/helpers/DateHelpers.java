@@ -12,9 +12,12 @@ public final class DateHelpers {
             D_2011_04_01 = new DateTime("2011-04-01"), 
             D_2011_04_05 = new DateTime("2011-04-05"), 
             D_2011_04_06 = new DateTime("2011-04-06"),
-            D_2011_04_08 = new DateTime("2011-04-08"), 
-            D_2011_04_09 = new DateTime("2011-04-09"), 
+            D_2011_04_07 = new DateTime("2011-04-07"),
+            D_2011_04_08 = new DateTime("2011-04-08"),
+            D_2011_04_09 = new DateTime("2011-04-09"),
+            D_2011_04_10 = new DateTime("2011-04-10"),
             D_2011_04_11 = new DateTime("2011-04-11"),
+            D_2011_04_12 = new DateTime("2011-04-12"),
             D_2011_04_13 = new DateTime("2011-04-13");
     // @formatter:on
 

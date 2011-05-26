@@ -2,6 +2,7 @@ package ar.edu.unq.dopplereffect.employees;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,8 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
  * Ademas el empleado tiene asignaciones, ya sean a licencias o a proyectos.
  */
 public class Employee extends Entity {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 2985643249801148589L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -77,22 +79,6 @@ public class Employee extends Entity {
 
     public void setDni(final int dni) {
         this.getPersonalData().setDni(dni);
-    }
-
-    public String getPhoneNumber() {
-        return this.getPersonalData().getPhoneNumber();
-    }
-
-    public void setPhoneNumber(final String phoneNumber) {
-        this.getPersonalData().setPhoneNumber(phoneNumber);
-    }
-
-    public String getEmail() {
-        return this.getPersonalData().getEmail();
-    }
-
-    public void setEmail(final String email) {
-        this.getPersonalData().setEmail(email);
     }
 
     public CareerData getCareerData() {
@@ -259,6 +245,19 @@ public class Employee extends Entity {
     }
 
     /**
+     * Retorna <code>true</code> si el empleado esta libre en la fecha dada,
+     * <code>false</code> en caso contrario.
+     */
+    public boolean isFreeAtDate(final DateTime date) {
+        for (Assignable assignable : this.getAssignments()) {
+            if (assignable.includesDay(date)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Retorna la antiguedad del empleado, en cantidad de años.
      */
     public int getSeniority() {
@@ -349,13 +348,67 @@ public class Employee extends Entity {
         return false;
     }
 
-    public int availabilityLevel(final IntervalDurationStrategy intervalDurationStrategy) {
+    /**
+     * Retorna un porcentaje que indica en que medida el empleado satisface un
+     * intervalo dado. Si esta totalmente libre durante el intervalo, entonces
+     * satisface en un 100%. Si no, el porcentaje se va restando, si no
+     * satisface ningun dia del intervalo, el porcentaje es 0.
+     */
+    public int availabilityLevel(final IntervalDurationStrategy intervalDS) {
+        int totalDays = intervalDS.getAmountOfDays();
+        int freeDays = totalDays - this.calculateSuperpositionDays(intervalDS);
+        return freeDays * 100 / totalDays;
+    }
+
+    /**
+     * Retorna aquellos {@link IntervalDurationStrategy} que resultan de la
+     * "resta" entre el intervalo dado como parametro, y las asignaciones que
+     * tenga el empleado. <br />
+     * Por ejemplo, si el intervalo dado es del 1/6 al 12/6, y el empleado esta
+     * asignado del 3/6 al 5/6, y del 7/6 al 9/6, entonces el resultado deberian
+     * ser los siguientes 3 intervalos: del 1/6 al 2/6, del 6/6 al 6/6 (un solo
+     * dia), y del 10/6 al 12/6.
+     */
+    public List<IntervalDurationStrategy> getAvailableIntervals(final IntervalDurationStrategy intervalDS) {
+        List<IntervalDurationStrategy> intervals = new LinkedList<IntervalDurationStrategy>();
+        DateTime currentIntervalStart = null;
+        boolean isCurrentIntervalStartSet = false;
+        for (DateTime current : intervalDS) {
+            if (this.isFreeAtDate(current)) {
+                if (!isCurrentIntervalStartSet) { // si no hay un intervalo
+                    currentIntervalStart = current; // nuevo, se lo crea
+                    isCurrentIntervalStartSet = true;
+                }
+            } else { // si ya habia empezado un intervalo
+                if (isCurrentIntervalStartSet) {
+                    // si habia un intervalo empezado, se lo termina
+                    // contando el dia anterior
+                    DateTime currentIntervalEnd = current.minusDays(1);
+                    // y se lo agrega a la lista de intervalos
+                    intervals.add(new IntervalDurationStrategy(currentIntervalStart, currentIntervalEnd)); // NOPMD
+                    // se resetea el intervalo actual
+                    isCurrentIntervalStartSet = false;
+                }
+            }
+        }
+        return intervals;
+    }
+
+    public IntervalDurationStrategy getAvailableInterval(final IntervalDurationStrategy intervalDS) {
         throw new UnsupportedOperationException();
     }
 
-    public IntervalDurationStrategy getAvailableInterval(final IntervalDurationStrategy intervalDurationStrategy) {
-        throw new UnsupportedOperationException();
+    /* ************************* PRIVATE METHODS ************************** */
+
+    private int calculateSuperpositionDays(final IntervalDurationStrategy ids) {
+        int result = 0;
+        for (Assignable assignable : this.getAssignments()) {
+            result += assignable.getSuperpositionDaysWith(ids);
+        }
+        return result;
     }
+
+    /* ****************** EQUALS, HASHCODE, TOSTRING ********************** */
 
     @Override
     public String toString() {
