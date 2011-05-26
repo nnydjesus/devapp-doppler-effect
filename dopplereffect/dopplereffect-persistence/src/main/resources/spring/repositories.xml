@@ -15,4 +15,12 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean id="careerPlanLevelRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.CareerPlanLevelRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="salarySpecRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.SalarySpecificationRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 </beans>

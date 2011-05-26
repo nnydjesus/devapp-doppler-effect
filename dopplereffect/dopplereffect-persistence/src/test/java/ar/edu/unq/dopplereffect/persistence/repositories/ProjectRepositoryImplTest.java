@@ -1,37 +1,24 @@
-package ar.edu.unq.dopplereffect;
+package ar.edu.unq.dopplereffect.persistence.repositories;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
-import ar.edu.unq.dopplereffect.persistence.repositories.ProjectRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.util.SpringPersistenceTest;
 import ar.edu.unq.dopplereffect.project.Project;
 import ar.edu.unq.dopplereffect.project.ProjectBuilder;
 
-public class ProjectRepositoryImplTest extends AbstractTransactionalDataSourceSpringContextTests implements
-        TestTransactional {
+public class ProjectRepositoryImplTest extends SpringPersistenceTest {
 
     private static final String PROJECT_NAME = "P1";
 
     private static final String UPDATE_PROJECT_NAME = "P5";
 
-    private static final Integer EFFORT = 2500;
-
-    // @Autowired
-    // private Project project;
+    private static final Long EFFORT = 2500L;
 
     @Autowired
     private ProjectRepositoryImpl repository;
-
-    public ProjectRepositoryImpl getRepository() {
-        return repository;
-    }
-
-    public void setRepository(final ProjectRepositoryImpl repository) {
-        this.repository = repository;
-    }
 
     @Test
     public void testSave() {
@@ -73,12 +60,5 @@ public class ProjectRepositoryImplTest extends AbstractTransactionalDataSourceSp
 
     private Project createProject(final String name) {
         return new ProjectBuilder().withName(name).withEstimatedEffort(EFFORT).build();
-
     }
-
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[] { "/spring/data-source.xml", "/spring/transactions.xml", "/spring/repositories.xml" };
-    }
-
 }

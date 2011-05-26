@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ar.edu.unq.dopplereffect.salaries" >
+
+	<class name="SalarySpecification" table="salary_specification" >
+				
+		<id name="id" type="java.lang.Long" >
+			<generator class="native" />
+		</id>
+
+		<property name="year" />
+		
+		<property name="plan" type="ar.edu.unq.dopplereffect.persistence.util.CareerPlanEnumType" column="career_plan" not-null="true" />
+		
+		<many-to-one name="level" class="ar.edu.unq.dopplereffect.employees.CareerPlanLevel" column="career_plan_level_id"
+		unique="true" cascade="all" />
+		
+		<property name="minSalary" column="min_salary" not-null="true" />
+		
+		<property name="maxSalary" column="max_salary" not-null="true" />
+		
+		<list name="percentages" table="salary_spec_percentage"
+				cascade="all, delete-orphan">
+
+			<key column="salary_specification_id" />
+
+			<list-index column="percentages_order" />
+
+			<element type="java.lang.Integer" column="percentage" />
+
+		</list>
+		
+	</class>
+
+</hibernate-mapping>

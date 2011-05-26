@@ -2,19 +2,20 @@ package ar.edu.unq.dopplereffect.persistence.repositories;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unq.dopplereffect.persistence.util.CustomHibernateRepositorySupport;
-import ar.edu.unq.dopplereffect.project.Project;
 import ar.edu.unq.dopplereffect.repositories.Repository;
 
-public class HibernatePersistentRepository<T> extends CustomHibernateRepositorySupport implements Repository<T> {
+public class HibernatePersistentRepository<T> extends HibernateDaoSupport implements Repository<T> {
 
     private Class<T> entityClass;
 
     public HibernatePersistentRepository(final Class<T> clazz) {
+        super();
         this.setEntityClass(clazz);
     }
 
@@ -22,6 +23,13 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
     @Transactional
     public void save(final T object) {
         this.getHibernateTemplate().save(object);
+    }
+
+    @Transactional
+    public void saveAll(final T... objects) {
+        for (T object : objects) {
+            this.getHibernateTemplate().save(object);
+        }
     }
 
     @Override
@@ -43,21 +51,30 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
         return this.getHibernateTemplate().loadAll(this.getEntityClass());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public T getByName(final String name) {
-        DetachedCriteria detachedCriteria = this.createCriteria();
-        detachedCriteria.add(Restrictions.like("name", name));
-        List<Project> list = this.getHibernateTemplate().findByCriteria(detachedCriteria);
-
-        if (list.isEmpty()) {
+        Criteria criteria = this.getSession().createCriteria(this.entityClass);
+        criteria.add(Restrictions.like("name", "%" + name + "%"));
+        List<T> results = criteria.list();
+        if (results.isEmpty()) {
             return null;
+        } else {
+            return (T) criteria.list().get(0);
         }
-        return (T) list.get(0);
+        // DetachedCriteria detachedCriteria = this.createCriteria();
+        // detachedCriteria.add(Restrictions.like("name", name));
+        // List<T> list =
+        // this.getHibernateTemplate().findByCriteria(detachedCriteria);
+        //
+        // if (list.isEmpty()) {
+        // return null;
+        // }
+        // return list.get(0);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public List<T> searchByExample(final T object) {
         return this.getHibernateTemplate().findByExample(object);
     }
