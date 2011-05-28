@@ -28,13 +28,6 @@ public class SearchProject extends Search<Project> {
         App.searchProject = this;
     }
 
-    public synchronized static SearchProject getInstance() {
-        if (App.searchProject == null) {
-            App.searchProject = new SearchProject();
-        }
-        return App.searchProject;
-    }
-
     public String getSearchByName() {
         this.search();
         return this.getName();

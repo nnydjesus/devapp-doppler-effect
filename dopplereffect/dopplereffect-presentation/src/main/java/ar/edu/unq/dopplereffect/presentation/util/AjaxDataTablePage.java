@@ -43,13 +43,13 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
     private WebMarkupContainer sortableAjaxWicket;
 
     public AjaxDataTablePage(final String id, final String sortName, final Search<T> aSearch,
-            final CallBack<Component> aCallBack, final List<String> fields, final Class<? extends Component> abm) {
+            final AjaxCallBack<Component> aCallBack, final List<String> fields, final Class<? extends Component> abm) {
 
         this.setFields(fields);
         this.setAbmClass(abm);
         this.setSearch(aSearch);
 
-        final CallBack<Component> callBack = aCallBack;
+        final AjaxCallBack<Component> callBack = aCallBack;
         ArrayList<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
         for (String field : fields) {

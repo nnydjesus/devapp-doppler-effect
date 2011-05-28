@@ -19,7 +19,7 @@ import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.SkillSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.salaryspec.SalarySpecSearchPanel;
-import ar.edu.unq.dopplereffect.presentation.util.CallBack;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
 /**
  * Simple home page.
@@ -32,7 +32,7 @@ public class Home extends StylePage<Component> implements IWiQueryPlugin {
         EffectBehavior effect1 = new EffectBehavior(new PulsateEffect(PulsateMode.show, 10, 1000));
         // effect2 = new EffectBehavior(new Show());
         this.add(effect1);
-        final CallBack<Component> callback = this.generateCallback();
+        final AjaxCallBack<Component> callback = this.generateCallback();
         this.add(this.createPanelLink("projects", new ProjectSearchPanel("body", callback)));
         this.add(this.createPanelLink("skills", new SkillSearchPanel("body", callback)));
         this.add(this.createPanelLink("employees", new EmployeeSearchPanel("body", callback)));
@@ -54,8 +54,8 @@ public class Home extends StylePage<Component> implements IWiQueryPlugin {
         };
     }
 
-    protected CallBack<Component> generateCallback() {
-        return new CallBack<Component>() {
+    protected AjaxCallBack<Component> generateCallback() {
+        return new AjaxCallBack<Component>() {
             private static final long serialVersionUID = 1L;
 
             @Override

@@ -6,7 +6,7 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
-import ar.edu.unq.dopplereffect.presentation.util.CallBack;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
 /**
  * TODO: description
@@ -16,9 +16,9 @@ public class PanelCallbackLink extends AjaxLink<Object> {
 
     private WebComponentFactory<Component> component;
 
-    private CallBack<Component> callBack;
+    private AjaxCallBack<Component> callBack;
 
-    public PanelCallbackLink(final String id, final CallBack<Component> callBack, final Component component) {
+    public PanelCallbackLink(final String id, final AjaxCallBack<Component> callBack, final Component component) {
         this(id, callBack, new WebComponentFactory<Component>() {
             private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class PanelCallbackLink extends AjaxLink<Object> {
         });
     }
 
-    public PanelCallbackLink(final String id, final CallBack<Component> callBack,
+    public PanelCallbackLink(final String id, final AjaxCallBack<Component> callBack,
             final WebComponentFactory<Component> component) {
         super(id);
         this.add(new ButtonBehavior());
@@ -42,11 +42,11 @@ public class PanelCallbackLink extends AjaxLink<Object> {
         this.getCallBack().execute(target, this.getComponent().createPage());
     }
 
-    public void setCallBack(final CallBack<Component> callBack) {
+    public void setCallBack(final AjaxCallBack<Component> callBack) {
         this.callBack = callBack;
     }
 
-    public CallBack<Component> getCallBack() {
+    public AjaxCallBack<Component> getCallBack() {
         return callBack;
     }
 

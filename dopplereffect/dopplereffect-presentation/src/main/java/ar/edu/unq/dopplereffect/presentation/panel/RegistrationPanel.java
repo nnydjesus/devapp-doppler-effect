@@ -1,6 +1,5 @@
 package ar.edu.unq.dopplereffect.presentation.panel;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -26,7 +25,7 @@ import ar.edu.unq.dopplereffect.user.User;
 
 /**
  */
-public class LoginPanel extends AbstractPanel<Model<String>> {
+public class RegistrationPanel extends AbstractPanel<Model<String>> {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,23 +33,13 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     private PasswordTextField passField;
 
-    private boolean rememberMe = false;
+    private static boolean rememberMe = false;
 
     private Authenticate service;
 
     private WebPage dafaultPage;
 
-    private StateLogin state = StateLogin.LOGIN;
-
-    private WebMarkupContainer rememberMeRow;
-
-    private Component submit;
-
-    private Component register;
-
-    private Model<String> submitModel;
-
-    public LoginPanel(final String id) {
+    public RegistrationPanel(final String id) {
         super(id);
         service = App.loginService;
     }
@@ -65,16 +54,16 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         this.setUserIdField(new RequiredTextField<String>("name", new Model<String>("")));
         this.setPassField(new PasswordTextField("password", new Model<String>("")));
 
-        this.setRememberMeRow(new WebMarkupContainer("rememberMeRow"));
+        WebMarkupContainer rememberMeRow = new WebMarkupContainer("rememberMeRow");
         //
         // // Add rememberMe checkbox
-        this.getRememberMeRow().add(new CheckBox("rememberMe", new PropertyModel<Boolean>(this, "rememberMe")));
+        rememberMeRow.add(new CheckBox("rememberMe", new PropertyModel<Boolean>(this, "rememberMe")));
 
         // Make form values persistent
         this.getUserIdField().setPersistent(rememberMe);
 
         // Show remember me checkbox?
-        this.getRememberMeRow().setVisible(true);
+        rememberMeRow.setVisible(true);
 
         /* Make sure that password field shows up during page re-render * */
 
@@ -83,36 +72,27 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         this.setDafaultPage(new Home());
         form.add(this.getUserIdField());
         form.add(this.getPassField());
-        form.add(this.getRememberMeRow());
+        form.add(rememberMeRow);
         form.add(this.setFeedbackPanel(new FeedbackPanel("feedbackPanel")));
-        this.setSubmit(this.createSubmitButton().add(new ButtonBehavior()));
-        form.add(this.getSubmit());
-        this.setRegister(this.createRegisterButton().add(new ButtonBehavior()));
-        form.add(this.getRegister());
+        form.add(this.createSubmitButton().add(new ButtonBehavior()));
         return form;
     }
 
     private AjaxButton createSubmitButton() {
-        this.setSubmitModel(new Model<String>("Login"));
-        return new AjaxButton("submit", this.getSubmitModel()) {
+        return new AjaxButton("submit") {
             private static final long serialVersionUID = 1L;
 
             @Override
             protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-                String userName = LoginPanel.this.getUserIdField().getDefaultModelObjectAsString();
-                String password = LoginPanel.this.getPassField().getDefaultModelObjectAsString();
-                if (LoginPanel.this.getState().equals(StateLogin.LOGIN)) {
-                    LoginPanel.this.getService().login(userName, password, this.loginCallback(target),
-                            this.errorCallback());
-                } else {
-                    LoginPanel.this.getService().signUp(userName, password, this.registerCallBack(target),
-                            this.errorCallback());
-                }
+                String userName = RegistrationPanel.this.getUserIdField().getDefaultModelObjectAsString();
+                String password = RegistrationPanel.this.getPassField().getDefaultModelObjectAsString();
+                RegistrationPanel.this.getService()
+                        .login(userName, password, this.loginCallback(target), this.errorCallback());
             }
 
             @Override
             protected void onError(final AjaxRequestTarget target, final Form<?> form) {
-                target.addComponent(LoginPanel.this.getFeedbackPanel());
+                target.addComponent(RegistrationPanel.this.getFeedbackPanel());
             }
 
             private CallBack<User> loginCallback(final AjaxRequestTarget target) {
@@ -121,22 +101,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
                     @Override
                     public void execute(final User user) {
-                        LoginPanel.this.getCallBack().execute(target, user);
-                    }
-                };
-            }
-
-            private CallBack<Object> registerCallBack(final AjaxRequestTarget target) {
-                return new CallBack<Object>() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void execute(final Object o) {
-                        LoginPanel.this.setState(StateLogin.LOGIN);
-                        LoginPanel.this.getRememberMeRow().setVisible(true);
-                        LoginPanel.this.getSubmitModel().setObject("Login");
-                        LoginPanel.this.getRegister().setVisible(true);
-                        target.addComponent(getForm());
+                        RegistrationPanel.this.getCallBack().execute(target, user);
                     }
                 };
             }
@@ -147,26 +112,11 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
                     @Override
                     public void execute(final UserException e) {
-                        error(getLocalizer().getString(e.getMessage(), LoginPanel.this));
+                        error(getLocalizer().getString(e.getMessage(), RegistrationPanel.this));
                     }
                 };
             }
 
-        };
-    }
-
-    private AjaxButton createRegisterButton() {
-        return new AjaxButton("register", new Model<String>("Registrarme")) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-                LoginPanel.this.setState(StateLogin.REGISTER);
-                LoginPanel.this.getRememberMeRow().setVisible(false);
-                LoginPanel.this.getRegister().setVisible(false);
-                LoginPanel.this.getSubmitModel().setObject("Aceptar");
-                target.addComponent(form);
-            }
         };
     }
 
@@ -176,7 +126,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
             @Override
             public void execute(final AjaxRequestTarget ajaxTarget, final Object component) {
-                LoginPanel.this.setResponsePage(LoginPanel.this.getDafaultPage());
+                RegistrationPanel.this.setResponsePage(RegistrationPanel.this.getDafaultPage());
             }
         };
     }
@@ -219,46 +169,6 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     public boolean isRememberMe() {
         return rememberMe;
-    }
-
-    public void setRememberMeRow(final WebMarkupContainer rememberMeRow) {
-        this.rememberMeRow = rememberMeRow;
-    }
-
-    public WebMarkupContainer getRememberMeRow() {
-        return rememberMeRow;
-    }
-
-    public void setState(final StateLogin state) {
-        this.state = state;
-    }
-
-    public StateLogin getState() {
-        return state;
-    }
-
-    public void setSubmitModel(final Model<String> submitModel) {
-        this.submitModel = submitModel;
-    }
-
-    public Model<String> getSubmitModel() {
-        return submitModel;
-    }
-
-    public void setRegister(final Component register) {
-        this.register = register;
-    }
-
-    public Component getRegister() {
-        return register;
-    }
-
-    public void setSubmit(final Component submit) {
-        this.submit = submit;
-    }
-
-    public Component getSubmit() {
-        return submit;
     }
 
 }

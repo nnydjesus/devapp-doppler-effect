@@ -12,7 +12,7 @@ import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
-import ar.edu.unq.dopplereffect.presentation.util.CallBack;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.ITable;
 import ar.edu.unq.dopplereffect.presentation.util.ReflectionAjaxButton;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
@@ -32,7 +32,7 @@ public abstract class AbstractSearchPanel<T extends Search> extends AbstractCall
      * @param parameters
      *            Page parameters
      */
-    public AbstractSearchPanel(final String id, final CallBack<Component> parentPage, final T model,
+    public AbstractSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final T model,
             final List<String> fields, final Class abm) {
         super(id, parentPage, model);
         this.setFields(fields);
