@@ -386,3 +386,8 @@ table.dataview tr th a:hover {
 table.dataview tr th a:active {
 	color: #003366;
 }
+
+.language_select {
+	padding: 10px;
+	text-align: right;	
+}

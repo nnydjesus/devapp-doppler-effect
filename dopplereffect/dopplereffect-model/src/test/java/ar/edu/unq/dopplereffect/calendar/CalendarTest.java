@@ -1,8 +1,7 @@
 package ar.edu.unq.dopplereffect.calendar;
 
 import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;

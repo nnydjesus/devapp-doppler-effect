@@ -25,8 +25,6 @@ public abstract class Search<T> implements Serializable {
     }
 
     public void setResults(final List<T> resultado) {
-        results.removeAll(results);
-        results.addAll(resultado);
         this.results = resultado;
     }
 

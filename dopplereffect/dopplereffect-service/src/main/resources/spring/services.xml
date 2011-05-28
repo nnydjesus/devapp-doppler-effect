@@ -3,8 +3,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-<!-- 	<bean id="employeeService" class="ar.edu.unq.dopplereffect.service.EmployeeServiceImpl" > -->
-<!-- 		<property name="repository" ref="employeeRepo"/> -->
-<!-- 	</bean> -->
+	<bean id="projectService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="projectRepo" />
+	</bean>
+	
+	<bean id="employeeService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="employeeRepo" />
+	</bean>
+	
+	<bean id="salarySpecService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="salarySpecRepo" />
+	</bean>
 	
 </beans>

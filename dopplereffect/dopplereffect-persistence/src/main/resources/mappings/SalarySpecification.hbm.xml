@@ -13,7 +13,7 @@
 
 		<property name="year" />
 		
-		<property name="plan" type="ar.edu.unq.dopplereffect.persistence.util.CareerPlanEnumType" column="career_plan" not-null="true" />
+		<property name="plan" type="ar.edu.unq.dopplereffect.persistence.util.CareerPlanEnumType" column="career_plan" />
 		
 		<many-to-one name="level" class="ar.edu.unq.dopplereffect.employees.CareerPlanLevel" column="career_plan_level_id"
 		unique="true" cascade="all" />

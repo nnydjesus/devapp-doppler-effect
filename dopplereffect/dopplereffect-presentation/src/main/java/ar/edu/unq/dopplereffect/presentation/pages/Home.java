@@ -7,7 +7,6 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.odlabs.wiquery.core.commons.IWiQueryPlugin;
 import org.odlabs.wiquery.core.commons.WiQueryResourceManager;
 import org.odlabs.wiquery.core.effects.EffectBehavior;
-import org.odlabs.wiquery.core.effects.basic.Show;
 import org.odlabs.wiquery.core.javascript.JsStatement;
 import org.odlabs.wiquery.ui.effects.PulsateEffect;
 import org.odlabs.wiquery.ui.effects.PulsateEffect.PulsateMode;
@@ -15,9 +14,11 @@ import org.odlabs.wiquery.ui.themes.ThemeUiHelper;
 import org.odlabs.wiquery.ui.themes.WiQueryCoreThemeResourceReference;
 
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.LanguageSelectorPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.SkillSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.salaryspec.SalarySpecSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 
 /**
@@ -26,19 +27,17 @@ import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 public class Home extends StylePage<Component> implements IWiQueryPlugin {
     private static final long serialVersionUID = 1L;
 
-    private EffectBehavior effect1;
-
-    private EffectBehavior effect2;
-
     public Home() {
         super();
-        effect1 = new EffectBehavior(new PulsateEffect(PulsateMode.show, 10, 1000));
-        effect2 = new EffectBehavior(new Show());
+        EffectBehavior effect1 = new EffectBehavior(new PulsateEffect(PulsateMode.show, 10, 1000));
+        // effect2 = new EffectBehavior(new Show());
         this.add(effect1);
         final CallBack<Component> callback = this.generateCallback();
         this.add(this.createPanelLink("projects", new ProjectSearchPanel("body", callback)));
         this.add(this.createPanelLink("skills", new SkillSearchPanel("body", callback)));
-        this.add(this.createPanelLink("employee", new EmployeeSearchPanel("body", callback)));
+        this.add(this.createPanelLink("employees", new EmployeeSearchPanel("body", callback)));
+        this.add(this.createPanelLink("salary_percentages", new SalarySpecSearchPanel("body", callback)));
+        this.add(new LanguageSelectorPanel("language_select"));
         this.add(new HeaderPanel("items"));
         // this.add(new PageLink("logout", parent));
     }
