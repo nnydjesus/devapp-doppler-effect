@@ -27,6 +27,8 @@ public class App extends WebApplication {
 
     public static SalarySpecSearch salarySpecSearch;
 
+    public static Authenticate loginService;
+
     @Override
     protected void init() {
         super.init();

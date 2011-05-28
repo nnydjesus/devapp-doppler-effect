@@ -15,4 +15,7 @@ public interface Repository<T> {
     List<T> searchByExample(T object);
 
     T getByName(String name);
+
+    T getByLikeName(String name);
+
 }

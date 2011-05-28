@@ -41,7 +41,7 @@ public class ServiceImpl<T> implements Service<T>, Serializable {
         this.repository = repository;
     }
 
-    private Repository<T> getRepository() {
+    public Repository<T> getRepository() {
         return repository;
     }
 

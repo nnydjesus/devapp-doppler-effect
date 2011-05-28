@@ -2,10 +2,13 @@ package ar.edu.unq.dopplereffect.persistence.repositories;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 
-public class CareerPlanLevelRepositoryImpl extends HibernatePersistentRepository<CareerPlanLevel> {
+public class CareerPlanLevelRepositoryImpl extends
+		HibernatePersistentRepository<CareerPlanLevel> {
 
-    public CareerPlanLevelRepositoryImpl() {
-        super(CareerPlanLevel.class);
-    }
+	private static final long serialVersionUID = 1L;
+
+	public CareerPlanLevelRepositoryImpl() {
+		super(CareerPlanLevel.class);
+	}
 
 }

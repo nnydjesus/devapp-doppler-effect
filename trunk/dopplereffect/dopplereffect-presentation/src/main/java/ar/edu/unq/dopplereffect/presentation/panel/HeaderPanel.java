@@ -25,6 +25,7 @@ public class HeaderPanel extends AbstractPanel<Object> {
         super(id);
         // this.setParentPage(aParent);
         this.setDialog(new Dialog("dialog"));
+        dialog.add(new Button("aceptar").add(new ButtonBehavior()));
         this.add(dialog);
         this.add(this.createButton("home"));
         this.add(this.createButton("about"));

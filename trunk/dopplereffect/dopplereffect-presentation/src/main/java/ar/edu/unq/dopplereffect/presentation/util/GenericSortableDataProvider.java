@@ -19,7 +19,8 @@ import org.apache.wicket.model.PropertyModel;
  * @author igor
  * 
  */
-public class GenericSortableDataProvider<T extends Serializable> extends SortableDataProvider<T> {
+public class GenericSortableDataProvider<T extends Serializable> extends SortableDataProvider<T> implements
+        Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<T> list;
@@ -92,7 +93,7 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
         return comparator;
     }
 
-    class SortableDataProviderComparator implements Comparator<T> {
+    class SortableDataProviderComparator implements Comparator<T>, Serializable {
         private static final long serialVersionUID = 1L;
 
         @Override

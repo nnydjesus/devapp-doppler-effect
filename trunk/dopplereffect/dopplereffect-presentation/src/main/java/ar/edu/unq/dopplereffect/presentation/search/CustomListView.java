@@ -13,7 +13,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 
 import ar.edu.unq.dopplereffect.presentation.panel.utils.SortableAjax;
-import ar.edu.unq.dopplereffect.presentation.util.CallBack;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.ITable;
 import ar.edu.unq.dopplereffect.presentation.util.SelectTable;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
@@ -39,12 +39,12 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
 
     private WebMarkupContainer sortableAjaxWicket;
 
-    private CallBack<Component> callback;
+    private AjaxCallBack<Component> callback;
 
     /* *************************** CONSTRUCTORS *************************** */
 
     public CustomListView(final String id, final List<String> modelFields,
-            final Class<? extends Component> entityPageClass, final CallBack<Component> aCallBack) {
+            final Class<? extends Component> entityPageClass, final AjaxCallBack<Component> aCallBack) {
         super(id);
 
         this.callback = aCallBack;
@@ -128,9 +128,9 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
             private static final long serialVersionUID = -8948246124445479612L;
 
             @Override
-            @SuppressWarnings("unchecked")
+            // @SuppressWarnings("unchecked")
             public void onClick(final AjaxRequestTarget target) {
-                T object = (T) this.getParent().getDefaultModelObject();
+                // T object = (T) this.getParent().getDefaultModelObject();
                 // CustomListView.this.getSearch().remove(object);
                 target.addComponent(CustomListView.this.getResultSection());
             }
@@ -149,6 +149,7 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
         this.sortableAjaxWicket = sortableAjaxWicket;
     }
 
+    @Override
     public WebMarkupContainer getSortableAjaxWicket() {
         return sortableAjaxWicket;
     }
@@ -169,11 +170,11 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
         return modelFields;
     }
 
-    public void setCallback(final CallBack<Component> callback) {
+    public void setCallback(final AjaxCallBack<Component> callback) {
         this.callback = callback;
     }
 
-    public CallBack<Component> getCallback() {
+    public AjaxCallBack<Component> getCallback() {
         return callback;
     }
 }
