@@ -11,19 +11,21 @@ import org.apache.wicket.protocol.http.request.WebRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCycleProcessor;
 
+import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearch;
 import ar.edu.unq.dopplereffect.presentation.pages.Login;
-import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearch;
 import ar.edu.unq.dopplereffect.presentation.project.SearchProject;
 import ar.edu.unq.dopplereffect.presentation.project.SearchSkill;
+import ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearch;
 
 public class App extends WebApplication {
 
-    // private EmployeeServiceImpl employeeService;
     public static SearchProject searchProject;
 
     public static SearchSkill searchSkill;
 
     public static EmployeeSearch employeeSearch;
+
+    public static SalarySpecSearch salarySpecSearch;
 
     @Override
     protected void init() {
@@ -31,6 +33,7 @@ public class App extends WebApplication {
         this.getResourceSettings().addResourceFolder("pages");
         this.getResourceSettings().addResourceFolder("panel");
         this.getResourceSettings().addResourceFolder("Images");
+        this.getResourceSettings().addResourceFolder("i18n");
     }
 
     /**
@@ -59,21 +62,4 @@ public class App extends WebApplication {
     public String getContextPath() {
         return this.getServletContext().getContextPath();
     }
-
-    public void setSearchProject(final SearchProject searchProject) {
-        this.searchProject = searchProject;
-    }
-
-    public SearchProject getSearchProject() {
-        return searchProject;
-    }
-
-    // public EmployeeServiceImpl getEmployeeService() {
-    // return employeeService;
-    // }
-    //
-    // public void setEmployeeService(final EmployeeServiceImpl employeeService)
-    // {
-    // this.employeeService = employeeService;
-    // }
 }

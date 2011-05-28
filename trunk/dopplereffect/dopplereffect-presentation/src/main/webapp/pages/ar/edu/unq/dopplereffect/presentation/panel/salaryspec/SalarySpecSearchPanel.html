@@ -1,0 +1,28 @@
+ <wicket:panel >
+    <a wicket:id="back" href="#" ><wicket-message key="back">back</wicket-message></a>
+    <form wicket:id="searchSalarySpecificationForm">
+      <table align="center" id="panel">
+	    <tr>
+          <td align="right"><wicket-message key="year">Year</wicket-message></td>
+          <td align="left"> <input wicket:id="searchByYear" type="text" /> </td>
+        </tr>
+        
+        <tr>
+          <td colspan="2"><input type="submit" wicket:id="search" value="Buscar" />          
+          <input type="submit" wicket:id="newSalarySpecification" value="Nueva Banda" /></td>
+        </tr>
+      </table>
+    </form>
+
+    <br/>
+    <br/>
+
+    <div wicket:id="resultSecction"  class="resultSecction">
+    	<ul wicket:id="markup" id="tabla">
+        	<li>
+	    		<table align="center" id="tabla" class="dataview" BORDER wicket:id="results">[table]</table>
+        	</li>
+		</ul>
+    </div>
+
+ </wicket:panel>

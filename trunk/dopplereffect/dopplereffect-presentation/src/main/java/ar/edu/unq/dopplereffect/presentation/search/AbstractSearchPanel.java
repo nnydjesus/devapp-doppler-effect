@@ -41,7 +41,7 @@ public abstract class AbstractSearchPanel<T extends Search> extends AbstractCall
     }
 
     protected void init(final Form<T> formulario) {
-        this.armarFormulario(formulario);
+        this.buildForm(formulario);
         this.addResultSection(this.selectITable());
         this.addButton(formulario);
         this.add(formulario);
@@ -87,8 +87,8 @@ public abstract class AbstractSearchPanel<T extends Search> extends AbstractCall
                 ((Search<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm());
     }
 
-    protected void armarFormulario(final Form<T> formulario) {
-        formulario.add(new TextField<String>(this.getDefaultImputSearchWicketId()));
+    protected void buildForm(final Form<T> formulario) {
+        formulario.add(new TextField<String>(this.getDefaultInputSearchWicketId()));
         // formulario.add(new TextField<String>("busquedaDireccion"));
     }
 
@@ -127,7 +127,7 @@ public abstract class AbstractSearchPanel<T extends Search> extends AbstractCall
         return "new" + this.getBeanName();
     }
 
-    protected String getDefaultImputSearchWicketId() {
+    protected String getDefaultInputSearchWicketId() {
         return "searchByName";
     }
 
