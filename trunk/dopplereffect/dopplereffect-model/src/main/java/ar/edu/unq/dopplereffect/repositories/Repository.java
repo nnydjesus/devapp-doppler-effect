@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface Repository<T> {
 
-    void save(T stock);
+    void save(T object);
 
-    void update(T stock);
+    void update(T object);
 
-    void delete(T stock);
+    void delete(T object);
 
     List<T> searchAll();
 
