@@ -5,14 +5,14 @@
 			<tr>
 				<td align="right">Name:</td>
 				<td align="left"><input wicket:id="searchByName" type="text"
-					name="name" /></td>
+					name="name" />
+				</td>
 			</tr>
 
 			<tr>
 				<td colspan="2"><input type="submit" wicket:id="search"
 					value="Buscar" /> <input type="submit" wicket:id="newProject"
-					value="Nueva Projecto" />
-				</td>
+					value="Nueva Projecto" /></td>
 			</tr>
 		</table>
 	</form>
@@ -23,43 +23,37 @@
 
 
 	<div wicket:id="resultSecction" class="resultSecction">
-		<!--     <table align="center" id="tabla" class="dataview" BORDER wicket:id="results">[table]</table> -->
-		<div wicket:id="markup" id="tabla">
-			<table align="center" id="tabla" class="dataview" BORDER
-				wicket:id="results">[table]
-			</table>
-		</div>
-	</div>
-	<!--     <ul wicket:id="markup" id="tabla" class="mark"> -->
-	<!--         <li> -->
-	<!-- 	    	<table align="center" id="tabla" class="dataview" BORDER> -->
-	<!-- 	    	<th>Name</th>    -->
-	<!-- 	        <th>Max Effort</th>         -->
-	<!-- 	        <th>Current Effort</th>        -->
-	<!-- 	        <th>Edit</th>        -->
-	<!-- 	        <th>Delete</th>        -->
+				<div wicket:id="markup" id="tabla">
+					<table align="center" id="tabla" class="dataview" BORDER
+						wicket:id="results">[table]
+					</table>
+				</div>
+			</div>
+<!-- 		<ul wicket:id="markup" id="tabla" class="mark"> -->
+<!-- 			<li> -->
+<!-- 				<table align="center" id="tabla" class="dataview" BORDER> -->
+<!-- 					<th>Name</th> -->
+<!-- 					<th>Max Effort</th> -->
+<!-- 					<th>Current Effort</th> -->
+<!-- 					<th>Edit</th> -->
+<!-- 					<th>Delete</th> -->
 
-	<!--         <tr align="center" wicket:id="results" id="main" width="90%" > -->
-	<!--           <td id="main"><span wicket:id="name"  ></span> </td> -->
-	<!--           <td id="main" ><span wicket:id="maxEffort" /></td>           -->
-	<!--           <td id="main" ><span wicket:id="currentEffort" /></td> -->
+<!-- 					<tr align="center" wicket:id="results" id="main" width="90%"> -->
+<!-- 						<td id="main"><span wicket:id="name"></span></td> -->
+<!-- 						<td id="main"><span wicket:id="maxEffort" /> -->
+<!-- 						</td> -->
+<!-- 						<td id="main"><span wicket:id="currentEffort" /> -->
+<!-- 						</td> -->
 
-	<!-- 	      <td> -->
-	<!--           		<a wicket:id="edit" href="#" > -->
-	<!--                 	<image src="Images/edit.png" alt="modificar datos del cliente" /> -->
-	<!--                 </a>  -->
-	<!--           </td> -->
-	<!--           <td> -->
-	<!--           		<a wicket:id="delete" href="#" > -->
-	<!--             		<image src="Images/delete.png" alt="eliminar el cliente" /> -->
-	<!--                 </a> -->
-	<!--            </td> -->
-	<!--         </tr> -->
+<!-- 						<td><a wicket:id="edit" href="#"> <image -->
+<!-- 									src="Images/edit.png" alt="modificar datos del cliente" /> </a></td> -->
+<!-- 						<td><a wicket:id="delete" href="#"> <image -->
+<!-- 									src="Images/delete.png" alt="eliminar el cliente" /> </a></td> -->
+<!-- 					</tr> -->
 
-	<!-- 	    	</table> -->
-	<!--         </li> -->
-	<!-- 	</ul> -->
-	<!--     </div> -->
+<!-- 				</table></li> -->
+<!-- 		</ul> -->
+<!-- 	</div> -->
 
 	<a align="left" wicket:id="back" href="#">back</a>
 </wicket:panel>

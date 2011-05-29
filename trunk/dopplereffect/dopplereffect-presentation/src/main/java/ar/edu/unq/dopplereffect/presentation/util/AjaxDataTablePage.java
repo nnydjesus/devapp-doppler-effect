@@ -13,12 +13,12 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColu
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.utils.SortableAjax;
 import ar.edu.unq.dopplereffect.presentation.search.Search;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
@@ -42,9 +42,12 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
 
     private WebMarkupContainer sortableAjaxWicket;
 
-    public AjaxDataTablePage(final String id, final String sortName, final Search<T> aSearch,
+    private Panel parentPanel;
+
+    public AjaxDataTablePage(final Panel parent, final String id, final String sortName, final Search<T> aSearch,
             final AjaxCallBack<Component> aCallBack, final List<String> fields, final Class<? extends Component> abm) {
 
+        this.setParentPanel(parent);
         this.setFields(fields);
         this.setAbmClass(abm);
         this.setSearch(aSearch);
@@ -62,16 +65,15 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
             @Override
             public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
                     final IModel<T> model) {
-                // cellItem.add(new Label(componentId, new Model("")));
                 cellItem.add(new AjaxActionPanel(componentId, "edit.png") {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void onAction(final AjaxRequestTarget target) {
-                        Component page = ReflectionUtils.instanciate(AjaxDataTablePage.this.getAbmClass(), "body",
+                        Component page = ReflectionUtils.instanciate(AjaxDataTablePage.this.getAbmClass(),
+                                AjaxDataTablePage.this.getParentPanel().getId(),
                                 AjaxDataTablePage.this.getParentPage(), model.getObject(), true);
                         callBack.execute(target, page);
-                        // this.setResponsePage(page);
                     }
 
                 });
@@ -97,14 +99,13 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
         });
         //
 
-        this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(id, columns, new GenericSortableDataProvider<T>(this
-                .getSearch().getResults(), sortName), Search.PAGE_SIZE));
-
+        this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(id, columns, new GenericSortableDataProvider<T>(id,
+                this.getSearch(), sortName), Search.PAGE_SIZE));
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
-        SortableAjax sortableAjaxBehavior = new SortableAjax();
-        sortableAjaxBehavior.getSortableBehavior().setConnectWith(".dataview.tr");
+        // SortableAjax sortableAjaxBehavior = new SortableAjax();
+        // sortableAjaxBehavior.getSortableBehavior().setConnectWith(".dataview.tr");
 
-        this.getSortableAjaxWicket().add(sortableAjaxBehavior);
+        // this.getSortableAjaxWicket().add(sortableAjaxBehavior);
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
 
     }
@@ -169,6 +170,14 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
 
     public WebMarkupContainer getSortableAjaxWicket() {
         return sortableAjaxWicket;
+    }
+
+    public void setParentPanel(final Panel parentPanel) {
+        this.parentPanel = parentPanel;
+    }
+
+    public Panel getParentPanel() {
+        return parentPanel;
     }
 
 }

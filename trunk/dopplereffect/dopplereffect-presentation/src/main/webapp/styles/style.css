@@ -233,7 +233,7 @@ body {
 }
 
 #menu a:hover {
-	background-image: url(../Images/link_background.png);
+	background-image: url(../Images/link_background.jpg);
 	background-repeat: repeat-x;
 }
 
@@ -349,6 +349,8 @@ table.dataview tbody tr td {
 
 table.dataview tbody tr:hover {
 	background: #FFF url(tr_bck.gif) repeat;
+	font-color: #FFF;
+	background-color: green;
 }
 
 table.dataview tbody tr:hover td {
@@ -374,13 +376,12 @@ table.dataview tr th a:link {
 	color: #666;
 }
 
-table.dataview tr th a:visited {color #666;
-	
+table.dataview tr th a:visited {
+	color: #666;	
 }
 
 table.dataview tr th a:hover {
 	color: #003366;
-	text-decoration: none;
 }
 
 table.dataview tr th a:active {
@@ -390,4 +391,7 @@ table.dataview tr th a:active {
 .language_select {
 	padding: 10px;
 	text-align: right;	
+}
+.login{
+background: url(../Images/login.png) ;
 }

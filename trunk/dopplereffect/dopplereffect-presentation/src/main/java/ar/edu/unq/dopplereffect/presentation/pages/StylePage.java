@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 
+import ar.edu.unq.dopplereffect.presentation.panel.LanguageSelectorPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SimplePanel;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
@@ -46,6 +47,7 @@ public class StylePage<T extends Component> extends WebPage implements Serializa
         this.add(this.createFooter());
         this.add(this.createHeader());
         this.add(this.createHeader2());
+        this.add(new LanguageSelectorPanel("language_select"));
 
         // bodyPanel = component;
         // bodyPanel.setOutputMarkupId(true);

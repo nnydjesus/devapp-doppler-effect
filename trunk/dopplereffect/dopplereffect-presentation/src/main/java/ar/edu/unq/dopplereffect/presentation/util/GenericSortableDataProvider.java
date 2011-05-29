@@ -6,33 +6,37 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
+import ar.edu.unq.tpi.util.common.ReflectionUtils;
+
 /**
- * implementation of IDataProvider for contacts that keeps track of sort
- * information
- * 
- * @author igor
  * 
  */
 public class GenericSortableDataProvider<T extends Serializable> extends SortableDataProvider<T> implements
         Serializable {
     private static final long serialVersionUID = 1L;
 
-    private List<T> list;
+    private IModel listModel;
+
+    private String id;
 
     private SortableDataProviderComparator comparator = new SortableDataProviderComparator();
 
     /**
      * constructor
      */
-    public GenericSortableDataProvider(final List<T> results, final String sortName) {
+    public GenericSortableDataProvider(final String id, final Object model, final String sortName) {
         super();
-        this.setList(results);
+        // this.setList(results);
+        this.id = id;
+        this.setListModel(new CompoundPropertyModel(model));
         this.setSort(sortName, true);
     }
 
@@ -42,7 +46,8 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
      * @return The list
      */
     protected List<T> getData() {
-        return this.getList();
+        return (List<T>) ReflectionUtils.invokeMethod(this.getListModel().getObject(),
+                "get" + StringUtils.capitalize(id));
     }
 
     /**
@@ -77,13 +82,13 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
         return new Model<T>(object);
     }
 
-    public void setList(final List<T> list) {
-        this.list = list;
-    }
-
-    public List<T> getList() {
-        return list;
-    }
+    // public void setList(final List<T> list) {
+    // this.list = list;
+    // }
+    //
+    // public List<T> getList() {
+    // return list;
+    // }
 
     public void setComparator(final SortableDataProviderComparator aComparator) {
         this.comparator = aComparator;
@@ -91,6 +96,22 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
 
     public SortableDataProviderComparator getComparator() {
         return comparator;
+    }
+
+    public void setListModel(final IModel listModel) {
+        this.listModel = listModel;
+    }
+
+    public IModel getListModel() {
+        return listModel;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     class SortableDataProviderComparator implements Comparator<T>, Serializable {

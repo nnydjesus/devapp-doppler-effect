@@ -1,7 +1,10 @@
 package ar.edu.unq.dopplereffect.presentation.panel;
 
+import java.util.Locale;
+
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
@@ -13,6 +16,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
@@ -48,7 +52,19 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     private Component register;
 
-    private Model<String> submitModel;
+    private StringResourceModel loginSubmitModel;
+
+    private StringResourceModel registerSubmitModel;
+
+    private StringResourceModel loginRegisterModel;
+
+    private StringResourceModel registerBackmmodel;
+
+    private AjaxButton submitButton;
+
+    private AjaxLink<String> registerButton;
+
+    private ButtonBehavior registerBehavior;
 
     public LoginPanel(final String id) {
         super(id);
@@ -56,7 +72,15 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
     }
 
     public void init() {
+        this.setLoginSubmitModel(this.createLocaleResources("login.submit"));
+        this.setRegisterSubmitModel(this.createLocaleResources("register.submit"));
+        this.setLoginRegisterModel(this.createLocaleResources("login.register"));
+        this.setRegisterBackmmodel(this.createLocaleResources("register.back"));
         this.add(this.createForm("loginForm"));
+    }
+
+    protected StringResourceModel createLocaleResources(final String key) {
+        return new StringResourceModel(key, new Model<Locale>(this.getLocale()));
     }
 
     @Override
@@ -66,35 +90,34 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         this.setPassField(new PasswordTextField("password", new Model<String>("")));
 
         this.setRememberMeRow(new WebMarkupContainer("rememberMeRow"));
-        //
         // // Add rememberMe checkbox
         this.getRememberMeRow().add(new CheckBox("rememberMe", new PropertyModel<Boolean>(this, "rememberMe")));
-
         // Make form values persistent
         this.getUserIdField().setPersistent(rememberMe);
 
-        // Show remember me checkbox?
         this.getRememberMeRow().setVisible(true);
 
         /* Make sure that password field shows up during page re-render * */
-
         this.getPassField().setResetPassword(true);
+
+        submitButton = this.createSubmitButton();
+        registerButton = this.createRegisterButton();
+        this.setSubmit(submitButton.add(new ButtonBehavior()));
+        registerBehavior = new ButtonBehavior().setLabel(this.getLoginRegisterModel());
+        this.setRegister(registerButton.add(registerBehavior));
 
         this.setDafaultPage(new Home());
         form.add(this.getUserIdField());
         form.add(this.getPassField());
         form.add(this.getRememberMeRow());
         form.add(this.setFeedbackPanel(new FeedbackPanel("feedbackPanel")));
-        this.setSubmit(this.createSubmitButton().add(new ButtonBehavior()));
         form.add(this.getSubmit());
-        this.setRegister(this.createRegisterButton().add(new ButtonBehavior()));
         form.add(this.getRegister());
         return form;
     }
 
-    private AjaxButton createSubmitButton() {
-        this.setSubmitModel(new Model<String>("Login"));
-        return new AjaxButton("submit", this.getSubmitModel()) {
+    protected AjaxButton createSubmitButton() {
+        return new AjaxButton("submit") {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -115,7 +138,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
                 target.addComponent(LoginPanel.this.getFeedbackPanel());
             }
 
-            private CallBack<User> loginCallback(final AjaxRequestTarget target) {
+            protected CallBack<User> loginCallback(final AjaxRequestTarget target) {
                 return new CallBack<User>() {
                     private static final long serialVersionUID = 1L;
 
@@ -126,22 +149,19 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
                 };
             }
 
-            private CallBack<Object> registerCallBack(final AjaxRequestTarget target) {
+            protected CallBack<Object> registerCallBack(final AjaxRequestTarget target) {
                 return new CallBack<Object>() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void execute(final Object o) {
-                        LoginPanel.this.setState(StateLogin.LOGIN);
-                        LoginPanel.this.getRememberMeRow().setVisible(true);
-                        LoginPanel.this.getSubmitModel().setObject("Login");
-                        LoginPanel.this.getRegister().setVisible(true);
+                        LoginPanel.this.gotoLogin();
                         target.addComponent(getForm());
                     }
                 };
             }
 
-            private CallBack<UserException> errorCallback() {
+            protected CallBack<UserException> errorCallback() {
                 return new CallBack<UserException>() {
                     private static final long serialVersionUID = 1L;
 
@@ -155,17 +175,18 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         };
     }
 
-    private AjaxButton createRegisterButton() {
-        return new AjaxButton("register", new Model<String>("Registrarme")) {
+    protected AjaxLink<String> createRegisterButton() {
+        return new AjaxLink<String>("register", this.getRegisterSubmitModel()) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-                LoginPanel.this.setState(StateLogin.REGISTER);
-                LoginPanel.this.getRememberMeRow().setVisible(false);
-                LoginPanel.this.getRegister().setVisible(false);
-                LoginPanel.this.getSubmitModel().setObject("Aceptar");
-                target.addComponent(form);
+            public void onClick(final AjaxRequestTarget target) {
+                if (LoginPanel.this.getState().equals(StateLogin.LOGIN)) {
+                    LoginPanel.this.gotoRegister();
+                } else {
+                    LoginPanel.this.gotoLogin();
+                }
+                target.addComponent(LoginPanel.this);
             }
         };
     }
@@ -179,6 +200,20 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
                 LoginPanel.this.setResponsePage(LoginPanel.this.getDafaultPage());
             }
         };
+    }
+
+    protected void gotoLogin() {
+        this.setState(StateLogin.LOGIN);
+        this.getRememberMeRow().setVisible(true);
+        submitButton.setModel(this.getLoginSubmitModel());
+        registerBehavior.setLabel(this.getLoginRegisterModel());
+    }
+
+    protected void gotoRegister() {
+        LoginPanel.this.setState(StateLogin.REGISTER);
+        LoginPanel.this.getRememberMeRow().setVisible(false);
+        submitButton.setModel(this.getRegisterSubmitModel());
+        registerBehavior.setLabel(this.getRegisterBackModel());
     }
 
     public void setService(final Authenticate service) {
@@ -237,14 +272,6 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         return state;
     }
 
-    public void setSubmitModel(final Model<String> submitModel) {
-        this.submitModel = submitModel;
-    }
-
-    public Model<String> getSubmitModel() {
-        return submitModel;
-    }
-
     public void setRegister(final Component register) {
         this.register = register;
     }
@@ -259,6 +286,38 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     public Component getSubmit() {
         return submit;
+    }
+
+    public void setLoginSubmitModel(final StringResourceModel loginSubmitModel) {
+        this.loginSubmitModel = loginSubmitModel;
+    }
+
+    public StringResourceModel getLoginSubmitModel() {
+        return loginSubmitModel;
+    }
+
+    public void setRegisterSubmitModel(final StringResourceModel registerSubmitModel) {
+        this.registerSubmitModel = registerSubmitModel;
+    }
+
+    public StringResourceModel getRegisterSubmitModel() {
+        return registerSubmitModel;
+    }
+
+    public void setLoginRegisterModel(final StringResourceModel loginregisterModel) {
+        loginRegisterModel = loginregisterModel;
+    }
+
+    public StringResourceModel getLoginRegisterModel() {
+        return loginRegisterModel;
+    }
+
+    public void setRegisterBackmmodel(final StringResourceModel registerBackmmodel) {
+        this.registerBackmmodel = registerBackmmodel;
+    }
+
+    public StringResourceModel getRegisterBackModel() {
+        return registerBackmmodel;
     }
 
 }

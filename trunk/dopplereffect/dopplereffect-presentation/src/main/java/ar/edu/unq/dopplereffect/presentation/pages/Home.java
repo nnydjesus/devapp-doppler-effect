@@ -14,7 +14,6 @@ import org.odlabs.wiquery.ui.themes.ThemeUiHelper;
 import org.odlabs.wiquery.ui.themes.WiQueryCoreThemeResourceReference;
 
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.LanguageSelectorPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.SkillSearchPanel;
@@ -37,9 +36,7 @@ public class Home extends StylePage<Component> implements IWiQueryPlugin {
         this.add(this.createPanelLink("skills", new SkillSearchPanel("body", callback)));
         this.add(this.createPanelLink("employees", new EmployeeSearchPanel("body", callback)));
         this.add(this.createPanelLink("salary_percentages", new SalarySpecSearchPanel("body", callback)));
-        this.add(new LanguageSelectorPanel("language_select"));
         this.add(new HeaderPanel("items"));
-        // this.add(new PageLink("logout", parent));
     }
 
     private Component createPanelLink(final String id, final Panel panel) {
@@ -85,6 +82,7 @@ public class Home extends StylePage<Component> implements IWiQueryPlugin {
      * 
      * @see org.odlabs.wiquery.core.commons.IWiQueryPlugin#statement()
      */
+    @Override
     public JsStatement statement() {
         // ThemeUiHelper.shadowComponent(this.getAjaxPanel());
         return ThemeUiHelper.hover(this.getPage());

@@ -51,9 +51,8 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
     }
 
     @Override
-    protected void onError(final AjaxRequestTarget arg0, final Form<?> arg1) {
-        // Hacer algo cuando hay un error
-
+    protected void onError(final AjaxRequestTarget target, final Form<?> arg1) {
+        target.addComponent(this.getAjaxTarget());
     }
 
     public void setAction(final String action) {

@@ -174,7 +174,7 @@ CREATE TABLE `dopplereffect`.`project_skill` (
 CREATE TABLE `dopplereffect`.`user` (
   `id`       int(11) NOT NULL AUTO_INCREMENT,
   `name`    VARCHAR(45) ,
-  `password`    VARCHAR(45) ,
+  `password`    VARCHAR(255) ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 
@@ -41,12 +42,14 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
 
     private AjaxCallBack<Component> callback;
 
+    private Panel parentPanel;
+
     /* *************************** CONSTRUCTORS *************************** */
 
-    public CustomListView(final String id, final List<String> modelFields,
+    public CustomListView(final Panel parent, final String id, final List<String> modelFields,
             final Class<? extends Component> entityPageClass, final AjaxCallBack<Component> aCallBack) {
         super(id);
-
+        this.setParentPanel(parent);
         this.callback = aCallBack;
         this.setModelFields(modelFields);
         this.setEntityPageClass(entityPageClass);
@@ -115,7 +118,8 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
             @Override
             public void onClick(final AjaxRequestTarget target) {
                 Component page = ReflectionUtils.instanciate(CustomListView.this.getEntityPageClass(),
-                        CustomListView.this.getParentPage(), this.getParent().getDefaultModelObject(), true);
+                        CustomListView.this.getParentPanel().getId(), CustomListView.this.getParentPage(), this
+                                .getParent().getDefaultModelObject(), true);
                 CustomListView.this.getCallback().execute(target, page);
                 // this.setResponsePage(page);
             }
@@ -176,5 +180,13 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
 
     public AjaxCallBack<Component> getCallback() {
         return callback;
+    }
+
+    public void setParentPanel(final Panel parentPanel) {
+        this.parentPanel = parentPanel;
+    }
+
+    public Panel getParentPanel() {
+        return parentPanel;
     }
 }

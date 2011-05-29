@@ -37,5 +37,7 @@
 		<property name="loginService" ref="userService" />
 	</bean>
 
+	<bean id="managerException" class="ar.edu.unq.dopplereffect.presentation.ManagerExceptionAspect" />
+
 
 </beans>

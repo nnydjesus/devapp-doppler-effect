@@ -67,8 +67,13 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
                 } catch (UserException e) {
                     // en caso de excepcion de negocio muestra el mensaje como
                     // un error.
-                    EntityPanel.this.getFeedbackPanel().error(e.getMessage());
+                    this.error(e.getMessage());
                 }
+            }
+
+            @Override
+            protected void onError(final AjaxRequestTarget target, final Form<?> form) {
+                target.addComponent(EntityPanel.this.getFeedbackPanel());
             }
         };
     }

@@ -11,8 +11,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
-import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
 import ar.edu.unq.dopplereffect.presentation.util.ITable;
 import ar.edu.unq.dopplereffect.presentation.util.ReflectionAjaxButton;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
@@ -77,13 +77,13 @@ public abstract class AbstractSearchPanel<T extends Search> extends AbstractCall
     }
 
     protected CustomListView<T, Class<Component>> createListView() {
-        return new CustomListView<T, Class<Component>>(this.getTableWicketId(), this.getFields(), this.getAbm(),
+        return new CustomListView<T, Class<Component>>(this, this.getTableWicketId(), this.getFields(), this.getAbm(),
                 this.getCallback());
     }
 
     @SuppressWarnings("unchecked")
     protected AjaxDataTablePage<T, Panel> createAjaxTable() {
-        return new AjaxDataTablePage<T, Panel>(this.getTableWicketId(), this.getSortName(),
+        return new AjaxDataTablePage<T, Panel>(this, this.getTableWicketId(), this.getSortName(),
                 ((Search<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm());
     }
 
