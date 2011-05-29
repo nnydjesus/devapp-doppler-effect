@@ -53,11 +53,13 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
     }
 
     @Override
+    @Transactional
     public T getByName(final String name) {
         return this.getByCriterion(Restrictions.eq("name", name));
     }
 
     @Override
+    @Transactional
     public T getByLikeName(final String name) {
         return this.getByCriterion(Restrictions.like("name", "%" + name + "%"));
     }
