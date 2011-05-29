@@ -6,25 +6,25 @@
 					<td align="right">a para ambos</td>
 				</tr>
 				<tr>
-					<td align="right">User Name:</td>
+					<td align="right"><wicket:message key="userName"/> </td>
 					<td align="left"> <input type="text" wicket:id="name" /></td>
 				</tr>
 				<tr>
-					<td align="right">Password</td>
+					<td align="right"><wicket:message key="password"/></td>
 					<td align="left"><input	type="password" wicket:id="password" /></td>
 				</tr>
 				<tr wicket:id="rememberMeRow">
 					<td></td>
-					<td> <input wicket:id="rememberMe" type="checkbox" /> Remember Me </td>
+					<td> <input wicket:id="rememberMe" type="checkbox" /><tt/> <wicket:message key="rememberMe"/> </td>
 				</tr>
 				<tr>
 					<td height="20" colspan="2">
-					<div wicket:id="feedbackPanel" class="feedbackPanelERROR">></div></td>
+					<div wicket:id="feedbackPanel" class="feedbackPanelERROR"></div></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
 						<input type="submit"  wicket:id="submit"/>
-						<input type="submit" wicket:id="register"/>
+						<input type="button" wicket:id="register"/>
 					</td>
 				</tr>
 			</table>

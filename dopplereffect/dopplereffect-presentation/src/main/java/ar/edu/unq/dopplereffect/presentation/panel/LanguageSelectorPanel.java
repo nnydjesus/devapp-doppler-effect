@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import org.apache.wicket.markup.html.link.Link;
 
-import ar.edu.unq.dopplereffect.presentation.pages.Home;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 
 public class LanguageSelectorPanel extends AbstractPanel<Object> {
@@ -25,7 +24,7 @@ public class LanguageSelectorPanel extends AbstractPanel<Object> {
             @Override
             public void onClick() {
                 this.getSession().setLocale(locale);
-                this.setResponsePage(Home.class);
+                // this.setResponsePage(Home.class);
             }
 
         });

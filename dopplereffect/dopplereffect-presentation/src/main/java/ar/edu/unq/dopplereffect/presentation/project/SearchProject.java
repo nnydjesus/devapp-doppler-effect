@@ -15,7 +15,7 @@ public class SearchProject extends Search<Project> {
 
     private String name = "";
 
-    private SearchProject() {
+    public SearchProject() {
         super(Project.class);
         // this.save(new
         // ProjectBuilder().withName("Wicket").withEstimatedEffort(33333).build());
