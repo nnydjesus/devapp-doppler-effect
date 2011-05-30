@@ -17,7 +17,7 @@ public class Skill extends Entity {
     /* *************************** CONSTRUCTORS *************************** */
 
     public Skill() {
-        super();
+        this(new SkillType(), null);
     }
 
     public Skill(final SkillType type, final SkillLevel level) {
@@ -65,26 +65,20 @@ public class Skill extends Entity {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
-        if (this.getClass() != obj.getClass()) {
+        if (this.getClass() != obj.getClass())
             return false;
-        }
         Skill other = (Skill) obj;
-        if (level != other.level) {
+        if (level != other.level)
             return false;
-        }
         if (type == null) {
-            if (other.type != null) {
+            if (other.type != null)
                 return false;
-            }
-        } else if (!type.equals(other.type)) {
+        } else if (!type.equals(other.type))
             return false;
-        }
         return true;
     }
 
