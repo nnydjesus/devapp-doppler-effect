@@ -2,7 +2,7 @@ package ar.edu.unq.dopplereffect.presentation.pages;
 
 import ar.edu.unq.dopplereffect.presentation.panel.LoginPanel;
 
-public class Login extends StylePage<LoginPanel> {
+public class Login extends AbstractWebPage<LoginPanel> {
 
     /**
      * Login page constituents are the same as Login.html except that it is made

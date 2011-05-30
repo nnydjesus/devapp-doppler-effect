@@ -1,21 +1,17 @@
 package ar.edu.unq.dopplereffect.presentation.project;
 
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
-import ar.edu.unq.dopplereffect.presentation.App;
-import ar.edu.unq.dopplereffect.presentation.search.Search;
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.project.Project;
 import ar.edu.unq.dopplereffect.service.Service;
 
-public class SearchProject extends Search<Project> {
+public class ProjectSearchModel extends SearchModel<Project> {
     private static final long serialVersionUID = 1L;
 
-    @SpringBean(name = "projectSearch")
     private Service<Project> service;
 
     private String name = "";
 
-    public SearchProject() {
+    public ProjectSearchModel() {
         super(Project.class);
         // this.save(new
         // ProjectBuilder().withName("Wicket").withEstimatedEffort(33333).build());
@@ -25,7 +21,6 @@ public class SearchProject extends Search<Project> {
         // ProjectBuilder().withName("SASASA").withEstimatedEffort(11111).build());
         // this.save(new
         // ProjectBuilder().withName("ALALALA").withEstimatedEffort(789898).build());
-        App.searchProject = this;
     }
 
     public String getSearchByName() {

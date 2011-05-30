@@ -4,19 +4,17 @@ import java.util.Arrays;
 
 import org.apache.wicket.Component;
 
-import ar.edu.unq.dopplereffect.presentation.App;
-import ar.edu.unq.dopplereffect.presentation.project.SearchProject;
+import ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
 /**
  */
-public class ProjectSearchPanel extends AbstractSearchPanel<SearchProject> {
+public class ProjectSearchPanel extends AbstractSearchPanel<ProjectSearchModel> {
     private static final long serialVersionUID = 1L;
 
-    public ProjectSearchPanel(final String id, final AjaxCallBack<Component> parentPage) {
-        super(id, parentPage, App.searchProject, Arrays.asList("name", "maxEffort", "currentEffort"),
-                ProjectPanel.class);
+    public ProjectSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final ProjectSearchModel model) {
+        super(id, parentPage, model, Arrays.asList("name", "maxEffort", "currentEffort"), ProjectPanel.class);
     }
 
     // @Override

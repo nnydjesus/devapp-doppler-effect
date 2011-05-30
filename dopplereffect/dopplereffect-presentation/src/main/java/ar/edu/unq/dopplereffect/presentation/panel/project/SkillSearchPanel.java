@@ -4,17 +4,17 @@ import java.util.Arrays;
 
 import org.apache.wicket.Component;
 
-import ar.edu.unq.dopplereffect.presentation.project.SearchSkill;
+import ar.edu.unq.dopplereffect.presentation.project.SkillSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
 /**
  */
-public class SkillSearchPanel extends AbstractSearchPanel<SearchSkill> {
+public class SkillSearchPanel extends AbstractSearchPanel<SkillSearchModel> {
     private static final long serialVersionUID = 1L;
 
-    public SkillSearchPanel(final String id, final AjaxCallBack<Component> parentPage) {
-        super(id, parentPage, new SearchSkill(), Arrays.asList("type", "level"), SkillPanel.class);
+    public SkillSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final SkillSearchModel model) {
+        super(id, parentPage, model, Arrays.asList("type.name", "level"), SkillPanel.class);
     }
 
     @Override

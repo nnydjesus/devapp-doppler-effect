@@ -4,6 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.odlabs.wiquery.core.commons.IWiQueryPlugin;
 import org.odlabs.wiquery.core.commons.WiQueryResourceManager;
 import org.odlabs.wiquery.core.effects.EffectBehavior;
@@ -13,30 +14,48 @@ import org.odlabs.wiquery.ui.effects.PulsateEffect.PulsateMode;
 import org.odlabs.wiquery.ui.themes.ThemeUiHelper;
 import org.odlabs.wiquery.ui.themes.WiQueryCoreThemeResourceReference;
 
+import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.SkillSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.salaryspec.SalarySpecSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel;
+import ar.edu.unq.dopplereffect.presentation.project.SkillSearchModel;
+import ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
 /**
  * Simple home page.
  */
-public class Home extends StylePage<Component> implements IWiQueryPlugin {
+public class HomePage extends AbstractWebPage<Component> implements IWiQueryPlugin {
+
     private static final long serialVersionUID = 1L;
 
-    public Home() {
+    @SpringBean(name = "employeeSearchModel")
+    private EmployeeSearchModel employeeSearchModel;
+
+    @SpringBean(name = "projectSearchModel")
+    private ProjectSearchModel projectSearchModel;
+
+    @SpringBean(name = "skillSearchModel")
+    private SkillSearchModel skillSearchModel;
+
+    @SpringBean(name = "salarySpecSearchModel")
+    private SalarySpecSearchModel salarySpecSearchModel;
+
+    public HomePage() {
         super();
         EffectBehavior effect1 = new EffectBehavior(new PulsateEffect(PulsateMode.show, 10, 1000));
         // effect2 = new EffectBehavior(new Show());
         this.add(effect1);
         final AjaxCallBack<Component> callback = this.generateCallback();
         String bodyId = "body";
-        this.add(this.createPanelLink("projects", new ProjectSearchPanel(bodyId, callback)));
-        this.add(this.createPanelLink("skills", new SkillSearchPanel(bodyId, callback)));
-        this.add(this.createPanelLink("employees", new EmployeeSearchPanel(bodyId, callback)));
-        this.add(this.createPanelLink("salary_percentages", new SalarySpecSearchPanel(bodyId, callback)));
+        this.add(this.createPanelLink("projects", new ProjectSearchPanel(bodyId, callback, projectSearchModel)));
+        this.add(this.createPanelLink("skills", new SkillSearchPanel(bodyId, callback, skillSearchModel)));
+        this.add(this.createPanelLink("employees", new EmployeeSearchPanel(bodyId, callback, employeeSearchModel)));
+        this.add(this.createPanelLink("salary_percentages", new SalarySpecSearchPanel(bodyId, callback,
+                salarySpecSearchModel)));
         this.add(new HeaderPanel("items"));
     }
 
@@ -46,7 +65,7 @@ public class Home extends StylePage<Component> implements IWiQueryPlugin {
 
             @Override
             public void onClick(final AjaxRequestTarget target) {
-                Home.this.generateCallback().execute(target, panel);
+                HomePage.this.generateCallback().execute(target, panel);
             }
 
         };
@@ -59,11 +78,11 @@ public class Home extends StylePage<Component> implements IWiQueryPlugin {
             @Override
             public void execute(final AjaxRequestTarget ajaxTarget, final Component component) {
                 if (component == null) {
-                    Home.this.setDefaultBody();
+                    HomePage.this.setDefaultBody();
                 } else {
-                    Home.this.setBody(component);
+                    HomePage.this.setBody(component);
                 }
-                ajaxTarget.addComponent(Home.this.getAjaxPanel());
+                ajaxTarget.addComponent(HomePage.this.getAjaxPanel());
             }
         };
     }

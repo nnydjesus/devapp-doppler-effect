@@ -15,9 +15,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
-import ar.edu.unq.dopplereffect.presentation.App;
 import ar.edu.unq.dopplereffect.presentation.Authenticate;
-import ar.edu.unq.dopplereffect.presentation.pages.Home;
+import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
@@ -41,7 +40,6 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
 
     public RegistrationPanel(final String id) {
         super(id);
-        service = App.loginService;
     }
 
     public void init() {
@@ -69,7 +67,7 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
 
         this.getPassField().setResetPassword(true);
 
-        this.setDafaultPage(new Home());
+        this.setDafaultPage(new HomePage());
         form.add(this.getUserIdField());
         form.add(this.getPassField());
         form.add(rememberMeRow);

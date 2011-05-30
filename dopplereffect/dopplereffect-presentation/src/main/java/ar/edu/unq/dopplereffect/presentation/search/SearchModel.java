@@ -7,7 +7,7 @@ import java.util.List;
 import ar.edu.unq.dopplereffect.service.Service;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-public abstract class Search<T> implements Serializable {
+public abstract class SearchModel<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final int PAGE_SIZE = 4;
@@ -16,7 +16,7 @@ public abstract class Search<T> implements Serializable {
 
     private Class<T> entityType;
 
-    public Search(final Class<T> entityClass) {
+    public SearchModel(final Class<T> entityClass) {
         this.setEntityType(entityClass);
     }
 

@@ -16,7 +16,7 @@ import ar.edu.unq.dopplereffect.presentation.util.ITable;
 import ar.edu.unq.dopplereffect.presentation.util.ReflectionAjaxButton;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-public abstract class AbstractSearchPanel<T extends Search> extends AbstractCallbackPanel<T> {
+public abstract class AbstractSearchPanel<T extends SearchModel> extends AbstractCallbackPanel<T> {
     private static final long serialVersionUID = 1L;
 
     private Component ajaxSectionResult;
@@ -83,7 +83,7 @@ public abstract class AbstractSearchPanel<T extends Search> extends AbstractCall
     @SuppressWarnings("unchecked")
     protected AjaxDataTablePage createAjaxTable() {
         return new AjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
-                ((Search<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm());
+                ((SearchModel<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm());
     }
 
     protected void buildForm(final Form<T> formulario) {
@@ -136,7 +136,7 @@ public abstract class AbstractSearchPanel<T extends Search> extends AbstractCall
 
     @SuppressWarnings("unchecked")
     protected String getBeanName() {
-        return ((Search<T>) this.getDefaultModelObject()).getEntityType().getSimpleName();
+        return ((SearchModel<T>) this.getDefaultModelObject()).getEntityType().getSimpleName();
     }
 
     public void setAjaxSectionResult(final Component ajaxSectionResult) {
