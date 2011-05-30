@@ -31,7 +31,7 @@ public class EmployeeBuilder {
     }
 
     public EmployeeBuilder withJoinDate(final DateTime date) {
-        employee.setJoinDate(date);
+        employee.getCareerData().setJoinDate(date);
         return this;
     }
 

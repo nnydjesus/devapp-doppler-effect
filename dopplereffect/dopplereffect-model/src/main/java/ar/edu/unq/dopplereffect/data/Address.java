@@ -52,4 +52,53 @@ public class Address extends Entity {
     public void setCity(final String city) {
         this.city = city;
     }
+
+    /* ****************** EQUALS, HASHCODE, TOSTRING ********************** */
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        int result = 1;
+        result = prime * result + (city == null ? 0 : city.hashCode());
+        result = prime * result + number;
+        result = prime * result + (street == null ? 0 : street.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Address other = (Address) obj;
+        if (city == null) {
+            if (other.city != null) {
+                return false;
+            }
+        } else if (!city.equals(other.city)) {
+            return false;
+        }
+        if (number != other.number) {
+            return false;
+        }
+        if (street == null) {
+            if (other.street != null) {
+                return false;
+            }
+        } else if (!street.equals(other.street)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Address [street=" + street + ", number=" + number + ", city=" + city + "]";
+    }
 }
