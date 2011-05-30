@@ -32,10 +32,11 @@ public class Home extends StylePage<Component> implements IWiQueryPlugin {
         // effect2 = new EffectBehavior(new Show());
         this.add(effect1);
         final AjaxCallBack<Component> callback = this.generateCallback();
-        this.add(this.createPanelLink("projects", new ProjectSearchPanel("body", callback)));
-        this.add(this.createPanelLink("skills", new SkillSearchPanel("body", callback)));
-        this.add(this.createPanelLink("employees", new EmployeeSearchPanel("body", callback)));
-        this.add(this.createPanelLink("salary_percentages", new SalarySpecSearchPanel("body", callback)));
+        String bodyId = "body";
+        this.add(this.createPanelLink("projects", new ProjectSearchPanel(bodyId, callback)));
+        this.add(this.createPanelLink("skills", new SkillSearchPanel(bodyId, callback)));
+        this.add(this.createPanelLink("employees", new EmployeeSearchPanel(bodyId, callback)));
+        this.add(this.createPanelLink("salary_percentages", new SalarySpecSearchPanel(bodyId, callback)));
         this.add(new HeaderPanel("items"));
     }
 
@@ -57,10 +58,10 @@ public class Home extends StylePage<Component> implements IWiQueryPlugin {
 
             @Override
             public void execute(final AjaxRequestTarget ajaxTarget, final Component component) {
-                if (component != null) {
-                    Home.this.setBody(component);
-                } else {
+                if (component == null) {
                     Home.this.setDefaultBody();
+                } else {
+                    Home.this.setBody(component);
                 }
                 ajaxTarget.addComponent(Home.this.getAjaxPanel());
             }

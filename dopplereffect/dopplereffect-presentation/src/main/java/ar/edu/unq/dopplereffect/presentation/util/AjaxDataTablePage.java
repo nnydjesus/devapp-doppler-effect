@@ -24,7 +24,7 @@ import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
  */
-public class AjaxDataTablePage<T extends Serializable, B extends Component> implements Serializable, ITable {
+public class AjaxDataTablePage<T extends Serializable> implements Serializable, ITable {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,6 +44,8 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
 
     private Panel parentPanel;
 
+    private transient AjaxCallBack<Component> callBack;
+
     public AjaxDataTablePage(final Panel parent, final String id, final String sortName, final Search<T> aSearch,
             final AjaxCallBack<Component> aCallBack, final List<String> fields, final Class<? extends Component> abm) {
 
@@ -52,7 +54,7 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
         this.setAbmClass(abm);
         this.setSearch(aSearch);
 
-        final AjaxCallBack<Component> callBack = aCallBack;
+        callBack = aCallBack;
         ArrayList<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
         for (String field : fields) {
@@ -69,6 +71,7 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
                     private static final long serialVersionUID = 1L;
 
                     @Override
+                    @SuppressWarnings("synthetic-access")
                     public void onAction(final AjaxRequestTarget target) {
                         Component page = ReflectionUtils.instanciate(AjaxDataTablePage.this.getAbmClass(),
                                 AjaxDataTablePage.this.getParentPanel().getId(),
@@ -99,6 +102,8 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
         });
         //
 
+        this.addCustomColumns(columns);
+
         this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(id, columns, new GenericSortableDataProvider<T>(id,
                 this.getSearch(), sortName), Search.PAGE_SIZE));
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
@@ -107,6 +112,15 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
 
         // this.getSortableAjaxWicket().add(sortableAjaxBehavior);
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
+
+    }
+
+    /**
+     * Agrega columnas personalizadas a las columnas ya existentes, pasadas como
+     * parametro.
+     */
+    @SuppressWarnings("unused")
+    protected void addCustomColumns(final List<IColumn<T>> columns) {
 
     }
 
@@ -168,6 +182,7 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
         this.sortableAjaxWicket = sortableAjaxWicket;
     }
 
+    @Override
     public WebMarkupContainer getSortableAjaxWicket() {
         return sortableAjaxWicket;
     }
@@ -178,6 +193,10 @@ public class AjaxDataTablePage<T extends Serializable, B extends Component> impl
 
     public Panel getParentPanel() {
         return parentPanel;
+    }
+
+    public AjaxCallBack<Component> getCallBack() {
+        return callBack;
     }
 
 }

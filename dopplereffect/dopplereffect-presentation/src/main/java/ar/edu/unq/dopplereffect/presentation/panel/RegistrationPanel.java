@@ -86,8 +86,8 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
             protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
                 String userName = RegistrationPanel.this.getUserIdField().getDefaultModelObjectAsString();
                 String password = RegistrationPanel.this.getPassField().getDefaultModelObjectAsString();
-                RegistrationPanel.this.getService()
-                        .login(userName, password, this.loginCallback(target), this.errorCallback());
+                RegistrationPanel.this.getService().login(userName, password, this.loginCallback(target),
+                        this.errorCallback());
             }
 
             @Override
@@ -111,8 +111,8 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public void execute(final UserException e) {
-                        error(getLocalizer().getString(e.getMessage(), RegistrationPanel.this));
+                    public void execute(final UserException exception) {
+                        error(getLocalizer().getString(exception.getMessage(), RegistrationPanel.this));
                     }
                 };
             }
@@ -163,8 +163,8 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
         return dafaultPage;
     }
 
-    public void setRememberMe(final boolean rememberMe) {
-        this.rememberMe = rememberMe;
+    public void setRememberMe(final boolean remember) {
+        rememberMe = remember;
     }
 
     public boolean isRememberMe() {

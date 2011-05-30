@@ -6,7 +6,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.Panel;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
@@ -82,8 +81,8 @@ public abstract class AbstractSearchPanel<T extends Search> extends AbstractCall
     }
 
     @SuppressWarnings("unchecked")
-    protected AjaxDataTablePage<T, Panel> createAjaxTable() {
-        return new AjaxDataTablePage<T, Panel>(this, this.getTableWicketId(), this.getSortName(),
+    protected AjaxDataTablePage createAjaxTable() {
+        return new AjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
                 ((Search<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm());
     }
 
