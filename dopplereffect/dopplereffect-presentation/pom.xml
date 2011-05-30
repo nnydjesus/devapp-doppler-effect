@@ -7,8 +7,6 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-
-
 	<parent>
 		<groupId>ar.edu.unq.dopplereffect</groupId>
 		<artifactId>dopplereffect-parent</artifactId>
@@ -196,11 +194,11 @@
 			<version>1.2.3</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.wiquery-plugins</groupId>
-			<artifactId>wiquery-plugins</artifactId>
-			<version>1.1-SNAPSHOT</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.wiquery-plugins</groupId> -->
+<!-- 			<artifactId>jqgrid</artifactId> -->
+<!-- 			<version>1.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
 
 	</dependencies>
 
@@ -224,10 +222,10 @@
 			<name>WiQuery repository</name>
 			<url>https://wiquery.googlecode.com/svn/repo/</url>
 		</repository>
-		<repository>
-			<id>wiquery-plugins-maven-repo</id>
-			<name>WiQuery repository</name>
-			<url>https://wiquery-plugins.googlecode.com/svn/m2repo/</url>
-		</repository>
+<!-- 		<repository> -->
+<!-- 			<id>wiquery-plugins-maven-repo</id> -->
+<!-- 			<name>WiQuery repository</name> -->
+<!-- 			<url>https://wiquery-plugins.googlecode.com/svn/m2repo/</url> -->
+<!-- 		</repository> -->
 	</repositories>
 </project>

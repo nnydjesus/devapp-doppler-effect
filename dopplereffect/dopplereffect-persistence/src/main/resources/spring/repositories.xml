@@ -6,6 +6,10 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="projectRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.ProjectRepositoryImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<bean id="skillRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.SkillRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
 	<bean id="careerDataRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.CareerDataRepositoryImpl">
 		<property name="sessionFactory" ref="sessionFactory" />

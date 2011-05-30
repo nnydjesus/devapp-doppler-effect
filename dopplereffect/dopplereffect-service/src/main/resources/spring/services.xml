@@ -6,7 +6,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="userService" class="ar.edu.unq.dopplereffect.service.LoginService" >
 		<property name="repository" ref="userRepo"/>
 	</bean>
-		<bean id="projectService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+	
+	<bean id="projectService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
 		<property name="repository" ref="projectRepo" />
 	</bean>
 	
@@ -17,4 +18,9 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="salarySpecService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
 		<property name="repository" ref="salarySpecRepo" />
 	</bean>
+	
+	<bean id="skillService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="skillRepo" />
+	</bean>
+	
 </beans>
