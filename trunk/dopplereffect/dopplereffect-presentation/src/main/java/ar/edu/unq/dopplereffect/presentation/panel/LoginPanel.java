@@ -58,13 +58,13 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     private StringResourceModel loginRegisterModel;
 
-    private StringResourceModel registerBackmmodel;
+    private transient StringResourceModel registerBackmmodel;
 
-    private AjaxButton submitButton;
+    private transient AjaxButton submitButton;
 
-    private AjaxLink<String> registerButton;
+    private transient AjaxLink<String> registerButton;
 
-    private ButtonBehavior registerBehavior;
+    private transient ButtonBehavior registerBehavior;
 
     public LoginPanel(final String id) {
         super(id);
@@ -154,7 +154,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public void execute(final Object o) {
+                    public void execute(final Object object) {
                         LoginPanel.this.gotoLogin();
                         target.addComponent(getForm());
                     }
@@ -166,8 +166,8 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public void execute(final UserException e) {
-                        error(getLocalizer().getString(e.getMessage(), LoginPanel.this));
+                    public void execute(final UserException exception) {
+                        error(getLocalizer().getString(exception.getMessage(), LoginPanel.this));
                     }
                 };
             }

@@ -23,7 +23,7 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
     /**
      * Componente a agregar via Ajax.
      */
-    private final Component ajaxTarget;
+    private final transient Component ajaxTarget;
 
     private T object;
 

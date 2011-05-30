@@ -14,7 +14,7 @@ public class SalarySpecSearch extends Search<SalarySpecification> {
     @SpringBean(name = "salarySpecSearch")
     private Service<SalarySpecification> service;
 
-    private SalarySpecification example;
+    private transient SalarySpecification example;
 
     public SalarySpecSearch() {
         super(SalarySpecification.class);

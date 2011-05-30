@@ -23,7 +23,7 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
         Serializable {
     private static final long serialVersionUID = 1L;
 
-    private IModel listModel;
+    private IModel<T> listModel;
 
     private String id;
 
@@ -36,7 +36,7 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
         super();
         // this.setList(results);
         this.id = id;
-        this.setListModel(new CompoundPropertyModel(model));
+        this.setListModel(new CompoundPropertyModel<T>(model));
         this.setSort(sortName, true);
     }
 
@@ -45,6 +45,7 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
      * 
      * @return The list
      */
+    @SuppressWarnings("unchecked")
     protected List<T> getData() {
         return (List<T>) ReflectionUtils.invokeMethod(this.getListModel().getObject(),
                 "get" + StringUtils.capitalize(id));
@@ -98,11 +99,11 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
         return comparator;
     }
 
-    public void setListModel(final IModel listModel) {
+    public void setListModel(final IModel<T> listModel) {
         this.listModel = listModel;
     }
 
-    public IModel getListModel() {
+    public IModel<T> getListModel() {
         return listModel;
     }
 

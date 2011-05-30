@@ -8,9 +8,6 @@ import ar.edu.unq.dopplereffect.service.LoginService;
 import ar.edu.unq.dopplereffect.user.User;
 import ar.edu.unq.tpi.util.common.HashUtils;
 
-/**
- * TODO: description
- */
 public class Authenticate {
 
     @SpringBean(name = "authenticate")

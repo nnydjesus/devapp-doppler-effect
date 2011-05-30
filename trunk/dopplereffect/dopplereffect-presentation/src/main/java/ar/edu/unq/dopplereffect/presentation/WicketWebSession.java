@@ -5,6 +5,7 @@ import org.apache.wicket.protocol.http.WebSession;
 
 public class WicketWebSession extends WebSession {
     private static final long serialVersionUID = 1L;
+
     /** Trivial user representation */
     private String user;
 
@@ -29,11 +30,9 @@ public class WicketWebSession extends WebSession {
      * @return True if the user was authenticated
      */
     public final boolean authenticate(final String username, final String password) {
-        if (user == null) {
-            // Trivial password "db"
-            if ("wicket".equalsIgnoreCase(username) && "wicket".equalsIgnoreCase(password)) {
-                user = username;
-            }
+        // Trivial password "db"
+        if (user == null && "wicket".equalsIgnoreCase(username) && "wicket".equalsIgnoreCase(password)) {
+            user = username;
         }
 
         return user != null;
@@ -61,4 +60,3 @@ public class WicketWebSession extends WebSession {
         this.user = user;
     }
 }
-

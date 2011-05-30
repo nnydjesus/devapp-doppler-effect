@@ -11,10 +11,6 @@ public class ManagerExceptionAspect {
 
     @Around("execution(* UserException(..))")
     public Object aroundSaludar(final ProceedingJoinPoint pjp) throws Throwable {
-        try {
-            return pjp.proceed();
-        } finally {
-        }
-
+        return pjp.proceed();
     }
 }
