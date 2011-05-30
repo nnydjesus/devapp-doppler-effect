@@ -19,6 +19,10 @@ import ar.edu.unq.dopplereffect.presentation.search.Search;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
 
+/**
+ * Similar a una {@link AjaxDataTablePage} pero con el agregado de un link con
+ * mas detalles.
+ */
 public class EmployeeAjaxDataTablePage extends AjaxDataTablePage<Employee> {
 
     private static final long serialVersionUID = 6376218516758816207L;

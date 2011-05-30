@@ -2,6 +2,10 @@
 		<form wicket:id="employeeForm">
 			<table align="center" width="80%" >
 				<tr>
+					<td height="20" colspan="2">
+					<div wicket:id="feedbackPanel"></div></td>
+				</tr>
+				<tr>
 					<td align="right">First name:</td>
 					<td align="left"><input wicket:id="firstName" type="text" /></td>
 				</tr>
@@ -14,8 +18,22 @@
 					<td align="left"><input wicket:id="dni" type="text" /></td>
 				</tr>
 				<tr>
-					<td height="20" colspan="2">
-					<div wicket:id="feedbackPanel"></div></td>
+					<td align="right">Phone number:</td>
+					<td align="left"><input wicket:id="phoneNumber" type="text" /></td>
+				</tr>
+				<tr>
+					<td align="right">Address:</td>
+					<td align="left"><input wicket:id="address.street" type="text" /></td>
+					<td align="left"><input wicket:id="address.number" type="text" /></td>
+					<td align="left"><input wicket:id="address.city" type="text" /></td>
+				</tr>
+				<tr>
+					<td align="right">Email:</td>
+					<td align="left"><input wicket:id="email" type="text" /></td>
+				</tr>
+				<tr>
+					<td align="right">join date:</td>
+					<td align="left"><input wicket:id="joinDate" type="text" /></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
