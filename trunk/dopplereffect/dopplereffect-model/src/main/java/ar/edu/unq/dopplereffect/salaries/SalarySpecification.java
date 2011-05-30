@@ -48,6 +48,7 @@ public class SalarySpecification extends Entity {
      *            sueldo.
      */
     public SalarySpecification(final int year, final CareerPlan plan, final CareerPlanLevel level) {
+        super();
         this.year = year;
         this.plan = plan;
         this.level = level;
@@ -55,6 +56,7 @@ public class SalarySpecification extends Entity {
 
     public SalarySpecification(final int year, final CareerPlan plan, final CareerPlanLevel level,
             final Integer... percentages) {
+        super();
         this.year = year;
         this.plan = plan;
         this.level = level;

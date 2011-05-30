@@ -97,14 +97,6 @@ public class Employee extends Entity {
         this.personalData = personalData;
     }
 
-    public CareerPlan getCareerPlan() {
-        return this.getCareerData().getCareerPlan();
-    }
-
-    public CareerPlanLevel getLevel() {
-        return this.getCareerData().getLevel();
-    }
-
     public int getPercentage() {
         return this.getCareerData().getPercentage();
     }
@@ -131,14 +123,6 @@ public class Employee extends Entity {
         return leaveRequests;
     }
 
-    public DateTime getJoinDate() {
-        return this.getCareerData().getJoinDate();
-    }
-
-    public void setJoinDate(final DateTime date) {
-        this.getCareerData().setJoinDate(date);
-    }
-
     public Set<Skill> getSkills() {
         return skills;
     }
@@ -147,20 +131,12 @@ public class Employee extends Entity {
         this.skills = skills;
     }
 
-    public String getPhoneNumber() {
-        return this.getPersonalData().getPhoneNumber();
+    public CareerPlan getCareerPlan() {
+        return this.getCareerData().getCareerPlan();
     }
 
-    public void setPhoneNumber(final String phone) {
-        this.getPersonalData().setPhoneNumber(phone);
-    }
-
-    public String getEmail() {
-        return this.getPersonalData().getEmail();
-    }
-
-    public void setEmail(final String email) {
-        this.getPersonalData().setEmail(email);
+    public CareerPlanLevel getLevel() {
+        return this.getCareerData().getLevel();
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -234,8 +210,9 @@ public class Employee extends Entity {
      */
     public Assignable getAssignableForDay(final DateTime date) {
         for (Assignable assignable : this.getAssignments()) {
-            if (assignable.includesDay(date))
+            if (assignable.includesDay(date)) {
                 return assignable;
+            }
         }
         return null;
     }
@@ -252,8 +229,9 @@ public class Employee extends Entity {
     public boolean isFreeAtInterval(final Interval interval) {
         for (Assignable assignable : this.getAssignments()) {
             // si alguna asignacion se pisa, entonces no esta libre
-            if (assignable.overlapsAssignment(interval))
+            if (assignable.overlapsAssignment(interval)) {
                 return false;
+            }
         }
         return true;
     }
@@ -264,8 +242,9 @@ public class Employee extends Entity {
      */
     public boolean isFreeAtDate(final DateTime date) {
         for (Assignable assignable : this.getAssignments()) {
-            if (assignable.includesDay(date))
+            if (assignable.includesDay(date)) {
                 return false;
+            }
         }
         return true;
     }
@@ -274,13 +253,13 @@ public class Employee extends Entity {
      * Retorna la antiguedad del empleado, en cantidad de años.
      */
     public int getSeniority() {
-        return Years.yearsBetween(this.getJoinDate(), new DateTime()).getYears();
+        return Years.yearsBetween(this.getCareerData().getJoinDate(), new DateTime()).getYears();
     }
 
     public void changeCareerPlan(final EmployeesController employeesController, final CareerPlan careerPlan,
             final CareerPlanLevel level, final int percentage) {
-        CareerPlanLevel oldLevel = this.getLevel();
-        CareerPlan oldPlan = this.getCareerPlan();
+        CareerPlanLevel oldLevel = this.getCareerData().getLevel();
+        CareerPlan oldPlan = this.getCareerData().getCareerPlan();
         int oldPercentage = this.getPercentage();
         int oldSalary = employeesController.getSalary(this);
         this.getCareerData().setCareerPlan(careerPlan);
@@ -316,8 +295,9 @@ public class Employee extends Entity {
      */
     public SkillLevel getLevelOfSkill(final SkillType type) {
         for (Skill skill : this.getSkills()) {
-            if (skill.getType().equals(type))
+            if (skill.getType().equals(type)) {
                 return skill.getLevel();
+            }
         }
         return null;
     }
@@ -340,8 +320,9 @@ public class Employee extends Entity {
      */
     public int skillSatifactionLevel(final Skill skill) {
         for (Skill sk : this.getSkills()) {
-            if (sk.getType().equals(skill.getType()))
+            if (sk.getType().equals(skill.getType())) {
                 return Math.min(sk.getLevel().satisfactionPercentage(skill.getLevel()), 100);
+            }
         }
         return 0;
     }
@@ -352,8 +333,9 @@ public class Employee extends Entity {
      */
     public boolean satisfySkill(final Skill skill) {
         for (Skill sk : this.getSkills()) {
-            if (sk.betterOrEqual(skill))
+            if (sk.betterOrEqual(skill)) {
                 return true;
+            }
         }
         return false;
     }
@@ -429,18 +411,23 @@ public class Employee extends Entity {
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (this.getClass() != obj.getClass())
+        }
+        if (this.getClass() != obj.getClass()) {
             return false;
+        }
         Employee other = (Employee) obj;
         if (this.getPersonalData() == null) {
-            if (other.getPersonalData() != null)
+            if (other.getPersonalData() != null) {
                 return false;
-        } else if (!this.getPersonalData().equals(other.getPersonalData()))
+            }
+        } else if (!this.getPersonalData().equals(other.getPersonalData())) {
             return false;
+        }
         return true;
     }
 }

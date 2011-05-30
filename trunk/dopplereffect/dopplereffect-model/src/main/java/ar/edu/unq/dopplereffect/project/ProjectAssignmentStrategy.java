@@ -42,8 +42,9 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
         Collections.sort(employees, this.getComparatorBySkills(intervalDurationStrategy));
         for (Employee employee : employees) {
             this.tryToAssign(intervalDurationStrategy, employee);
-            if (project.getMaxEffort() <= project.getCurrentEffort())
+            if (project.getMaxEffort() <= project.getCurrentEffort()) {
                 return;
+            }
         }
     }
 
@@ -55,7 +56,7 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
             } else {
                 int missingDays = ProjectHelper.hoursEffortToDays(project.getMaxEffort() - project.getCurrentEffort());
                 if (interval.getAmountOfDays() >= missingDays) {
-                    IntervalDurationStrategy reducedInterval = new IntervalDurationStrategy(new Interval(
+                    IntervalDurationStrategy reducedInterval = new IntervalDurationStrategy(new Interval(// NOPMD
                             interval.getStartDate(), interval.getStartDate().plusDays(missingDays - 1)));
                     if (project.validateEffort(reducedInterval)) {
                         this.internalManualAssignment(employee, reducedInterval);
@@ -67,17 +68,21 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
 
     protected void validateAssignment(final Employee employee, final IntervalDurationStrategy interval) {
         final ProjectAssignment assignment = project.getAssignment(employee);
-        if (assignment != null && assignment.overlapsAssignment(interval))
+        if (assignment != null && assignment.overlapsAssignment(interval)) {
             throw new UserException("El empleado no puede tener dos asignaciones en el proyecto en un mismo intervalo");
-        if (interval.getEndDate().isAfter(interval.getStartDate().plus(project.getTimeProyect())))
+        }
+        if (interval.getEndDate().isAfter(interval.getStartDate().plus(project.getTimeProyect()))) {
             throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
-        if (!employee.isFreeAtInterval(interval.getInterval()))
+        }
+        if (!employee.isFreeAtInterval(interval.getInterval())) {
             throw new UserException("El empleado no esta libre en el intervalo " + interval);
+        }
         if (project.validateEffort(interval)) {
             long hoursAssignment = project.getHoursOfEffort(interval);
             project.plusEffort(hoursAssignment);
-        } else
+        } else {
             throw new UserException("Se ha alcanzado el maximo de horas de esfuerzo del proyecto");
+        }
     }
 
     protected boolean higherPriority(final Employee employee1, final Employee employee2,
