@@ -17,12 +17,12 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
-import ar.edu.unq.dopplereffect.presentation.App;
 import ar.edu.unq.dopplereffect.presentation.Authenticate;
-import ar.edu.unq.dopplereffect.presentation.pages.Home;
+import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
@@ -40,6 +40,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     private boolean rememberMe = false;
 
+    @SpringBean(name = "authenticate")
     private Authenticate service;
 
     private WebPage dafaultPage;
@@ -68,7 +69,6 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     public LoginPanel(final String id) {
         super(id);
-        service = App.loginService;
     }
 
     public void init() {
@@ -106,7 +106,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         registerBehavior = new ButtonBehavior().setLabel(this.getLoginRegisterModel());
         this.setRegister(registerButton.add(registerBehavior));
 
-        this.setDafaultPage(new Home());
+        this.setDafaultPage(new HomePage());
         form.add(this.getUserIdField());
         form.add(this.getPassField());
         form.add(this.getRememberMeRow());

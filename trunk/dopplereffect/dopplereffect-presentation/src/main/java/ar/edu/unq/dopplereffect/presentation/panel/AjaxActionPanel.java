@@ -10,7 +10,7 @@ public abstract class AjaxActionPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    public AjaxActionPanel(final String id, final String image) {
+    public AjaxActionPanel(final String id, final String image, final String prevPath) {
         super(id, new Model<String>(""));
         AjaxLink<String> ajaxLink = new AjaxLink<String>("action") {
             private static final long serialVersionUID = 1L;
@@ -21,9 +21,12 @@ public abstract class AjaxActionPanel extends Panel {
             }
 
         };
-        ajaxLink.add(new Image("image", new Model<String>("../Images/" + image)));
+        ajaxLink.add(new Image("image", new Model<String>(prevPath + "../Images/" + image)));
         this.add(ajaxLink);
+    }
 
+    public AjaxActionPanel(final String id, final String image) {
+        this(id, image, "");
     }
 
     public abstract void onAction(final AjaxRequestTarget target);

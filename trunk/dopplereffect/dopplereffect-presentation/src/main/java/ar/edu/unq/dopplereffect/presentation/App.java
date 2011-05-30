@@ -10,28 +10,20 @@ import org.apache.wicket.protocol.http.request.CryptedUrlWebRequestCodingStrateg
 import org.apache.wicket.protocol.http.request.WebRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCycleProcessor;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
-import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearch;
 import ar.edu.unq.dopplereffect.presentation.pages.Login;
-import ar.edu.unq.dopplereffect.presentation.project.SearchProject;
-import ar.edu.unq.dopplereffect.presentation.project.SearchSkill;
-import ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearch;
 
 public class App extends WebApplication {
-
-    public static SearchProject searchProject;
-
-    public static SearchSkill searchSkill;
-
-    public static EmployeeSearch employeeSearch;
-
-    public static SalarySpecSearch salarySpecSearch;
-
-    public static Authenticate loginService;
 
     @Override
     protected void init() {
         super.init();
+        addResources();
+        this.addComponentInstantiationListener(new SpringComponentInjector(this));
+    }
+
+    private void addResources() {
         this.getResourceSettings().addResourceFolder("pages");
         this.getResourceSettings().addResourceFolder("panel");
         this.getResourceSettings().addResourceFolder("Images");

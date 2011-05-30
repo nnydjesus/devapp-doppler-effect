@@ -1,7 +1,5 @@
 package ar.edu.unq.dopplereffect.presentation;
 
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 import ar.edu.unq.dopplereffect.service.LoginService;
@@ -10,19 +8,14 @@ import ar.edu.unq.tpi.util.common.HashUtils;
 
 public class Authenticate {
 
-    @SpringBean(name = "authenticate")
     private LoginService loginService;
 
-    private Authenticate() {
-        App.loginService = this;
+    public LoginService getLoginService() {
+        return loginService;
     }
 
     public void setLoginService(final LoginService loginService) {
         this.loginService = loginService;
-    }
-
-    public LoginService getLoginService() {
-        return loginService;
     }
 
     public void login(final String userName, final String password, final CallBack<User> callback,

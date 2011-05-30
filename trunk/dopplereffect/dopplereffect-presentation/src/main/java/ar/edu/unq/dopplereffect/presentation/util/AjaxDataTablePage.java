@@ -19,7 +19,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
-import ar.edu.unq.dopplereffect.presentation.search.Search;
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
@@ -32,7 +32,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
 
     private Component parentPage;
 
-    private Search<T> search;
+    private SearchModel<T> search;
 
     private List<String> fields;
 
@@ -46,7 +46,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
 
     private transient AjaxCallBack<Component> callBack;
 
-    public AjaxDataTablePage(final Panel parent, final String id, final String sortName, final Search<T> aSearch,
+    public AjaxDataTablePage(final Panel parent, final String id, final String sortName, final SearchModel<T> aSearch,
             final AjaxCallBack<Component> aCallBack, final List<String> fields, final Class<? extends Component> abm) {
 
         this.setParentPanel(parent);
@@ -105,7 +105,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
         this.addCustomColumns(columns);
 
         this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(id, columns, new GenericSortableDataProvider<T>(id,
-                this.getSearch(), sortName), Search.PAGE_SIZE));
+                this.getSearch(), sortName), SearchModel.PAGE_SIZE));
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
         // SortableAjax sortableAjaxBehavior = new SortableAjax();
         // sortableAjaxBehavior.getSortableBehavior().setConnectWith(".dataview.tr");
@@ -146,11 +146,11 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
         this.parentPage = page;
     }
 
-    public Search<T> getSearch() {
+    public SearchModel<T> getSearch() {
         return search;
     }
 
-    public void setSearch(final Search<T> search) {
+    public void setSearch(final SearchModel<T> search) {
         this.search = search;
     }
 

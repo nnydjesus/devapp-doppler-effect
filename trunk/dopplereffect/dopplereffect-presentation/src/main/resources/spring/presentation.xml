@@ -21,23 +21,26 @@
 		<property name="forceEagerSessionCreation" value="true" />
 	</bean>
 
-	<bean id="projectSearch"
-		class="ar.edu.unq.dopplereffect.presentation.project.SearchProject">
+	<bean id="projectSearchModel" class="ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel">
 		<property name="service" ref="projectService" />
 	</bean>
-	<bean id="employeeSearch"
-		class="ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearch">
+	
+	<bean id="skillSearchModel" class="ar.edu.unq.dopplereffect.presentation.project.SkillSearchModel">
+		<property name="service" ref="skillService" />
+	</bean>
+	
+	<bean id="employeeSearchModel" class="ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel">
 		<property name="service" ref="employeeService" />
 	</bean>
 	
-	<bean id="salarySpecSearch" class="ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearch">
+	<bean id="salarySpecSearchModel" class="ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel">
 		<property name="service" ref="salarySpecService" />
 	</bean>
+	
 	<bean id="authenticate" class="ar.edu.unq.dopplereffect.presentation.Authenticate">
 		<property name="loginService" ref="userService" />
 	</bean>
 
 	<bean id="managerException" class="ar.edu.unq.dopplereffect.presentation.ManagerExceptionAspect" />
-
 
 </beans>

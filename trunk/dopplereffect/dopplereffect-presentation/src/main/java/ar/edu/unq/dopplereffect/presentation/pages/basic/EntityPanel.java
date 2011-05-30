@@ -12,7 +12,7 @@ import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
-import ar.edu.unq.dopplereffect.presentation.search.Search;
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 
 public abstract class EntityPanel<T> extends NavigablePanel<T> {
     private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
                 try {
                     // invoca la logica de negocio
                     T object = EntityPanel.this.getModelObject();
-                    Search<T> search = (Search<T>) EntityPanel.this.getPreviousPage().getDefaultModelObject();
+                    SearchModel<T> search = (SearchModel<T>) EntityPanel.this.getPreviousPage().getDefaultModelObject();
                     if (EntityPanel.this.isEditMode()) {
                         search.update(object);
                     } else {

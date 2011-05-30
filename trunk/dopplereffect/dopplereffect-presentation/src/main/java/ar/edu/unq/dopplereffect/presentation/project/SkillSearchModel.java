@@ -2,11 +2,11 @@ package ar.edu.unq.dopplereffect.presentation.project;
 
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ar.edu.unq.dopplereffect.presentation.search.Search;
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.project.Skill;
 import ar.edu.unq.dopplereffect.service.Service;
 
-public class SearchSkill extends Search<Skill> {
+public class SkillSearchModel extends SearchModel<Skill> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean(name = "servieImpl")
@@ -14,7 +14,7 @@ public class SearchSkill extends Search<Skill> {
 
     private String name = "";
 
-    public SearchSkill() {
+    public SkillSearchModel() {
         super(Skill.class);
         // this.save(new Skill(new SkillType("Hbernate"), SkillLevel.EXPERT));
         // this.save(new Skill(new SkillType("Wicket"), SkillLevel.BEGINNER));

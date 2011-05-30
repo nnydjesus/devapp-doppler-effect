@@ -16,7 +16,7 @@ import ar.edu.unq.tpi.util.common.ReflectionUtils;
  * Pagina para probar el wicket extend No puede hacer que reflesque por ajax el
  * body
  */
-public class StylePage<T extends Component> extends WebPage implements Serializable {
+public class AbstractWebPage<T extends Component> extends WebPage implements Serializable {
     private static final long serialVersionUID = 1L;
 
     protected static final String BODY = "body";
@@ -33,11 +33,11 @@ public class StylePage<T extends Component> extends WebPage implements Serializa
 
     private Component body;
 
-    public StylePage(final Class<T> body, final Object... params) {
+    public AbstractWebPage(final Class<T> body, final Object... params) {
         this(ReflectionUtils.instanciate(body, params));
     }
 
-    public StylePage(final Component component) {
+    public AbstractWebPage(final Component component) {
         super();
         body = component;
         ajaxPanel = new SimplePanel(BODY);
@@ -70,7 +70,7 @@ public class StylePage<T extends Component> extends WebPage implements Serializa
         return new Label(HEADER2, new Model<String>("Effect"));
     }
 
-    public StylePage() {
+    public AbstractWebPage() {
         this(new Label("body", new Model<String>("Welcome to de dance of death")));
         // this(new EmptyPanel(BODY));
     }

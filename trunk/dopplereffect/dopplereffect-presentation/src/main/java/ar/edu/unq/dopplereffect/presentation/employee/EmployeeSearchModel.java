@@ -1,6 +1,5 @@
 package ar.edu.unq.dopplereffect.presentation.employee;
 
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.joda.time.DateTime;
 
 import ar.edu.unq.dopplereffect.data.Address;
@@ -9,23 +8,20 @@ import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeData;
-import ar.edu.unq.dopplereffect.presentation.App;
-import ar.edu.unq.dopplereffect.presentation.search.Search;
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.Service;
 
-public class EmployeeSearch extends Search<Employee> {
+public class EmployeeSearchModel extends SearchModel<Employee> {
 
     private static final long serialVersionUID = -4428182030184876921L;
 
-    @SpringBean(name = "employeeSearch")
     private Service<Employee> service;
 
     private transient Employee example;
 
-    public EmployeeSearch() {
+    public EmployeeSearchModel() {
         super(Employee.class);
         example = this.createExample();
-        App.employeeSearch = this;
         this.addTestData();
     }
 

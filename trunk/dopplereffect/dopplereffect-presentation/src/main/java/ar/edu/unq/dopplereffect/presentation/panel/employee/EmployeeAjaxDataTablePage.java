@@ -15,7 +15,7 @@ import org.apache.wicket.model.Model;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
-import ar.edu.unq.dopplereffect.presentation.search.Search;
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
 
@@ -28,7 +28,7 @@ public class EmployeeAjaxDataTablePage extends AjaxDataTablePage<Employee> {
     private static final long serialVersionUID = 6376218516758816207L;
 
     public EmployeeAjaxDataTablePage(final Panel parent, final String id, final String sortName,
-            final Search<Employee> aSearch, final AjaxCallBack<Component> aCallBack, final List<String> fields,
+            final SearchModel<Employee> aSearch, final AjaxCallBack<Component> aCallBack, final List<String> fields,
             final Class<? extends Component> abm) {
         super(parent, id, sortName, aSearch, aCallBack, fields, abm);
     }
@@ -43,7 +43,7 @@ public class EmployeeAjaxDataTablePage extends AjaxDataTablePage<Employee> {
             @Override
             public void populateItem(final Item<ICellPopulator<Employee>> cellItem, final String componentId,
                     final IModel<Employee> rowModel) {
-                cellItem.add(new AjaxActionPanel(componentId, "Detalle") {
+                cellItem.add(new AjaxActionPanel(componentId, "details.png", "../") {
 
                     private static final long serialVersionUID = 1026116621448693265L;
 
