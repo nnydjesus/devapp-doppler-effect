@@ -10,10 +10,9 @@
 		<id name="id" type="java.lang.Long">
 			<generator class="native" />
 		</id>
+
+		<property name="type" not-null="true" />
 		
-		<many-to-one name="type" class="SkillType"
-			column="type_id" not-null="true" cascade="all"	unique="true" />
-			
 		<property name="level" type="ar.edu.unq.dopplereffect.persistence.util.SkillLevelEnumType" column="level" not-null="true" />
 
 	</class>
