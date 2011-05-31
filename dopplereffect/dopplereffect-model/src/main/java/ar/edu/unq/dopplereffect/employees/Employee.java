@@ -17,7 +17,6 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.project.Skill;
 import ar.edu.unq.dopplereffect.project.SkillLevel;
-import ar.edu.unq.dopplereffect.project.SkillType;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
@@ -293,7 +292,7 @@ public class Employee extends Entity {
      * Retorna el nivel correspondiente al tipo de skill dado. Retorna
      * <code>null</code> si el empleado no posee ese skill.
      */
-    public SkillLevel getLevelOfSkill(final SkillType type) {
+    public SkillLevel getLevelOfSkill(final String type) {
         for (Skill skill : this.getSkills()) {
             if (skill.getType().equals(type)) {
                 return skill.getLevel();

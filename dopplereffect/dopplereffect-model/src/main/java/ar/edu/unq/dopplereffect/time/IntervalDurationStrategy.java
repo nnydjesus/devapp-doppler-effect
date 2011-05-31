@@ -16,9 +16,6 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
  * todos sus dias intermedios estan contemplados. Aplicable a licencias y
  * asignaciones de proyectos.
  */
-/**
- * TODO: description
- */
 public class IntervalDurationStrategy extends Entity implements DurationStrategy, Iterable<DateTime> {
     private static final long serialVersionUID = 1L;
 

@@ -10,17 +10,17 @@ public class Skill extends Entity {
     private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
-    private SkillType type;
+    private String type;
 
     private SkillLevel level;
 
     /* *************************** CONSTRUCTORS *************************** */
 
     public Skill() {
-        this(new SkillType(), null);
+        this("", null);
     }
 
-    public Skill(final SkillType type, final SkillLevel level) {
+    public Skill(final String type, final SkillLevel level) {
         super();
         this.level = level;
         this.type = type;
@@ -36,11 +36,11 @@ public class Skill extends Entity {
         this.level = level;
     }
 
-    public SkillType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(final SkillType type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
@@ -53,33 +53,4 @@ public class Skill extends Entity {
     public boolean betterOrEqual(final Skill skill) {
         return this.getType().equals(skill.getType()) && this.getLevel().betterOrEqual(skill.getLevel());
     }
-
-    @Override
-    public int hashCode() {
-        int prime = 31;
-        int result = 1;
-        result = prime * result + (level == null ? 0 : level.hashCode());
-        result = prime * result + (type == null ? 0 : type.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (this.getClass() != obj.getClass())
-            return false;
-        Skill other = (Skill) obj;
-        if (level != other.level)
-            return false;
-        if (type == null) {
-            if (other.type != null)
-                return false;
-        } else if (!type.equals(other.type))
-            return false;
-        return true;
-    }
-
 }
