@@ -8,9 +8,6 @@ import org.odlabs.wiquery.ui.button.ButtonBehavior;
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
-/**
- * TODO: description
- */
 public class PanelCallbackLink extends AjaxLink<Object> {
     private static final long serialVersionUID = 1L;
 

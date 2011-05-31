@@ -23,7 +23,7 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
     /**
      * Componente a agregar via Ajax.
      */
-    private final transient Component ajaxTarget;
+    private Component ajaxTarget;
 
     private T object;
 
@@ -55,23 +55,28 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
         target.addComponent(this.getAjaxTarget());
     }
 
-    public void setAction(final String action) {
-        this.action = action;
-    }
-
     public String getAction() {
         return action;
     }
 
-    public Component getAjaxTarget() {
-        return ajaxTarget;
+    public void setAction(final String action) {
+        this.action = action;
+    }
+
+    public T getObject() {
+        return object;
     }
 
     public void setObject(final T object) {
         this.object = object;
     }
 
-    public T getObject() {
-        return object;
+    public Component getAjaxTarget() {
+        return ajaxTarget;
+    }
+
+    public void setAjaxTarget(final Component ajaxTarget) {
+        // solo porque rompe las bolas el PMD
+        this.ajaxTarget = ajaxTarget;
     }
 }

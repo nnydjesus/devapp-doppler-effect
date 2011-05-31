@@ -20,13 +20,10 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
-import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.presentation.Authenticate;
 import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
-import ar.edu.unq.dopplereffect.presentation.util.CallBack;
-import ar.edu.unq.dopplereffect.user.User;
 
 /**
  */
@@ -59,13 +56,13 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     private StringResourceModel loginRegisterModel;
 
-    private transient StringResourceModel registerBackmmodel;
+    private StringResourceModel registerBackmmodel;
 
-    private transient AjaxButton submitButton;
+    private AjaxButton submitButton;
 
-    private transient AjaxLink<String> registerButton;
+    private AjaxLink<String> registerButton;
 
-    private transient ButtonBehavior registerBehavior;
+    private ButtonBehavior registerBehavior;
 
     public LoginPanel(final String id) {
         super(id);
@@ -117,62 +114,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
     }
 
     protected AjaxButton createSubmitButton() {
-        return new AjaxButton("submit") {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-                String userName = LoginPanel.this.getUserIdField().getDefaultModelObjectAsString();
-                String password = LoginPanel.this.getPassField().getDefaultModelObjectAsString();
-                if (LoginPanel.this.getState().equals(StateLogin.LOGIN)) {
-                    LoginPanel.this.getService().login(userName, password, this.loginCallback(target),
-                            this.errorCallback());
-                } else {
-                    LoginPanel.this.getService().signUp(userName, password, this.registerCallBack(target),
-                            this.errorCallback());
-                }
-            }
-
-            @Override
-            protected void onError(final AjaxRequestTarget target, final Form<?> form) {
-                target.addComponent(LoginPanel.this.getFeedbackPanel());
-            }
-
-            protected CallBack<User> loginCallback(final AjaxRequestTarget target) {
-                return new CallBack<User>() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void execute(final User user) {
-                        LoginPanel.this.getCallBack().execute(target, user);
-                    }
-                };
-            }
-
-            protected CallBack<Object> registerCallBack(final AjaxRequestTarget target) {
-                return new CallBack<Object>() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void execute(final Object object) {
-                        LoginPanel.this.gotoLogin();
-                        target.addComponent(getForm());
-                    }
-                };
-            }
-
-            protected CallBack<UserException> errorCallback() {
-                return new CallBack<UserException>() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void execute(final UserException exception) {
-                        error(getLocalizer().getString(exception.getMessage(), LoginPanel.this));
-                    }
-                };
-            }
-
-        };
+        return new LoginPanelSubmitButton("submit", this);
     }
 
     protected AjaxLink<String> createRegisterButton() {
@@ -320,4 +262,31 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         return registerBackmmodel;
     }
 
+    public AjaxButton getSubmitButton() {
+        return submitButton;
+    }
+
+    public void setSubmitButton(final AjaxButton submitButton) {
+        this.submitButton = submitButton;
+    }
+
+    public AjaxLink<String> getRegisterButton() {
+        return registerButton;
+    }
+
+    public void setRegisterButton(final AjaxLink<String> registerButton) {
+        this.registerButton = registerButton;
+    }
+
+    public ButtonBehavior getRegisterBehavior() {
+        return registerBehavior;
+    }
+
+    public void setRegisterBehavior(final ButtonBehavior registerBehavior) {
+        this.registerBehavior = registerBehavior;
+    }
+
+    public StringResourceModel getRegisterBackmmodel() {
+        return registerBackmmodel;
+    }
 }

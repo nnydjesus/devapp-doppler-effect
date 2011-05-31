@@ -2,7 +2,6 @@ package ar.edu.unq.dopplereffect.presentation.util;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
@@ -27,7 +25,7 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
 
     private String id;
 
-    private SortableDataProviderComparator comparator = new SortableDataProviderComparator();
+    private SortableDataProviderComparator<T> comparator = new SortableDataProviderComparator<T>(this);
 
     /**
      * constructor
@@ -91,49 +89,27 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
     // return list;
     // }
 
-    public void setComparator(final SortableDataProviderComparator aComparator) {
-        this.comparator = aComparator;
-    }
-
-    public SortableDataProviderComparator getComparator() {
+    public SortableDataProviderComparator<T> getComparator() {
         return comparator;
     }
 
-    public void setListModel(final IModel<T> listModel) {
-        this.listModel = listModel;
+    public void setComparator(final SortableDataProviderComparator<T> aComparator) {
+        this.comparator = aComparator;
     }
 
     public IModel<T> getListModel() {
         return listModel;
     }
 
-    public void setId(final String id) {
-        this.id = id;
+    public void setListModel(final IModel<T> listModel) {
+        this.listModel = listModel;
     }
 
     public String getId() {
         return id;
     }
 
-    class SortableDataProviderComparator implements Comparator<T>, Serializable {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public int compare(final T o1, final T o2) {
-            PropertyModel<Comparable<Object>> model1 = new PropertyModel<Comparable<Object>>(o1,
-                    GenericSortableDataProvider.this.getSort().getProperty());
-            PropertyModel<Comparable<Object>> model2 = new PropertyModel<Comparable<Object>>(o2,
-                    GenericSortableDataProvider.this.getSort().getProperty());
-
-            int result = model1.getObject().compareTo(model2.getObject());
-
-            if (!GenericSortableDataProvider.this.getSort().isAscending()) {
-                result = -result;
-            }
-
-            return result;
-        }
-
+    public void setId(final String id) {
+        this.id = id;
     }
-
 }

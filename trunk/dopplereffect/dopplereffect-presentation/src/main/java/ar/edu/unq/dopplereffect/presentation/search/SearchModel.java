@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.service.Service;
-import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 public abstract class SearchModel<T> implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     public static final int PAGE_SIZE = 4;
@@ -36,26 +36,19 @@ public abstract class SearchModel<T> implements Serializable {
 
     public void search() {
         this.setResults(this.getService().searchAll());
-        // this.setResultado(entityHome.getInstance().buscarByExample(this.crearExample()));
     }
 
     public void remove(final T entity) {
         this.getService().delete(entity);
-        // entityHome.getInstance().eliminar(entity);
         this.getResults().remove(entity);
+        this.search();
     }
 
     public void update(final T entity) {
         this.getService().update(entity);
-        // entityHome.getInstance().actualizar(entity);
-        // this.remove(entity);
-        // this.save(entity);
-        this.results.remove(entity);
-        this.results.add(entity);
-    }
-
-    public T createExample() {
-        return ReflectionUtils.instanciate(this.getEntityType());
+        this.getResults().remove(entity);
+        this.getResults().add(entity);
+        this.search();
     }
 
     public Class<T> getEntityType() {
@@ -66,8 +59,7 @@ public abstract class SearchModel<T> implements Serializable {
         this.entityType = entityType;
     }
 
-    public abstract void setService(Service<T> service);
-
     public abstract Service<T> getService();
 
+    public abstract void setService(Service<T> service);
 }

@@ -11,9 +11,6 @@ import org.odlabs.wiquery.ui.dialog.Dialog;
 
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 
-/**
- * TODO: description
- */
 public class HeaderPanel extends AbstractPanel<Object> {
     private static final long serialVersionUID = 1L;
 

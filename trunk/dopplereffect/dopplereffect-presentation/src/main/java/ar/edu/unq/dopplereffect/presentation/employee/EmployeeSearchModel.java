@@ -8,20 +8,17 @@ import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeData;
-import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
+import ar.edu.unq.dopplereffect.presentation.search.SearchByExampleModel;
 import ar.edu.unq.dopplereffect.service.Service;
 
-public class EmployeeSearchModel extends SearchModel<Employee> {
+public class EmployeeSearchModel extends SearchByExampleModel<Employee> {
 
     private static final long serialVersionUID = -4428182030184876921L;
 
     private Service<Employee> service;
 
-    private transient Employee example;
-
     public EmployeeSearchModel() {
         super(Employee.class);
-        example = this.createExample();
         this.addTestData();
     }
 
@@ -34,11 +31,11 @@ public class EmployeeSearchModel extends SearchModel<Employee> {
     }
 
     public String getSearchByName() {
-        return example.getFirstName();
+        return this.getExample().getFirstName();
     }
 
     public void setSearchByName(final String aName) {
-        example.setFirstName(aName);
+        this.getExample().setFirstName(aName);
     }
 
     @Override
@@ -47,12 +44,12 @@ public class EmployeeSearchModel extends SearchModel<Employee> {
     }
 
     @Override
-    public void setService(final Service<Employee> service) {
-        this.service = service;
+    public Service<Employee> getService() {
+        return service;
     }
 
     @Override
-    public Service<Employee> getService() {
-        return service;
+    public void setService(final Service<Employee> service) {
+        this.service = service;
     }
 }

@@ -5,12 +5,10 @@ import java.util.Arrays;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.model.CompoundPropertyModel;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.EntityPanel;
 import ar.edu.unq.dopplereffect.project.Skill;
 import ar.edu.unq.dopplereffect.project.SkillLevel;
-import ar.edu.unq.dopplereffect.project.SkillType;
 
 /**
  */
@@ -33,8 +31,7 @@ public class SkillPanel extends EntityPanel<Skill> {
     @Override
     protected void addFields(final Form<Skill> form) {
         form.add(this.getFeedbackPanel());
-        SkillType type = ((Skill) this.getDefaultModelObject()).getType();
-        form.add(new RequiredTextField<SkillType>("name", new CompoundPropertyModel<SkillType>(type)));
+        form.add(new RequiredTextField<String>("type"));
         form.add(new DropDownChoice<SkillLevel>("level", Arrays.asList(SkillLevel.values())));
 
     }

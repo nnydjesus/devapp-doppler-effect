@@ -222,10 +222,10 @@
 			<name>WiQuery repository</name>
 			<url>https://wiquery.googlecode.com/svn/repo/</url>
 		</repository>
-<!-- 		<repository> -->
-<!-- 			<id>wiquery-plugins-maven-repo</id> -->
-<!-- 			<name>WiQuery repository</name> -->
-<!-- 			<url>https://wiquery-plugins.googlecode.com/svn/m2repo/</url> -->
-<!-- 		</repository> -->
+		<repository>
+			<id>wiquery-plugins-maven-repo</id>
+			<name>WiQuery repository</name>
+			<url>https://wiquery-plugins.googlecode.com/svn/m2repo/</url>
+		</repository>
 	</repositories>
 </project>
