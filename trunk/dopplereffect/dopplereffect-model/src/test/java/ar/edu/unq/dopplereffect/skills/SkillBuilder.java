@@ -2,7 +2,6 @@ package ar.edu.unq.dopplereffect.skills;
 
 import ar.edu.unq.dopplereffect.project.Skill;
 import ar.edu.unq.dopplereffect.project.SkillLevel;
-import ar.edu.unq.dopplereffect.project.SkillType;
 
 public class SkillBuilder {
 
@@ -13,7 +12,7 @@ public class SkillBuilder {
     }
 
     public SkillBuilder withType(final String skillType) {
-        skill.setType(new SkillType(skillType));
+        skill.setType(skillType);
         return this;
     }
 
