@@ -44,7 +44,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
 
     private Panel parentPanel;
 
-    private transient AjaxCallBack<Component> callBack;
+    private AjaxCallBack<Component> callBack;
 
     public AjaxDataTablePage(final Panel parent, final String id, final String sortName, final SearchModel<T> aSearch,
             final AjaxCallBack<Component> aCallBack, final List<String> fields, final Class<? extends Component> abm) {
@@ -121,7 +121,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
      */
     @SuppressWarnings("unused")
     protected void addCustomColumns(final List<IColumn<T>> columns) {
-
+        // el PMD me dice que documente esto (?)
     }
 
     private PropertyColumn<T> createPropertyColumn(final String field) {
@@ -199,4 +199,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
         return callBack;
     }
 
+    public void setCallBack(final AjaxCallBack<Component> callBack) {
+        this.callBack = callBack;
+    }
 }

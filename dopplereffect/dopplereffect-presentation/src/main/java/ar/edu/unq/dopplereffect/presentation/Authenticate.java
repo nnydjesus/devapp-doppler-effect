@@ -1,12 +1,16 @@
 package ar.edu.unq.dopplereffect.presentation;
 
+import java.io.Serializable;
+
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 import ar.edu.unq.dopplereffect.service.LoginService;
 import ar.edu.unq.dopplereffect.user.User;
 import ar.edu.unq.tpi.util.common.HashUtils;
 
-public class Authenticate {
+public class Authenticate implements Serializable {
+
+    private static final long serialVersionUID = 8275619832282562770L;
 
     private LoginService loginService;
 

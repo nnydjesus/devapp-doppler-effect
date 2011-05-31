@@ -107,4 +107,38 @@ public class HomePage extends AbstractWebPage<Component> implements IWiQueryPlug
         // ThemeUiHelper.shadowComponent(this.getAjaxPanel());
         return ThemeUiHelper.hover(this.getPage());
     }
+
+    /* definidos porque el PMD chilla */
+
+    public EmployeeSearchModel getEmployeeSearchModel() {
+        return employeeSearchModel;
+    }
+
+    public void setEmployeeSearchModel(final EmployeeSearchModel employeeSearchModel) {
+        this.employeeSearchModel = employeeSearchModel;
+    }
+
+    public ProjectSearchModel getProjectSearchModel() {
+        return projectSearchModel;
+    }
+
+    public void setProjectSearchModel(final ProjectSearchModel projectSearchModel) {
+        this.projectSearchModel = projectSearchModel;
+    }
+
+    public SkillSearchModel getSkillSearchModel() {
+        return skillSearchModel;
+    }
+
+    public void setSkillSearchModel(final SkillSearchModel skillSearchModel) {
+        this.skillSearchModel = skillSearchModel;
+    }
+
+    public SalarySpecSearchModel getSalarySpecSearchModel() {
+        return salarySpecSearchModel;
+    }
+
+    public void setSalarySpecSearchModel(final SalarySpecSearchModel salarySpecSearchModel) {
+        this.salarySpecSearchModel = salarySpecSearchModel;
+    }
 }

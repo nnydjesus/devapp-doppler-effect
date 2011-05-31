@@ -4,9 +4,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.odlabs.wiquery.ui.selectable.SelectableAjaxBehavior;
 
-/**
- * TODO: description
- */
 public class SelectTable extends SelectableAjaxBehavior {
     private static final long serialVersionUID = 1L;
 
