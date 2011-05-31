@@ -58,6 +58,7 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
         return this.getByCriterion(Restrictions.eq("name", name));
     }
 
+    @Override
     @Transactional
     public T getByLikeName(final String name) {
         return this.getByCriterion(Restrictions.like("name", "%" + name + "%"));
@@ -75,6 +76,7 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<T> searchByExample(final T object) {
         return this.getHibernateTemplate().findByExample(object);
