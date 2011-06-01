@@ -1,0 +1,137 @@
+!SESSION 2011-05-30 16:31:38.426 -----------------------------------------------
+eclipse.buildId=M20110210-1200
+java.version=1.6.0_18
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=es_AR
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.ui 4 4 2011-05-30 16:32:27.074
+!MESSAGE Invalid preference page path: Web Page Editor
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.750
+!MESSAGE NLS unused message: add_script_load_bp in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.754
+!MESSAGE NLS unused message: bp_conditional in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.758
+!MESSAGE NLS unused message: bp_conditonal in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.771
+!MESSAGE NLS unused message: bp_entry_and_exit in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.781
+!MESSAGE NLS unused message: bp_entry_only in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.787
+!MESSAGE NLS unused message: bp_exit_only in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.793
+!MESSAGE NLS unused message: bp_hit_count in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.802
+!MESSAGE NLS unused message: bp_line_number in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.808
+!MESSAGE NLS unused message: bp_suspend_vm in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.815
+!MESSAGE NLS unused message: breakpoint_configuration in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.820
+!MESSAGE NLS unused message: connect in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.821
+!MESSAGE NLS unused message: connector in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.827
+!MESSAGE NLS unused message: connector_properties in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.833
+!MESSAGE NLS unused message: creating_script_load_bp in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.839
+!MESSAGE NLS unused message: enable_hit_count in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.845
+!MESSAGE NLS unused message: enter_new_hit_count in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.851
+!MESSAGE NLS unused message: exception_occurred_setting_bp_properties in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.857
+!MESSAGE NLS unused message: hit_count_must_be_positive in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.869
+!MESSAGE NLS unused message: no_description_provided in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.871
+!MESSAGE NLS unused message: scripts in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.883
+!MESSAGE NLS unused message: select_javascript_file in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.885
+!MESSAGE NLS unused message: set_bp_hit_count in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.891
+!MESSAGE NLS unused message: suspend_target in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.897
+!MESSAGE NLS unused message: suspend_thread in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.906
+!MESSAGE NLS unused message: the_argument_0_is_not_valid in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.eclipse.osgi 2 1 2011-05-30 16:33:10.918
+!MESSAGE NLS unused message: osgi.nls.warnings in: org.eclipse.wst.jsdt.debug.internal.ui.messages
+
+!ENTRY org.maven.ide.eclipse 4 0 2011-05-30 16:39:14.066
+!MESSAGE Unable to update index for central|http://repo1.maven.org/maven2
+!STACK 0
+java.io.IOException: Transfer for nexus-maven-repository-index.gz failed; Transfer error: The server did not respond within the configured timeout.
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater$WagonFetcher.retrieve(DefaultIndexUpdater.java:693)
+	at org.sonatype.nexus.index.updater.AbstractResourceFetcher.retrieve(AbstractResourceFetcher.java:22)
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater$LocalCacheIndexAdaptor.setIndexFile(DefaultIndexUpdater.java:868)
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater.fetchAndUpdateIndex(DefaultIndexUpdater.java:995)
+	at org.sonatype.nexus.index.updater.DefaultIndexUpdater.fetchAndUpdateIndex(DefaultIndexUpdater.java:138)
+	at org.maven.ide.eclipse.internal.index.NexusIndexManager.updateRemoteIndex(NexusIndexManager.java:1060)
+	at org.maven.ide.eclipse.internal.index.NexusIndexManager.updateIndex(NexusIndexManager.java:1013)
+	at org.maven.ide.eclipse.internal.index.NexusIndexManager$1.run(NexusIndexManager.java:624)
+	at org.maven.ide.eclipse.internal.index.IndexUpdaterJob.run(IndexUpdaterJob.java:71)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2011-05-30 16:58:52.802 -----------------------------------------------
+eclipse.buildId=M20110210-1200
+java.version=1.6.0_18
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=es_AR
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.ui 4 4 2011-05-30 16:59:08.649
+!MESSAGE Invalid preference page path: Web Page Editor
+
+!ENTRY org.eclipse.core.resources 4 2 2011-05-30 17:00:06.571
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.core.resources".
+!STACK 0
+java.lang.ExceptionInInitializerError
+	at org.eclipse.jst.j2ee.project.facet.EarFacetValidator.validate(EarFacetValidator.java:53)
+	at org.eclipse.wst.common.project.facet.core.internal.FacetedProjectValidationBuilder.build(FacetedProjectValidationBuilder.java:132)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:629)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:172)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:203)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:255)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:258)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:311)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:343)
+	at org.eclipse.core.internal.events.AutoBuildJob.doBuild(AutoBuildJob.java:144)
+	at org.eclipse.core.internal.events.AutoBuildJob.run(AutoBuildJob.java:242)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+Caused by: java.lang.IllegalArgumentException: Project facet jst.ejb has not been defined.
+	at org.eclipse.wst.common.project.facet.core.internal.FacetedProjectFrameworkImpl.getProjectFacet(FacetedProjectFrameworkImpl.java:234)
+	at org.eclipse.wst.common.project.facet.core.ProjectFacetsManager.getProjectFacet(ProjectFacetsManager.java:75)
+	at org.eclipse.jst.j2ee.project.facet.IJ2EEFacetConstants.<clinit>(IJ2EEFacetConstants.java:38)
+	... 14 more

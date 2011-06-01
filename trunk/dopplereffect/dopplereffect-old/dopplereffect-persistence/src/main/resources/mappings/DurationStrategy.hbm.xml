@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ar.edu.unq.dopplereffect.time" >
+
+	<class name="DurationStrategy" table="duration_strategy" >
+
+		<id name="id" type="java.lang.Long" >
+			<generator class="native" />
+		</id>
+
+		<discriminator column="subclass_type" type="string" />
+
+		<subclass name="OneDayDurationStrategy" discriminator-value="OneDayDurationStrategy" >
+
+			<property type="org.joda.time.contrib.hibernate.PersistentDateTime"	name="date" />
+
+		</subclass>
+
+		<subclass name="IntervalDurationStrategy" discriminator-value="IntervalDurationStrategy">
+		
+			<property type="org.joda.time.contrib.hibernate.PersistentInterval" name="interval" >
+			
+				<column name="start_date" />
+				
+				<column name="end_date" />
+				
+			</property>
+
+		</subclass>
+
+	</class>
+
+</hibernate-mapping>
