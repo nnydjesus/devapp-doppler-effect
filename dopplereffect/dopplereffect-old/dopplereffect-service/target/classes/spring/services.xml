@@ -1,0 +1,20 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="userService" class="ar.edu.unq.dopplereffect.service.LoginService" >
+		<property name="repository" ref="userRepo"/>
+	</bean>
+		<bean id="projectService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="projectRepo" />
+	</bean>
+	
+	<bean id="employeeService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="employeeRepo" />
+	</bean>
+	
+	<bean id="salarySpecService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="salarySpecRepo" />
+	</bean>
+</beans>

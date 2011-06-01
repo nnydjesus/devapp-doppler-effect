@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="ar.edu.unq.dopplereffect.project">
+
+	<class name="ClientData" table="client_data">
+
+		<id name="id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+
+		<many-to-one name="personalData" class="ar.edu.unq.dopplereffect.data.PersonalData"
+			column="personal_data_id" not-null="true" cascade="all" unique="true" />
+
+	</class>
+
+</hibernate-mapping>
