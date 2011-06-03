@@ -62,8 +62,6 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
                     }
                     // navegacion: vuelve a la pagina de busqueda.
                     EntityPanel.this.back(target);
-                    // this.setResponsePage(EntityPage.this.getPreviousPage());
-                    // EntityPanel.this.getPreviousPage().back();
                 } catch (UserException e) {
                     // en caso de excepcion de negocio muestra el mensaje como
                     // un error.

@@ -19,7 +19,7 @@ public class App extends WebApplication {
     @Override
     protected void init() {
         super.init();
-        addResources();
+        this.addResources();
         this.addComponentInstantiationListener(new SpringComponentInjector(this));
     }
 
@@ -56,4 +56,5 @@ public class App extends WebApplication {
     public String getContextPath() {
         return this.getServletContext().getContextPath();
     }
+
 }

@@ -172,6 +172,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-datetime</artifactId>
+			<version>${wicket.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
 			<groupId>org.wicketstuff</groupId>
 			<artifactId>objectautocomplete</artifactId>
 			<version>${wicket.version}</version>
@@ -193,12 +205,12 @@
 			<artifactId>wiquery</artifactId>
 			<version>1.2.3</version>
 		</dependency>
-		
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.wiquery-plugins</groupId> -->
-<!-- 			<artifactId>jqgrid</artifactId> -->
-<!-- 			<version>1.1-SNAPSHOT</version> -->
-<!-- 		</dependency> -->
+
+		<!-- <dependency> -->
+		<!-- <groupId>com.wiquery-plugins</groupId> -->
+		<!-- <artifactId>jqgrid</artifactId> -->
+		<!-- <version>1.1-SNAPSHOT</version> -->
+		<!-- </dependency> -->
 
 	</dependencies>
 

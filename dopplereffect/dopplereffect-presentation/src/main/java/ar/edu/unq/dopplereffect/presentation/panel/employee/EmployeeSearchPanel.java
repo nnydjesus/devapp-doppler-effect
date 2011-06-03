@@ -6,6 +6,7 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
+import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
 /**
@@ -15,9 +16,14 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<Employe
 
     private static final long serialVersionUID = -7425688577267166062L;
 
+    // TODO mejorar, es una chanchada
+    private LeaveRequestSearchModel leaveRequestSearchModel;
+
     @SuppressWarnings("unchecked")
-    public EmployeeSearchPanel(final String id, final AjaxCallBack parentPage, final EmployeeSearchModel model) {
+    public EmployeeSearchPanel(final String id, final AjaxCallBack parentPage, final EmployeeSearchModel model,
+            final LeaveRequestSearchModel leaveRequestSearchModel) {
         super(id, parentPage, model, Arrays.asList("firstName", "lastName", "dni"), EmployeePanel.class);
+        this.setLeaveRequestSearchModel(leaveRequestSearchModel);
     }
 
     @Override
@@ -29,6 +35,15 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<Employe
     @SuppressWarnings("unchecked")
     protected EmployeeAjaxDataTablePage createAjaxTable() {
         return new EmployeeAjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
-                ((SearchModel<Employee>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm());
+                ((SearchModel<Employee>) this.getDefaultModelObject()), this.getCallback(), this.getFields(),
+                this.getAbm(), this.getLeaveRequestSearchModel());
+    }
+
+    public LeaveRequestSearchModel getLeaveRequestSearchModel() {
+        return leaveRequestSearchModel;
+    }
+
+    public void setLeaveRequestSearchModel(final LeaveRequestSearchModel leaveRequestSearchModel) {
+        this.leaveRequestSearchModel = leaveRequestSearchModel;
     }
 }

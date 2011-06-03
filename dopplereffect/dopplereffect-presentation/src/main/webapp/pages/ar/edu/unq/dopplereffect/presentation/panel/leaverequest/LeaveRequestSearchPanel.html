@@ -1,0 +1,31 @@
+<wicket:panel>
+	<a wicket:id="back" href="#">Atrás</a>
+	<form wicket:id="searchLeaveRequestForm">
+		<table align="center" id="panel">
+			<tr>
+				<td>Buscar por fecha:</td>
+				<td><input wicket:id="searchByDate" type="text" /></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" wicket:id="search"	value="Buscar" />
+					<input type="submit" wicket:id="newLeaveRequest" value="Nueva Licencia" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	<br />
+	<br />
+
+	<div wicket:id="resultSecction" class="resultSecction">
+		<ul wicket:id="markup" id="tabla">
+			<li>
+				<table align="center" id="tabla" class="dataview" BORDER wicket:id="results">
+					[table]
+				</table>
+			</li>
+		</ul>
+	</div>
+
+</wicket:panel>
