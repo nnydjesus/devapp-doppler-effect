@@ -8,7 +8,7 @@
 	<class name="PersonalData" table="personal_data" >
 	
 		<id name="id" type="java.lang.Long" >
-			<generator class="increment" />
+			<generator class="native" />
 		</id>
 		
 		<property name="firstName" column="first_name" not-null="true" />
@@ -20,13 +20,15 @@
 		<many-to-one name="address" class="ar.edu.unq.dopplereffect.data.Address"
 		column="address_id" cascade="all" unique="true" lazy="false" />
 		
-		<union-subclass name="ar.edu.unq.dopplereffect.employees.EmployeeData" table="employee_data" >
+		<joined-subclass name="ar.edu.unq.dopplereffect.employees.EmployeeData" table="employee_data" >
+			
+			<key column="personal_data_id" />
 		
 			<property name="dni" not-null="true" />
 			
 			<property name="lastName" column="last_name" not-null="true" />
 		
-		</union-subclass>
+		</joined-subclass>
 		
 	</class>
 

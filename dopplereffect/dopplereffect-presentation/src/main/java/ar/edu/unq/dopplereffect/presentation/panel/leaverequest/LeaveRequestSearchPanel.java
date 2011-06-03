@@ -23,6 +23,7 @@ public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSea
     public LeaveRequestSearchPanel(final String id, final AjaxCallBack<Component> parentPage,
             final LeaveRequestSearchModel model) {
         super(id, parentPage, model, Arrays.asList("firstDate", "amountOfDays", "reason"), LeaveRequestPanel.class);
+        this.getModelObject().search();
     }
 
     @Override
@@ -49,6 +50,6 @@ public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSea
     protected LeaveRequestAjaxDataTablePage createAjaxTable() {
         return new LeaveRequestAjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
                 ((SearchModel<LeaveRequest>) this.getDefaultModelObject()), this.getCallback(), this.getFields(),
-                this.getAbm());
+                this.getAbmClass());
     }
 }

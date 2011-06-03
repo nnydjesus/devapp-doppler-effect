@@ -44,12 +44,12 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
     protected void init(final Form<T> formulario) {
         this.buildForm(formulario);
         this.addResultSection(this.selectITable());
-        this.addButton(formulario);
+        this.addButtons(formulario);
         this.add(formulario);
         this.add(this.getAjaxSectionResult());
     }
 
-    protected void addButton(final Form<T> form) {
+    protected void addButtons(final Form<T> form) {
         form.add(new ReflectionAjaxButton<T>(this.getSubmitButtonWicketId(), form, this.getAjaxSectionResult()));
         form.add(new PanelCallbackLink(this.getNewFromBeanWicketId(), this.getCallback(),
                 new WebComponentFactory<Component>() {
@@ -57,7 +57,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
 
                     @Override
                     public Component createPage() {
-                        return ReflectionUtils.instanciate(AbstractSearchPanel.this.getAbm(),
+                        return ReflectionUtils.instanciate(AbstractSearchPanel.this.getAbmClass(),
                                 AbstractSearchPanel.this.getId(), AbstractSearchPanel.this);
                     }
                 }));
@@ -74,18 +74,24 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
      * Selected in *createAjaxTable() *createListView()
      */
     protected ITable selectITable() {
-        return this.createAjaxTable();
+        return this.getNewAjaxTable();
     }
 
     protected CustomListView<T, Class<Component>> createListView() {
-        return new CustomListView<T, Class<Component>>(this, this.getTableWicketId(), this.getFields(), this.getAbm(),
+        return new CustomListView<T, Class<Component>>(this, this.getTableWicketId(), this.getFields(), this.getAbmClass(),
                 this.getCallback());
+    }
+
+    private AjaxDataTablePage getNewAjaxTable() {
+        AjaxDataTablePage ajaxDataTablePage = this.createAjaxTable();
+        ajaxDataTablePage.init();
+        return ajaxDataTablePage;
     }
 
     @SuppressWarnings("unchecked")
     protected AjaxDataTablePage createAjaxTable() {
         return new AjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
-                ((SearchModel<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm());
+                ((SearchModel<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbmClass());
     }
 
     protected void buildForm(final Form<T> form) {
@@ -149,7 +155,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
         this.ajaxSectionResult = ajaxSectionResult;
     }
 
-    public Class<Component> getAbm() {
+    public Class<Component> getAbmClass() {
         return this.getEntityPanel();
     }
 

@@ -23,6 +23,10 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="repository" ref="leaveReqRepo" />
 	</bean>
 	
+	<bean id="leaveReqTypeService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="leaveReqTypeRepo" />
+	</bean>
+	
 	<bean id="skillService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
 		<property name="repository" ref="skillRepo" />
 	</bean>
@@ -35,6 +39,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="careerPlanLevelRepo" ref="careerPlanLevelRepo" />
 		<property name="employeeRepo" ref="employeeRepo" />
 		<property name="projectRepo" ref="projectRepo" />
+		<property name="leaveReqRepo" ref="leaveReqRepo" />
+		<property name="leaveReqTypeRepo" ref="leaveReqTypeRepo" />
 	</bean>
 	
 </beans>

@@ -12,8 +12,7 @@
 		</id>
 
 		<many-to-one name="employee"
-			class="ar.edu.unq.dopplereffect.employees.Employee" column="employee_id"
-			not-null="true" cascade="all" />
+			class="ar.edu.unq.dopplereffect.employees.Employee" column="employee_id"/>
 
 		<joined-subclass name="ar.edu.unq.dopplereffect.leaverequests.LeaveRequest"
 			table="leave_request">
@@ -22,7 +21,7 @@
 
 			<many-to-one name="type"
 				class="ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType"
-				column="type_id" unique="true" not-null="true" cascade="all" lazy="false" />
+				column="type_id" not-null="true" lazy="false" />
 
 			<many-to-one name="durationStrategy"
 				class="ar.edu.unq.dopplereffect.time.DurationStrategy" column="duration_strategy_id"

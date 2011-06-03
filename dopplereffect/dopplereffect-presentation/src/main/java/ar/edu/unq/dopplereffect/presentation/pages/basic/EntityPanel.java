@@ -22,12 +22,17 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
     public EntityPanel(final String id, final T model,
             final AbstractCallbackPanel<? extends Serializable> previousPage, final boolean editMode) {
         super(id, model, previousPage);
+        this.beforeConstruct();
         this.setEditMode(editMode);
         this.setFeedbackPanel(new FeedbackPanel(this.getFeedbackPanelWicketId()));
         Form<T> form = new Form<T>(this.getFormWicketId(), new CompoundPropertyModel<T>(this.getModelObject()));
         this.add(form);
         this.addFields(form);
         this.addButtons(form);
+    }
+
+    protected void beforeConstruct() {
+
     }
 
     public EntityPanel(final String id, final T model, final AbstractCallbackPanel<? extends Serializable> previousPage) {

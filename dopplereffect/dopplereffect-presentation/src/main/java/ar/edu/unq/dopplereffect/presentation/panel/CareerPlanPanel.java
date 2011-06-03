@@ -7,7 +7,7 @@ import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.service.ServiceImpl;
 
-public class CareerPlanPanel extends AbstractCallbackPanel {
+public class CareerPlanPanel extends AbstractCallbackPanel<Object> {
 
     private static final long serialVersionUID = -4010881082543221231L;
 
@@ -26,11 +26,9 @@ public class CareerPlanPanel extends AbstractCallbackPanel {
     }
 
     private void addCareerPlansListing() {
-        // TODO
     }
 
     private void addCareerPlanLevelsListing() {
-        // TODO
     }
 
     public ServiceImpl<CareerPlanLevel> getCareerPlanLevelService() {

@@ -1,33 +1,37 @@
  <wicket:panel >
-		<form wicket:id="leaveRequestForm">
-			<table align="center" width="80%" >
-				<tr>
-					<td height="20" colspan="2">
-					<div wicket:id="feedbackPanel"></div></td>
-				</tr>
-				<tr>
-					<td align="right">Type:</td>
-					<td align="left"><select wicket:id="type" /></td>
-				</tr>
-				<tr>
-					<td align="right">Duration type:</td>
-					<td align="left"><select wicket:id="duration" /></td>
-				</tr>
-				<tr>
-					<td align="right">Start Date:</td>
-					<td align="left"><input wicket:id="startDate" type="text" /></td>
-				</tr>
-				<tr>
-					<td align="right">End Date:</td>
-					<td align="left"><input wicket:id="endDate" type="text" /></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input wicket:id="accept" type="submit" name="aceptar" value="Aceptar" />
-						<input wicket:id="cancel" type="submit" name="cancelar" value="Cancelar" />
-					</td>
-				</tr>
-			</table>
-			<br />
-		</form>
+	<form wicket:id="leaveRequestForm">
+		<table align="center" width="80%" >
+			<tr>
+				<td height="20" colspan="2">
+				<div wicket:id="feedbackPanel"></div></td>
+			</tr>
+			<tr>
+				<td align="right">Employee:</td>
+				<td align="left"><select wicket:id="employeeCombo" /></td>
+			</tr>
+			<tr>
+				<td align="right">Type:</td>
+				<td align="left"><select wicket:id="type" /></td>
+			</tr>
+			<tr>
+				<td align="right">Duration type:</td>
+				<td align="left"><select wicket:id="duration" /></td>
+			</tr>
+			<tr>
+				<td align="right">Start Date:</td>
+				<td align="left"><input wicket:id="startDate" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right">End Date:</td>
+				<td align="left"><input wicket:id="endDate" type="text" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input wicket:id="accept" type="submit" name="aceptar" value="Aceptar" />
+					<input wicket:id="cancel" type="submit" name="cancelar" value="Cancelar" />
+				</td>
+			</tr>
+		</table>
+		<br />
+	</form>
  </wicket:panel>

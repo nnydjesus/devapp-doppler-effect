@@ -100,4 +100,9 @@ public class OneDayDurationStrategy extends Entity implements DurationStrategy {
     public DateTime getFirstDate() {
         return this.getDate();
     }
+
+    @Override
+    public String toString() {
+        return "One day duration strategy";
+    }
 }

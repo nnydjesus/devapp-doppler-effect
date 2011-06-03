@@ -18,6 +18,9 @@ public class SalarySpecificationPersistenceTest extends SpringPersistenceTest {
     @Autowired
     private SalarySpecificationRepositoryImpl salarySpecRepo;
 
+    @Autowired
+    private CareerPlanLevelRepositoryImpl careerPlanLevelRepo;
+
     @Test
     public void testSaveAndRetrieve() {
         // CREATE
@@ -25,6 +28,7 @@ public class SalarySpecificationPersistenceTest extends SpringPersistenceTest {
         CareerPlanLevel level = new CareerPlanLevel("Junior");
         SalarySpecification example = new SalarySpecification(2011, plan, level, 0, 25, 50, 75, 100);
         // SAVE
+        careerPlanLevelRepo.save(level);
         salarySpecRepo.save(example);
         // GET
         SalarySpecification getSSpec = salarySpecRepo.getByPlanAndLevel(plan, level);
@@ -34,5 +38,13 @@ public class SalarySpecificationPersistenceTest extends SpringPersistenceTest {
         Assert.assertEquals(level, getSSpec.getLevel());
         List<Integer> expPercentages = Arrays.asList(0, 25, 50, 75, 100);
         Assert.assertEquals(expPercentages, getSSpec.getPercentages());
+    }
+
+    public void setCareerPlanLevelRepo(final CareerPlanLevelRepositoryImpl careerPlanLevelRepo) {
+        this.careerPlanLevelRepo = careerPlanLevelRepo;
+    }
+
+    public CareerPlanLevelRepositoryImpl getCareerPlanLevelRepo() {
+        return careerPlanLevelRepo;
     }
 }
