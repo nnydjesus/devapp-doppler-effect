@@ -15,8 +15,7 @@
 		
 		<property name="careerPlan" type="ar.edu.unq.dopplereffect.persistence.util.CareerPlanEnumType" column="career_plan" not-null="true" />
 		
-		<many-to-one name="level" class="CareerPlanLevel" column="career_data_level_id"
-		unique="true" />
+		<many-to-one name="level" class="CareerPlanLevel" column="career_data_level_id" not-null="true" lazy="false" />
 		
 		<property name="percentage" not-null="true" />
 		
