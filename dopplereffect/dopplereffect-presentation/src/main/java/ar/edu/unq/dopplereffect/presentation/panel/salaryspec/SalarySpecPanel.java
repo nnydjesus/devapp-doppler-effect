@@ -36,4 +36,9 @@ public class SalarySpecPanel extends EntityPanel<SalarySpecification> {
         return "salarySpecForm";
     }
 
+    @Override
+    protected void beforeConstruct() {
+        // x
+    }
+
 }

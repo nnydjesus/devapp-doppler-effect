@@ -201,14 +201,15 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
 
     @Override
     public String toString() {
-        String result = "Interval duration strategy";
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append("Interval duration strategy");
         if (this.getStartDate() != null) {
-            result += " starting at: " + this.getStartDate().toString();
+            strBuilder.append(" starting at: " + this.getStartDate().toString());
         }
         if (this.getEndDate() != null) {
-            result += " finishing at: " + this.getStartDate().toString();
+            strBuilder.append(" finishing at: " + this.getStartDate().toString());
         }
-        return result;
+        return strBuilder.toString();
     }
 
 }

@@ -115,4 +115,9 @@ public class EmployeePanel extends EntityPanel<Employee> {
     public ServiceImpl<CareerPlanLevel> getCareerPlanLevelService() {
         return careerPlanLevelService;
     }
+
+    @Override
+    protected void beforeConstruct() {
+        // x
+    }
 }

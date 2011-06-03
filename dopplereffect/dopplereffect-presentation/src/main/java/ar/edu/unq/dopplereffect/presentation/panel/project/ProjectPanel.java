@@ -33,6 +33,11 @@ public class ProjectPanel extends EntityPanel<Project> {
         form.add(new TextField<Project>("maxEffort"));
     }
 
+    @Override
+    protected void beforeConstruct() {
+        // x
+    }
+
     /**
      * Crea y agrega los controles para editar el nuevo cliente.
      */

@@ -22,7 +22,7 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<Employe
     public EmployeeSearchPanel(final String id, final AjaxCallBack parentPage, final EmployeeSearchModel model,
             final LeaveRequestSearchModel leaveRequestSearchModel) {
         super(id, parentPage, model, Arrays.asList("firstName", "lastName", "dni"), EmployeePanel.class);
-        employeeAjaxDataTable.setLeaveRequestSearchModel(leaveRequestSearchModel);
+        this.getEmployeeAjaxDataTable().setLeaveRequestSearchModel(leaveRequestSearchModel);
     }
 
     @Override
@@ -33,9 +33,17 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<Employe
     @Override
     @SuppressWarnings("unchecked")
     protected EmployeeAjaxDataTable createAjaxTable() {
-        employeeAjaxDataTable = new EmployeeAjaxDataTable(this, this.getTableWicketId(), this.getSortName(),
-                ((SearchModel<Employee>) this.getDefaultModelObject()), this.getCallback(), this.getFields(),
-                this.getAbmClass());
+        this.setEmployeeAjaxDataTable(new EmployeeAjaxDataTable(this, this.getTableWicketId(), this.getSortName(),
+                ((SearchModel<Employee>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this
+                        .getAbmClass()));
+        return this.getEmployeeAjaxDataTable();
+    }
+
+    public EmployeeAjaxDataTable getEmployeeAjaxDataTable() {
         return employeeAjaxDataTable;
+    }
+
+    public void setEmployeeAjaxDataTable(final EmployeeAjaxDataTable employeeAjaxDataTable) {
+        this.employeeAjaxDataTable = employeeAjaxDataTable;
     }
 }

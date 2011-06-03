@@ -41,4 +41,9 @@ public class SkillPanel extends EntityPanel<Skill> {
         return "skillForm";
     }
 
+    @Override
+    protected void beforeConstruct() {
+        // x
+    }
+
 }
