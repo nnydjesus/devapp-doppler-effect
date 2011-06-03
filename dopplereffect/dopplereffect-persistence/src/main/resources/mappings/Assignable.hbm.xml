@@ -11,6 +11,10 @@
 			<generator class="native" />
 		</id>
 
+		<many-to-one name="employee"
+			class="ar.edu.unq.dopplereffect.employees.Employee" column="employee_id"
+			not-null="true" cascade="all" />
+
 		<joined-subclass name="ar.edu.unq.dopplereffect.leaverequests.LeaveRequest"
 			table="leave_request">
 
@@ -18,11 +22,11 @@
 
 			<many-to-one name="type"
 				class="ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType"
-				column="type_id" unique="true" not-null="true" cascade="all" />
+				column="type_id" unique="true" not-null="true" cascade="all" lazy="false" />
 
 			<many-to-one name="durationStrategy"
 				class="ar.edu.unq.dopplereffect.time.DurationStrategy" column="duration_strategy_id"
-				unique="true" not-null="true" cascade="all" />
+				unique="true" not-null="true" cascade="all" lazy="false" />
 
 		</joined-subclass>
 
@@ -30,10 +34,6 @@
 			table="project_assignment">
 
 			<key column="assignable_id" not-null="true" />
-
-			<many-to-one name="employee"
-				class="ar.edu.unq.dopplereffect.employees.Employee" column="employee_id"
-				not-null="true" cascade="all" />
 
 			<set name="intervals" table="project_assignment_intervals" cascade="all, delete-orphan">
 				<key column="project_id" />

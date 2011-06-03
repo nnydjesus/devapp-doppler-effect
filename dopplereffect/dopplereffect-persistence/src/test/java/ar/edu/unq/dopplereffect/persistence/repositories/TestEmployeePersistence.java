@@ -15,13 +15,18 @@ import ar.edu.unq.dopplereffect.persistence.util.SpringPersistenceTest;
 public class TestEmployeePersistence extends SpringPersistenceTest {
 
     @Autowired
+    private CareerPlanLevelRepositoryImpl careerPlanLevelRepositoryImpl;
+
+    @Autowired
     private EmployeeRepositoryImpl employeeRepository;
 
     @Test
     public void testSave() {
         Address address = new Address("Av. Hibernate", 123, "Java Land");
         EmployeeData ed = new EmployeeData(21234567, "El mejor", "Empleado", address);
-        CareerData cd = new CareerData(new DateTime(), CareerPlan.FUNCTIONAL, new CareerPlanLevel("LA DESCOSE"), 50);
+        CareerPlanLevel level = new CareerPlanLevel("LA DESCOSE");
+        careerPlanLevelRepositoryImpl.save(level);
+        CareerData cd = new CareerData(new DateTime(), CareerPlan.FUNCTIONAL, level, 50);
         Employee employee = new Employee(ed, cd);
         employeeRepository.save(employee);
 

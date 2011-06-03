@@ -18,14 +18,14 @@
 		<property name="email" not-null="false" />
 		
 		<many-to-one name="address" class="ar.edu.unq.dopplereffect.data.Address"
-		column="address_id" not-null="true" cascade="all" unique="true" />
+		column="address_id" cascade="all" unique="true" lazy="false" />
 		
 		<union-subclass name="ar.edu.unq.dopplereffect.employees.EmployeeData" table="employee_data" >
 		
 			<property name="dni" not-null="true" />
 			
 			<property name="lastName" column="last_name" not-null="true" />
-			
+		
 		</union-subclass>
 		
 	</class>
