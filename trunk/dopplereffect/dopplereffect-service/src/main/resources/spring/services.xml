@@ -19,8 +19,22 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="repository" ref="salarySpecRepo" />
 	</bean>
 	
+	<bean id="leaveReqService" class="ar.edu.unq.dopplereffect.service.LeaveRequestServiceImpl">
+		<property name="repository" ref="leaveReqRepo" />
+	</bean>
+	
 	<bean id="skillService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
 		<property name="repository" ref="skillRepo" />
+	</bean>
+	
+	<bean id="careerPlanLevelService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="careerPlanLevelRepo" />
+	</bean>
+	
+	<bean id="addDefaultValuesService" class="ar.edu.unq.dopplereffect.service.AddDefaultValuesService">
+		<property name="careerPlanLevelRepo" ref="careerPlanLevelRepo" />
+		<property name="employeeRepo" ref="employeeRepo" />
+		<property name="projectRepo" ref="projectRepo" />
 	</bean>
 	
 </beans>
