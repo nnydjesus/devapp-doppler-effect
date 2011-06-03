@@ -45,10 +45,12 @@ public class ProjectAssignment extends Entity implements Assignable {
         this.intervals = intervals;
     }
 
+    @Override
     public Employee getEmployee() {
         return employee;
     }
 
+    @Override
     public void setEmployee(final Employee employee) {
         this.employee = employee;
     }

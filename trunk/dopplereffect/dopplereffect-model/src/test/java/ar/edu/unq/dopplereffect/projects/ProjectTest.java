@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.projects;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -14,8 +15,8 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.junit.Test;
 
+import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.helpers.DateHelpers;
 import ar.edu.unq.dopplereffect.helpers.SkillHelpers;

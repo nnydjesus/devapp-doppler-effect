@@ -1,0 +1,6 @@
+* filtros en las busquedas (por ejemplo, filtrar licencias por motivo, filtrar empleados por un intervalo de fechas, etc). Que sea lo mas abstracto posible
+* hacer DTOs en los lugares necesarios
+* dividir service en service-api y service-impl, y actualizar dependencias
+* mostrar bandas como matriz de "plan de carrera x nivel"
+* hacer un wizard para crear empleados?
+* hacer tablas con jqgrid

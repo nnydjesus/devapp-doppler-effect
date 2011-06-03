@@ -167,6 +167,11 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
         }
     }
 
+    @Override
+    public String toString() {
+        return this.getReason();
+    }
+
     /* ************************* PRIVATE METHODS ************************** */
 
     private boolean isSpecifiedMinimum() {

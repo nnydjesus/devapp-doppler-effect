@@ -3,6 +3,7 @@ package ar.edu.unq.dopplereffect.assignments;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.entity.IEntity;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
@@ -40,4 +41,8 @@ public interface Assignable extends IEntity {
      * {@link IntervalDurationStrategy} pasado como parametro.
      */
     int getSuperpositionDaysWith(IntervalDurationStrategy intervalDurationStrategy);
+
+    Employee getEmployee();
+
+    void setEmployee(Employee employee);
 }
