@@ -46,7 +46,7 @@ public class EmployeeDetailPanel extends NavigablePanel<Employee> {
     }
 
     protected void addNavigationButtons() {
-        // throw new UnsupportedOperationException();
+        // TODO
     }
 
 }

@@ -15,15 +15,19 @@ import org.odlabs.wiquery.ui.themes.ThemeUiHelper;
 import org.odlabs.wiquery.ui.themes.WiQueryCoreThemeResourceReference;
 
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
+import ar.edu.unq.dopplereffect.presentation.panel.CareerPlanPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.leaverequest.LeaveRequestSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.SkillSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.salaryspec.SalarySpecSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel;
 import ar.edu.unq.dopplereffect.presentation.project.SkillSearchModel;
+import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
+import ar.edu.unq.dopplereffect.service.AddDefaultValuesService;
 
 /**
  * Simple home page.
@@ -44,6 +48,12 @@ public class HomePage extends AbstractWebPage<Component> implements IWiQueryPlug
     @SpringBean(name = "salarySpecSearchModel")
     private SalarySpecSearchModel salarySpecSearchModel;
 
+    @SpringBean(name = "addDefaultValuesService")
+    private AddDefaultValuesService addDefaultValuesService;
+
+    @SpringBean(name = "leaveReqSearchModel")
+    private LeaveRequestSearchModel leaveReqSearchModel;
+
     public HomePage() {
         super();
         EffectBehavior effect1 = new EffectBehavior(new PulsateEffect(PulsateMode.show, 10, 1000));
@@ -53,10 +63,15 @@ public class HomePage extends AbstractWebPage<Component> implements IWiQueryPlug
         String bodyId = "body";
         this.add(this.createPanelLink("projects", new ProjectSearchPanel(bodyId, callback, projectSearchModel)));
         this.add(this.createPanelLink("skills", new SkillSearchPanel(bodyId, callback, skillSearchModel)));
-        this.add(this.createPanelLink("employees", new EmployeeSearchPanel(bodyId, callback, employeeSearchModel)));
+        this.add(this.createPanelLink("employees", new EmployeeSearchPanel(bodyId, callback, employeeSearchModel,
+                leaveReqSearchModel)));
         this.add(this.createPanelLink("salary_percentages", new SalarySpecSearchPanel(bodyId, callback,
                 salarySpecSearchModel)));
+        this.add(this.createPanelLink("leave_requests", new LeaveRequestSearchPanel(bodyId, callback,
+                leaveReqSearchModel)));
+        this.add(this.createPanelLink("career_plans", new CareerPlanPanel(bodyId, callback)));
         this.add(new HeaderPanel("items"));
+        this.getAddDefaultValuesService().addAllData();
     }
 
     private Component createPanelLink(final String id, final Panel panel) {
@@ -140,5 +155,21 @@ public class HomePage extends AbstractWebPage<Component> implements IWiQueryPlug
 
     public void setSalarySpecSearchModel(final SalarySpecSearchModel salarySpecSearchModel) {
         this.salarySpecSearchModel = salarySpecSearchModel;
+    }
+
+    public void setAddDefaultValuesService(final AddDefaultValuesService addDefaultValuesService) {
+        this.addDefaultValuesService = addDefaultValuesService;
+    }
+
+    public AddDefaultValuesService getAddDefaultValuesService() {
+        return addDefaultValuesService;
+    }
+
+    public LeaveRequestSearchModel getLeaveReqSearchModel() {
+        return leaveReqSearchModel;
+    }
+
+    public void setLeaveReqSearchModel(final LeaveRequestSearchModel leaveReqSearchModel) {
+        this.leaveReqSearchModel = leaveReqSearchModel;
     }
 }

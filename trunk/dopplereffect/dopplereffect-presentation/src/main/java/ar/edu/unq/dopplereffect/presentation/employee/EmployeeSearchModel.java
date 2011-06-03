@@ -1,13 +1,6 @@
 package ar.edu.unq.dopplereffect.presentation.employee;
 
-import org.joda.time.DateTime;
-
-import ar.edu.unq.dopplereffect.data.Address;
-import ar.edu.unq.dopplereffect.employees.CareerData;
-import ar.edu.unq.dopplereffect.employees.CareerPlan;
-import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.employees.EmployeeData;
 import ar.edu.unq.dopplereffect.presentation.search.SearchByExampleModel;
 import ar.edu.unq.dopplereffect.service.Service;
 
@@ -19,15 +12,6 @@ public class EmployeeSearchModel extends SearchByExampleModel<Employee> {
 
     public EmployeeSearchModel() {
         super(Employee.class);
-        this.addTestData();
-    }
-
-    private void addTestData() {
-        CareerData careerData = new CareerData(new DateTime(), CareerPlan.TESTER, new CareerPlanLevel("Junior"), 50);
-        Address address = new Address("Av. XXX", 123, "YYY");
-        EmployeeData personalData = new EmployeeData(12345678, "Juan", "Perez", "11-65655665", "juan.perez@x.com",
-                address);
-        this.getResults().add(new Employee(personalData, careerData));
     }
 
     public String getSearchByName() {

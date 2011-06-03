@@ -16,6 +16,7 @@ import ar.edu.unq.dopplereffect.presentation.util.ITable;
 import ar.edu.unq.dopplereffect.presentation.util.ReflectionAjaxButton;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
+@SuppressWarnings("rawtypes")
 public abstract class AbstractSearchPanel<T extends SearchModel> extends AbstractCallbackPanel<T> {
     private static final long serialVersionUID = 1L;
 
@@ -31,12 +32,13 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
      * @param parameters
      *            Page parameters
      */
+    @SuppressWarnings({ "unchecked" })
     public AbstractSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final T model,
             final List<String> fields, final Class abm) {
         super(id, parentPage, model);
         this.setFields(fields);
         this.setAbm(abm);
-        this.init(this.createForm(this.getFormWicketID()));
+        this.init(this.createForm(this.getFormWicketId()));
     }
 
     protected void init(final Form<T> formulario) {
@@ -86,8 +88,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
                 ((SearchModel<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbm());
     }
 
-    protected void buildForm(final Form<T> formulario) {
-        formulario.add(new TextField<String>(this.getDefaultInputSearchWicketId()));
+    protected void buildForm(final Form<T> form) {
+        form.add(new TextField<String>(this.getDefaultInputSearchWicketId()));
         // formulario.add(new TextField<String>("busquedaDireccion"));
     }
 
@@ -102,7 +104,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
         this.setAjaxSectionResult(panel);
     }
 
-    protected String getFormWicketID() {
+    protected String getFormWicketId() {
         return this.getSubmitButtonWicketId() + this.getBeanName() + "Form";
     }
 
@@ -139,35 +141,35 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
         return ((SearchModel<T>) this.getDefaultModelObject()).getEntityType().getSimpleName();
     }
 
-    public void setAjaxSectionResult(final Component ajaxSectionResult) {
-        this.ajaxSectionResult = ajaxSectionResult;
-    }
-
     public Component getAjaxSectionResult() {
         return ajaxSectionResult;
     }
 
-    public void setAbm(final Class<Component> abm) {
-        this.setEntityPanel(abm);
+    public void setAjaxSectionResult(final Component ajaxSectionResult) {
+        this.ajaxSectionResult = ajaxSectionResult;
     }
 
     public Class<Component> getAbm() {
         return this.getEntityPanel();
     }
 
-    public void setFields(final List<String> fields) {
-        this.fields = fields;
+    public void setAbm(final Class<Component> abm) {
+        this.setEntityPanel(abm);
     }
 
     public List<String> getFields() {
         return fields;
     }
 
-    public void setEntityPanel(final Class<Component> entityPanel) {
-        this.entityPanel = entityPanel;
+    public void setFields(final List<String> fields) {
+        this.fields = fields;
     }
 
     public Class<Component> getEntityPanel() {
         return entityPanel;
+    }
+
+    public void setEntityPanel(final Class<Component> entityPanel) {
+        this.entityPanel = entityPanel;
     }
 }

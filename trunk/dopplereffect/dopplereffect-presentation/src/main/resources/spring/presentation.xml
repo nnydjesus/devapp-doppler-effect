@@ -37,10 +37,14 @@
 		<property name="service" ref="salarySpecService" />
 	</bean>
 	
+	<bean id="leaveReqSearchModel" class="ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel">
+		<property name="service" ref="leaveReqService" />
+	</bean>
+	
 	<bean id="authenticate" class="ar.edu.unq.dopplereffect.presentation.Authenticate">
 		<property name="loginService" ref="userService" />
 	</bean>
 
 	<bean id="managerException" class="ar.edu.unq.dopplereffect.presentation.ManagerExceptionAspect" />
-
+	
 </beans>
