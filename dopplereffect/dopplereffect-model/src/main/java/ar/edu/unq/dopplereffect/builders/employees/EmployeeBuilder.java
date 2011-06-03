@@ -1,6 +1,10 @@
-package ar.edu.unq.dopplereffect.employees;
+package ar.edu.unq.dopplereffect.builders.employees;
 
 import org.joda.time.DateTime;
+
+import ar.edu.unq.dopplereffect.employees.CareerPlan;
+import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
+import ar.edu.unq.dopplereffect.employees.Employee;
 
 public class EmployeeBuilder {
 
@@ -32,6 +36,16 @@ public class EmployeeBuilder {
 
     public EmployeeBuilder withJoinDate(final DateTime date) {
         employee.getCareerData().setJoinDate(date);
+        return this;
+    }
+
+    public EmployeeBuilder withCareerPlan(final CareerPlan plan) {
+        employee.getCareerData().setCareerPlan(plan);
+        return this;
+    }
+
+    public EmployeeBuilder withCareerPlanLevel(final CareerPlanLevel level) {
+        employee.getCareerData().setLevel(level);
         return this;
     }
 

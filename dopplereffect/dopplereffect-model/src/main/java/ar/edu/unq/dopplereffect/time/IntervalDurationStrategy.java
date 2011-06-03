@@ -17,7 +17,8 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
  * asignaciones de proyectos.
  */
 public class IntervalDurationStrategy extends Entity implements DurationStrategy, Iterable<DateTime> {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 546936361450624108L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
@@ -52,8 +53,16 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
         return this.getInterval().getStart();
     }
 
+    public void setStartDate(final DateTime dateTime) {
+        this.setInterval(new Interval(dateTime, this.getEndDate()));
+    }
+
     public DateTime getEndDate() {
         return this.getInterval().getEnd();
+    }
+
+    public void setEndDate(final DateTime dateTime) {
+        this.setInterval(new Interval(this.getStartDate(), dateTime));
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -147,6 +156,11 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
         return result;
     }
 
+    @Override
+    public DateTime getFirstDate() {
+        return this.getStartDate();
+    }
+
     /* ****************** EQUALS, HASHCODE, TOSTRING ********************** */
 
     @Override
@@ -183,4 +197,5 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
     public String toString() {
         return this.getStartDate().toString() + " ~ " + this.getEndDate().toString();
     }
+
 }

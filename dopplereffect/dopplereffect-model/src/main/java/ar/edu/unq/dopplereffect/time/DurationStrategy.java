@@ -64,4 +64,9 @@ public interface DurationStrategy extends IEntity {
      * {@link IntervalDurationStrategy} pasado como parametro.
      */
     int getSuperpositionDaysWith(IntervalDurationStrategy interval);
+
+    /**
+     * Retorna el primer dia de la licencia.
+     */
+    DateTime getFirstDate();
 }

@@ -22,14 +22,17 @@ public class LeaveRequest extends Entity implements Assignable {
 
     private DurationStrategy durationStrategy;
 
+    private Employee employee;
+
     /* *************************** CONSTRUCTORS *************************** */
 
     public LeaveRequest() {
         super();
     }
 
-    public LeaveRequest(final LeaveRequestType type, final DurationStrategy durationStrategy) {
+    public LeaveRequest(final Employee employee, final LeaveRequestType type, final DurationStrategy durationStrategy) {
         super();
+        this.employee = employee;
         this.type = type;
         this.durationStrategy = durationStrategy;
     }
@@ -50,6 +53,16 @@ public class LeaveRequest extends Entity implements Assignable {
 
     public void setDurationStrategy(final DurationStrategy durationStrategy) {
         this.durationStrategy = durationStrategy;
+    }
+
+    @Override
+    public void setEmployee(final Employee employee) {
+        this.employee = employee;
+    }
+
+    @Override
+    public Employee getEmployee() {
+        return employee;
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -95,13 +108,13 @@ public class LeaveRequest extends Entity implements Assignable {
      * varios parametros, como por ejemplo la cantidad de licencias que ya se
      * tomo, o bien la duracion de la licencia.
      * 
-     * @param el
-     *            empleado que pide la licencia.
+     * @param anEmployee
+     *            el empleado que pide la licencia.
      * @return <code>true</code> si puede tomarse la licencia,
      *         <code>false</code> en caso contrario.
      */
-    public boolean isValidFor(final Employee employee) {
-        return !this.overlapOtherLeaveRequest(employee) && this.getType().isValidFor(this, employee);
+    public boolean isValidFor(final Employee anEmployee) {
+        return !this.overlapOtherLeaveRequest(anEmployee) && this.getType().isValidFor(this, anEmployee);
     }
 
     /**
@@ -113,8 +126,8 @@ public class LeaveRequest extends Entity implements Assignable {
      * @return <code>true</code> si la licencia se superpone, <code>false</code>
      *         en caso contrario.
      */
-    public boolean overlapOtherLeaveRequest(final Employee employee) {
-        for (LeaveRequest req : employee.getLeaveRequests()) {
+    public boolean overlapOtherLeaveRequest(final Employee anEmployee) {
+        for (LeaveRequest req : anEmployee.getLeaveRequests()) {
             if (this.overlapsWith(req)) {
                 return true;
             }
@@ -150,5 +163,16 @@ public class LeaveRequest extends Entity implements Assignable {
     @Override
     public int getSuperpositionDaysWith(final IntervalDurationStrategy interval) {
         return this.getDurationStrategy().getSuperpositionDaysWith(interval);
+    }
+
+    /**
+     * Retorna el primer dia de la licencia. Lo delega en el tipo de duracion.
+     */
+    public DateTime getFirstDate() {
+        return this.getDurationStrategy().getFirstDate();
+    }
+
+    public String getReason() {
+        return this.getType().getReason();
     }
 }
