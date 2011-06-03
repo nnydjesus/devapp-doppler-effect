@@ -1,7 +1,5 @@
 package ar.edu.unq.dopplereffect.employees;
 
-import java.util.Date;
-
 import org.joda.time.DateTime;
 
 import ar.edu.unq.dopplereffect.entity.Entity;
@@ -22,8 +20,6 @@ public class CareerData extends Entity {
     private CareerPlanLevel level;
 
     private int percentage;
-
-    private Date x;
 
     /* *************************** CONSTRUCTORS *************************** */
 
@@ -81,14 +77,6 @@ public class CareerData extends Entity {
 
     public void setLevelName(final String levelName) {
         this.getLevel().setName(levelName);
-    }
-
-    public Date getX() {
-        return x;
-    }
-
-    public void setX(final Date x) {
-        this.x = x;
     }
 
     /* **************************** OPERATIONS **************************** */

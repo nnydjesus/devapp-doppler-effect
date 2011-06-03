@@ -54,9 +54,9 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
             final SearchModel<T> searchModel, final AjaxCallBack<Component> callBack, final List<String> fields,
             final Class<? extends Component> abmClass) {
 
-        this.id = id;
-        this.sortName = sortName;
-        this.searchModel = searchModel;
+        this.setId(id);
+        this.setSortName(sortName);
+        this.setSearchModel(searchModel);
         this.callBack = callBack;
         this.parentPanel = parent;
         this.fields = fields;
@@ -110,8 +110,9 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
             }
         });
         this.addCustomColumns(columns);
-        this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(id, columns, new GenericSortableDataProvider<T>(id,
-                this.getSearch(), this.sortName), SearchModel.PAGE_SIZE));
+        this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(this.getId(), columns,
+                new GenericSortableDataProvider<T>(this.getId(), this.getSearch(), this.getSortName()),
+                SearchModel.PAGE_SIZE));
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
         // this.getSortableAjaxWicket().add(sortableAjaxBehavior);
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
@@ -151,11 +152,11 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
     }
 
     public SearchModel<T> getSearch() {
-        return searchModel;
+        return this.getSearchModel();
     }
 
     public void setSearch(final SearchModel<T> search) {
-        this.searchModel = search;
+        this.setSearchModel(search);
     }
 
     public AjaxFallbackDefaultDataTable<T> getAjaxdataTable() {
@@ -205,5 +206,29 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
 
     public void setCallBack(final AjaxCallBack<Component> callBack) {
         this.callBack = callBack;
+    }
+
+    public SearchModel<T> getSearchModel() {
+        return searchModel;
+    }
+
+    public void setSearchModel(final SearchModel<T> searchModel) {
+        this.searchModel = searchModel;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
+    public String getSortName() {
+        return sortName;
+    }
+
+    public void setSortName(final String sortName) {
+        this.sortName = sortName;
     }
 }

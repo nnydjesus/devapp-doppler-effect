@@ -31,9 +31,8 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
         this.addButtons(form);
     }
 
-    protected void beforeConstruct() {
-
-    }
+    // abstracto porque el PMD se queja
+    protected abstract void beforeConstruct();
 
     public EntityPanel(final String id, final T model, final AbstractCallbackPanel<? extends Serializable> previousPage) {
         this(id, model, previousPage, false);

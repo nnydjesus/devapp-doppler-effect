@@ -46,7 +46,7 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
 
     @Override
     protected void beforeConstruct() {
-        employee = ((LeaveRequestSearchModel) this.getPreviousPage().getModelObject()).getSearchByEmployee();
+        this.setEmployee(((LeaveRequestSearchModel) this.getPreviousPage().getModelObject()).getSearchByEmployee());
     }
 
     @Override
@@ -61,11 +61,11 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
 
     private void addEmployeeCombo(final Form<LeaveRequest> form) {
         DropDownChoice<Employee> ddc = new DropDownChoice<Employee>("employeeCombo", new PropertyModel<Employee>(
-                form.getDefaultModelObject(), "employee"), employeeService.searchAll());
+                form.getDefaultModelObject(), "employee"), this.getEmployeeService().searchAll());
         ddc.setNullValid(true);
         ddc.setRequired(true);
-        if (employee != null) {
-            ddc.setModelObject(employee);
+        if (this.getEmployee() != null) {
+            ddc.setModelObject(this.getEmployee());
             ddc.setEnabled(false);
         }
         form.add(ddc);
@@ -171,5 +171,21 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
 
     public void setLeaveReqTypeService(final ServiceImpl<LeaveRequestType> leaveReqTypeService) {
         this.leaveReqTypeService = leaveReqTypeService;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(final Employee employee) {
+        this.employee = employee;
+    }
+
+    public ServiceImpl<Employee> getEmployeeService() {
+        return employeeService;
+    }
+
+    public void setEmployeeService(final ServiceImpl<Employee> employeeService) {
+        this.employeeService = employeeService;
     }
 }

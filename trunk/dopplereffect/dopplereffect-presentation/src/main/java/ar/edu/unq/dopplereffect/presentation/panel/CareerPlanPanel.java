@@ -26,9 +26,11 @@ public class CareerPlanPanel extends AbstractCallbackPanel<Object> {
     }
 
     private void addCareerPlansListing() {
+        // todo
     }
 
     private void addCareerPlanLevelsListing() {
+        // todo
     }
 
     public ServiceImpl<CareerPlanLevel> getCareerPlanLevelService() {
