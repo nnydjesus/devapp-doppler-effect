@@ -16,14 +16,13 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<Employe
 
     private static final long serialVersionUID = -7425688577267166062L;
 
-    // TODO mejorar, es una chanchada
-    private LeaveRequestSearchModel leaveRequestSearchModel;
+    private EmployeeAjaxDataTable employeeAjaxDataTable;
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public EmployeeSearchPanel(final String id, final AjaxCallBack parentPage, final EmployeeSearchModel model,
             final LeaveRequestSearchModel leaveRequestSearchModel) {
         super(id, parentPage, model, Arrays.asList("firstName", "lastName", "dni"), EmployeePanel.class);
-        this.setLeaveRequestSearchModel(leaveRequestSearchModel);
+        employeeAjaxDataTable.setLeaveRequestSearchModel(leaveRequestSearchModel);
     }
 
     @Override
@@ -33,17 +32,10 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<Employe
 
     @Override
     @SuppressWarnings("unchecked")
-    protected EmployeeAjaxDataTablePage createAjaxTable() {
-        return new EmployeeAjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
+    protected EmployeeAjaxDataTable createAjaxTable() {
+        employeeAjaxDataTable = new EmployeeAjaxDataTable(this, this.getTableWicketId(), this.getSortName(),
                 ((SearchModel<Employee>) this.getDefaultModelObject()), this.getCallback(), this.getFields(),
-                this.getAbm(), this.getLeaveRequestSearchModel());
-    }
-
-    public LeaveRequestSearchModel getLeaveRequestSearchModel() {
-        return leaveRequestSearchModel;
-    }
-
-    public void setLeaveRequestSearchModel(final LeaveRequestSearchModel leaveRequestSearchModel) {
-        this.leaveRequestSearchModel = leaveRequestSearchModel;
+                this.getAbmClass());
+        return employeeAjaxDataTable;
     }
 }

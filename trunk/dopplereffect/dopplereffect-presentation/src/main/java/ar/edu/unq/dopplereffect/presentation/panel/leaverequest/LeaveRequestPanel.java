@@ -2,22 +2,23 @@ package ar.edu.unq.dopplereffect.presentation.panel.leaverequest;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.wicket.datetime.StyleDateConverter;
 import org.apache.wicket.datetime.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.joda.time.DateTime;
 
+import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.presentation.pages.basic.EntityPanel;
+import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
+import ar.edu.unq.dopplereffect.service.ServiceImpl;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
@@ -26,47 +27,73 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
 
     private static final long serialVersionUID = 1511189466309907850L;
 
+    @SpringBean(name = "leaveReqTypeService")
+    private ServiceImpl<LeaveRequestType> leaveReqTypeService;
+
+    @SpringBean(name = "employeeService")
+    private ServiceImpl<Employee> employeeService;
+
+    private Employee employee;
+
     public LeaveRequestPanel(final String id, final LeaveRequestSearchPanel previousPage) {
         super(id, new LeaveRequest(), previousPage);
     }
 
-    public LeaveRequestPanel(final String id, final LeaveRequest model, final LeaveRequestSearchPanel previousPage,
+    public LeaveRequestPanel(final String id, final LeaveRequestSearchPanel previousPage, final LeaveRequest model,
             final Boolean editMode) {
         super(id, model, previousPage, editMode);
     }
 
     @Override
+    protected void beforeConstruct() {
+        employee = ((LeaveRequestSearchModel) this.getPreviousPage().getModelObject()).getSearchByEmployee();
+    }
+
+    @Override
     protected void addFields(final Form<LeaveRequest> form) {
         form.add(this.getFeedbackPanel());
+        this.addEmployeeCombo(form);
         this.addTypeCombo(form);
         this.addDurationTypeCombo(form);
         this.addStartDateField(form);
         this.addEndDateField(form);
     }
 
+    private void addEmployeeCombo(final Form<LeaveRequest> form) {
+        DropDownChoice<Employee> ddc = new DropDownChoice<Employee>("employeeCombo", new PropertyModel<Employee>(
+                form.getDefaultModelObject(), "employee"), employeeService.searchAll());
+        ddc.setNullValid(true);
+        ddc.setRequired(true);
+        if (employee != null) {
+            ddc.setModelObject(employee);
+            ddc.setEnabled(false);
+        }
+        form.add(ddc);
+    }
+
     protected void addDurationTypeCombo(final Form<LeaveRequest> form) {
         @SuppressWarnings({ "rawtypes", "unchecked" })
         DropDownChoice durationTypeDropDownChoice = new DropDownChoice("duration", new PropertyModel<DurationStrategy>(
-                form.getDefaultModelObject(), "strategy"), Arrays.asList(new OneDayDurationStrategy(),
+                form.getDefaultModelObject(), "durationStrategy"), Arrays.asList(new OneDayDurationStrategy(),
                 new IntervalDurationStrategy()));
         durationTypeDropDownChoice.setRequired(true);
+        durationTypeDropDownChoice.setNullValid(true);
         form.add(durationTypeDropDownChoice);
     }
 
     protected void addTypeCombo(final Form<LeaveRequest> form) {
-        // TODO traer estas choices de un servicio
-        List<LeaveRequestType> choices = new LinkedList<LeaveRequestType>();
         @SuppressWarnings({ "rawtypes", "unchecked" })
         DropDownChoice typeDropDownChoice = new DropDownChoice("type", new PropertyModel<LeaveRequestType>(
-                form.getDefaultModelObject(), "type"), choices);
+                form.getDefaultModelObject(), "type"), this.getLeaveReqTypeService().searchAll());
         typeDropDownChoice.setRequired(true);
+        typeDropDownChoice.setNullValid(true);
         form.add(typeDropDownChoice);
     }
 
     private void addStartDateField(final Form<LeaveRequest> form) {
         // TODO una chanchada, prometo mejorarlo
         StyleDateConverter converter = new StyleDateConverter(true);
-        IModel<Date> model = new Model<Date>() {
+        Model<Date> model = new Model<Date>() {
 
             private static final long serialVersionUID = 1L;
 
@@ -104,7 +131,7 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
 
     private void addEndDateField(final Form<LeaveRequest> form) {
         StyleDateConverter converter = new StyleDateConverter(true);
-        IModel<Date> model = new Model<Date>() {
+        Model<Date> model = new Model<Date>() {
 
             private static final long serialVersionUID = 1L;
 
@@ -136,5 +163,13 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
     @Override
     protected String getFormWicketId() {
         return "leaveRequestForm";
+    }
+
+    public ServiceImpl<LeaveRequestType> getLeaveReqTypeService() {
+        return leaveReqTypeService;
+    }
+
+    public void setLeaveReqTypeService(final ServiceImpl<LeaveRequestType> leaveReqTypeService) {
+        this.leaveReqTypeService = leaveReqTypeService;
     }
 }

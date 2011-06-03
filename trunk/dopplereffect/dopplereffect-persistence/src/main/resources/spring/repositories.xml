@@ -31,6 +31,10 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean id="leaveReqTypeRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestTypeRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	<bean id="userRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.UserRepositoryImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>

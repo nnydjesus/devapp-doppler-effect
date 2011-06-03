@@ -32,7 +32,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
 
     private Component parentPage;
 
-    private SearchModel<T> search;
+    private SearchModel<T> searchModel;
 
     private List<String> fields;
 
@@ -46,18 +46,27 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
 
     private AjaxCallBack<Component> callBack;
 
-    public AjaxDataTablePage(final Panel parent, final String id, final String sortName, final SearchModel<T> aSearch,
-            final AjaxCallBack<Component> aCallBack, final List<String> fields, final Class<? extends Component> abm) {
+    private String id;
 
-        this.setParentPanel(parent);
-        this.setFields(fields);
-        this.setAbmClass(abm);
-        this.setSearch(aSearch);
+    private String sortName;
 
-        callBack = aCallBack;
+    public AjaxDataTablePage(final Panel parent, final String id, final String sortName,
+            final SearchModel<T> searchModel, final AjaxCallBack<Component> callBack, final List<String> fields,
+            final Class<? extends Component> abmClass) {
+
+        this.id = id;
+        this.sortName = sortName;
+        this.searchModel = searchModel;
+        this.callBack = callBack;
+        this.parentPanel = parent;
+        this.fields = fields;
+        this.abmClass = abmClass;
+    }
+
+    public void init() {
         ArrayList<IColumn<T>> columns = new ArrayList<IColumn<T>>();
 
-        for (String field : fields) {
+        for (String field : this.getFields()) {
             columns.add(this.createPropertyColumn(field));
         }
 
@@ -100,19 +109,14 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
                 });
             }
         });
-        //
-
         this.addCustomColumns(columns);
-
         this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(id, columns, new GenericSortableDataProvider<T>(id,
-                this.getSearch(), sortName), SearchModel.PAGE_SIZE));
+                this.getSearch(), this.sortName), SearchModel.PAGE_SIZE));
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
-        // SortableAjax sortableAjaxBehavior = new SortableAjax();
-        // sortableAjaxBehavior.getSortableBehavior().setConnectWith(".dataview.tr");
-
         // this.getSortableAjaxWicket().add(sortableAjaxBehavior);
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
-
+        // SortableAjax sortableAjaxBehavior = new SortableAjax();
+        // sortableAjaxBehavior.getSortableBehavior().setConnectWith(".dataview.tr");
     }
 
     /**
@@ -147,39 +151,35 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
     }
 
     public SearchModel<T> getSearch() {
-        return search;
+        return searchModel;
     }
 
     public void setSearch(final SearchModel<T> search) {
-        this.search = search;
+        this.searchModel = search;
     }
 
     public AjaxFallbackDefaultDataTable<T> getAjaxdataTable() {
         return ajaxdataTable;
     }
 
-    public void setFields(final List<String> fields) {
-        this.fields = fields;
+    public void setAjaxdataTable(final AjaxFallbackDefaultDataTable<T> ajaxdataTable) {
+        this.ajaxdataTable = ajaxdataTable;
     }
 
     public List<String> getFields() {
         return fields;
     }
 
-    public void setAjaxdataTable(final AjaxFallbackDefaultDataTable<T> ajaxdataTable) {
-        this.ajaxdataTable = ajaxdataTable;
-    }
-
-    public void setAbmClass(final Class<? extends Component> abmClass) {
-        this.abmClass = abmClass;
+    public void setFields(final List<String> fields) {
+        this.fields = fields;
     }
 
     public Class<? extends Component> getAbmClass() {
         return abmClass;
     }
 
-    public void setSortableAjaxWicket(final WebMarkupContainer sortableAjaxWicket) {
-        this.sortableAjaxWicket = sortableAjaxWicket;
+    public void setAbmClass(final Class<? extends Component> abmClass) {
+        this.abmClass = abmClass;
     }
 
     @Override
@@ -187,12 +187,16 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
         return sortableAjaxWicket;
     }
 
-    public void setParentPanel(final Panel parentPanel) {
-        this.parentPanel = parentPanel;
+    public void setSortableAjaxWicket(final WebMarkupContainer sortableAjaxWicket) {
+        this.sortableAjaxWicket = sortableAjaxWicket;
     }
 
     public Panel getParentPanel() {
         return parentPanel;
+    }
+
+    public void setParentPanel(final Panel parentPanel) {
+        this.parentPanel = parentPanel;
     }
 
     public AjaxCallBack<Component> getCallBack() {

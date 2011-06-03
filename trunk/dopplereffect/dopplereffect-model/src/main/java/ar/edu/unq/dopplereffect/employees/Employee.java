@@ -148,6 +148,7 @@ public class Employee extends Entity {
      */
     public void addAssignment(final Assignable assignable) {
         this.getAssignments().add(assignable);
+        assignable.setEmployee(this);
     }
 
     /**
@@ -399,7 +400,7 @@ public class Employee extends Entity {
 
     @Override
     public String toString() {
-        return "Employee " + this.getFirstName() + " " + this.getLastName();
+        return this.getFirstName() + " " + this.getLastName();
     }
 
     @Override

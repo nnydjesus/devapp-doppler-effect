@@ -25,17 +25,16 @@ import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
  * Similar a una {@link AjaxDataTablePage} pero con el agregado de un link con
  * mas detalles.
  */
-public class EmployeeAjaxDataTablePage extends AjaxDataTablePage<Employee> {
+public class EmployeeAjaxDataTable extends AjaxDataTablePage<Employee> {
 
     private static final long serialVersionUID = 6376218516758816207L;
 
     private LeaveRequestSearchModel leaveRequestSearchModel;
 
-    public EmployeeAjaxDataTablePage(final Panel parent, final String id, final String sortName,
+    public EmployeeAjaxDataTable(final Panel parent, final String id, final String sortName,
             final SearchModel<Employee> aSearch, final AjaxCallBack<Component> aCallBack, final List<String> fields,
-            final Class<? extends Component> abm, final LeaveRequestSearchModel leaveRequestSearchModel) {
+            final Class<? extends Component> abm) {
         super(parent, id, sortName, aSearch, aCallBack, fields, abm);
-        this.setLeaveRequestSearchModel(leaveRequestSearchModel);
     }
 
     @Override
@@ -56,8 +55,8 @@ public class EmployeeAjaxDataTablePage extends AjaxDataTablePage<Employee> {
                     public void onAction(final AjaxRequestTarget target) {
                         @SuppressWarnings({ "rawtypes", "unchecked" })
                         EmployeeDetailPanel comp = new EmployeeDetailPanel("body", rowModel.getObject(),
-                                (AbstractCallbackPanel) EmployeeAjaxDataTablePage.this.getParentPanel());
-                        EmployeeAjaxDataTablePage.this.getCallBack().execute(target, comp);
+                                (AbstractCallbackPanel) EmployeeAjaxDataTable.this.getParentPanel());
+                        EmployeeAjaxDataTable.this.getCallBack().execute(target, comp);
                     }
                 });
             }
@@ -76,23 +75,25 @@ public class EmployeeAjaxDataTablePage extends AjaxDataTablePage<Employee> {
 
                     @Override
                     public void onAction(final AjaxRequestTarget target) {
-                        LeaveRequestSearchPanel comp = new LeaveRequestSearchPanel("body",
-                                EmployeeAjaxDataTablePage.this.getCallBack(), EmployeeAjaxDataTablePage.this
-                                        .getLeaveRequestSearchModel());
-                        EmployeeAjaxDataTablePage.this.getLeaveRequestSearchModel().setSearchByEmployee(
-                                rowModel.getObject());
-                        EmployeeAjaxDataTablePage.this.getCallBack().execute(target, comp);
+                        AjaxCallBack<Component> callback = EmployeeAjaxDataTable.this.getCallBack();
+                        LeaveRequestSearchModel leaveReqSearchModel = EmployeeAjaxDataTable.this
+                                .getLeaveRequestSearchModel();
+                        LeaveRequestSearchPanel comp = new LeaveRequestSearchPanel("body", callback,
+                                leaveReqSearchModel);
+                        leaveReqSearchModel.setSearchByEmployee(rowModel.getObject());
+                        leaveReqSearchModel.search();
+                        callback.execute(target, comp);
                     }
                 });
             }
         });
     }
 
-    public void setLeaveRequestSearchModel(final LeaveRequestSearchModel leaveRequestSearchModel) {
-        this.leaveRequestSearchModel = leaveRequestSearchModel;
-    }
-
     public LeaveRequestSearchModel getLeaveRequestSearchModel() {
         return leaveRequestSearchModel;
+    }
+
+    public void setLeaveRequestSearchModel(final LeaveRequestSearchModel leaveRequestSearchModel) {
+        this.leaveRequestSearchModel = leaveRequestSearchModel;
     }
 }

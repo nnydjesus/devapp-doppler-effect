@@ -50,6 +50,9 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
     }
 
     public DateTime getStartDate() {
+        if (this.getInterval() == null) {
+            return null;
+        }
         return this.getInterval().getStart();
     }
 
@@ -58,6 +61,9 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
     }
 
     public DateTime getEndDate() {
+        if (this.getInterval() == null) {
+            return null;
+        }
         return this.getInterval().getEnd();
     }
 
@@ -195,7 +201,14 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
 
     @Override
     public String toString() {
-        return this.getStartDate().toString() + " ~ " + this.getEndDate().toString();
+        String result = "Interval duration strategy";
+        if (this.getStartDate() != null) {
+            result += " starting at: " + this.getStartDate().toString();
+        }
+        if (this.getEndDate() != null) {
+            result += " finishing at: " + this.getStartDate().toString();
+        }
+        return result;
     }
 
 }

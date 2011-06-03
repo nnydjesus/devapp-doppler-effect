@@ -78,8 +78,8 @@ public class EmployeePanel extends EntityPanel<Employee> {
     protected void addCareerPlanLevelCombo(final Form<Employee> form) {
         PropertyModel<CareerPlanLevel> pm = new PropertyModel<CareerPlanLevel>(form.getDefaultModelObject(),
                 "careerData.level");
-        DropDownChoice<CareerPlanLevel> ddc = new DropDownChoice<CareerPlanLevel>("careerPlanLevel", pm,
-                getCareerPlanLevelService().searchAll());
+        DropDownChoice<CareerPlanLevel> ddc = new DropDownChoice<CareerPlanLevel>("careerPlanLevel", pm, this
+                .getCareerPlanLevelService().searchAll());
         ddc.setRequired(true);
         form.add(ddc);
     }
@@ -108,7 +108,7 @@ public class EmployeePanel extends EntityPanel<Employee> {
         form.add(dateTextField);
     }
 
-    public void setCareerPlanLevelService(ServiceImpl<CareerPlanLevel> careerPlanLevelService) {
+    public void setCareerPlanLevelService(final ServiceImpl<CareerPlanLevel> careerPlanLevelService) {
         this.careerPlanLevelService = careerPlanLevelService;
     }
 

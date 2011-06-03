@@ -12,13 +12,19 @@ public class SalarySpecSearchPanel extends AbstractSearchPanel<SalarySpecSearchM
 
     private static final long serialVersionUID = 4870066995423669454L;
 
-    public SalarySpecSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final SalarySpecSearchModel model) {
+    public SalarySpecSearchPanel(final String id, final AjaxCallBack<Component> parentPage,
+            final SalarySpecSearchModel model) {
         super(id, parentPage, model, Arrays.asList("year", "minSalary", "maxSalary"), SalarySpecPanel.class);
     }
 
     @Override
     protected String getDefaultInputSearchWicketId() {
         return "searchByYear";
+    }
+
+    @Override
+    protected String getSortName() {
+        return "year";
     }
 
 }

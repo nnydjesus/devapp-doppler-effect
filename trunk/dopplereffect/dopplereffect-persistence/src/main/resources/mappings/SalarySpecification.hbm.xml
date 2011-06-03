@@ -15,8 +15,7 @@
 		
 		<property name="plan" type="ar.edu.unq.dopplereffect.persistence.util.CareerPlanEnumType" column="career_plan" />
 		
-		<many-to-one name="level" class="ar.edu.unq.dopplereffect.employees.CareerPlanLevel" column="career_plan_level_id"
-		unique="true" cascade="all" />
+		<many-to-one name="level" class="ar.edu.unq.dopplereffect.employees.CareerPlanLevel" column="career_plan_level_id" cascade="all" />
 		
 		<property name="minSalary" column="min_salary" not-null="true" />
 		

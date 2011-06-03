@@ -30,9 +30,8 @@ public class LeaveRequest extends Entity implements Assignable {
         super();
     }
 
-    public LeaveRequest(final Employee employee, final LeaveRequestType type, final DurationStrategy durationStrategy) {
+    public LeaveRequest(final LeaveRequestType type, final DurationStrategy durationStrategy) {
         super();
-        this.employee = employee;
         this.type = type;
         this.durationStrategy = durationStrategy;
     }
