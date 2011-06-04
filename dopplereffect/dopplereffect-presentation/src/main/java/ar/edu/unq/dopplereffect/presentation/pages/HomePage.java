@@ -5,14 +5,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.odlabs.wiquery.core.commons.IWiQueryPlugin;
-import org.odlabs.wiquery.core.commons.WiQueryResourceManager;
 import org.odlabs.wiquery.core.effects.EffectBehavior;
-import org.odlabs.wiquery.core.javascript.JsStatement;
 import org.odlabs.wiquery.ui.effects.PulsateEffect;
 import org.odlabs.wiquery.ui.effects.PulsateEffect.PulsateMode;
-import org.odlabs.wiquery.ui.themes.ThemeUiHelper;
-import org.odlabs.wiquery.ui.themes.WiQueryCoreThemeResourceReference;
 
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.panel.CareerPlanPanel;
@@ -33,7 +28,7 @@ import ar.edu.unq.dopplereffect.service.AddDefaultValuesService;
 /**
  * Simple home page.
  */
-public class HomePage extends AbstractWebPage<Component> implements IWiQueryPlugin {
+public class HomePage extends AbstractWebPage<Component> {
 
     private static final long serialVersionUID = 1L;
 
@@ -86,6 +81,37 @@ public class HomePage extends AbstractWebPage<Component> implements IWiQueryPlug
                 HomePage.this.generateCallback().execute(target, panel);
             }
 
+            // @Override
+            // protected IAjaxCallDecorator getAjaxCallDecorator() {
+            // return new AjaxCallDecorator() {
+            //
+            // private static final long serialVersionUID = 1L;
+            //
+            // @Override
+            // public CharSequence decorateOnSuccessScript(final CharSequence
+            // script) {
+            // SlideDown effect = new SlideDown(EffectSpeed.SLOW);
+            // return new
+            // JsStatement().$(panel).chain(effect).render(true).toString() +
+            // script + ";";
+            // }
+            //
+            // @Override
+            // public CharSequence decorateScript(final CharSequence script) {
+            // Effect effect = new FadeIn(EffectSpeed.SLOW);
+            // effect.setCallback(new JsScope() {
+            // private static final long serialVersionUID = 1L;
+            //
+            // @Override
+            // protected void execute(final JsScopeContext scopeContext) {
+            // scopeContext.append(script);
+            // }
+            // });
+            // return new JsStatement().$(panel).chain(effect).render(true);
+            // }
+            // };
+            // }
+
         };
     }
 
@@ -103,27 +129,6 @@ public class HomePage extends AbstractWebPage<Component> implements IWiQueryPlug
                 ajaxTarget.addComponent(HomePage.this.getAjaxPanel());
             }
         };
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.odlabs.wiquery.core.commons.IWiQueryPlugin#contribute(org.odlabs.wiquery.core.commons.WiQueryResourceManager)
-     */
-    @Override
-    public void contribute(final WiQueryResourceManager wiQueryResourceManager) {
-        wiQueryResourceManager.addCssResource(new WiQueryCoreThemeResourceReference("le-frog"));
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.odlabs.wiquery.core.commons.IWiQueryPlugin#statement()
-     */
-    @Override
-    public JsStatement statement() {
-        // ThemeUiHelper.shadowComponent(this.getAjaxPanel());
-        return ThemeUiHelper.hover(this.getPage());
     }
 
     /* definidos porque el PMD chilla */

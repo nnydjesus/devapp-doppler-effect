@@ -143,20 +143,12 @@ CREATE TABLE `dopplereffect`.`project_assignment` (
     FOREIGN KEY (`project_id`) REFERENCES `project` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `dopplereffect`.`skill_type` (
-  `id`                int(11) NOT NULL AUTO_INCREMENT,
-  `name`  VARCHAR(45) ,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `dopplereffect`.`skill` (
   `id`       int(11) NOT NULL AUTO_INCREMENT,
   `level`    VARCHAR(45) ,
-  `type_id`  int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `skill_type_fk` (`type_id`),
-  CONSTRAINT `skill_type_fk`
-    FOREIGN KEY (`type_id`) REFERENCES `skill_type` (`id`)
+  `type`   VARCHAR(45) ,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `dopplereffect`.`project_skill` (
