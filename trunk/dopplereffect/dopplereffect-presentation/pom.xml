@@ -206,17 +206,17 @@
 			<version>1.1-SNAPSHOT</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.wiquery-plugins</groupId>
-			<artifactId>jqgrid</artifactId>
-			<version>1.1</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.wiquery-plugins</groupId> -->
+<!-- 			<artifactId>jqgrid</artifactId> -->
+<!-- 			<version>1.1</version> -->
+<!-- 		</dependency> -->
 
-		<dependency>
-			<groupId>com.wiquery-plugins</groupId>
-			<artifactId>antila-grid</artifactId>
-			<version>1.1</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.wiquery-plugins</groupId> -->
+<!-- 			<artifactId>antila-grid</artifactId> -->
+<!-- 			<version>1.1</version> -->
+<!-- 		</dependency> -->
 
 	</dependencies>
 
