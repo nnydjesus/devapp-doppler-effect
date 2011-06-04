@@ -1,9 +1,12 @@
 package ar.edu.unq.dopplereffect.service;
 
+import java.util.Arrays;
+
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.salaries.SalarySpecificationBuilder;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
@@ -14,6 +17,7 @@ import ar.edu.unq.dopplereffect.persistence.repositories.EmployeeRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestTypeRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.repositories.ProjectRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.repositories.SalarySpecificationRepositoryImpl;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
 
@@ -60,12 +64,34 @@ public class AddDefaultValuesService {
 
     private LeaveRequestTypeRepositoryImpl leaveReqTypeRepo;
 
+    private SalarySpecificationRepositoryImpl salarySpecRepo;
+
     public void addAllData() {
         this.addCareerPlanLevels();
         this.addEmployees();
         this.addLeaveRequestTypes();
         this.addLeaveRequests();
         this.addProjects();
+        this.addSalarySpecs();
+    }
+
+    private void addSalarySpecs() {
+        // @formatter:off
+        this.getSalarySpecRepo().saveAll(
+           new SalarySpecificationBuilder()
+               .withYear(2011).withPlan(CareerPlan.TESTER).withLevel(SEMI_SENIOR)
+               .withMinSalary(2000).withMaxSalary(3500)
+               .withPercentages(Arrays.asList(0, 50, 100)).build(),
+           new SalarySpecificationBuilder()
+               .withYear(2011).withPlan(CareerPlan.FUNCTIONAL).withLevel(SENIOR)
+               .withMinSalary(4000).withMaxSalary(6500)
+               .withPercentages(Arrays.asList(0, 50, 100)).build(),
+           new SalarySpecificationBuilder()
+               .withYear(2011).withPlan(CareerPlan.DESIGNER).withLevel(JUNIOR)
+               .withMinSalary(5500).withMaxSalary(8000)
+               .withPercentages(Arrays.asList(0, 50, 100)).build()
+        );
+        // @formatter:on
     }
 
     public void addCareerPlanLevels() {
@@ -141,5 +167,13 @@ public class AddDefaultValuesService {
 
     public void setLeaveReqTypeRepo(final LeaveRequestTypeRepositoryImpl leaveReqTypeRepo) {
         this.leaveReqTypeRepo = leaveReqTypeRepo;
+    }
+
+    public void setSalarySpecRepo(final SalarySpecificationRepositoryImpl salarySpecRepo) {
+        this.salarySpecRepo = salarySpecRepo;
+    }
+
+    public SalarySpecificationRepositoryImpl getSalarySpecRepo() {
+        return salarySpecRepo;
     }
 }

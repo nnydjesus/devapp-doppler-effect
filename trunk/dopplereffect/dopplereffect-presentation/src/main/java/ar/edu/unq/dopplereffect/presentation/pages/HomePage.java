@@ -24,6 +24,7 @@ import ar.edu.unq.dopplereffect.presentation.panel.project.SkillSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.salaryspec.SalarySpecSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel;
 import ar.edu.unq.dopplereffect.presentation.project.SkillSearchModel;
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
@@ -79,7 +80,9 @@ public class HomePage extends AbstractWebPage<Component> implements IWiQueryPlug
             private static final long serialVersionUID = 1L;
 
             @Override
+            @SuppressWarnings("rawtypes")
             public void onClick(final AjaxRequestTarget target) {
+                ((SearchModel) panel.getDefaultModelObject()).reset();
                 HomePage.this.generateCallback().execute(target, panel);
             }
 

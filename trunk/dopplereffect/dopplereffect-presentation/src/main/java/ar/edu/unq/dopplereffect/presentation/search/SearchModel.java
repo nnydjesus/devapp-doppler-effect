@@ -2,6 +2,7 @@ package ar.edu.unq.dopplereffect.presentation.search;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.service.Service;
@@ -57,6 +58,10 @@ public abstract class SearchModel<T> implements Serializable {
 
     public void setEntityType(final Class<T> entityType) {
         this.entityType = entityType;
+    }
+
+    public void reset() {
+        this.setResults(new LinkedList<T>());
     }
 
     public abstract Service<T> getService();

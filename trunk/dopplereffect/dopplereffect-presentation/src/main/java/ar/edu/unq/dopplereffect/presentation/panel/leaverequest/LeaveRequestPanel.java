@@ -104,10 +104,12 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
                     return null;
                 }
                 if (durStrategy instanceof IntervalDurationStrategy) {
-                    return ((IntervalDurationStrategy) durStrategy).getStartDate().toDate();
+                    DateTime startDate = ((IntervalDurationStrategy) durStrategy).getStartDate();
+                    return startDate == null ? null : startDate.toDate();
                 }
                 if (durStrategy instanceof OneDayDurationStrategy) {
-                    return ((OneDayDurationStrategy) durStrategy).getDate().toDate();
+                    DateTime date = ((OneDayDurationStrategy) durStrategy).getDate();
+                    return date == null ? null : date.toDate();
                 }
                 return null;
             }
@@ -142,7 +144,8 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
                     return null;
                 }
                 if (durStrategy instanceof IntervalDurationStrategy) {
-                    return ((IntervalDurationStrategy) durStrategy).getEndDate().toDate();
+                    DateTime endDate = ((IntervalDurationStrategy) durStrategy).getEndDate();
+                    return endDate == null ? null : endDate.toDate();
                 }
                 return null;
             }

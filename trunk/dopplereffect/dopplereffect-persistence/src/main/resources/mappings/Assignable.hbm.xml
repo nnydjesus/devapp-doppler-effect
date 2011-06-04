@@ -12,7 +12,7 @@
 		</id>
 
 		<many-to-one name="employee"
-			class="ar.edu.unq.dopplereffect.employees.Employee" column="employee_id"/>
+			class="ar.edu.unq.dopplereffect.employees.Employee" column="employee_id" lazy="false" />
 
 		<joined-subclass name="ar.edu.unq.dopplereffect.leaverequests.LeaveRequest"
 			table="leave_request">
