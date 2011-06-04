@@ -6,8 +6,12 @@ import org.odlabs.wiquery.ui.sortable.SortableAjaxBehavior;
 
 /**
  */
-public class SortableAjax extends SortableAjaxBehavior<Component> {
+public class SortableAjax<T extends Component> extends SortableAjaxBehavior<T> {
     private static final long serialVersionUID = 1L;
+
+    public SortableAjax(final SortedEvent... callbacks) {
+        super(callbacks);
+    }
 
     /*
      * (non-Javadoc)
@@ -18,11 +22,14 @@ public class SortableAjax extends SortableAjaxBehavior<Component> {
      * org.apache.wicket.ajax.AjaxRequestTarget)
      */
     @Override
-    public void onReceive(final Component sortedComponent, final int index, final Component parentSortedComponent,
+    public void onReceive(final T sortedComponent, final int index, final Component parentSortedComponent,
             final AjaxRequestTarget ajaxRequestTarget) {
-        ajaxRequestTarget.appendJavascript("alert('received  : " + sortedComponent.getMarkupId() + " - "
-                + sortedComponent.getDefaultModelObject().toString() + " - index : " + index + "')");
-        ajaxRequestTarget.appendJavascript("alert('received from  : " + parentSortedComponent.getMarkupId() + "')");
+        // ajaxRequestTarget.appendJavascript("alert('received  : " +
+        // sortedComponent.getMarkupId() + " - "
+        // + sortedComponent.getDefaultModelObject().toString() + " - index : "
+        // + index + "')");
+        // ajaxRequestTarget.appendJavascript("alert('received from  : " +
+        // parentSortedComponent.getMarkupId() + "')");
     }
 
     /*
@@ -33,9 +40,11 @@ public class SortableAjax extends SortableAjaxBehavior<Component> {
      * .wicket.Component, int, org.apache.wicket.ajax.AjaxRequestTarget)
      */
     @Override
-    public void onUpdate(final Component sortedComponent, final int index, final AjaxRequestTarget ajaxRequestTarget) {
-        ajaxRequestTarget.appendJavascript("alert('updated  : " + sortedComponent.getMarkupId() + " - "
-                + sortedComponent.getDefaultModelObject().toString() + " - index : " + index + "')");
+    public void onUpdate(final T sortedComponent, final int index, final AjaxRequestTarget ajaxRequestTarget) {
+        // ajaxRequestTarget.appendJavascript("alert('updated  : " +
+        // sortedComponent.getMarkupId() + " - "
+        // + sortedComponent.getDefaultModelObject().toString() + " - index : "
+        // + index + "')");
     }
 
     /*
@@ -46,9 +55,10 @@ public class SortableAjax extends SortableAjaxBehavior<Component> {
      * .wicket.Component, org.apache.wicket.ajax.AjaxRequestTarget)
      */
     @Override
-    public void onRemove(final Component sortedComponent, final AjaxRequestTarget ajaxRequestTarget) {
-        ajaxRequestTarget.appendJavascript("alert('removed  : " + sortedComponent.getMarkupId() + " - "
-                + sortedComponent.getDefaultModelObject().toString() + "')");
+    public void onRemove(final T sortedComponent, final AjaxRequestTarget ajaxRequestTarget) {
+        // ajaxRequestTarget.appendJavascript("alert('removed  : " +
+        // sortedComponent.getMarkupId() + " - "
+        // + sortedComponent.getDefaultModelObject().toString() + "')");
     }
 
 }

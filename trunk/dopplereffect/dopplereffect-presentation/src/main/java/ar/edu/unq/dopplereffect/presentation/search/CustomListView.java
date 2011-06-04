@@ -55,7 +55,7 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
         this.setEntityPageClass(entityPageClass);
 
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
-        SortableAjax sortableAjaxBehavior = new SortableAjax();
+        SortableAjax<Component> sortableAjaxBehavior = new SortableAjax<Component>();
         sortableAjaxBehavior.getSortableBehavior().setConnectWith(".connectedSortable");
 
         SelectTable selectTable = new SelectTable();
@@ -88,10 +88,10 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
         return resultSection;
     }
 
-    @Override
-    public void setResultSection(final Component panel) {
-        this.resultSection = panel;
-    }
+    // @Override
+    // public void setResultSection(final Component panel) {
+    // this.resultSection = panel;
+    // }
 
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -188,5 +188,9 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
 
     public Panel getParentPanel() {
         return parentPanel;
+    }
+
+    public void setResultSection(final Component resultSection) {
+        this.resultSection = resultSection;
     }
 }

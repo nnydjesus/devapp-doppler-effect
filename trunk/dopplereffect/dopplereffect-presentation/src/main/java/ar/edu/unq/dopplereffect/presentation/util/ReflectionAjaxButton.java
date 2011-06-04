@@ -4,6 +4,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
@@ -27,14 +29,20 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
 
     private T object;
 
+    public ReflectionAjaxButton(final String id, final Form<T> form, final Component ajaxTarget,
+            final IModel<String> model) {
+        this(id, id, form, ajaxTarget, model);
+    }
+
     public ReflectionAjaxButton(final String id, final Form<T> form, final Component ajaxTarget) {
-        this(id, id, form, ajaxTarget);
-        this.add(new ButtonBehavior());
+        this(id, form, ajaxTarget, new Model<String>(""));
 
     }
 
-    public ReflectionAjaxButton(final String id, final String action, final Form<T> form, final Component anAjaxTarget) {
-        super(id);
+    public ReflectionAjaxButton(final String id, final String action, final Form<T> form, final Component anAjaxTarget,
+            final IModel<String> model) {
+        super(id, model);
+        this.add(new ButtonBehavior());
         this.setAction(action);
         this.ajaxTarget = anAjaxTarget;
         this.setObject(form.getModel().getObject());

@@ -161,10 +161,6 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
         return dafaultPage;
     }
 
-    public void setRememberMe(final boolean remember) {
-        rememberMe = remember;
-    }
-
     public boolean isRememberMe() {
         return rememberMe;
     }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
@@ -17,6 +16,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
@@ -70,7 +70,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
             columns.add(this.createPropertyColumn(field));
         }
 
-        columns.add(new AbstractColumn<T>(new Model<String>("Edit")) {
+        columns.add(new AbstractColumn<T>(new StringResourceModel("header.edit", new Model<String>(""))) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -92,7 +92,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
             }
         });
 
-        columns.add(new AbstractColumn<T>(new Model<String>("Delete")) {
+        columns.add(new AbstractColumn<T>(new StringResourceModel("header.delete", new Model<String>(""))) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -130,14 +130,13 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
     }
 
     private PropertyColumn<T> createPropertyColumn(final String field) {
-        return new PropertyColumn<T>(new Model<String>(StringUtils.capitalize(field)), field);
+        return new PropertyColumn<T>(new StringResourceModel("header." + field, new Model<String>("")), field);
     }
 
     public Component getResultSection() {
         return resultSection;
     }
 
-    @Override
     public void setResultSection(final Component resultSection) {
         this.resultSection = resultSection;
     }

@@ -23,6 +23,8 @@ public class HeaderPanel extends AbstractPanel<Object> {
         // this.setParentPage(aParent);
         this.setDialog(new Dialog("dialog"));
         dialog.add(new Button("aceptar").add(new ButtonBehavior()));
+        dialog.setModal(true);
+        dialog.setAutoOpen(false);
         this.add(dialog);
         this.add(this.createButton("home"));
         this.add(this.createButton("about"));
@@ -43,7 +45,7 @@ public class HeaderPanel extends AbstractPanel<Object> {
 
             @Override
             public JsScope callback() {
-                HeaderPanel.this.getDialog().setTitle(id);
+                // HeaderPanel.this.getDialog().setTitle(id);
                 // HeaderPanel.this.getDialog().setnew
                 // DialogUtilsBehavior().simpleDialog(id, id));
                 // HeaderPanel.this.setResponsePage(HeaderPanel.this.getParentPage());

@@ -6,6 +6,8 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
@@ -50,18 +52,20 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
     }
 
     protected void addButtons(final Form<T> form) {
-        form.add(new ReflectionAjaxButton<T>(this.getSubmitButtonWicketId(), form, this.getAjaxSectionResult()));
-        form.add(new PanelCallbackLink(this.getNewFromBeanWicketId(), this.getCallback(),
-                new WebComponentFactory<Component>() {
-                    private static final long serialVersionUID = 1L;
+        form.add(new ReflectionAjaxButton<T>(this.getSubmitButtonWicketId(), form, this.getAjaxSectionResult(),
+                new StringResourceModel("searchButton", new Model<String>(""))));
+        form.add(new PanelCallbackLink(this.getNewFromBeanWicketId(), this.getCallback(), new StringResourceModel(
+                "newEntityButton", new Model<String>("")), new WebComponentFactory<Component>() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public Component createPage() {
-                        return ReflectionUtils.instanciate(AbstractSearchPanel.this.getAbmClass(),
-                                AbstractSearchPanel.this.getId(), AbstractSearchPanel.this);
-                    }
-                }));
-        this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), (Component) null));
+            @Override
+            public Component createPage() {
+                return ReflectionUtils.instanciate(AbstractSearchPanel.this.getAbmClass(),
+                        AbstractSearchPanel.this.getId(), AbstractSearchPanel.this);
+            }
+        }));
+        this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), (Component) null,
+                new StringResourceModel("backButton", new Model<String>(""))));
     }
 
     protected void addResultSection(final ITable iTable) {
@@ -78,8 +82,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
     }
 
     protected CustomListView<T, Class<Component>> createListView() {
-        return new CustomListView<T, Class<Component>>(this, this.getTableWicketId(), this.getFields(), this.getAbmClass(),
-                this.getCallback());
+        return new CustomListView<T, Class<Component>>(this, this.getTableWicketId(), this.getFields(),
+                this.getAbmClass(), this.getCallback());
     }
 
     private AjaxDataTablePage getNewAjaxTable() {
@@ -91,8 +95,14 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
     @SuppressWarnings("unchecked")
     protected AjaxDataTablePage createAjaxTable() {
         return new AjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
-                ((SearchModel<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbmClass());
+                ((SearchModel<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(),
+                this.getAbmClass());
     }
+
+    // protected GridPanel<T> createAjaxGrid() {
+    // return new GridPanel<T>(this.getTableWicketId(),
+    // this.getModelObject().getEntityType(), this.getFields());
+    // }
 
     protected void buildForm(final Form<T> form) {
         form.add(new TextField<String>(this.getDefaultInputSearchWicketId()));
@@ -103,7 +113,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
         WebMarkupContainer panel = new WebMarkupContainer(this.getResultSectionWicketId());
         // para que refresque por Ajax
         panel.setOutputMarkupId(true);
-        listView.setResultSection(panel);
+        // listView.setResultSection(panel);
         // listView.setSearch(this.getModelObject());
         listView.setParentPage(this);
         panel.add(listView.getSortableAjaxWicket());

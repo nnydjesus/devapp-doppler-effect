@@ -25,6 +25,8 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
 
     private String id;
 
+    // private SingleSortState state = new SingleSortState();;
+
     private SortableDataProviderComparator<T> comparator = new SortableDataProviderComparator<T>(this);
 
     /**
@@ -49,11 +51,7 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
                 "get" + StringUtils.capitalize(id));
     }
 
-    /**
-     * @see IDataProvider#iterator(int, int)
-     */
-    @Override
-    public Iterator<? extends T> iterator(final int first, final int count) {
+    public Iterator<? extends T> simpleInterator(final int first, final int count) {
         List<T> aList = this.getData();
 
         int toIndex = first + count;
@@ -63,6 +61,26 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
         Collections.sort(aList, this.getComparator());
 
         return aList.subList(first, toIndex).listIterator();
+    }
+
+    @Override
+    public Iterator<? extends T> iterator(final int first, final int count) {
+        // List<T> aList = this.getData();
+        // if (this.getSortState() == null || this.getSort() == null) {
+        return this.simpleInterator(first, count);
+        // } else {
+        // SortParam sort = this.getSort();
+        // SortInfo sortInfo = new SortInfo(sort.getProperty(),
+        // sort.isAscending() ? SortOrder.asc : SortOrder.desc);
+        // if (sortInfo != null) {
+        // QueryUtils.sortList(aList, sortInfo);
+        // }
+        // int toIndex = first + count;
+        // if (toIndex > aList.size()) {
+        // toIndex = aList.size();
+        // }
+        // return aList.subList(first, toIndex).listIterator();
+        // }
     }
 
     /**

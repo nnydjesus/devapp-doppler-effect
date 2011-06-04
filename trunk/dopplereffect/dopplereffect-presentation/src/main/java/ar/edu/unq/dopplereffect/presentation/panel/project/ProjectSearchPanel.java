@@ -19,7 +19,7 @@ public class ProjectSearchPanel extends AbstractSearchPanel<ProjectSearchModel> 
 
     // @Override
     // protected ITable selectITable() {
-    // return this.createListView();
+    // return this.createAjaxGrid();
     // }
 
 }
