@@ -14,7 +14,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
 import ar.edu.unq.dopplereffect.presentation.pages.Login;
 
-public class App extends WebApplication {
+public class App extends WebApplication {// implements IThemableApplication {
 
     @Override
     protected void init() {
@@ -27,6 +27,7 @@ public class App extends WebApplication {
         this.getResourceSettings().addResourceFolder("pages");
         this.getResourceSettings().addResourceFolder("panel");
         this.getResourceSettings().addResourceFolder("Images");
+        this.getResourceSettings().addResourceFolder("theme");
         this.getResourceSettings().addResourceFolder("i18n");
     }
 
@@ -57,4 +58,8 @@ public class App extends WebApplication {
         return this.getServletContext().getContextPath();
     }
 
+    // @Override
+    // public ResourceReference getTheme(final Session session) {
+    // return RedmondTheme.getInstance().getTheme();
+    // }
 }

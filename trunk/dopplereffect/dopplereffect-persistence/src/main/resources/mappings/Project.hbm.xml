@@ -18,7 +18,7 @@
 		<many-to-one name="clientData" class="ClientData" column="client_data_id"
 			 cascade="all" unique="true" />
 
-		<set name="skills" table="project_skill" cascade="all, delete-orphan">
+		<set name="skills" table="project_skill" cascade="all, delete-orphan" lazy="false">
 			<key column="project_id" />
 			<many-to-many column="skill_id" class="ar.edu.unq.dopplereffect.project.Skill" />
 		</set>

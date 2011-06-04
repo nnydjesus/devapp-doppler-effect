@@ -10,8 +10,8 @@ public class Login extends AbstractWebPage<LoginPanel> {
      */
 
     public Login() {
+        // super(GridPanel.class, BODY);
         super(LoginPanel.class, BODY);
         ((LoginPanel) this.getBody()).init();
     }
-
 }

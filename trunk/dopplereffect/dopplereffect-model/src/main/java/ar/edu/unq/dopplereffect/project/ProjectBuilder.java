@@ -22,6 +22,11 @@ public class ProjectBuilder {
         return this;
     }
 
+    public ProjectBuilder addSkill(final Skill skill) {
+        this.getProyect().addSkill(skill);
+        return this;
+    }
+
     public ProjectBuilder withSkills(final Set<Skill> skills) {
         this.getProyect().setSkills(skills);
         return this;
