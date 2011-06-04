@@ -2,13 +2,16 @@
 		<form wicket:id="projectForm" >
 			<table align="center" width="80%">
 				<tr>
-					<td align="right">Name:</td>
+					<td align="right"><wicket:message key="name"/></td>
 					<td align="left"><input wicket:id="name" type="text" /></td>
 				</tr>
 				<tr>
-					<td align="right">Max Effort:</td>
-					<td align="left"><input wicket:id="maxEffort" type="text" />
-					</td>
+					<td align="right"><wicket:message key="maxEffort"/></td>
+					<td align="left"><input wicket:id="maxEffort" type="text" /></td>
+				</tr>
+				<tr>
+					<td align="right"><wicket:message key="addSkill"/></td>
+					<td align="left"><input wicket:id="addSkill" type="button" /></td>
 				</tr>
 				<tr>
 					<td height="20" colspan="2">
@@ -16,12 +19,22 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center"><input wicket:id="accept"
-						type="submit" name="aceptar" value="Aceptar" /> <input
-						wicket:id="cancel" type="submit" name="cancelar" value="Cancelar" />
-					</td>
+						type="submit" name="aceptar" /> <input
+						wicket:id="cancel" type="submit" name="cancelar"  /></td>
 				</tr>
 			</table>
 			<br />
+			<div wicket:id="addSkillDialog">
+			<table align="center" >
+				<tr>
+					<td> <span  wicket:id="skill1"/></td>
+					<td> <span  wicket:id="skill2"/></td>
+				</tr>
+				<tr>
+			       	<button wicket:id="aceptar"><wicket:message key="aceptbutton"/></button>
+				</tr>
+		    </table>
+  		 	</div>
 		</form>
  </wicket:panel>
 

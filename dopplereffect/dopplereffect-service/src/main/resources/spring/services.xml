@@ -41,7 +41,9 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="projectRepo" ref="projectRepo" />
 		<property name="leaveReqRepo" ref="leaveReqRepo" />
 		<property name="leaveReqTypeRepo" ref="leaveReqTypeRepo" />
+		<property name="skillRepo" ref="skillRepo" />
 		<property name="salarySpecRepo" ref="salarySpecRepo" />
+		
 	</bean>
 	
 </beans>
