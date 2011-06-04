@@ -114,10 +114,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
                 new GenericSortableDataProvider<T>(this.getId(), this.getSearch(), this.getSortName()),
                 SearchModel.PAGE_SIZE));
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
-        // this.getSortableAjaxWicket().add(sortableAjaxBehavior);
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
-        // SortableAjax sortableAjaxBehavior = new SortableAjax();
-        // sortableAjaxBehavior.getSortableBehavior().setConnectWith(".dataview.tr");
     }
 
     /**

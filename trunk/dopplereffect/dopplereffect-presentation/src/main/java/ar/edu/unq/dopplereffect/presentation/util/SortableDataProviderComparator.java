@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 import org.apache.wicket.model.PropertyModel;
 
-class SortableDataProviderComparator<T extends Serializable> implements Comparator<T>, Serializable {
+class SortableDataProviderComparator<T> implements Comparator<T>, Serializable {
 
     private static final long serialVersionUID = 1L;
 

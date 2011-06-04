@@ -1,24 +1,21 @@
 package ar.edu.unq.dopplereffect.presentation.util;
 
 import java.io.Serializable;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
  * 
  */
-public class GenericSortableDataProvider<T extends Serializable> extends SortableDataProvider<T> implements
-        Serializable {
+public class GenericSortableDataProvider<T> extends SortableDataProvider<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private IModel<T> listModel;
@@ -32,11 +29,15 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
     /**
      * constructor
      */
-    public GenericSortableDataProvider(final String id, final Object model, final String sortName) {
+    public GenericSortableDataProvider(final String id, final Object model) {
         super();
         // this.setList(results);
         this.id = id;
         this.setListModel(new CompoundPropertyModel<T>(model));
+    }
+
+    public GenericSortableDataProvider(final String id, final Object model, final String sortName) {
+        this(id, model);
         this.setSort(sortName, true);
     }
 
@@ -46,21 +47,22 @@ public class GenericSortableDataProvider<T extends Serializable> extends Sortabl
      * @return The list
      */
     @SuppressWarnings("unchecked")
-    protected List<T> getData() {
-        return (List<T>) ReflectionUtils.invokeMethod(this.getListModel().getObject(),
+    protected Collection<T> getData() {
+        return (Collection<T>) ReflectionUtils.invokeMethod(this.getListModel().getObject(),
                 "get" + StringUtils.capitalize(id));
     }
 
     public Iterator<? extends T> simpleInterator(final int first, final int count) {
-        List<T> aList = this.getData();
+        Collection<T> aList = this.getData();
 
         int toIndex = first + count;
         if (toIndex > aList.size()) {
             toIndex = aList.size();
         }
-        Collections.sort(aList, this.getComparator());
+        // Collections.sort(aList, this.getComparator());
 
-        return aList.subList(first, toIndex).listIterator();
+        return aList.iterator();
+        // return aList.subList(first, toIndex).listIterator();
     }
 
     @Override

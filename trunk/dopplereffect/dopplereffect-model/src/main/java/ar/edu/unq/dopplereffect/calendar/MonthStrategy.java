@@ -15,6 +15,10 @@ public class MonthStrategy extends CalendarStrategy {
         super(year, month, Days.ONE);
     }
 
+    public MonthStrategy(final int year, final int month) {
+        this(Years.years(year), Months.months(month));
+    }
+
     // public MonthStrategy(final Years year, final Months month, final Days
     // day) {
     // this(year, month);
@@ -39,6 +43,11 @@ public class MonthStrategy extends CalendarStrategy {
     @Override
     public int getTotalDays() {
         return this.getDay().dayOfMonth().getMaximumValue();
+    }
+
+    @Override
+    public DateTime internalPrevious() {
+        return this.getDay().minusMonths(1);
     }
 
     /* **************************** ACCESSORS ***************************** */
