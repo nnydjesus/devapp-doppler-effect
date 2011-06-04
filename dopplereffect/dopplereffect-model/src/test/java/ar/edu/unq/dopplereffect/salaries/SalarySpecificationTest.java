@@ -15,6 +15,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import ar.edu.unq.dopplereffect.builders.salaries.SalarySpecificationBuilder;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 

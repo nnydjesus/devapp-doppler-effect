@@ -22,11 +22,10 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequest> {
 
     public LeaveRequestSearchModel() {
         super(LeaveRequest.class);
-        searchByDate = new DateTime();
     }
 
     public Date getSearchByDate() {
-        return searchByDate.toDate();
+        return searchByDate == null ? null : searchByDate.toDate();
     }
 
     public void setSearchByDate(final Date searchByDate) {
@@ -59,5 +58,12 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequest> {
         } else {
             this.setResults(((LeaveRequestServiceImpl) this.getService()).searchByEmployee(searchByEmployee));
         }
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        searchByEmployee = null;
+        searchByDate = null;
     }
 }

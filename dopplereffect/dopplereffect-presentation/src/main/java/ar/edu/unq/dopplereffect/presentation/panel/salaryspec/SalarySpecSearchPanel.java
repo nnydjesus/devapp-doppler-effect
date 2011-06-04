@@ -14,7 +14,8 @@ public class SalarySpecSearchPanel extends AbstractSearchPanel<SalarySpecSearchM
 
     public SalarySpecSearchPanel(final String id, final AjaxCallBack<Component> parentPage,
             final SalarySpecSearchModel model) {
-        super(id, parentPage, model, Arrays.asList("year", "minSalary", "maxSalary"), SalarySpecPanel.class);
+        super(id, parentPage, model, Arrays.asList("year", "minSalary", "maxSalary", "plan", "level"),
+                SalarySpecPanel.class);
     }
 
     @Override
