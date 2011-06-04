@@ -8,6 +8,8 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
@@ -43,12 +45,13 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
     }
 
     protected void addButtons(final Form<T> form) {
-        form.add(this.makeAcceptButton().add(new ButtonBehavior().setLabel("Aceptar")));
-        form.add(this.makeCancelButton().add(new ButtonBehavior().setLabel("Cancelar")));
+        form.add(this.makeAcceptButton().add(new ButtonBehavior()));
+        form.add(this.makeCancelButton().add(new ButtonBehavior()));
     }
 
     private Button makeAcceptButton() {
-        return new AjaxButton(this.getAcceptButtonWicketId()) {
+        return new AjaxButton(this.getAcceptButtonWicketId(), new StringResourceModel("aceptbutton", new Model<String>(
+                ""))) {
 
             private static final long serialVersionUID = 3631325660303690307L;
 
@@ -69,7 +72,7 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
                 } catch (UserException e) {
                     // en caso de excepcion de negocio muestra el mensaje como
                     // un error.
-                    this.error(e.getMessage());
+                    this.error(this.getLocalizer().getString(e.getMessage(), EntityPanel.this));
                 }
             }
 
@@ -81,7 +84,8 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
     }
 
     private Button makeCancelButton() {
-        Button button = new AjaxButton(this.getCancelButtonWicketId()) {
+        Button button = new AjaxButton(this.getCancelButtonWicketId(), new StringResourceModel("cancelButton",
+                new Model<String>(""))) {
 
             private static final long serialVersionUID = -3180010882527791755L;
 

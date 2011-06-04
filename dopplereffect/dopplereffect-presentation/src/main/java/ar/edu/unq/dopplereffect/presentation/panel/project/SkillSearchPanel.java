@@ -14,11 +14,11 @@ public class SkillSearchPanel extends AbstractSearchPanel<SkillSearchModel> {
     private static final long serialVersionUID = 1L;
 
     public SkillSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final SkillSearchModel model) {
-        super(id, parentPage, model, Arrays.asList("type.name", "level"), SkillPanel.class);
+        super(id, parentPage, model, Arrays.asList("type", "level"), SkillPanel.class);
     }
 
     @Override
     protected String getSortName() {
-        return "type.name";
+        return "type";
     }
 }

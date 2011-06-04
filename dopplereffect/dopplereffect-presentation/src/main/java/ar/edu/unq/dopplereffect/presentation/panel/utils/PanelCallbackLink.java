@@ -3,20 +3,22 @@ package ar.edu.unq.dopplereffect.presentation.panel.utils;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.model.IModel;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
-public class PanelCallbackLink extends AjaxLink<Object> {
+public class PanelCallbackLink extends AjaxLink<String> {
     private static final long serialVersionUID = 1L;
 
     private WebComponentFactory<Component> component;
 
     private AjaxCallBack<Component> callBack;
 
-    public PanelCallbackLink(final String id, final AjaxCallBack<Component> callBack, final Component component) {
-        this(id, callBack, new WebComponentFactory<Component>() {
+    public PanelCallbackLink(final String id, final AjaxCallBack<Component> callBack, final Component component,
+            final IModel<String> model) {
+        this(id, callBack, model, new WebComponentFactory<Component>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -26,9 +28,9 @@ public class PanelCallbackLink extends AjaxLink<Object> {
         });
     }
 
-    public PanelCallbackLink(final String id, final AjaxCallBack<Component> callBack,
+    public PanelCallbackLink(final String id, final AjaxCallBack<Component> callBack, final IModel<String> model,
             final WebComponentFactory<Component> component) {
-        super(id);
+        super(id, model);
         this.add(new ButtonBehavior());
         this.setComponent(component);
         this.setCallBack(callBack);
