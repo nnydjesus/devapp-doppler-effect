@@ -18,6 +18,11 @@ import ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestRepositoryI
 import ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestTypeRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.repositories.ProjectRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.repositories.SalarySpecificationRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.repositories.SkillRepositoryImpl;
+import ar.edu.unq.dopplereffect.project.Project;
+import ar.edu.unq.dopplereffect.project.ProjectBuilder;
+import ar.edu.unq.dopplereffect.project.Skill;
+import ar.edu.unq.dopplereffect.project.SkillLevel;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
 
@@ -52,6 +57,20 @@ public class AddDefaultValuesService {
         EMPLOYEE_5 = new EmployeeBuilder().withFirstName("nombre5").withLastName("apellido5")
             .withDNI(52222222).withJoinDate(new DateTime("2011-05-29")).withCareerPlan(CareerPlan.DESIGNER)
             .withCareerPlanLevel(JUNIOR).build();
+
+    private static final Skill 
+        JAVA_E = new Skill("JAVA", SkillLevel.EXPERT),
+        HIBERNATE_B = new Skill("HIBERNATE", SkillLevel.BEGINNER),
+        POO_E = new Skill("POO", SkillLevel.EXPERT),
+        AOP_M = new Skill("AOP", SkillLevel.MEDIUM);
+    
+    private static final Project 
+        SERENITO = new ProjectBuilder().withName("Serenito").addSkill(JAVA_E).withEstimatedEffort(12552).build(),
+        CINDOR = new ProjectBuilder().withName("Cindor").addSkill(HIBERNATE_B).withEstimatedEffort(3214).build(),
+        CINE_PLEX = new ProjectBuilder().withName("Cine Plex").addSkill(POO_E).withEstimatedEffort(545214).build(),
+        SANTANDER = new ProjectBuilder().withName("Santander").addSkill(AOP_M).withEstimatedEffort(252525).build();
+        
+    
     // @formatter:on
 
     private EmployeeRepositoryImpl employeeRepo;
@@ -66,13 +85,15 @@ public class AddDefaultValuesService {
 
     private SalarySpecificationRepositoryImpl salarySpecRepo;
 
+    private SkillRepositoryImpl skillRepo;
+
     public void addAllData() {
         this.addCareerPlanLevels();
         this.addEmployees();
         this.addLeaveRequestTypes();
         this.addLeaveRequests();
         this.addProjects();
-        this.addSalarySpecs();
+        // this.addSkills();
     }
 
     private void addSalarySpecs() {
@@ -102,8 +123,12 @@ public class AddDefaultValuesService {
         employeeRepo.saveAll(EMPLOYEE_1, EMPLOYEE_2, EMPLOYEE_3, EMPLOYEE_4, EMPLOYEE_5);
     }
 
+    public void addSkills() {
+        this.getSkillRepo().saveAll(JAVA_E, HIBERNATE_B, POO_E, AOP_M);
+    }
+
     private void addProjects() {
-        // TODO hacer
+        projectRepo.saveAll(SERENITO, CINDOR, CINE_PLEX, SANTANDER);
     }
 
     private void addLeaveRequestTypes() {
@@ -167,6 +192,14 @@ public class AddDefaultValuesService {
 
     public void setLeaveReqTypeRepo(final LeaveRequestTypeRepositoryImpl leaveReqTypeRepo) {
         this.leaveReqTypeRepo = leaveReqTypeRepo;
+    }
+
+    public void setSkillRepo(final SkillRepositoryImpl skillRepo) {
+        this.skillRepo = skillRepo;
+    }
+
+    public SkillRepositoryImpl getSkillRepo() {
+        return skillRepo;
     }
 
     public void setSalarySpecRepo(final SalarySpecificationRepositoryImpl salarySpecRepo) {

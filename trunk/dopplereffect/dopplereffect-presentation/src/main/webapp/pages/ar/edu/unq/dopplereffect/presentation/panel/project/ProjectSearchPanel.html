@@ -3,16 +3,15 @@
 	<form wicket:id="searchProjectForm">
 		<table align="center" id="panel">
 			<tr>
-				<td align="right">Name:</td>
+				<td align="right"><wicket:message key="name"/></td>
 				<td align="left"><input wicket:id="searchByName" type="text"
 					name="name" />
 				</td>
 			</tr>
 
 			<tr>
-				<td colspan="2"><input type="submit" wicket:id="search"
-					value="Buscar" /> <input type="submit" wicket:id="newProject"
-					value="Nueva Projecto" /></td>
+				<td colspan="2"><input type="submit" wicket:id="search"/> 
+				<input type="submit" value="New Project" wicket:id="newProject"/></td>
 			</tr>
 		</table>
 	</form>
@@ -23,6 +22,9 @@
 
 
 	<div wicket:id="resultSecction" class="resultSecction">
+	
+	
+<!-- 				<div wicket:id="results"></div> -->
 				<div wicket:id="markup" id="tabla">
 					<table align="center" id="tabla" class="dataview" BORDER
 						wicket:id="results">[table]
