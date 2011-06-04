@@ -5,13 +5,12 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.odlabs.wiquery.core.effects.EffectBehavior;
-import org.odlabs.wiquery.ui.effects.PulsateEffect;
-import org.odlabs.wiquery.ui.effects.PulsateEffect.PulsateMode;
 
+import ar.edu.unq.dopplereffect.presentation.App;
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.panel.CareerPlanPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.calendar.CalendarPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.leaverequest.LeaveRequestSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
@@ -44,17 +43,19 @@ public class HomePage extends AbstractWebPage<Component> {
     @SpringBean(name = "salarySpecSearchModel")
     private SalarySpecSearchModel salarySpecSearchModel;
 
-    @SpringBean(name = "addDefaultValuesService")
-    private AddDefaultValuesService addDefaultValuesService;
-
     @SpringBean(name = "leaveReqSearchModel")
     private LeaveRequestSearchModel leaveReqSearchModel;
 
+    @SpringBean(name = "addDefaultValuesService")
+    private AddDefaultValuesService addDefaultValuesService;
+
     public HomePage() {
         super();
-        EffectBehavior effect1 = new EffectBehavior(new PulsateEffect(PulsateMode.show, 10, 1000));
-        // effect2 = new EffectBehavior(new Show());
-        this.add(effect1);
+        if (!App.isCreate()) {
+            addDefaultValuesService.addAllData();
+            App.setCreate(true);
+        }
+
         final AjaxCallBack<Component> callback = this.generateCallback();
         String bodyId = "body";
         this.add(this.createPanelLink("projects", new ProjectSearchPanel(bodyId, callback, projectSearchModel)));
@@ -66,8 +67,9 @@ public class HomePage extends AbstractWebPage<Component> {
         this.add(this.createPanelLink("leave_requests", new LeaveRequestSearchPanel(bodyId, callback,
                 leaveReqSearchModel)));
         this.add(this.createPanelLink("career_plans", new CareerPlanPanel(bodyId, callback)));
+
+        this.add(this.createPanelLink("calendar", new CalendarPanel(bodyId, employeeSearchModel)));
         this.add(new HeaderPanel("items"));
-        this.getAddDefaultValuesService().addAllData();
     }
 
     private Component createPanelLink(final String id, final Panel panel) {
@@ -165,19 +167,19 @@ public class HomePage extends AbstractWebPage<Component> {
         this.salarySpecSearchModel = salarySpecSearchModel;
     }
 
-    public void setAddDefaultValuesService(final AddDefaultValuesService addDefaultValuesService) {
-        this.addDefaultValuesService = addDefaultValuesService;
-    }
-
-    public AddDefaultValuesService getAddDefaultValuesService() {
-        return addDefaultValuesService;
-    }
-
     public LeaveRequestSearchModel getLeaveReqSearchModel() {
         return leaveReqSearchModel;
     }
 
     public void setLeaveReqSearchModel(final LeaveRequestSearchModel leaveReqSearchModel) {
         this.leaveReqSearchModel = leaveReqSearchModel;
+    }
+
+    public void setAddDefaultValuesService(final AddDefaultValuesService addDefaultValuesService) {
+        this.addDefaultValuesService = addDefaultValuesService;
+    }
+
+    public AddDefaultValuesService getAddDefaultValuesService() {
+        return addDefaultValuesService;
     }
 }

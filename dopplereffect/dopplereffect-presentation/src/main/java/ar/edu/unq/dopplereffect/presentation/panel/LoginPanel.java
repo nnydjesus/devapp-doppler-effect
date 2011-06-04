@@ -28,6 +28,8 @@ import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 import ar.edu.unq.dopplereffect.user.User;
 
+import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
+
 /**
  */
 public class LoginPanel extends AbstractPanel<Model<String>> {
@@ -83,11 +85,14 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         return new StringResourceModel(key, new Model<Locale>(this.getLocale()));
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Form<Model<String>> createForm(final String formName) {
         Form<Model<String>> form = new Form<Model<String>>(formName);
-        this.setUserIdField(new RequiredTextField<String>("name", new Model<String>("")));
-        this.setPassField(new PasswordTextField("password", new Model<String>("")));
+        this.setUserIdField((TextField<String>) new RequiredTextField<String>("name", new Model<String>(""))
+                .add(new TextFieldWatermarkBehaviour("User name")));
+        this.setPassField((PasswordTextField) new PasswordTextField("password", new Model<String>(""))
+                .add(new TextFieldWatermarkBehaviour("Password")));
 
         this.setRememberMeRow(new WebMarkupContainer("rememberMeRow"));
         // // Add rememberMe checkbox

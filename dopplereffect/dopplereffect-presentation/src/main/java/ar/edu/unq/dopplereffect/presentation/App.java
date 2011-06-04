@@ -16,6 +16,10 @@ import ar.edu.unq.dopplereffect.presentation.pages.Login;
 
 public class App extends WebApplication {// implements IThemableApplication {
 
+    // para tener datos en memoria.... per solo se quiere
+    // ingresar esos datos cuando levanta el jetty
+    private static boolean isCreate = false;
+
     @Override
     protected void init() {
         super.init();
@@ -24,11 +28,11 @@ public class App extends WebApplication {// implements IThemableApplication {
     }
 
     private void addResources() {
+        this.getResourceSettings().addResourceFolder("i18n");
         this.getResourceSettings().addResourceFolder("pages");
         this.getResourceSettings().addResourceFolder("panel");
         this.getResourceSettings().addResourceFolder("Images");
         this.getResourceSettings().addResourceFolder("theme");
-        this.getResourceSettings().addResourceFolder("i18n");
     }
 
     /**
@@ -56,6 +60,14 @@ public class App extends WebApplication {// implements IThemableApplication {
 
     public String getContextPath() {
         return this.getServletContext().getContextPath();
+    }
+
+    public static void setCreate(final boolean isCreate) {
+        App.isCreate = isCreate;
+    }
+
+    public static boolean isCreate() {
+        return isCreate;
     }
 
     // @Override

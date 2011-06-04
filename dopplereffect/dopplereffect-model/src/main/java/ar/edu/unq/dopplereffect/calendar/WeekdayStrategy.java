@@ -15,6 +15,10 @@ public class WeekdayStrategy extends CalendarStrategy {
         super(year, month, day);
     }
 
+    public WeekdayStrategy(final int year, final int month, final int days) {
+        this(Years.years(year), Months.months(month), Days.days(days));
+    }
+
     public WeekdayStrategy(final DateTime day) {
         super(day);
     }
@@ -34,6 +38,11 @@ public class WeekdayStrategy extends CalendarStrategy {
     @Override
     public int getTotalDays() {
         return 7;
+    }
+
+    @Override
+    public DateTime internalPrevious() {
+        return this.getDay().minusDays(7);
     }
 
     /* **************************** ACCESSORS ***************************** */

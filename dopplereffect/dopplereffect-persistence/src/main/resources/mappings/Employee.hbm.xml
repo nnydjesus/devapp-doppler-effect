@@ -17,7 +17,7 @@
 		<many-to-one name="careerData" class="CareerData" column="career_data_id"
 		not-null="true" cascade="all" unique="true" lazy="false" />
 		
-		<set name="assignments" cascade="all, delete-orphan" >
+		<set name="assignments" cascade="all, delete-orphan" lazy="false">
 		
 			<key column="employee_id" />
 			

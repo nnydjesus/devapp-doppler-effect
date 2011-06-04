@@ -15,6 +15,8 @@ import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.pages.basic.EntityPanel;
 import ar.edu.unq.dopplereffect.project.Project;
 
+import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
+
 /**
  */
 
@@ -38,7 +40,7 @@ public class ProjectPanel extends EntityPanel<Project> {
     protected void addFields(final Form<Project> form) {
         final AddSkillDialog addSkillDialog = new AddSkillDialog("addSkillDialog", this.getModelObject());
         form.add(this.getFeedbackPanel());
-        form.add(new RequiredTextField<Project>("name"));
+        form.add(new RequiredTextField<Project>("name").add(new TextFieldWatermarkBehaviour("Project Name")));
         form.add(new TextField<Project>("maxEffort"));
         Button addSkill = (Button) CustomComponent.addButtonSking(new Button("addSkill", new StringResourceModel(
                 "addSkill", new Model<String>(""))));

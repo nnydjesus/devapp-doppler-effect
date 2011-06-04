@@ -2,6 +2,7 @@ package ar.edu.unq.dopplereffect.calendar;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.collections15.map.LinkedMap;
@@ -49,6 +50,10 @@ public class Matrix<X, Y, V> {
 
     public Collection<Map<Y, V>> values() {
         return this.getMap().values();
+    }
+
+    public Set<Entry<X, Map<Y, V>>> getEntrySet() {
+        return this.getMap().entrySet();
     }
 
     public boolean conteinsX(final X coordinateX) {

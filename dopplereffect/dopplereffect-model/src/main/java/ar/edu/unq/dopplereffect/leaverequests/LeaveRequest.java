@@ -174,4 +174,9 @@ public class LeaveRequest extends Entity implements Assignable {
     public String getReason() {
         return this.getType().getReason();
     }
+
+    @Override
+    public String toString() {
+        return this.getReason();
+    }
 }

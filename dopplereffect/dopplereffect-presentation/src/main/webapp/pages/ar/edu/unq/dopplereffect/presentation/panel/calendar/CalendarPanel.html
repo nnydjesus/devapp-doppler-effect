@@ -1,0 +1,18 @@
+<wicket:panel id="panel">
+		<div>
+			<a href="#" type="button" wicket:id="mensual"> Mensual></a>
+			<a href="#" type="button" wicket:id="semanal"> Semanal</a>
+			<input wicket:id="datePicker" class="ui-state-active" />
+			<span wicket:id="hasta" class="ui-state-active" />
+		</div>
+		<div wicket:id="scrollpane">
+		<table align="center" id="tabla" class="dataview" BORDER
+			wicket:id="calendarTable">[table]
+		</table>
+		</div>
+		<div >
+			<button wicket:id="previousMonth" ></button>
+			<button  wicket:id="nextMonth" > </button>
+		</div>
+
+</wicket:panel>

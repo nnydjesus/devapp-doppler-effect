@@ -32,6 +32,11 @@ public abstract class CalendarStrategy {
         return this.getDay();
     }
 
+    public DateTime previous() {
+        day = this.internalPrevious();
+        return this.getDay();
+    }
+
     public void plus() {
         day = day.plusDays(1);
     }
@@ -40,13 +45,15 @@ public abstract class CalendarStrategy {
 
     public abstract DateTime internalNext();
 
+    public abstract DateTime internalPrevious();
+
     public abstract CalendarStrategy cloneStrategy();
 
     public abstract int getTotalDays();
 
     /* **************************** ACCESSORS ***************************** */
 
-    protected void setDay(final DateTime day) {
+    public void setDay(final DateTime day) {
         this.day = day;
     }
 

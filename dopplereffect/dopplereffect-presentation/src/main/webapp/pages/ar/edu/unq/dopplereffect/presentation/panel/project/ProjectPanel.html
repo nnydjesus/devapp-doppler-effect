@@ -2,16 +2,19 @@
 		<form wicket:id="projectForm" >
 			<table align="center" width="80%">
 				<tr>
-					<td align="right"><wicket:message key="name"/></td>
+<!-- 					<td align="right"><wicket:message key="name"/></td> -->
+					<td align="right">Project Name</td>
 					<td align="left"><input wicket:id="name" type="text" /></td>
 				</tr>
 				<tr>
-					<td align="right"><wicket:message key="maxEffort"/></td>
+<!-- 					<td align="right"><wicket:message key="maxEffort"/></td> -->
+					<td align="right">Max Effort</td>
 					<td align="left"><input wicket:id="maxEffort" type="text" /></td>
 				</tr>
 				<tr>
-					<td align="right"><wicket:message key="addSkill"/></td>
-					<td align="left"><input wicket:id="addSkill" type="button" /></td>
+<!-- 					<td align="right"><wicket:message key="addSkill"/></td> -->
+					<td align="right">Add Skill</td>
+					<td align="left"><input wicket:id="addSkill" type="button" value="Add"/></td>
 				</tr>
 				<tr>
 					<td height="20" colspan="2">
@@ -19,8 +22,8 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center"><input wicket:id="accept"
-						type="submit" name="aceptar" /> <input
-						wicket:id="cancel" type="submit" name="cancelar"  /></td>
+						type="submit" name="aceptar" value="Acept"/> <input
+						wicket:id="cancel" type="submit" name="cancelar" value="Cancel" /></td>
 				</tr>
 			</table>
 			<br />
@@ -31,7 +34,8 @@
 					<td> <span  wicket:id="skill2"/></td>
 				</tr>
 				<tr>
-			       	<button wicket:id="aceptar"><wicket:message key="aceptbutton"/></button>
+<!-- 			       	<button wicket:id="aceptar"><wicket:message key="aceptbutton"/></button> -->
+			       	<button wicket:id="aceptar" value="Acept"/>
 				</tr>
 		    </table>
   		 	</div>
