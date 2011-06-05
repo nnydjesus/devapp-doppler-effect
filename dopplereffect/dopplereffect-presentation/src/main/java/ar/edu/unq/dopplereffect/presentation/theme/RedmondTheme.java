@@ -9,9 +9,9 @@ public class RedmondTheme extends UITheme {
 
     private static final long serialVersionUID = 1L;
 
-    public static final ResourceReference THEME = new ResourceReference(Themes.class, "jquery-ui-1.7.1.custom.css");
+    public static final ResourceReference THEME = new ResourceReference(Theme.class, "jquery-ui-1.7.1.custom.css");
 
-    private static RedmondTheme instance;
+    private static RedmondTheme instance = new RedmondTheme();
 
     /**
      * @param name
@@ -30,10 +30,7 @@ public class RedmondTheme extends UITheme {
         return THEME;
     }
 
-    public static synchronized RedmondTheme getInstance() {
-        if (instance == null) {
-            instance = new RedmondTheme();
-        }
+    public static RedmondTheme getInstance() {
         return instance;
     }
 

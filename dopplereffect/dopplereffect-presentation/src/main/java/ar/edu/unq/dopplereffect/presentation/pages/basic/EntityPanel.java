@@ -25,7 +25,7 @@ public abstract class EntityPanel<T> extends NavigablePanel<T> {
             final AbstractCallbackPanel<? extends Serializable> previousPage, final boolean editMode) {
         super(id, model, previousPage);
         this.beforeConstruct();
-        this.setEditMode(editMode);
+        this.editMode = editMode;
         this.setFeedbackPanel(new FeedbackPanel(this.getFeedbackPanelWicketId()));
         Form<T> form = new Form<T>(this.getFormWicketId(), new CompoundPropertyModel<T>(this.getModelObject()));
         this.add(form);

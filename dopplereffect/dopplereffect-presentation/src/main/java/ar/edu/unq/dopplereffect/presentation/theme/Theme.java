@@ -3,7 +3,7 @@ package ar.edu.unq.dopplereffect.presentation.theme;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Themes {
+public class Theme {
 
     public static final List<UITheme> THEMES = new ArrayList<UITheme>();
 
@@ -15,7 +15,7 @@ public class Themes {
         THEMES.add(CupertinoTheme.getInstance());
     }
 
-    private Themes() {
+    private Theme() {
         super();
     }
 }

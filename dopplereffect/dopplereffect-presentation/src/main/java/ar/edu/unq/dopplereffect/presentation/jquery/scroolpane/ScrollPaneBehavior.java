@@ -65,7 +65,11 @@ public class ScrollPaneBehavior extends WiQueryAbstractBehavior {
      */
     public boolean isShowArrows() {
         Boolean showArrows = this.getOptions().getBoolean("showArrows");
-        return showArrows != null ? showArrows.booleanValue() : false;
+        if (showArrows != null) {
+            return showArrows.booleanValue();
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -89,7 +93,11 @@ public class ScrollPaneBehavior extends WiQueryAbstractBehavior {
      */
     public boolean isMaintainPosition() {
         Boolean maintainPosition = this.getOptions().getBoolean("maintainPosition");
-        return maintainPosition != null ? maintainPosition.booleanValue() : true;
+        if (maintainPosition != null) {
+            return maintainPosition.booleanValue();
+        } else {
+            return true;
+        }
     }
 
     /**
