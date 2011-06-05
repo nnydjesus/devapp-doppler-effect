@@ -22,8 +22,10 @@ public abstract class CalendarStrategy {
     }
 
     public CalendarStrategy(final DateTime date) {
-        day = new DateTime(date);
+        day = this.stabilize(date);
     }
+
+    protected abstract DateTime stabilize(final DateTime date);
 
     /* **************************** OPERATIONS **************************** */
 
@@ -54,7 +56,7 @@ public abstract class CalendarStrategy {
     /* **************************** ACCESSORS ***************************** */
 
     public void setDay(final DateTime day) {
-        this.day = day;
+        this.day = this.stabilize(day);
     }
 
     public DateTime getDay() {

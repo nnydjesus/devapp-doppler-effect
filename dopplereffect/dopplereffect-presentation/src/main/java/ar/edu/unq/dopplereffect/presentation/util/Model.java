@@ -5,6 +5,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Objects;
 
 /**
+ * Model para cuando queremos usar un T que no es serializable
  */
 public class Model<T> implements IModel<T> {
     private static final long serialVersionUID = 1L;

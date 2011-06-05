@@ -39,8 +39,7 @@ public class EmployeeAjaxDataTable extends AjaxDataTablePage<Employee> {
 
     @Override
     protected void addCustomColumns(final List<IColumn<Employee>> columns) {
-        int index = columns.size() - 3; // delante de 'edit' y 'delete'
-        columns.add(index, new AbstractColumn<Employee>(new Model<String>("Detalle")) {
+        columns.add(new AbstractColumn<Employee>(new Model<String>("Detalle")) {
 
             private static final long serialVersionUID = -2909724564965473105L;
 
@@ -61,8 +60,7 @@ public class EmployeeAjaxDataTable extends AjaxDataTablePage<Employee> {
                 });
             }
         });
-        int index2 = index + 1;
-        columns.add(index2, new AbstractColumn<Employee>(new Model<String>("Licencias")) {
+        columns.add(new AbstractColumn<Employee>(new Model<String>("Licencias")) {
 
             private static final long serialVersionUID = -2909724564965473105L;
 

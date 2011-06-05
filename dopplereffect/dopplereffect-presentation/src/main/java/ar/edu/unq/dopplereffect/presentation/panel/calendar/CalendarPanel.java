@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
@@ -34,13 +32,22 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.jquery.scroolpane.ScrollPaneBehavior;
-import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.AjaxReflextionActionPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.GenericSortableDataProvider;
 import ar.edu.unq.dopplereffect.presentation.util.Model;
+import ar.edu.unq.dopplereffect.presentation.util.ReflextionAjaxLink;
 
 public class CalendarPanel extends Panel {
     private static final long serialVersionUID = 1L;
+
+    private static final String NEXT = "next";
+
+    private static final String PREVIOUS = "next";
+
+    private static final String WEEKLY = "weekly";
+
+    private static final String MONTHLY = "monthly";
 
     private EmployeeSearchModel employeeService;
 
@@ -95,7 +102,7 @@ public class CalendarPanel extends Panel {
         this.setHastaModel(new Model<String>(""));
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         this.updateTable();
-        this.addNavegator();
+        this.addComponents();
     }
 
     protected MarkupContainer updateTable() {
@@ -127,7 +134,9 @@ public class CalendarPanel extends Panel {
             columns.add(this.createColumn(date));
             strategy.plus();
         }
+
         this.getHastaModel().setObject(dateFormat.format(strategy.getDay().toDate()));
+
         return new AjaxFallbackDefaultDataTable<Entry<Employee, Map<DateTime, Assignable>>>("calendarTable", columns,
                 new GenericSortableDataProvider<Entry<Employee, Map<DateTime, Assignable>>>("entrySet",
                         this.getMatrix()), SearchModel.PAGE_SIZE);
@@ -148,7 +157,7 @@ public class CalendarPanel extends Panel {
         };
     }
 
-    private void addNavegator() {
+    protected void addComponents() {
         this.setDatePicker(new DatePicker<Date>("datePicker", this.getDatePicketModel(), Date.class)
                 .setButtonText("<div class=\"ui-icon ui-icon-calendar\"></div>").setShowOn(ShowOnEnum.BOTH)
                 .setShowButtonPanel(true));
@@ -157,62 +166,34 @@ public class CalendarPanel extends Panel {
 
         this.add(new Label("hasta", this.getHastaModel()));
 
-        this.add(CustomComponent.addButtonSking(new AjaxActionPanel("nextMonth", "next.png", "../") {
-            private static final long serialVersionUID = 1L;
+        this.add(CustomComponent.addButtonSking(new AjaxReflextionActionPanel<CalendarPanel>("nextMonth", this, NEXT,
+                "next.png", "")));
 
-            @Override
-            public void onAction(final AjaxRequestTarget target) {
-                CalendarPanel.this.next();
-                target.addComponent(CalendarPanel.this);
-            }
+        this.add(CustomComponent.addButtonSking(new AjaxReflextionActionPanel<CalendarPanel>("previousMonth", this,
+                PREVIOUS, "previous.png", "")));
 
-        }));
-
-        this.add(CustomComponent.addButtonSking(new AjaxActionPanel("previousMonth", "previous.png", "../") {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onAction(final AjaxRequestTarget target) {
-                CalendarPanel.this.previous();
-                target.addComponent(CalendarPanel.this);
-            }
-        }));
-        this.add(CustomComponent.addButtonSking(new AjaxLink<String>("mensual", new Model<String>("mensual")) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onClick(final AjaxRequestTarget target) {
-                CalendarPanel.this.monthDay();
-                target.addComponent(CalendarPanel.this);
-            }
-        }));
-        this.add(CustomComponent.addButtonSking(new AjaxLink<String>("semanal", new Model<String>("semanal")) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onClick(final AjaxRequestTarget target) {
-                CalendarPanel.this.weekDay();
-                target.addComponent(CalendarPanel.this);
-            }
-        }));
+        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel>("mensual", MONTHLY, this, this,
+                new Model<String>("Monthly"))));
+        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel>("semanal", WEEKLY, this, this,
+                new Model<String>("Weekly"))));
     }
 
-    protected void next() {
+    public void next() {
         this.getCalendar().getStrategy().next();
         this.updateTable();
     }
 
-    protected void previous() {
+    public void previous() {
         this.getCalendar().getStrategy().previous();
         this.updateTable();
     }
 
-    protected void weekDay() {
+    public void weekly() {
         this.getCalendar().setStrategy(CalendarPanel.this.getWeekdayStrategy());
         this.updateTable();
     }
 
-    protected void monthDay() {
+    public void monthly() {
         this.getCalendar().setStrategy(CalendarPanel.this.getMonthStrategy());
         this.updateTable();
     }
