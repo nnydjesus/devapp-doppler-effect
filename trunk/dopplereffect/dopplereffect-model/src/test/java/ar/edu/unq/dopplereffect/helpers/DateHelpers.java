@@ -10,6 +10,7 @@ public final class DateHelpers {
     // @formatter:off
     public static final DateTime 
             D_2011_04_01 = new DateTime("2011-04-01"), 
+            D_2011_04_04 = new DateTime("2011-04-04"), 
             D_2011_04_05 = new DateTime("2011-04-05"), 
             D_2011_04_06 = new DateTime("2011-04-06"),
             D_2011_04_07 = new DateTime("2011-04-07"),

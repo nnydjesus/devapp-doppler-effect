@@ -69,6 +69,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
         for (String field : this.getFields()) {
             columns.add(this.createPropertyColumn(field));
         }
+        this.addCustomColumns(columns);
 
         columns.add(new AbstractColumn<T>(new StringResourceModel("header.edit", new Model<String>(""))) {
             private static final long serialVersionUID = 1L;
@@ -109,7 +110,6 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
                 });
             }
         });
-        this.addCustomColumns(columns);
         this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(this.getId(), columns,
                 new GenericSortableDataProvider<T>(this.getId(), this.getSearch(), this.getSortName()),
                 SearchModel.PAGE_SIZE));

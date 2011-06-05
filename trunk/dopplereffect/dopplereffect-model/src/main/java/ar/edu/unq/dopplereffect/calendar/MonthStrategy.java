@@ -50,6 +50,15 @@ public class MonthStrategy extends CalendarStrategy {
         return this.getDay().minusMonths(1);
     }
 
+    @Override
+    protected DateTime stabilize(final DateTime date) {
+        DateTime currentDay = date;
+        if (date.getDayOfMonth() > 1) {
+            currentDay = currentDay.minusDays(currentDay.getDayOfMonth() - 1);
+        }
+        return currentDay;
+    }
+
     /* **************************** ACCESSORS ***************************** */
 
 }

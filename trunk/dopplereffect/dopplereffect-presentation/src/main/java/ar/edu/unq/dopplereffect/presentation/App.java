@@ -1,10 +1,9 @@
 package ar.edu.unq.dopplereffect.presentation;
 
 import org.apache.wicket.Page;
-import org.apache.wicket.Request;
-import org.apache.wicket.Response;
-import org.apache.wicket.Session;
-import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.authentication.AuthenticatedWebApplication;
+import org.apache.wicket.authentication.AuthenticatedWebSession;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebRequestCycleProcessor;
 import org.apache.wicket.protocol.http.request.CryptedUrlWebRequestCodingStrategy;
 import org.apache.wicket.protocol.http.request.WebRequestCodingStrategy;
@@ -12,9 +11,11 @@ import org.apache.wicket.request.IRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCycleProcessor;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
+import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
 import ar.edu.unq.dopplereffect.presentation.pages.Login;
 
-public class App extends WebApplication {// implements IThemableApplication {
+public class App extends AuthenticatedWebApplication {// implements
+                                                      // IThemableApplication {
 
     // para tener datos en memoria.... per solo se quiere
     // ingresar esos datos cuando levanta el jetty
@@ -23,8 +24,16 @@ public class App extends WebApplication {// implements IThemableApplication {
     @Override
     protected void init() {
         super.init();
-        this.addResources();
         this.addComponentInstantiationListener(new SpringComponentInjector(this));
+        this.addResources();
+        this.mounterURLs();
+        this.addComponentInstantiationListener(new SpringComponentInjector(this));
+    }
+
+    private void mounterURLs() {
+        MounterURL aMounterURL = new MounterURL(this);
+        aMounterURL.mount("autenticate", Login.class, "");
+        aMounterURL.mount("home", HomePage.class, "");
     }
 
     private void addResources() {
@@ -49,12 +58,17 @@ public class App extends WebApplication {// implements IThemableApplication {
     }
 
     @Override
-    public Session newSession(final Request request, final Response response) {
-        return new WicketWebSession(request);
+    public Class<? extends Page> getHomePage() {
+        return Login.class;
     }
 
     @Override
-    public Class<? extends Page> getHomePage() {
+    protected Class<? extends AuthenticatedWebSession> getWebSessionClass() {
+        return WicketWebSession.class;
+    }
+
+    @Override
+    protected Class<? extends WebPage> getSignInPageClass() {
         return Login.class;
     }
 

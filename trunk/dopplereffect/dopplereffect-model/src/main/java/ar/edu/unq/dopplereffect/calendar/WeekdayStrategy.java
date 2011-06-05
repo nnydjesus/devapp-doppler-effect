@@ -45,5 +45,14 @@ public class WeekdayStrategy extends CalendarStrategy {
         return this.getDay().minusDays(7);
     }
 
+    @Override
+    protected DateTime stabilize(final DateTime date) {
+        DateTime currentDay = date;
+        if (currentDay.getDayOfWeek() > 1) {
+            currentDay = currentDay.minusDays(currentDay.getDayOfWeek() - 1);
+        }
+        return currentDay;
+    }
+
     /* **************************** ACCESSORS ***************************** */
 }

@@ -31,8 +31,7 @@ public class LeaveRequestAjaxDataTablePage extends AjaxDataTablePage<LeaveReques
 
     @Override
     protected void addCustomColumns(final List<IColumn<LeaveRequest>> columns) {
-        int index = columns.size() - 3; // delante de 'edit' y 'delete'
-        columns.add(index, new AbstractColumn<LeaveRequest>(new Model<String>("Detalle")) {
+        columns.add(new AbstractColumn<LeaveRequest>(new Model<String>("Detalle")) {
 
             private static final long serialVersionUID = -2909724564965473105L;
 
