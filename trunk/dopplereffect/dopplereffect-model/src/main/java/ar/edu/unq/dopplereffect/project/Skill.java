@@ -62,7 +62,7 @@ public class Skill extends Entity {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
+        int prime = 31;
         int result = 1;
         result = prime * result + (level == null ? 0 : level.hashCode());
         result = prime * result + (type == null ? 0 : type.hashCode());

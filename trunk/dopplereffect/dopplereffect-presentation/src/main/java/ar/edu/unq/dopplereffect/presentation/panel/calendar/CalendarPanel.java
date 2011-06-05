@@ -41,13 +41,14 @@ import ar.edu.unq.dopplereffect.presentation.util.ReflextionAjaxLink;
 public class CalendarPanel extends Panel {
     private static final long serialVersionUID = 1L;
 
-    private static final String NEXT = "next";
+    // El ponerle _ACTION es para que PMD no chille
+    private static final String NEXT_ACTION = "next";
 
-    private static final String PREVIOUS = "next";
+    private static final String PREVIOUS_ACTION = "next";
 
-    private static final String WEEKLY = "weekly";
+    private static final String WEEKLY_ACTION = "weekly";
 
-    private static final String MONTHLY = "monthly";
+    private static final String MONTHLY_ACTION = "monthly";
 
     private EmployeeSearchModel employeeService;
 
@@ -100,7 +101,7 @@ public class CalendarPanel extends Panel {
         });
 
         this.setHastaModel(new Model<String>(""));
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        this.setDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
         this.updateTable();
         this.addComponents();
     }
@@ -135,7 +136,7 @@ public class CalendarPanel extends Panel {
             strategy.plus();
         }
 
-        this.getHastaModel().setObject(dateFormat.format(strategy.getDay().toDate()));
+        this.getHastaModel().setObject(this.getDateFormat().format(strategy.getDay().toDate()));
 
         return new AjaxFallbackDefaultDataTable<Entry<Employee, Map<DateTime, Assignable>>>("calendarTable", columns,
                 new GenericSortableDataProvider<Entry<Employee, Map<DateTime, Assignable>>>("entrySet",
@@ -166,16 +167,16 @@ public class CalendarPanel extends Panel {
 
         this.add(new Label("hasta", this.getHastaModel()));
 
-        this.add(CustomComponent.addButtonSking(new AjaxReflextionActionPanel<CalendarPanel>("nextMonth", this, NEXT,
-                "next.png", "")));
+        this.add(CustomComponent.addButtonSking(new AjaxReflextionActionPanel<CalendarPanel>("nextMonth", this,
+                NEXT_ACTION, "next.png", "")));
 
         this.add(CustomComponent.addButtonSking(new AjaxReflextionActionPanel<CalendarPanel>("previousMonth", this,
-                PREVIOUS, "previous.png", "")));
+                PREVIOUS_ACTION, "previous.png", "")));
 
-        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel>("mensual", MONTHLY, this, this,
-                new Model<String>("Monthly"))));
-        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel>("semanal", WEEKLY, this, this,
-                new Model<String>("Weekly"))));
+        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel>("mensual", MONTHLY_ACTION, this,
+                this, new Model<String>("Monthly"))));
+        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel>("semanal", WEEKLY_ACTION, this,
+                this, new Model<String>("Weekly"))));
     }
 
     public void next() {
@@ -277,5 +278,13 @@ public class CalendarPanel extends Panel {
 
     public DatePicker<Date> getDatePicker() {
         return datePicker;
+    }
+
+    public void setDateFormat(final DateFormat dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
+    public DateFormat getDateFormat() {
+        return dateFormat;
     }
 }

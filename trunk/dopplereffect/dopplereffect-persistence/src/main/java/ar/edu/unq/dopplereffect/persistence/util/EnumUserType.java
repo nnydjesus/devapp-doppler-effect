@@ -14,20 +14,20 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     private Class<E> clazz = null;
 
     protected EnumUserType(final Class<E> clazz) {
-        this.clazz = clazz;
+        this.setClazz(clazz);
     }
 
     private static final int[] SQL_TYPES = { Types.VARCHAR };
 
     @Override
     public int[] sqlTypes() {
-        return SQL_TYPES;
+        return SQL_TYPES.clone();
     }
 
     @Override
     @SuppressWarnings("rawtypes")
     public Class returnedClass() {
-        return clazz;
+        return this.getClazz();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
         String name = resultSet.getString(names[0]);
         E result = null;
         if (!resultSet.wasNull()) {
-            result = Enum.valueOf(clazz, name);
+            result = Enum.valueOf(this.getClazz(), name);
         }
         return result;
     }
@@ -91,5 +91,13 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
             return false;
         }
         return object1.equals(object2);
+    }
+
+    public void setClazz(final Class<E> clazz) {
+        this.clazz = clazz;
+    }
+
+    public Class<E> getClazz() {
+        return clazz;
     }
 }

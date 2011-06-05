@@ -19,7 +19,7 @@ public class App extends AuthenticatedWebApplication {// implements
 
     // para tener datos en memoria.... per solo se quiere
     // ingresar esos datos cuando levanta el jetty
-    private static boolean isCreate = false;
+    private static boolean create = false;
 
     @Override
     protected void init() {
@@ -77,11 +77,11 @@ public class App extends AuthenticatedWebApplication {// implements
     }
 
     public static void setCreate(final boolean isCreate) {
-        App.isCreate = isCreate;
+        App.create = isCreate;
     }
 
     public static boolean isCreate() {
-        return isCreate;
+        return create;
     }
 
     // @Override

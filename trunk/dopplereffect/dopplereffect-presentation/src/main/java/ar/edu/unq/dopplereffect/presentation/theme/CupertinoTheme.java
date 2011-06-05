@@ -8,7 +8,7 @@ public class CupertinoTheme extends UITheme {
 
     private static final long serialVersionUID = 1L;
 
-    public static final ResourceReference THEME = new ResourceReference(Themes.class,
+    public static final ResourceReference THEME = new ResourceReference(Theme.class,
             "cupertino/jquery-ui-1.7.2.custom.css");
 
     private static CupertinoTheme instance;
