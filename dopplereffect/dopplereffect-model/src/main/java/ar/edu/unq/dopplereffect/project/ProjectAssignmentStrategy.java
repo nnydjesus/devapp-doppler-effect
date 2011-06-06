@@ -33,6 +33,10 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
         employee.addAssignment(projectAssignment);
     }
 
+   /**
+    * XXX no se entiende como esta implementado este metodo, que estrategia utilizan ??
+    * XXX faltaria crear mas test asi queda claro cuales son las estrategias
+    */
     @Override
     public void automaticAssignment(final Project anProject, final List<Employee> employees,
             final IntervalDurationStrategy intervalDurationStrategy) {
@@ -48,6 +52,9 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
         }
     }
 
+    /**
+     * XXX Que hace este metodo?? dice Try pero pero lo asigan ??  no deberia retornar un booleano ?
+     */
     protected void tryToAssign(final IntervalDurationStrategy intervalDurationStrategy, final Employee employee) {
         List<IntervalDurationStrategy> availableIntervals = employee.getAvailableIntervals(intervalDurationStrategy);
         for (IntervalDurationStrategy interval : availableIntervals) {

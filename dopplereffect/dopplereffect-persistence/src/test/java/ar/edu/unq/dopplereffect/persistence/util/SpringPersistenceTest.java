@@ -2,6 +2,10 @@ package ar.edu.unq.dopplereffect.persistence.util;
 
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
+/**
+ * 
+ * XXX esto es un test ???  que funcion tiene ?
+ */
 public abstract class SpringPersistenceTest extends AbstractTransactionalDataSourceSpringContextTests {
 
     @Override

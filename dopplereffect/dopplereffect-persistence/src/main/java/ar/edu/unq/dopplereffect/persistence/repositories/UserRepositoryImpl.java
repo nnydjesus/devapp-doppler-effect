@@ -18,6 +18,7 @@ public class UserRepositoryImpl extends HibernatePersistentRepository<User> {
         super(User.class);
     }
 
+    // XXX - Si no existe crea un usuario ???
     public void signUp(final String userName, final String password) {
         User user = this.getByName(userName);
         if (user != null) {
