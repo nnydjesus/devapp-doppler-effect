@@ -3,6 +3,8 @@ package ar.edu.unq.dopplereffect.service;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import ar.edu.unq.dopplereffect.repositories.Repository;
 
 /**
@@ -19,21 +21,25 @@ public class ServiceImpl<T> implements Service<T>, Serializable {
     private Repository<T> repository;
 
     @Override
+    @Transactional
     public void save(final T stock) {
         this.getRepository().save(stock);
     }
 
     @Override
+    @Transactional
     public void update(final T stock) {
         this.getRepository().update(stock);
     }
 
     @Override
+    @Transactional
     public void delete(final T stock) {
         this.getRepository().delete(stock);
     }
 
     @Override
+    @Transactional
     public T getByName(final String name) {
         return this.getRepository().getByName(name);
     }
@@ -41,6 +47,12 @@ public class ServiceImpl<T> implements Service<T>, Serializable {
     @Override
     public List<T> searchAll() {
         return this.getRepository().searchAll();
+    }
+
+    @Override
+    @Transactional
+    public List<T> searchByExample(final T object) {
+    	return repository.searchByExample(object);
     }
 
     public void setRepository(final Repository<T> repository) {
@@ -51,8 +63,4 @@ public class ServiceImpl<T> implements Service<T>, Serializable {
         return repository;
     }
 
-    @Override
-    public List<T> searchByExample(final T object) {
-        return repository.searchByExample(object);
-    }
 }
