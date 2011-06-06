@@ -21,12 +21,10 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
     }
 
     @Override
-    @Transactional
     public void save(final T object) {
         this.getHibernateTemplate().save(object);
     }
 
-    @Transactional
     public void saveAll(final T... objects) {
         for (T object : objects) {
             this.getHibernateTemplate().save(object);
@@ -34,32 +32,27 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
     }
 
     @Override
-    @Transactional
     public void update(final T object) {
         this.getHibernateTemplate().update(object);
     }
 
     @Override
-    @Transactional
     public void delete(final T object) {
         this.getHibernateTemplate().delete(object);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    @Transactional
     public List<T> searchAll() {
         return this.getHibernateTemplate().loadAll(this.getEntityClass());
     }
 
     @Override
-    @Transactional
     public T getByName(final String name) {
         return this.getByCriterion(Restrictions.eq("name", name));
     }
 
     @Override
-    @Transactional
     public T getByLikeName(final String name) {
         return this.getByCriterion(Restrictions.like("name", "%" + name + "%"));
     }
