@@ -5,7 +5,13 @@ import java.util.List;
 
 import ar.edu.unq.dopplereffect.repositories.Repository;
 
-@org.springframework.stereotype.Service
+/**
+ * 
+ * XXX este modo de crear servicios tiene el gran problema que no pueden hacer
+ * validaciones de negocio en servicios o chequeos en general, si un add de un
+ * objeto requiero validar precondiciones y contruir un objeto mas complejo
+ * antes de guardarlo, no s seria posible
+ */
 public class ServiceImpl<T> implements Service<T>, Serializable {
 
     private static final long serialVersionUID = -806879556462184789L;

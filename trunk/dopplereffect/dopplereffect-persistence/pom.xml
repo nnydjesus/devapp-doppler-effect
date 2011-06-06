@@ -146,4 +146,17 @@
 			</releases>
 		</repository>
 	</repositories>
+	
+		 <reporting>
+                <plugins>
+                        <plugin>
+                                <groupId>net.sf</groupId>
+                                <artifactId>stat-scm</artifactId>
+                                <configuration>
+                                        <skip>true</skip>
+                                </configuration>
+                        </plugin>
+                </plugins>
+        </reporting>
+
 </project>
