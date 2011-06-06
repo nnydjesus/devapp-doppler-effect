@@ -16,7 +16,7 @@
 	<name>${artifactId}</name>
 	<url>http://maven.apache.org</url>
 
-	<build>
+<!-- 	<build>
 	<plugins>
 	<plugin>
         <groupId>org.mortbay.jetty</groupId>
@@ -52,9 +52,9 @@
                         </goals>
                 </execution>
         </executions>
-</plugin>
+</plugin>  
 	</plugins>
-	</build>
+	</build> -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<wicket.version>1.4.17</wicket.version>
