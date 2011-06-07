@@ -1,9 +1,7 @@
 package ar.edu.unq.dopplereffect.helpers;
 
-import static ar.edu.unq.dopplereffect.project.SkillLevel.BEGINNER;
-import static ar.edu.unq.dopplereffect.project.SkillLevel.EXPERT;
-import static ar.edu.unq.dopplereffect.project.SkillLevel.MEDIUM;
-import ar.edu.unq.dopplereffect.project.Skill;
+import static ar.edu.unq.dopplereffect.projects.SkillLevel.*;
+import ar.edu.unq.dopplereffect.projects.Skill;
 import ar.edu.unq.dopplereffect.skills.SkillBuilder;
 
 public class SkillHelpers {

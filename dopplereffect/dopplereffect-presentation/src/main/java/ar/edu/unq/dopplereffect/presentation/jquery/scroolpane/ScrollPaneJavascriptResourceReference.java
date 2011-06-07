@@ -10,7 +10,7 @@ public class ScrollPaneJavascriptResourceReference extends WiQueryJavaScriptReso
     /**
      * Singleton instance.
      */
-    private static ScrollPaneJavascriptResourceReference instance = new ScrollPaneJavascriptResourceReference();;
+    private static ScrollPaneJavascriptResourceReference instance = new ScrollPaneJavascriptResourceReference();
 
     /**
      * Builds a new instance of {@link ScrollPaneJavascriptResourceReference}.

@@ -2,13 +2,13 @@ package ar.edu.unq.dopplereffect.presentation.search.salaryspec;
 
 import ar.edu.unq.dopplereffect.presentation.search.SearchByExampleModel;
 import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
-import ar.edu.unq.dopplereffect.service.Service;
+import ar.edu.unq.dopplereffect.service.PersistenceService;
 
 public class SalarySpecSearchModel extends SearchByExampleModel<SalarySpecification> {
 
     private static final long serialVersionUID = 3767171379328961777L;
 
-    private Service<SalarySpecification> service;
+    private PersistenceService<SalarySpecification> service;
 
     public SalarySpecSearchModel() {
         super(SalarySpecification.class);
@@ -28,12 +28,12 @@ public class SalarySpecSearchModel extends SearchByExampleModel<SalarySpecificat
     }
 
     @Override
-    public Service<SalarySpecification> getService() {
+    public PersistenceService<SalarySpecification> getService() {
         return service;
     }
 
     @Override
-    public void setService(final Service<SalarySpecification> service) {
+    public void setService(final PersistenceService<SalarySpecification> service) {
         this.service = service;
     }
 }

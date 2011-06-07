@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.persistence.repositories;
 
-import ar.edu.unq.dopplereffect.project.Skill;
+import ar.edu.unq.dopplereffect.projects.Skill;
 
 public class SkillRepositoryImpl extends HibernatePersistentRepository<Skill> {
 

@@ -29,9 +29,9 @@ public class SalarySpecification extends Entity {
 
     private List<Integer> percentages;
 
-    private int minSalary;
+    private float minSalary;
 
-    private int maxSalary;
+    private float maxSalary;
 
     /* *************************** CONSTRUCTORS *************************** */
 
@@ -102,19 +102,19 @@ public class SalarySpecification extends Entity {
         this.percentages = percentages;
     }
 
-    public int getMinSalary() {
+    public float getMinSalary() {
         return minSalary;
     }
 
-    public void setMinSalary(final int minSalary) {
+    public void setMinSalary(final float minSalary) {
         this.minSalary = minSalary;
     }
 
-    public int getMaxSalary() {
+    public float getMaxSalary() {
         return maxSalary;
     }
 
-    public void setMaxSalary(final int maxSalary) {
+    public void setMaxSalary(final float maxSalary) {
         this.maxSalary = maxSalary;
     }
 
@@ -146,9 +146,9 @@ public class SalarySpecification extends Entity {
      * @param percentage
      *            el porcentaje con el cual se regula el monto del sueldo.
      */
-    public int getSalary(final int percentage) {
+    public float getSalary(final int percentage) {
         if (this.hasPercentage(percentage)) {
-            return (int) (this.getMinSalary() + (float) percentage / 100 * (this.getMaxSalary() - this.getMinSalary()));
+            return this.getMinSalary() + (float) percentage / 100 * (this.getMaxSalary() - this.getMinSalary());
         } else {
             throw new UserException("El porcentaje no figura dentro de la banda");
         }

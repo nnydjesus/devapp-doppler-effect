@@ -8,13 +8,13 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.LeaveRequestServiceImpl;
-import ar.edu.unq.dopplereffect.service.Service;
+import ar.edu.unq.dopplereffect.service.PersistenceService;
 
 public class LeaveRequestSearchModel extends SearchModel<LeaveRequest> {
 
     private static final long serialVersionUID = -2535940685385343959L;
 
-    private Service<LeaveRequest> service;
+    private PersistenceService<LeaveRequest> service;
 
     private DateTime searchByDate;
 
@@ -41,12 +41,12 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequest> {
     }
 
     @Override
-    public Service<LeaveRequest> getService() {
+    public PersistenceService<LeaveRequest> getService() {
         return service;
     }
 
     @Override
-    public void setService(final Service<LeaveRequest> service) {
+    public void setService(final PersistenceService<LeaveRequest> service) {
         this.service = service;
     }
 

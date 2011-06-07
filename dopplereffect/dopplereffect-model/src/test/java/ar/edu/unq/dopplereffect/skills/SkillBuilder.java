@@ -1,7 +1,7 @@
 package ar.edu.unq.dopplereffect.skills;
 
-import ar.edu.unq.dopplereffect.project.Skill;
-import ar.edu.unq.dopplereffect.project.SkillLevel;
+import ar.edu.unq.dopplereffect.projects.Skill;
+import ar.edu.unq.dopplereffect.projects.SkillLevel;
 
 public class SkillBuilder {
 

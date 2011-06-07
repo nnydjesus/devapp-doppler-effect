@@ -30,11 +30,13 @@ public class CupertinoTheme extends UITheme {
         return THEME;
     }
 
-    public static synchronized CupertinoTheme getInstance() {
-        if (instance == null) {
-            instance = new CupertinoTheme();
+    public static CupertinoTheme getInstance() {
+        synchronized (new Object()) {
+            if (instance == null) {
+                instance = new CupertinoTheme();
+            }
+            return instance;
         }
-        return instance;
     }
 
 }

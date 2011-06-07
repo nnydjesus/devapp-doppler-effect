@@ -317,11 +317,11 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
     }
 
     public void setRegisterBackmmodel(final StringResourceModel registerBackmmodel) {
-        setRegisterBackmModel(registerBackmmodel);
+        this.setRegisterBackmModel(registerBackmmodel);
     }
 
     public StringResourceModel getRegisterBackModel() {
-        return getRegisterBackmModel();
+        return this.getRegisterBackmModel();
     }
 
     public void setRegisterBehavior(final ButtonBehavior registerBehavior) {
@@ -348,12 +348,11 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         return submitButton;
     }
 
-    public void setRegisterBackmModel(StringResourceModel registerBackmModel) {
+    public void setRegisterBackmModel(final StringResourceModel registerBackmModel) {
         this.registerBackmModel = registerBackmModel;
     }
 
     public StringResourceModel getRegisterBackmModel() {
         return registerBackmModel;
     }
-
 }

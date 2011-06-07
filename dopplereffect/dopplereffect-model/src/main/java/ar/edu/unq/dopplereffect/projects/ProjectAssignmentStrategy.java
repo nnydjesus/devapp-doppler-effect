@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.project;
+package ar.edu.unq.dopplereffect.projects;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,6 +7,7 @@ import java.util.List;
 import org.joda.time.Interval;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
@@ -14,29 +15,41 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 /**
  */
 public class ProjectAssignmentStrategy extends Entity implements IProjectAssignmentStrategy {
+
     private static final long serialVersionUID = 1L;
 
     private transient Project project;
 
-    @Override
-    public void manualAssignment(final Project anProject, final Employee employee,
-            final IntervalDurationStrategy interval) {
-        project = anProject;
-        this.internalManualAssignment(employee, interval);
+    private transient EmployeeTimeCalculator employeeTimeCalculator;
 
+    public Project getProject() {
+        return project;
     }
 
-    public void internalManualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
+    public void setEmployeeTimeCalculator(final EmployeeTimeCalculator calculator) {
+        employeeTimeCalculator = calculator;
+    }
+
+    @Override
+    public void manualAssignment(final Project aProject, final Employee employee,
+            final IntervalDurationStrategy interval) {
+        project = aProject;
+        employeeTimeCalculator = new EmployeeTimeCalculator();
+        this.internalManualAssignment(employee, interval);
+    }
+
+    private void internalManualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
         this.validateAssignment(employee, interval);
         final ProjectAssignment projectAssignment = project.findOrCreateAssignment(employee);
         projectAssignment.addInterval(interval);
         employee.addAssignment(projectAssignment);
     }
 
-   /**
-    * XXX no se entiende como esta implementado este metodo, que estrategia utilizan ??
-    * XXX faltaria crear mas test asi queda claro cuales son las estrategias
-    */
+    /**
+     * XXX no se entiende como esta implementado este metodo, que estrategia
+     * utilizan ?? XXX faltaria crear mas test asi queda claro cuales son las
+     * estrategias
+     */
     @Override
     public void automaticAssignment(final Project anProject, final List<Employee> employees,
             final IntervalDurationStrategy intervalDurationStrategy) {
@@ -53,10 +66,12 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
     }
 
     /**
-     * XXX Que hace este metodo?? dice Try pero pero lo asigan ??  no deberia retornar un booleano ?
+     * XXX Que hace este metodo?? dice Try pero pero lo asigan ?? no deberia
+     * retornar un booleano ?
      */
     protected void tryToAssign(final IntervalDurationStrategy intervalDurationStrategy, final Employee employee) {
-        List<IntervalDurationStrategy> availableIntervals = employee.getAvailableIntervals(intervalDurationStrategy);
+        List<IntervalDurationStrategy> availableIntervals = employeeTimeCalculator.getAvailableIntervals(employee,
+                intervalDurationStrategy);
         for (IntervalDurationStrategy interval : availableIntervals) {
             if (project.validateEffort(interval)) {
                 this.internalManualAssignment(employee, interval);
@@ -81,7 +96,7 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
         if (interval.getEndDate().isAfter(interval.getStartDate().plus(project.getTimeProyect()))) {
             throw new UserException("El tiempo asignado no puede superar al tiempo del proyecto");
         }
-        if (!employee.isFreeAtInterval(interval.getInterval())) {
+        if (!employeeTimeCalculator.isFreeAtInterval(employee, interval.getInterval())) {
             throw new UserException("El empleado no esta libre en el intervalo " + interval);
         }
         if (project.validateEffort(interval)) {
@@ -100,7 +115,7 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
 
     protected int getpriorityLevelEmployee(final Employee employee,
             final IntervalDurationStrategy intervalDurationStrategy) {
-        return employee.availabilityLevel(intervalDurationStrategy)
+        return employeeTimeCalculator.availabilityLevel(employee, intervalDurationStrategy)
                 + employee.satisfactionLevelOfSkills(project.getSkills());
     }
 
@@ -115,9 +130,4 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
         };
 
     }
-
-    public Project getProject() {
-        return project;
-    }
-
 }

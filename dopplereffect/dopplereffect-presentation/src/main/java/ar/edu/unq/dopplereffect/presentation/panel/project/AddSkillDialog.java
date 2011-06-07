@@ -11,8 +11,8 @@ import org.odlabs.wiquery.ui.dialog.Dialog;
 import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.panel.SortablePanel;
 import ar.edu.unq.dopplereffect.presentation.project.SkillSearchModel;
-import ar.edu.unq.dopplereffect.project.Project;
-import ar.edu.unq.dopplereffect.project.Skill;
+import ar.edu.unq.dopplereffect.projects.Project;
+import ar.edu.unq.dopplereffect.projects.Skill;
 
 /**
  */

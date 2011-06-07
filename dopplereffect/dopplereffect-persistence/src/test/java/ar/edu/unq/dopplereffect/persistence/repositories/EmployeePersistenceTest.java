@@ -12,7 +12,7 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeData;
 import ar.edu.unq.dopplereffect.persistence.util.SpringPersistenceTest;
 
-public class TestEmployeePersistence extends SpringPersistenceTest {
+public class EmployeePersistenceTest extends SpringPersistenceTest {
 
     @Autowired
     private CareerPlanLevelRepositoryImpl careerPlanLevelRepositoryImpl;

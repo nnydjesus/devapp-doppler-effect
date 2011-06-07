@@ -1,11 +1,8 @@
 package ar.edu.unq.dopplereffect.service;
 
 import java.util.List;
-/**
- * 
- * XXX: interface Service en model ??  que funcion cumple?
- */
-public interface Service<T> {
+
+public interface PersistenceService<T> extends Service {
 
     void save(T object);
 

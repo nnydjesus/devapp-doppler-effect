@@ -65,10 +65,10 @@ public class ScrollPaneBehavior extends WiQueryAbstractBehavior {
      */
     public boolean isShowArrows() {
         Boolean showArrows = this.getOptions().getBoolean("showArrows");
-        if (showArrows != null) {
-            return showArrows.booleanValue();
-        } else {
+        if (showArrows == null) {
             return false;
+        } else {
+            return showArrows.booleanValue();
         }
     }
 

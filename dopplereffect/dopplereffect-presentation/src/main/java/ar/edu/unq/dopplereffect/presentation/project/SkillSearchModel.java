@@ -3,14 +3,14 @@ package ar.edu.unq.dopplereffect.presentation.project;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
-import ar.edu.unq.dopplereffect.project.Skill;
-import ar.edu.unq.dopplereffect.service.Service;
+import ar.edu.unq.dopplereffect.projects.Skill;
+import ar.edu.unq.dopplereffect.service.PersistenceService;
 
 public class SkillSearchModel extends SearchModel<Skill> {
     private static final long serialVersionUID = 1L;
 
     @SpringBean(name = "servieImpl")
-    private Service<Skill> service;
+    private PersistenceService<Skill> service;
 
     private String name = "";
 
@@ -38,12 +38,12 @@ public class SkillSearchModel extends SearchModel<Skill> {
     }
 
     @Override
-    public void setService(final Service<Skill> service) {
+    public void setService(final PersistenceService<Skill> service) {
         this.service = service;
     }
 
     @Override
-    public Service<Skill> getService() {
+    public PersistenceService<Skill> getService() {
         return service;
     }
 

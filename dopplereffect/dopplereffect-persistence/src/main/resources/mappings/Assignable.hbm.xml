@@ -29,7 +29,7 @@
 
 		</joined-subclass>
 
-		<joined-subclass name="ar.edu.unq.dopplereffect.project.ProjectAssignment"
+		<joined-subclass name="ar.edu.unq.dopplereffect.projects.ProjectAssignment"
 			table="project_assignment">
 
 			<key column="assignable_id" not-null="true" />

@@ -1,14 +1,12 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 
 public class HolidayLeaveRequestTest {
 
@@ -24,9 +22,10 @@ public class HolidayLeaveRequestTest {
         holidayType.configure(1, 7);
         Employee employee = mock(Employee.class);
         LeaveRequest leaveReq = mock(LeaveRequest.class);
+        EmployeeTimeCalculator calculator = mock(EmployeeTimeCalculator.class);
         // WHEN
         when(employee.getSeniority()).thenReturn(1);
-        when(employee.daysRequestedInYear(holidayType, 2011)).thenReturn(2);
+        when(calculator.daysRequestedInYear(employee, holidayType, 2011)).thenReturn(2);
         when(leaveReq.getAmountOfDays()).thenReturn(8);
         when(leaveReq.getYear()).thenReturn(2011);
         // THEN
@@ -39,11 +38,12 @@ public class HolidayLeaveRequestTest {
         LeaveRequestCustomType holidayType = this.createHolidayLeaveRequestType(7, 15);
         Employee employee = mock(Employee.class);
         LeaveRequest leaveReq = mock(LeaveRequest.class);
+        EmployeeTimeCalculator calculator = mock(EmployeeTimeCalculator.class);
         // WHEN
         holidayType.initialConfig(7);
         holidayType.configure(1, 7);
         when(employee.getSeniority()).thenReturn(1);
-        when(employee.daysRequestedInYear(holidayType, 2011)).thenReturn(0);
+        when(calculator.daysRequestedInYear(employee, holidayType, 2011)).thenReturn(0);
         when(leaveReq.getAmountOfDays()).thenReturn(7);
         when(leaveReq.getYear()).thenReturn(2011);
         // THEN

@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.project;
+package ar.edu.unq.dopplereffect.projects;
 
 /**
  */

@@ -7,8 +7,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.EntityPanel;
-import ar.edu.unq.dopplereffect.project.Skill;
-import ar.edu.unq.dopplereffect.project.SkillLevel;
+import ar.edu.unq.dopplereffect.projects.Skill;
+import ar.edu.unq.dopplereffect.projects.SkillLevel;
 
 /**
  */
