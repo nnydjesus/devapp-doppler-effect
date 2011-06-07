@@ -91,7 +91,7 @@ public class EmployeesController {
      * Dado un empleado, retorna su salario correspondiente. Lanza una excepcion
      * si no es posible obtenerlo.
      */
-    public int getSalary(final Employee employee) {
+    public float getSalary(final Employee employee) {
         SalarySpecification spec = this.searchSalarySpecification(employee.getCareerPlan(), employee.getLevel());
         return spec.getSalary(employee.getPercentage());
     }

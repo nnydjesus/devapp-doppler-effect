@@ -1,5 +1,7 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
+import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
+
 public class LeaveRequestTypeBuilder {
 
     private transient LeaveRequestCustomType leaveRequestType;
@@ -30,5 +32,10 @@ public class LeaveRequestTypeBuilder {
 
     public LeaveRequestCustomType build() {
         return leaveRequestType;
+    }
+
+    public LeaveRequestTypeBuilder withEmployeeTimeCalculator(final EmployeeTimeCalculator calculator) {
+        leaveRequestType.setEmployeeTimeCalculator(calculator);
+        return this;
     }
 }

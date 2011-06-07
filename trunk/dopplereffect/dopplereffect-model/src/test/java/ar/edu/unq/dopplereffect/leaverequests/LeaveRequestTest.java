@@ -1,16 +1,8 @@
 package ar.edu.unq.dopplereffect.leaverequests;
 
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_06;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_08;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_11;
-import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_13;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static ar.edu.unq.dopplereffect.helpers.DateHelpers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +11,7 @@ import org.joda.time.Interval;
 import org.junit.Test;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
@@ -132,10 +125,12 @@ public class LeaveRequestTest {
     public void testValidateEmployeeWhenAlreadyRequestedAllPossibleDays() {
         int maxDays = 15;
         Employee empl = mock(Employee.class);
-        LeaveRequestCustomType leaveReqType = new LeaveRequestTypeBuilder().withMaxDaysInYear(maxDays).build();
+        EmployeeTimeCalculator calculator = mock(EmployeeTimeCalculator.class);
+        LeaveRequestCustomType leaveReqType = new LeaveRequestTypeBuilder().withMaxDaysInYear(maxDays)
+                .withEmployeeTimeCalculator(calculator).build();
         LeaveRequest request = new LeaveRequestBuilder().withType(leaveReqType)
                 .withInterval(D_2011_04_05, D_2011_04_08).build();
-        when(empl.daysRequestedInYear(leaveReqType, 2011)).thenReturn(maxDays);
+        when(calculator.daysRequestedInYear(empl, leaveReqType, 2011)).thenReturn(maxDays);
         assertFalse("la validacion de la licencia fallo", request.isValidFor(empl));
     }
 

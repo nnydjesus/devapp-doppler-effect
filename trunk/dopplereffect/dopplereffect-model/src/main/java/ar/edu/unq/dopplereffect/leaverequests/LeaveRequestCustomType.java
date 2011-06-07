@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 
@@ -29,6 +30,8 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
 
     private List<LeaveRequestDaysConfiguration> configurations;
 
+    private transient EmployeeTimeCalculator employeeTimeCalculator;
+
     /* *************************** CONSTRUCTORS **************************** */
 
     public LeaveRequestCustomType() {
@@ -40,12 +43,18 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
     }
 
     public LeaveRequestCustomType(final String reason, final int maxDaysInYear, final int minLimit, final int maxLimit) {
+        this(reason, maxDaysInYear, minLimit, maxLimit, new EmployeeTimeCalculator());
+    }
+
+    public LeaveRequestCustomType(final String reason, final int maxDaysInYear, final int minLimit, final int maxLimit,
+            final EmployeeTimeCalculator calculator) {
         super();
         this.reason = reason;
         this.maxDaysInYear = maxDaysInYear;
         this.minLimit = minLimit;
         this.maxLimit = maxLimit;
         configurations = new LinkedList<LeaveRequestDaysConfiguration>();
+        employeeTimeCalculator = calculator;
     }
 
     /* **************************** ACCESSORS ***************************** */
@@ -91,6 +100,10 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
         this.configurations = configurations;
     }
 
+    public void setEmployeeTimeCalculator(final EmployeeTimeCalculator calculator) {
+        employeeTimeCalculator = calculator;
+    }
+
     /* **************************** OPERATIONS **************************** */
 
     /**
@@ -108,8 +121,9 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
     public boolean isValidFor(final LeaveRequest leaveReq, final Employee employee) {
         boolean satisfiesMinimum = this.isSpecifiedMinimum() ? leaveReq.getAmountOfDays() >= this.getMinLimit() : true;
         boolean satisfiesMaximum = this.isSpecifiedMaximum() ? leaveReq.getAmountOfDays() <= this.getMaxLimit() : true;
-        boolean employeeCanRequestMoreDays = this.isSpecifiedMaxDaysInAYear() ? employee.daysRequestedInYear(this,
-                leaveReq.getYear()) + leaveReq.getAmountOfDays() <= this.getMaxDaysInYear() : true;
+        int daysRequestedInYear = employeeTimeCalculator.daysRequestedInYear(employee, this, leaveReq.getYear());
+        boolean employeeCanRequestMoreDays = this.isSpecifiedMaxDaysInAYear() ? daysRequestedInYear
+                + leaveReq.getAmountOfDays() <= this.getMaxDaysInYear() : true;
         return satisfiesMinimum && satisfiesMaximum && employeeCanRequestMoreDays
                 && this.satisfiesConfiguration(leaveReq, employee);
     }
@@ -191,8 +205,9 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
             return true;
         }
         int correspondingDays = this.getCorrespondingDays(leaveReq.getYear());
-        int daysThatCanRequest = correspondingDays
-                - employee.daysRequestedInYear(leaveReq.getType(), leaveReq.getYear());
+        int daysRequested = employeeTimeCalculator
+                .daysRequestedInYear(employee, leaveReq.getType(), leaveReq.getYear());
+        int daysThatCanRequest = correspondingDays - daysRequested;
         return leaveReq.getAmountOfDays() <= daysThatCanRequest;
     }
 }

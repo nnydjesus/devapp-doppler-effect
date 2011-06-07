@@ -23,9 +23,10 @@ public class Helpers {
         }
     }
 
-    public static void assertGetSalary(final SalarySpecification base, final List<Integer> percentages, final int[] values) {
+    public static void assertGetSalary(final SalarySpecification base, final List<Integer> percentages,
+            final int[] values) {
         for (int i = 0; i < values.length; i++) {
-            Assert.assertEquals(values[i], base.getSalary(percentages.get(i)));
+            Assert.assertEquals(values[i], base.getSalary(percentages.get(i)), 0);
         }
     }
 }

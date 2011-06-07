@@ -9,9 +9,10 @@ import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 
 /**
- * Pagina que recuerda la pagina anterior, permitiendo asi la navegacion.
+ * Panel que recuerda el panel anterior, permitiendo asi la navegacion.
  */
 public class NavigablePanel<T> extends AbstractPanel<T> {
+
     private static final long serialVersionUID = 1L;
 
     private AbstractCallbackPanel<? extends Serializable> previousPage;

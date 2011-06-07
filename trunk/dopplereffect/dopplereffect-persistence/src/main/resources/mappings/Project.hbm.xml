@@ -3,7 +3,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 		  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="ar.edu.unq.dopplereffect.project">
+<hibernate-mapping package="ar.edu.unq.dopplereffect.projects">
 
 	<class name="Project" table="project">
 
@@ -20,12 +20,12 @@
 
 		<set name="skills" table="project_skill" cascade="all, delete-orphan" lazy="false">
 			<key column="project_id" />
-			<many-to-many column="skill_id" class="ar.edu.unq.dopplereffect.project.Skill" />
+			<many-to-many column="skill_id" class="ar.edu.unq.dopplereffect.projects.Skill" />
 		</set>
 
 		<set name="projectAssignment" table="project_assignment" cascade="all, delete-orphan">
 			<key column="project_id" />
-			<one-to-many class="ar.edu.unq.dopplereffect.project.ProjectAssignment" />
+			<one-to-many class="ar.edu.unq.dopplereffect.projects.ProjectAssignment" />
 		</set>
 
 		<many-to-one name="projectAssignmentStrategy" class="ProjectAssignmentStrategy"

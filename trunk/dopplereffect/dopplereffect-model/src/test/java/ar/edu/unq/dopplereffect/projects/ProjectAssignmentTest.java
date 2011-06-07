@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.project.ProjectAssignment;
+import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class ProjectAssignmentTest {

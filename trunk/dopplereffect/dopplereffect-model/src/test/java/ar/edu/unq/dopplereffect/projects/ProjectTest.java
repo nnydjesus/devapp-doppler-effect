@@ -1,7 +1,6 @@
 package ar.edu.unq.dopplereffect.projects;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -17,13 +16,10 @@ import org.junit.Test;
 
 import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.helpers.DateHelpers;
 import ar.edu.unq.dopplereffect.helpers.SkillHelpers;
-import ar.edu.unq.dopplereffect.project.Project;
-import ar.edu.unq.dopplereffect.project.ProjectBuilder;
-import ar.edu.unq.dopplereffect.project.ProjectHelper;
-import ar.edu.unq.dopplereffect.project.Skill;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class ProjectTest {
@@ -54,11 +50,11 @@ public class ProjectTest {
 
     @Test
     public void manualAssignmentOk() {
-        final Period period = Period.months(2).plusDays(3);
-        final Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
-        final IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+        Period period = Period.months(2).plusDays(3);
+        Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
+        IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
                 MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE)));
-        final Employee employee = new EmployeeBuilder().build();
+        Employee employee = new EmployeeBuilder().build();
         project.manualAssignment(employee, interval);
 
         Assert.assertTrue("", project.isAssigned(employee));
@@ -67,9 +63,9 @@ public class ProjectTest {
 
     @Test(expected = UserException.class)
     public void manualAssignmentSpendTimeOfProyect() {
-        final Period period = Period.months(2).plusDays(1);
-        final Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
-        final IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+        Period period = Period.months(2).plusDays(1);
+        Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
+        IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
                 MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE + 2)));
 
         project.manualAssignment(new EmployeeBuilder().build(), interval);
@@ -83,10 +79,10 @@ public class ProjectTest {
     public void manualAssignmentTwoAssignment() {
         Period period = Period.months(4);
         Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
-        final IntervalDurationStrategy firstInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
-                YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE)));
-        final IntervalDurationStrategy secondInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
-                YEAR, MONTH_BASE + 1, DAY_BASE + 1), DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE)));
+        IntervalDurationStrategy firstInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+                MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE)));
+        IntervalDurationStrategy secondInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+                MONTH_BASE + 1, DAY_BASE + 1), DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE)));
 
         Employee employee1 = new EmployeeBuilder().build();
         project.manualAssignment(employee1, firstInterval);
@@ -98,12 +94,12 @@ public class ProjectTest {
 
     @Test(expected = UserException.class)
     public void manualAssignmentOverlaps() {
-        final Period period = Period.months(4);
-        final Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
-        final IntervalDurationStrategy firstInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
-                YEAR, MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE)));
-        final IntervalDurationStrategy secondInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(
-                YEAR, MONTH_BASE, 25), DateHelpers.getDate(YEAR, MONTH_BASE + 1, 10)));
+        Period period = Period.months(4);
+        Project project = this.getBuilderWithMoreEffort().withConsideredEffor(period).build();
+        IntervalDurationStrategy firstInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+                MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE + 1, DAY_BASE)));
+        IntervalDurationStrategy secondInterval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+                MONTH_BASE, 25), DateHelpers.getDate(YEAR, MONTH_BASE + 1, 10)));
 
         project.manualAssignment(new EmployeeBuilder().build(), firstInterval);
         project.manualAssignment(new EmployeeBuilder().build(), secondInterval);
@@ -111,9 +107,9 @@ public class ProjectTest {
 
     @Test(expected = UserException.class)
     public void validateEffort() {
-        final Period days = Period.days(2);
-        final Project project = new ProjectBuilder().withEstimatedEffort(30).withConsideredEffor(days).build();
-        final IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
+        Period days = Period.days(2);
+        Project project = new ProjectBuilder().withEstimatedEffort(30).withConsideredEffor(days).build();
+        IntervalDurationStrategy interval = new IntervalDurationStrategy(new Interval(DateHelpers.getDate(YEAR,
                 MONTH_BASE, DAY_BASE), DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE + 1)));
         project.manualAssignment(new EmployeeBuilder().build(), interval);// 16
         project.manualAssignment(new EmployeeBuilder().build(), interval);// 24
@@ -122,72 +118,81 @@ public class ProjectTest {
 
     @Test
     public void automaticAssignment() {
-        final Period period = Period.months(2);
+        Period period = Period.months(2);
         DateTime datebase = DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE);
 
-        final IntervalDurationStrategy intervalTwoMonth = new IntervalDurationStrategy(new Interval(datebase,
+        IntervalDurationStrategy intervalTwoMonth = new IntervalDurationStrategy(new Interval(datebase,
                 DateHelpers.getDate(YEAR, MONTH_BASE + 2, DAY_BASE)));
 
         long effortByEmployee = ProjectHelper.daysToHoursEffort(intervalTwoMonth.getAmountOfDays());
 
-        final IntervalDurationStrategy intervalOneMonth = new IntervalDurationStrategy(new Interval(datebase,
-                DateHelpers.getDate(YEAR, MONTH_BASE, DAY_BASE).plusDays((intervalTwoMonth.getAmountOfDays() - 1) / 2)));
+        IntervalDurationStrategy intervalOneMonth = new IntervalDurationStrategy(new Interval(datebase, DateHelpers
+                .getDate(YEAR, MONTH_BASE, DAY_BASE).plusDays((intervalTwoMonth.getAmountOfDays() - 1) / 2)));
+
+        EmployeeTimeCalculator calculator = mock(EmployeeTimeCalculator.class);
 
         // se calcula 4 empleados en los dos meses enteros
-        final Project project = new ProjectBuilder().withConsideredEffor(period)
-                .withEstimatedEffort(effortByEmployee * 4).withSkills(skills).build();
+        Project project = new ProjectBuilder().withConsideredEffor(period).withEstimatedEffort(effortByEmployee * 4)
+                .withSkills(skills).withEmployeeTimeCalculator(calculator).build();
 
-        final Employee employee1 = mock(Employee.class);
-        final Employee employee2 = mock(Employee.class);
-        final Employee employee3 = mock(Employee.class);
-        final Employee employee4 = mock(Employee.class);
-        final Employee employee5 = mock(Employee.class);
-        final Employee employee6 = mock(Employee.class);
-        final Employee employee7 = mock(Employee.class);
+        Employee employee1 = mock(Employee.class);
+        Employee employee2 = mock(Employee.class);
+        Employee employee3 = mock(Employee.class);
+        Employee employee4 = mock(Employee.class);
+        Employee employee5 = mock(Employee.class);
+        Employee employee6 = mock(Employee.class);
+        Employee employee7 = mock(Employee.class);
 
         IntervalDurationStrategy intervalDurationStrategy = new IntervalDurationStrategy(new Interval(datebase,
                 datebase.plus(project.getTimeProyect())));
 
         when(employee1.satisfactionLevelOfSkills(skills)).thenReturn(2);
-        when(employee1.getAvailableIntervals(intervalDurationStrategy)).thenReturn(Arrays.asList(intervalOneMonth));
-        when(employee1.availabilityLevel(intervalDurationStrategy)).thenReturn(2);
-        when(employee1.isFreeAtInterval(intervalOneMonth.getInterval())).thenReturn(true);
+        when(calculator.getAvailableIntervals(employee1, intervalDurationStrategy)).thenReturn(
+                Arrays.asList(intervalOneMonth));
+        when(calculator.availabilityLevel(employee1, intervalDurationStrategy)).thenReturn(2);
+        when(calculator.isFreeAtInterval(employee1, intervalOneMonth.getInterval())).thenReturn(true);
         when(employee1.toString()).thenReturn("empleado1"); // para testing
 
         when(employee2.satisfactionLevelOfSkills(skills)).thenReturn(1);
-        when(employee2.getAvailableIntervals(intervalDurationStrategy)).thenReturn(Arrays.asList(intervalTwoMonth));
-        when(employee2.availabilityLevel(intervalDurationStrategy)).thenReturn(2);
-        when(employee2.isFreeAtInterval(intervalTwoMonth.getInterval())).thenReturn(true);
+        when(calculator.getAvailableIntervals(employee2, intervalDurationStrategy)).thenReturn(
+                Arrays.asList(intervalTwoMonth));
+        when(calculator.availabilityLevel(employee2, intervalDurationStrategy)).thenReturn(2);
+        when(calculator.isFreeAtInterval(employee2, intervalTwoMonth.getInterval())).thenReturn(true);
         when(employee2.toString()).thenReturn("empleado2");
 
         when(employee3.satisfactionLevelOfSkills(skills)).thenReturn(4);
-        when(employee3.getAvailableIntervals(intervalDurationStrategy)).thenReturn(Arrays.asList(intervalTwoMonth));
-        when(employee3.availabilityLevel(intervalDurationStrategy)).thenReturn(1);
-        when(employee3.isFreeAtInterval(intervalOneMonth.getInterval())).thenReturn(true);
+        when(calculator.getAvailableIntervals(employee3, intervalDurationStrategy)).thenReturn(
+                Arrays.asList(intervalTwoMonth));
+        when(calculator.availabilityLevel(employee3, intervalDurationStrategy)).thenReturn(1);
+        when(calculator.isFreeAtInterval(employee3, intervalOneMonth.getInterval())).thenReturn(true);
         when(employee3.toString()).thenReturn("empleado3");
 
         when(employee4.satisfactionLevelOfSkills(skills)).thenReturn(2);
-        when(employee4.getAvailableIntervals(intervalDurationStrategy)).thenReturn(Arrays.asList(intervalTwoMonth));
-        when(employee4.availabilityLevel(intervalDurationStrategy)).thenReturn(2);
-        when(employee4.isFreeAtInterval(intervalTwoMonth.getInterval())).thenReturn(true);
+        when(calculator.getAvailableIntervals(employee4, intervalDurationStrategy)).thenReturn(
+                Arrays.asList(intervalTwoMonth));
+        when(calculator.availabilityLevel(employee4, intervalDurationStrategy)).thenReturn(2);
+        when(calculator.isFreeAtInterval(employee4, intervalTwoMonth.getInterval())).thenReturn(true);
         when(employee4.toString()).thenReturn("empleado4");
 
         when(employee5.satisfactionLevelOfSkills(skills)).thenReturn(4);
-        when(employee5.getAvailableIntervals(intervalDurationStrategy)).thenReturn(Arrays.asList(intervalOneMonth));
-        when(employee5.availabilityLevel(intervalDurationStrategy)).thenReturn(5);
-        when(employee5.isFreeAtInterval(intervalOneMonth.getInterval())).thenReturn(true);
+        when(calculator.getAvailableIntervals(employee5, intervalDurationStrategy)).thenReturn(
+                Arrays.asList(intervalOneMonth));
+        when(calculator.availabilityLevel(employee5, intervalDurationStrategy)).thenReturn(5);
+        when(calculator.isFreeAtInterval(employee5, intervalOneMonth.getInterval())).thenReturn(true);
         when(employee5.toString()).thenReturn("empleado5");
 
         when(employee6.satisfactionLevelOfSkills(skills)).thenReturn(5);
-        when(employee6.getAvailableIntervals(intervalDurationStrategy)).thenReturn(Arrays.asList(intervalOneMonth));
-        when(employee6.availabilityLevel(intervalDurationStrategy)).thenReturn(2);
-        when(employee6.isFreeAtInterval(intervalOneMonth.getInterval())).thenReturn(true);
+        when(calculator.getAvailableIntervals(employee6, intervalDurationStrategy)).thenReturn(
+                Arrays.asList(intervalOneMonth));
+        when(calculator.availabilityLevel(employee6, intervalDurationStrategy)).thenReturn(2);
+        when(calculator.isFreeAtInterval(employee6, intervalOneMonth.getInterval())).thenReturn(true);
         when(employee6.toString()).thenReturn("empleado6");
 
         when(employee7.satisfactionLevelOfSkills(skills)).thenReturn(1);
-        when(employee7.getAvailableIntervals(intervalDurationStrategy)).thenReturn(Arrays.asList(intervalTwoMonth));
-        when(employee7.availabilityLevel(intervalDurationStrategy)).thenReturn(1);
-        when(employee7.isFreeAtInterval(intervalTwoMonth.getInterval())).thenReturn(true);
+        when(calculator.getAvailableIntervals(employee7, intervalDurationStrategy)).thenReturn(
+                Arrays.asList(intervalTwoMonth));
+        when(calculator.availabilityLevel(employee7, intervalDurationStrategy)).thenReturn(1);
+        when(calculator.isFreeAtInterval(employee7, intervalTwoMonth.getInterval())).thenReturn(true);
         when(employee7.toString()).thenReturn("empleado7");
 
         List<Employee> employees = Arrays.asList(employee1, employee2, employee3, employee4, employee5, employee6,

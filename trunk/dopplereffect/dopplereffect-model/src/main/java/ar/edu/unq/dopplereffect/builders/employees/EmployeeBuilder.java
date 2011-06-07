@@ -30,7 +30,7 @@ public class EmployeeBuilder {
     }
 
     public EmployeeBuilder withPercentage(final int percentage) {
-        employee.setPercentage(percentage);
+        employee.getCareerData().setPercentage(percentage);
         return this;
     }
 

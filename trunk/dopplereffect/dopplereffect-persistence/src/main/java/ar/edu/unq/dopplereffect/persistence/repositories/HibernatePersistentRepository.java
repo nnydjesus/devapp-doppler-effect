@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.dopplereffect.persistence.util.CustomHibernateRepositorySupport;
 import ar.edu.unq.dopplereffect.repositories.Repository;

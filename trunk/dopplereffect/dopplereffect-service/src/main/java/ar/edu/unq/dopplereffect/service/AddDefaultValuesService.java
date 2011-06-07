@@ -19,10 +19,10 @@ import ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestTypeReposit
 import ar.edu.unq.dopplereffect.persistence.repositories.ProjectRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.repositories.SalarySpecificationRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.repositories.SkillRepositoryImpl;
-import ar.edu.unq.dopplereffect.project.Project;
-import ar.edu.unq.dopplereffect.project.ProjectBuilder;
-import ar.edu.unq.dopplereffect.project.Skill;
-import ar.edu.unq.dopplereffect.project.SkillLevel;
+import ar.edu.unq.dopplereffect.projects.Project;
+import ar.edu.unq.dopplereffect.projects.ProjectBuilder;
+import ar.edu.unq.dopplereffect.projects.Skill;
+import ar.edu.unq.dopplereffect.projects.SkillLevel;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
 

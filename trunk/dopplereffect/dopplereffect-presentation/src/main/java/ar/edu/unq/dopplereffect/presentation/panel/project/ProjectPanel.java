@@ -13,7 +13,7 @@ import org.odlabs.wiquery.core.javascript.JsScope;
 
 import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.pages.basic.EntityPanel;
-import ar.edu.unq.dopplereffect.project.Project;
+import ar.edu.unq.dopplereffect.projects.Project;
 
 import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
 

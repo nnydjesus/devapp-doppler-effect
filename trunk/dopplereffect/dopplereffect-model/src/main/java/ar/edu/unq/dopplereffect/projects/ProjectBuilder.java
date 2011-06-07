@@ -1,8 +1,10 @@
-package ar.edu.unq.dopplereffect.project;
+package ar.edu.unq.dopplereffect.projects;
 
 import java.util.Set;
 
 import org.joda.time.Period;
+
+import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 
 public class ProjectBuilder {
 
@@ -10,6 +12,14 @@ public class ProjectBuilder {
 
     public ProjectBuilder() {
         this.setProyect(new Project(new ProjectAssignmentStrategy()));
+    }
+
+    protected Project getProyect() {
+        return proyect;
+    }
+
+    protected void setProyect(final Project proyect) {
+        this.proyect = proyect;
     }
 
     public ProjectBuilder withEstimatedEffort(final long effort) {
@@ -42,16 +52,13 @@ public class ProjectBuilder {
         return this;
     }
 
+    public ProjectBuilder withEmployeeTimeCalculator(final EmployeeTimeCalculator calculator) {
+        ((ProjectAssignmentStrategy) this.getProyect().getProjectAssignmentStrategy())
+                .setEmployeeTimeCalculator(calculator);
+        return this;
+    }
+
     public Project build() {
         return this.getProyect();
     }
-
-    protected Project getProyect() {
-        return proyect;
-    }
-
-    protected void setProyect(final Project proyect) {
-        this.proyect = proyect;
-    }
-
 }

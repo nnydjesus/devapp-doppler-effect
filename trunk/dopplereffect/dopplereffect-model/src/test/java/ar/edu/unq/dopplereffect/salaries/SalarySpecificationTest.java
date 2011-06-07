@@ -1,12 +1,8 @@
 package ar.edu.unq.dopplereffect.salaries;
 
-import static ar.edu.unq.dopplereffect.helpers.Helpers.assertGetSalary;
-import static ar.edu.unq.dopplereffect.helpers.Helpers.assertSalaryHasPercentages;
-import static ar.edu.unq.dopplereffect.helpers.Helpers.assertSalaryHasntPercentages;
+import static ar.edu.unq.dopplereffect.helpers.Helpers.*;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -35,13 +31,13 @@ public class SalarySpecificationTest {
     @Test
     public void testGetMinSalary() {
         SalarySpecification base = new SalarySpecificationBuilder().withMinSalary(MIN_SALARY).build();
-        assertEquals("El sueldo minimo debe ser 3000", MIN_SALARY, base.getMinSalary());
+        assertEquals("El sueldo minimo debe ser 3000", MIN_SALARY, base.getMinSalary(), 0);
     }
 
     @Test
     public void testGetMaxSalary() {
         SalarySpecification base = new SalarySpecificationBuilder().withMaxSalary(MAX_SALARY).build();
-        assertEquals("El sueldo maximo debe ser 4500", MAX_SALARY, base.getMaxSalary());
+        assertEquals("El sueldo maximo debe ser 4500", MAX_SALARY, base.getMaxSalary(), 0);
     }
 
     @Test

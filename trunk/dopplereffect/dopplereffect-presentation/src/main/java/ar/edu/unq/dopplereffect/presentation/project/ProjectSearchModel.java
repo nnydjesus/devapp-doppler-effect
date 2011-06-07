@@ -1,13 +1,13 @@
 package ar.edu.unq.dopplereffect.presentation.project;
 
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
-import ar.edu.unq.dopplereffect.project.Project;
-import ar.edu.unq.dopplereffect.service.Service;
+import ar.edu.unq.dopplereffect.projects.Project;
+import ar.edu.unq.dopplereffect.service.PersistenceService;
 
 public class ProjectSearchModel extends SearchModel<Project> {
     private static final long serialVersionUID = 1L;
 
-    private Service<Project> service;
+    private PersistenceService<Project> service;
 
     private String name = "";
 
@@ -41,12 +41,12 @@ public class ProjectSearchModel extends SearchModel<Project> {
     }
 
     @Override
-    public void setService(final Service<Project> service) {
+    public void setService(final PersistenceService<Project> service) {
         this.service = service;
     }
 
     @Override
-    public Service<Project> getService() {
+    public PersistenceService<Project> getService() {
         return service;
     }
 

@@ -14,7 +14,7 @@ import ar.edu.unq.dopplereffect.repositories.Repository;
  * objeto requiero validar precondiciones y contruir un objeto mas complejo
  * antes de guardarlo, no s seria posible
  */
-public class ServiceImpl<T> implements Service<T>, Serializable {
+public class ServiceImpl<T> implements PersistenceService<T>, Serializable {
 
     private static final long serialVersionUID = -806879556462184789L;
 

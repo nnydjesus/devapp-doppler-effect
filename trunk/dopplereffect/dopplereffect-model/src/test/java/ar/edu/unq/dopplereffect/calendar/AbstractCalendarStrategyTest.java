@@ -13,7 +13,6 @@ public abstract class AbstractCalendarStrategyTest {
 
     public AbstractCalendarStrategyTest(final DateTime date) {
         DATE = date;
-
     }
 
     @Test

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import ar.edu.unq.dopplereffect.service.Service;
+import ar.edu.unq.dopplereffect.service.PersistenceService;
 
 public abstract class SearchModel<T> implements Serializable {
 
@@ -64,7 +64,7 @@ public abstract class SearchModel<T> implements Serializable {
         this.setResults(new LinkedList<T>());
     }
 
-    public abstract Service<T> getService();
+    public abstract PersistenceService<T> getService();
 
-    public abstract void setService(Service<T> service);
+    public abstract void setService(PersistenceService<T> service);
 }
