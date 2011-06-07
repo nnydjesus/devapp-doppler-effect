@@ -11,6 +11,8 @@ public class MonthStrategy extends CalendarStrategy {
 
     /* *************************** CONSTRUCTORS *************************** */
 
+    private static final long serialVersionUID = -5806960287780676835L;
+
     public MonthStrategy(final Years year, final Months month) {
         super(year, month, Days.ONE);
     }

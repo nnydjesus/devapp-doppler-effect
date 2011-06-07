@@ -15,6 +15,8 @@ public class Calendar extends AbstractCalendar {
     /* ************************ INSTANCE VARIABLES ************************ */
     /* *************************** CONSTRUCTORS *************************** */
 
+    private static final long serialVersionUID = 1L;
+
     public Calendar(final CalendarStrategy week) {
         super(week);
     }

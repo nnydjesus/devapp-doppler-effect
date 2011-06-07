@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.calendar;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,9 +14,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Matrix
  */
-public class Matrix<X, Y, V> {
+public class Matrix<X, Y, V> implements Serializable {
 
     /* ************************ INSTANCE VARIABLES ************************ */
+
+    private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Matrix.class);
 

@@ -1,6 +1,8 @@
 package ar.edu.unq.dopplereffect.presentation;
 
 import org.apache.wicket.Page;
+import org.apache.wicket.ResourceReference;
+import org.apache.wicket.Session;
 import org.apache.wicket.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.WebPage;
@@ -10,12 +12,13 @@ import org.apache.wicket.protocol.http.request.WebRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCycleProcessor;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.odlabs.wiquery.ui.themes.IThemableApplication;
 
 import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
 import ar.edu.unq.dopplereffect.presentation.pages.Login;
+import ar.edu.unq.dopplereffect.presentation.theme.LeFrogTheme;
 
-public class App extends AuthenticatedWebApplication {// implements
-                                                      // IThemableApplication {
+public class App extends AuthenticatedWebApplication implements IThemableApplication {
 
     // para tener datos en memoria.... per solo se quiere
     // ingresar esos datos cuando levanta el jetty
@@ -84,8 +87,8 @@ public class App extends AuthenticatedWebApplication {// implements
         return create;
     }
 
-    // @Override
-    // public ResourceReference getTheme(final Session session) {
-    // return RedmondTheme.getInstance().getTheme();
-    // }
+    @Override
+    public ResourceReference getTheme(final Session session) {
+        return LeFrogTheme.getInstance().getTheme();
+    }
 }
