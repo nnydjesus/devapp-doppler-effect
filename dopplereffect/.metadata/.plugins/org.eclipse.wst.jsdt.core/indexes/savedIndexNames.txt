@@ -1,6 +1,0 @@
-INDEX VERSION 1.122+/media/nny/dev-app/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
-66235685.index
-998720386.index
-3869310207.index
-2154760917.index
-52068971.index
