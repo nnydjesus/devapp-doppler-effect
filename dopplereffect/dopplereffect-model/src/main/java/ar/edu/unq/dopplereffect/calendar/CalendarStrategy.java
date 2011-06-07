@@ -1,13 +1,17 @@
 package ar.edu.unq.dopplereffect.calendar;
 
+import java.io.Serializable;
+
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Years;
 
-public abstract class CalendarStrategy {
+public abstract class CalendarStrategy implements Serializable {
 
     /* ************************ INSTANCE VARIABLES ************************ */
+
+    private static final long serialVersionUID = -3215114029589833655L;
 
     private DateTime day;
 

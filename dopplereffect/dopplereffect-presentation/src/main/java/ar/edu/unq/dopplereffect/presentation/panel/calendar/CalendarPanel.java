@@ -78,28 +78,28 @@ public class CalendarPanel extends Panel {
         employeeService = employeeSearchModel;
         employeeSearchModel.search();
         DateTime day = new DateTime();
-        this.monthStrategy = new MonthStrategy(day);
-        this.weekdayStrategy = new WeekdayStrategy(day);
-        calendar = new Calendar(this.monthStrategy);
-        this.matrix = calendar.getCalendar(employeeService.getResults());
-        this.scrollpane = new WebMarkupContainer("scrollpane");
-        this.scrollpane.add(new ScrollPaneBehavior());
+        monthStrategy = new MonthStrategy(day);
+        weekdayStrategy = new WeekdayStrategy(day);
+        calendar = new Calendar(monthStrategy);
+        matrix = calendar.getCalendar(employeeService.getResults());
+        scrollpane = new WebMarkupContainer("scrollpane");
+        scrollpane.add(new ScrollPaneBehavior());
         this.makePage();
-        this.add(this.scrollpane);
+        this.add(scrollpane);
     }
 
     private void makePage() {
 
-        this.hastaModel = new Model<String>("");
-        this.dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        hastaModel = new Model<String>("");
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         this.updateTable();
         this.addComponents();
     }
 
     protected MarkupContainer updateTable() {
-        this.employeeService.search();
-        this.matrix = this.calendar.getCalendar(this.employeeService.getResults());
-        return this.scrollpane.addOrReplace(this.createTable());
+        employeeService.search();
+        matrix = calendar.getCalendar(employeeService.getResults());
+        return scrollpane.addOrReplace(this.createTable());
     }
 
     private AjaxFallbackDefaultDataTable<Entry<Employee, Map<DateTime, Assignable>>> createTable() {
@@ -115,22 +115,22 @@ public class CalendarPanel extends Panel {
             }
         });
 
-        CalendarStrategy strategy = this.calendar.getStrategy().cloneStrategy();
-        this.currentDate = this.calendar.getStrategy().getDay().toDate();
-        this.datePicketModel = this.currentDate;
+        CalendarStrategy strategy = calendar.getStrategy().cloneStrategy();
+        currentDate = calendar.getStrategy().getDay().toDate();
+        this.setDatePicketModel(currentDate);
 
-        for (int day = 1; day <= CalendarPanel.this.calendar.getStrategy().getTotalDays(); day++) {
+        for (int day = 1; day <= calendar.getStrategy().getTotalDays(); day++) {
             final DateTime date = strategy.getDay();
 
             columns.add(this.createColumn(date));
             strategy.plus();
         }
 
-        this.hastaModel.setObject(this.dateFormat.format(strategy.getDay().toDate()));
+        hastaModel.setObject(dateFormat.format(strategy.getDay().toDate()));
 
         return new AjaxFallbackDefaultDataTable<Entry<Employee, Map<DateTime, Assignable>>>("calendarTable", columns,
-                new GenericSortableDataProvider<Entry<Employee, Map<DateTime, Assignable>>>("entrySet",
-                        this.matrix), SearchModel.PAGE_SIZE);
+                new GenericSortableDataProvider<Entry<Employee, Map<DateTime, Assignable>>>("entrySet", matrix),
+                SearchModel.PAGE_SIZE);
     }
 
     protected AbstractColumn<Entry<Employee, Map<DateTime, Assignable>>> createColumn(final DateTime date) {
@@ -149,13 +149,13 @@ public class CalendarPanel extends Panel {
     }
 
     protected void addComponents() {
-        this.datePicker = new DatePicker<Date>("datePicker", new PropertyModel<Date>(this, "datePickerModel"), Date.class)
+        datePicker = new DatePicker<Date>("datePicker", new PropertyModel<Date>(this, "datePicketModel"), Date.class)
                 .setButtonText("<div class=\"ui-icon ui-icon-calendar\"></div>").setShowOn(ShowOnEnum.BOTH)
                 .setShowButtonPanel(true);
 
-        this.add(this.datePicker);
+        this.add(datePicker);
 
-        this.add(new Label("hasta", this.hastaModel));
+        this.add(new Label("hasta", hastaModel));
 
         this.add(CustomComponent.addButtonSking(new AjaxReflextionActionPanel<CalendarPanel>("nextMonth", this,
                 NEXT_METHOD, "next.png", "")));
@@ -165,29 +165,37 @@ public class CalendarPanel extends Panel {
 
         this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel>("mensual", MONTHLY_METHOD, this,
                 this, new Model<String>("Monthly"))));
-        
+
         this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel>("semanal", WEEKLY_METHOD, this,
                 this, new Model<String>("Weekly"))));
     }
 
     public void next() {
-        this.calendar.getStrategy().next();
+        calendar.getStrategy().next();
         this.updateTable();
     }
 
     public void previous() {
-        this.calendar.getStrategy().previous();
+        calendar.getStrategy().previous();
         this.updateTable();
     }
 
     public void weekly() {
-        this.calendar.setStrategy(CalendarPanel.this.weekdayStrategy);
+        calendar.setStrategy(weekdayStrategy);
         this.updateTable();
     }
 
     public void monthly() {
-        this.calendar.setStrategy(CalendarPanel.this.monthStrategy);
+        calendar.setStrategy(monthStrategy);
         this.updateTable();
+    }
+
+    public void setDatePicketModel(final Date datePicketModel) {
+        this.datePicketModel = datePicketModel;
+    }
+
+    public Date getDatePicketModel() {
+        return datePicketModel;
     }
 
 }

@@ -4,6 +4,8 @@ public abstract class AbstractCalendar implements ICalendar {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
+    private static final long serialVersionUID = 4273013031773377576L;
+
     private CalendarStrategy strategy;
 
     /* *************************** CONSTRUCTORS *************************** */

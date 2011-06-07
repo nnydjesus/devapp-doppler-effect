@@ -8,7 +8,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.unq.dopplereffect.presentation.App;
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
-import ar.edu.unq.dopplereffect.presentation.panel.CareerPlanPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.calendar.CalendarPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
@@ -66,7 +65,8 @@ public class HomePage extends AbstractWebPage<Component> {
                 salarySpecSearchModel)));
         this.add(this.createPanelLink("leave_requests", new LeaveRequestSearchPanel(bodyId, callback,
                 leaveReqSearchModel)));
-        this.add(this.createPanelLink("career_plans", new CareerPlanPanel(bodyId, callback)));
+        // this.add(this.createPanelLink("career_plans", new
+        // CareerPlanPanel(bodyId, callback)));
 
         this.add(this.createPanelLink("calendar", new CalendarPanel(bodyId, employeeSearchModel)));
         this.add(new HeaderPanel("items"));

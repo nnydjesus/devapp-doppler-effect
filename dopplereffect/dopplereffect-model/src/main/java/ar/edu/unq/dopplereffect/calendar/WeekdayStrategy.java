@@ -11,6 +11,8 @@ public class WeekdayStrategy extends CalendarStrategy {
 
     /* *************************** CONSTRUCTORS *************************** */
 
+    private static final long serialVersionUID = 1L;
+
     public WeekdayStrategy(final Years year, final Months month, final Days day) {
         super(year, month, day);
     }
