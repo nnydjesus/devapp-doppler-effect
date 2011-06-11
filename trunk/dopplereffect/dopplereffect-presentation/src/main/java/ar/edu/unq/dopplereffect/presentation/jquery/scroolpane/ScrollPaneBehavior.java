@@ -93,11 +93,7 @@ public class ScrollPaneBehavior extends WiQueryAbstractBehavior {
      */
     public boolean isMaintainPosition() {
         Boolean maintainPosition = this.getOptions().getBoolean("maintainPosition");
-        if (maintainPosition != null) {
-            return maintainPosition.booleanValue();
-        } else {
-            return true;
-        }
+        return maintainPosition == null ? true : maintainPosition.booleanValue();
     }
 
     /**

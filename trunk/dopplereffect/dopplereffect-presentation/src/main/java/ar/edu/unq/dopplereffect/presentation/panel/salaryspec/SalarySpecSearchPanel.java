@@ -28,4 +28,13 @@ public class SalarySpecSearchPanel extends AbstractSearchPanel<SalarySpecSearchM
         return "year";
     }
 
+    @Override
+    protected String getFormWicketId() {
+        return "searchSalarySpecForm";
+    }
+
+    @Override
+    protected String getNewFromBeanWicketId() {
+        return "newSalarySpec";
+    }
 }

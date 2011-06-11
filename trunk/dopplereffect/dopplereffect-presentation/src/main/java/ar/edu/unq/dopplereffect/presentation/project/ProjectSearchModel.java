@@ -1,26 +1,22 @@
 package ar.edu.unq.dopplereffect.presentation.project;
 
-import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
-import ar.edu.unq.dopplereffect.projects.Project;
-import ar.edu.unq.dopplereffect.service.PersistenceService;
+import java.util.List;
 
-public class ProjectSearchModel extends SearchModel<Project> {
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
+import ar.edu.unq.dopplereffect.service.DTO;
+import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
+import ar.edu.unq.dopplereffect.service.project.ProjectService;
+
+public class ProjectSearchModel extends SearchModel<ProjectDTO> {
+
     private static final long serialVersionUID = 1L;
 
-    private PersistenceService<Project> service;
+    private ProjectService service;
 
     private String name = "";
 
     public ProjectSearchModel() {
-        super(Project.class);
-        // this.save(new
-        // ProjectBuilder().withName("Wicket").withEstimatedEffort(33333).build());
-        // this.save(new
-        // ProjectBuilder().withName("PAPAPA").withEstimatedEffort(34234).build());
-        // this.save(new
-        // ProjectBuilder().withName("SASASA").withEstimatedEffort(11111).build());
-        // this.save(new
-        // ProjectBuilder().withName("ALALALA").withEstimatedEffort(789898).build());
+        super(ProjectDTO.class);
     }
 
     public String getSearchByName() {
@@ -40,14 +36,38 @@ public class ProjectSearchModel extends SearchModel<Project> {
         return name;
     }
 
-    @Override
-    public void setService(final PersistenceService<Project> service) {
+    public void setService(final ProjectService service) {
         this.service = service;
     }
 
-    @Override
-    public PersistenceService<Project> getService() {
+    public ProjectService getService() {
         return service;
     }
 
+    @Override
+    protected List<ProjectDTO> getAllResultsFromService() {
+        return this.getService().searchAllProjects();
+    }
+
+    @Override
+    protected <D extends DTO> void callSaveOnService(final D entity) {
+        this.getService().newProject((ProjectDTO) entity);
+    }
+
+    @Override
+    protected void callRemoveOnService(final ProjectDTO entity) {
+        this.getService().deleteProject(entity);
+    }
+
+    @Override
+    protected <D extends DTO> void callUpdateOnService(final D entity) {
+        this.getService().updateProject((ProjectDTO) entity);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public ProjectDTO createEditDTO(final ProjectDTO viewDTO) {
+        // es el mismo en este caso??
+        return viewDTO;
+    }
 }

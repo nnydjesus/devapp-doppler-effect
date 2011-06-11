@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ar.edu.unq.dopplereffect.persistence.project.ProjectRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.util.SpringPersistenceTest;
 import ar.edu.unq.dopplereffect.projects.Project;
 import ar.edu.unq.dopplereffect.projects.ProjectBuilder;

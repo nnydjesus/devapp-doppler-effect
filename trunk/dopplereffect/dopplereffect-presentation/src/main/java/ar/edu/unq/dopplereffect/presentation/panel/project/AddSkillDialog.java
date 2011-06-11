@@ -2,6 +2,7 @@ package ar.edu.unq.dopplereffect.presentation.panel.project;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.wicket.markup.html.link.Link;
@@ -10,9 +11,9 @@ import org.odlabs.wiquery.ui.dialog.Dialog;
 
 import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.panel.SortablePanel;
-import ar.edu.unq.dopplereffect.presentation.project.SkillSearchModel;
-import ar.edu.unq.dopplereffect.projects.Project;
-import ar.edu.unq.dopplereffect.projects.Skill;
+import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
+import ar.edu.unq.dopplereffect.service.project.SkillDTO;
+import ar.edu.unq.dopplereffect.service.project.SkillService;
 
 /**
  */
@@ -20,35 +21,34 @@ public class AddSkillDialog extends Dialog {
 
     private static final long serialVersionUID = 1L;
 
-    @SpringBean(name = "skillSearchModel")
-    private SkillSearchModel skillSearchModel;
+    @SpringBean(name = "service.skill")
+    private SkillService skillService;
 
-    private List<Skill> skills;
+    private List<SkillDTO> skills;
 
-    private Project project;
+    private ProjectDTO project;
 
-    private List<Skill> results;
+    private List<SkillDTO> results;
 
-    public AddSkillDialog(final String id, final Project project) {
+    public AddSkillDialog(final String id, final ProjectDTO project) {
         super(id);
         this.setWidth(300);
         this.setHeight(500);
         this.setResizable(false);
         this.setProject(project);
-        this.setSkills(new ArrayList<Skill>());
+        this.setSkills(new ArrayList<SkillDTO>());
         this.getSkills().addAll(project.getSkills());
-        this.getSkillSearchModel().search();
-        this.setResults(new ArrayList<Skill>(this.getSkillSearchModel().getResults()));
+        this.setResults(this.getSkillService().searchAllSkills());
         this.getResults().removeAll(this.getSkills());
-        this.add(new SortablePanel<Skill>("skill1", this.getSkills(), true));
-        this.add(new SortablePanel<Skill>("skill2", this.getResults(), false));
+        this.add(new SortablePanel<SkillDTO>("skill1", this.getSkills(), true));
+        this.add(new SortablePanel<SkillDTO>("skill2", this.getResults(), false));
         this.add(CustomComponent.addButtonSking(new Link<String>("aceptar") {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick() {
-                HashSet<Skill> hashSet = new HashSet<Skill>(AddSkillDialog.this.getSkills());
-                AddSkillDialog.this.getProject().setSkills(hashSet);
+                HashSet<SkillDTO> hashSet = new HashSet<SkillDTO>(AddSkillDialog.this.getSkills());
+                AddSkillDialog.this.getProject().setSkills(new LinkedList<SkillDTO>(hashSet));
                 AddSkillDialog.this.getResults().removeAll(AddSkillDialog.this.getSkills());
                 AddSkillDialog.this.close();
             }
@@ -56,35 +56,35 @@ public class AddSkillDialog extends Dialog {
         }));
     }
 
-    public void setResults(final List<Skill> results) {
-        this.results = results;
-    }
-
-    public List<Skill> getResults() {
+    public List<SkillDTO> getResults() {
         return results;
     }
 
-    public void setProject(final Project project) {
-        this.project = project;
+    public void setResults(final List<SkillDTO> results) {
+        this.results = results;
     }
 
-    public Project getProject() {
+    public ProjectDTO getProject() {
         return project;
     }
 
-    public void setSkills(final List<Skill> skills) {
-        this.skills = skills;
+    public void setProject(final ProjectDTO project) {
+        this.project = project;
     }
 
-    public List<Skill> getSkills() {
+    public List<SkillDTO> getSkills() {
         return skills;
     }
 
-    public void setSkillSearchModel(final SkillSearchModel skillSearchModel) {
-        this.skillSearchModel = skillSearchModel;
+    public void setSkills(final List<SkillDTO> skills) {
+        this.skills = skills;
     }
 
-    public SkillSearchModel getSkillSearchModel() {
-        return skillSearchModel;
+    public SkillService getSkillService() {
+        return skillService;
+    }
+
+    public void setSkillService(final SkillService skillService) {
+        this.skillService = skillService;
     }
 }

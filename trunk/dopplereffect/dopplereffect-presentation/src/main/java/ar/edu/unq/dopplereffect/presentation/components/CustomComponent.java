@@ -7,6 +7,10 @@ import org.odlabs.wiquery.ui.button.ButtonBehavior;
  */
 public class CustomComponent {
 
+    private CustomComponent() {
+        // x
+    }
+
     public static Component addButtonSking(final Component component) {
         return component.add(new ButtonBehavior());
     }

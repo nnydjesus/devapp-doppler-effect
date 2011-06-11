@@ -13,10 +13,8 @@ import ar.edu.unq.dopplereffect.presentation.panel.calendar.CalendarPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.leaverequest.LeaveRequestSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.project.SkillSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.salaryspec.SalarySpecSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel;
-import ar.edu.unq.dopplereffect.presentation.project.SkillSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel;
@@ -30,22 +28,19 @@ public class HomePage extends AbstractWebPage<Component> {
 
     private static final long serialVersionUID = 1L;
 
-    @SpringBean(name = "employeeSearchModel")
+    @SpringBean(name = "search_model.employee")
     private EmployeeSearchModel employeeSearchModel;
 
-    @SpringBean(name = "projectSearchModel")
+    @SpringBean(name = "search_model.project")
     private ProjectSearchModel projectSearchModel;
 
-    @SpringBean(name = "skillSearchModel")
-    private SkillSearchModel skillSearchModel;
-
-    @SpringBean(name = "salarySpecSearchModel")
+    @SpringBean(name = "search_model.salary_spec")
     private SalarySpecSearchModel salarySpecSearchModel;
 
-    @SpringBean(name = "leaveReqSearchModel")
+    @SpringBean(name = "search_model.leave_request")
     private LeaveRequestSearchModel leaveReqSearchModel;
 
-    @SpringBean(name = "addDefaultValuesService")
+    @SpringBean(name = "service.default_values")
     private AddDefaultValuesService addDefaultValuesService;
 
     public HomePage() {
@@ -58,7 +53,6 @@ public class HomePage extends AbstractWebPage<Component> {
         final AjaxCallBack<Component> callback = this.generateCallback();
         String bodyId = "body";
         this.add(this.createPanelLink("projects", new ProjectSearchPanel(bodyId, callback, projectSearchModel)));
-        this.add(this.createPanelLink("skills", new SkillSearchPanel(bodyId, callback, skillSearchModel)));
         this.add(this.createPanelLink("employees", new EmployeeSearchPanel(bodyId, callback, employeeSearchModel,
                 leaveReqSearchModel)));
         this.add(this.createPanelLink("salary_percentages", new SalarySpecSearchPanel(bodyId, callback,
@@ -151,14 +145,6 @@ public class HomePage extends AbstractWebPage<Component> {
         this.projectSearchModel = projectSearchModel;
     }
 
-    public SkillSearchModel getSkillSearchModel() {
-        return skillSearchModel;
-    }
-
-    public void setSkillSearchModel(final SkillSearchModel skillSearchModel) {
-        this.skillSearchModel = skillSearchModel;
-    }
-
     public SalarySpecSearchModel getSalarySpecSearchModel() {
         return salarySpecSearchModel;
     }
@@ -175,11 +161,11 @@ public class HomePage extends AbstractWebPage<Component> {
         this.leaveReqSearchModel = leaveReqSearchModel;
     }
 
-    public void setAddDefaultValuesService(final AddDefaultValuesService addDefaultValuesService) {
-        this.addDefaultValuesService = addDefaultValuesService;
-    }
-
     public AddDefaultValuesService getAddDefaultValuesService() {
         return addDefaultValuesService;
+    }
+
+    public void setAddDefaultValuesService(final AddDefaultValuesService addDefaultValuesService) {
+        this.addDefaultValuesService = addDefaultValuesService;
     }
 }

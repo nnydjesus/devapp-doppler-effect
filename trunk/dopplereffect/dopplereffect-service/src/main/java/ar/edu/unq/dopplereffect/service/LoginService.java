@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.service;
 
-import ar.edu.unq.dopplereffect.persistence.repositories.UserRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.user.UserRepositoryImpl;
 import ar.edu.unq.dopplereffect.repositories.Repository;
 import ar.edu.unq.dopplereffect.user.User;
 import ar.edu.unq.tpi.util.common.HashUtils;

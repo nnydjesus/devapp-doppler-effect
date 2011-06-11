@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
+import ar.edu.unq.dopplereffect.persistence.employee.CareerPlanLevelRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.employee.SalarySpecificationRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.util.SpringPersistenceTest;
 import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
 

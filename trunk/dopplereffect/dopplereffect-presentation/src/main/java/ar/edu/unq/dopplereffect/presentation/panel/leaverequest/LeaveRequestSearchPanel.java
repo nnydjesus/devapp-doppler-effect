@@ -10,9 +10,7 @@ import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.PropertyModel;
 
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
-import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
@@ -22,18 +20,23 @@ public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSea
 
     public LeaveRequestSearchPanel(final String id, final AjaxCallBack<Component> parentPage,
             final LeaveRequestSearchModel model) {
-        super(id, parentPage, model, Arrays.asList("firstDate", "amountOfDays", "reason"), LeaveRequestPanel.class);
+        super(id, parentPage, model, Arrays.asList("startDate", "amountOfDays", "reason"), LeaveRequestPanel.class);
         this.getModelObject().search();
     }
 
     @Override
     protected String getSortName() {
-        return "firstDate";
+        return "startDate";
     }
 
     @Override
     protected String getFormWicketId() {
         return "searchLeaveRequestForm";
+    }
+
+    @Override
+    protected String getNewFromBeanWicketId() {
+        return "newLeaveRequest";
     }
 
     @Override
@@ -46,10 +49,9 @@ public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSea
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     protected LeaveRequestAjaxDataTablePage createAjaxTable() {
         return new LeaveRequestAjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
-                ((SearchModel<LeaveRequest>) this.getDefaultModelObject()), this.getCallback(), this.getFields(),
+                (LeaveRequestSearchModel) this.getDefaultModelObject(), this.getCallback(), this.getFields(),
                 this.getAbmClass());
     }
 }

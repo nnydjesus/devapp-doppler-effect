@@ -64,6 +64,17 @@ public class SalarySpecification extends Entity {
         Collections.addAll(this.percentages, percentages);
     }
 
+    public SalarySpecification(final int year, final CareerPlan plan, final CareerPlanLevel level,
+            final float minSalary, final float maxSalary, final List<Integer> percentages) {
+        super();
+        this.year = year;
+        this.plan = plan;
+        this.level = level;
+        this.minSalary = minSalary;
+        this.maxSalary = maxSalary;
+        this.percentages = percentages;
+    }
+
     public SalarySpecification() {
         super();
     }

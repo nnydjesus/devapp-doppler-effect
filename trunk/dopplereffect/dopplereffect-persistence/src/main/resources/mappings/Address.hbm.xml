@@ -11,11 +11,11 @@
 			<generator class="native" />
 		</id>
 
-		<property name="street" not-null="true" />
+		<property name="street" />
 
-		<property name="number" not-null="true" />
+		<property name="number" />
 
-		<property name="city" not-null="true" />
+		<property name="city" />
 
 	</class>
 

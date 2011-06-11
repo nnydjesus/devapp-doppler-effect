@@ -1,8 +1,11 @@
 package ar.edu.unq.dopplereffect.presentation.search;
 
+import java.util.List;
+
+import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-public abstract class SearchByExampleModel<T> extends SearchModel<T> {
+public abstract class SearchByExampleModel<T extends DTO> extends SearchModel<T> {
 
     private static final long serialVersionUID = 6216820887576813914L;
 
@@ -27,10 +30,9 @@ public abstract class SearchByExampleModel<T> extends SearchModel<T> {
 
     @Override
     public void search() {
-        this.searchByExample();
+        this.setResults(this.searchByExample(this.createExample()));
     }
 
-    public void searchByExample() {
-        this.setResults(this.getService().searchByExample(this.getExample()));
-    }
+    public abstract List<T> searchByExample(T theExample);
+
 }

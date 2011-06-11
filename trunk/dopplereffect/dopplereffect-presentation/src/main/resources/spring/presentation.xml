@@ -21,28 +21,24 @@
 		<property name="forceEagerSessionCreation" value="true" />
 	</bean>
 
-	<bean id="projectSearchModel" class="ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel">
-		<property name="service" ref="projectService" />
+	<bean id="search_model.project" class="ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel">
+		<property name="service" ref="service.project" />
 	</bean>
 	
-	<bean id="skillSearchModel" class="ar.edu.unq.dopplereffect.presentation.project.SkillSearchModel">
-		<property name="service" ref="skillService" />
+	<bean id="search_model.employee" class="ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel">
+		<property name="service" ref="service.employee" />
 	</bean>
 	
-	<bean id="employeeSearchModel" class="ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel">
-		<property name="service" ref="employeeService" />
+	<bean id="search_model.salary_spec" class="ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel">
+		<property name="service" ref="service.salary_spec" />
 	</bean>
 	
-	<bean id="salarySpecSearchModel" class="ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel">
-		<property name="service" ref="salarySpecService" />
-	</bean>
-	
-	<bean id="leaveReqSearchModel" class="ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel">
-		<property name="service" ref="leaveReqService" />
+	<bean id="search_model.leave_request" class="ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel">
+		<property name="service" ref="service.leave_request" />
 	</bean>
 	
 	<bean id="authenticate" class="ar.edu.unq.dopplereffect.presentation.Authenticate">
-		<property name="loginService" ref="userService" />
+		<property name="loginService" ref="service.user" />
 	</bean>
 
 	<bean id="managerException" class="ar.edu.unq.dopplereffect.presentation.ManagerExceptionAspect" />

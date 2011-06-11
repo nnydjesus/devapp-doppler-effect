@@ -42,7 +42,7 @@ public class LeaveRequest extends Entity implements Assignable {
         return type;
     }
 
-    public void setType(final LeaveRequestCustomType leaveRequestType) {
+    public void setType(final LeaveRequestType leaveRequestType) {
         type = leaveRequestType;
     }
 
@@ -55,13 +55,13 @@ public class LeaveRequest extends Entity implements Assignable {
     }
 
     @Override
-    public void setEmployee(final Employee employee) {
-        this.employee = employee;
+    public Employee getEmployee() {
+        return employee;
     }
 
     @Override
-    public Employee getEmployee() {
-        return employee;
+    public void setEmployee(final Employee employee) {
+        this.employee = employee;
     }
 
     /* **************************** OPERATIONS **************************** */

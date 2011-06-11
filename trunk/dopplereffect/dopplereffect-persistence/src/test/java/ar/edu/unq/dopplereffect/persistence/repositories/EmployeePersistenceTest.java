@@ -10,6 +10,8 @@ import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeData;
+import ar.edu.unq.dopplereffect.persistence.employee.CareerPlanLevelRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.employee.EmployeeRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.util.SpringPersistenceTest;
 
 public class EmployeePersistenceTest extends SpringPersistenceTest {

@@ -15,8 +15,9 @@ import org.odlabs.wiquery.ui.button.ButtonBehavior;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
+import ar.edu.unq.dopplereffect.service.DTO;
 
-public abstract class EntityPanel<T> extends NavigablePanel<T> {
+public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
     private static final long serialVersionUID = 1L;
 
     private boolean editMode;

@@ -2,9 +2,12 @@ package ar.edu.unq.dopplereffect.service.salaryspec;
 
 import java.util.List;
 
+import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.service.DTO;
 
 public class SalarySpecDTO implements DTO {
+
+    private static final long serialVersionUID = 3411660773006513822L;
 
     private int year;
 
@@ -12,7 +15,7 @@ public class SalarySpecDTO implements DTO {
 
     private float maxSalary;
 
-    private String careerPlan;
+    private CareerPlan careerPlan;
 
     private String careerPlanLevel;
 
@@ -42,11 +45,11 @@ public class SalarySpecDTO implements DTO {
         this.minSalary = minSalary;
     }
 
-    public String getCareerPlan() {
+    public CareerPlan getCareerPlan() {
         return careerPlan;
     }
 
-    public void setCareerPlan(final String careerPlan) {
+    public void setCareerPlan(final CareerPlan careerPlan) {
         this.careerPlan = careerPlan;
     }
 

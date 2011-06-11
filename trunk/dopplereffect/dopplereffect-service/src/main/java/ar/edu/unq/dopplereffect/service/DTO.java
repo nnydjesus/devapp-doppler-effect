@@ -1,5 +1,7 @@
 package ar.edu.unq.dopplereffect.service;
 
-public interface DTO {
+import java.io.Serializable;
+
+public interface DTO extends Serializable {
 
 }

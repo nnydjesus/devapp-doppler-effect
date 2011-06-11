@@ -3,47 +3,51 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-	<bean id="userService" class="ar.edu.unq.dopplereffect.service.LoginService" >
-		<property name="repository" ref="userRepo"/>
+	<bean id="service.user" class="ar.edu.unq.dopplereffect.service.LoginService" >
+		<property name="repository" ref="repo.user"/>
 	</bean>
 	
-	<bean id="projectService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
-		<property name="repository" ref="projectRepo" />
+	<bean id="service.project" class="ar.edu.unq.dopplereffect.service.project.ProjectServiceImpl">
+		<property name="projectRepo" ref="repo.project" />
+		<property name="skillService" ref="service.skill" />
 	</bean>
 	
-	<bean id="employeeService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
-		<property name="repository" ref="employeeRepo" />
+	<bean id="service.employee" class="ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl">
+		<property name="employeeRepo" ref="repo.employee" />
+		<property name="careerPlanLevelRepo" ref="repo.career_plan_level" />
 	</bean>
 	
-	<bean id="salarySpecService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
-		<property name="repository" ref="salarySpecRepo" />
+	<bean id="service.salary_spec" class="ar.edu.unq.dopplereffect.service.salaryspec.SalarySpecServiceImpl">
+		<property name="repository" ref="repo.salary_spec" />
+		<property name="careerPlanService" ref="service.career_plan" />
 	</bean>
 	
-	<bean id="leaveReqService" class="ar.edu.unq.dopplereffect.service.LeaveRequestServiceImpl">
-		<property name="repository" ref="leaveReqRepo" />
+	<bean id="service.leave_request" class="ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestServiceImpl">
+		<property name="leaveRequestRepo" ref="repo.leave_request" />
+		<property name="leaveRequestTypeRepo" ref="repo.leave_request_type" />
+		<property name="employeeService" ref="service.employee" />
 	</bean>
 	
-	<bean id="leaveReqTypeService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
-		<property name="repository" ref="leaveReqTypeRepo" />
+	<bean id="service.leave_request_type" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
+		<property name="repository" ref="repo.leave_request_type" />
 	</bean>
 	
-	<bean id="skillService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
-		<property name="repository" ref="skillRepo" />
+	<bean id="service.skill" class="ar.edu.unq.dopplereffect.service.project.SkillServiceImpl">
+		<property name="skillRepo" ref="repo.skill" />
 	</bean>
 	
-	<bean id="careerPlanLevelService" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
-		<property name="repository" ref="careerPlanLevelRepo" />
+	<bean id="service.career_plan" class="ar.edu.unq.dopplereffect.service.employee.CareerPlanServiceImpl">
+		<property name="careerPlanLevelRepository" ref="repo.career_plan_level" />
 	</bean>
 	
-	<bean id="addDefaultValuesService" class="ar.edu.unq.dopplereffect.service.AddDefaultValuesService">
-		<property name="careerPlanLevelRepo" ref="careerPlanLevelRepo" />
-		<property name="employeeRepo" ref="employeeRepo" />
-		<property name="projectRepo" ref="projectRepo" />
-		<property name="leaveReqRepo" ref="leaveReqRepo" />
-		<property name="leaveReqTypeRepo" ref="leaveReqTypeRepo" />
-		<property name="skillRepo" ref="skillRepo" />
-		<property name="salarySpecRepo" ref="salarySpecRepo" />
-		
+	<bean id="service.default_values" class="ar.edu.unq.dopplereffect.service.AddDefaultValuesService">
+		<property name="careerPlanLevelRepo" ref="repo.career_plan_level" />
+		<property name="employeeRepo" ref="repo.employee" />
+		<property name="projectRepo" ref="repo.project" />
+		<property name="leaveReqRepo" ref="repo.leave_request" />
+		<property name="leaveReqTypeRepo" ref="repo.leave_request_type" />
+		<property name="skillRepo" ref="repo.skill" />
+		<property name="salarySpecRepo" ref="repo.salary_spec" />
 	</bean>
-	
+
 </beans>

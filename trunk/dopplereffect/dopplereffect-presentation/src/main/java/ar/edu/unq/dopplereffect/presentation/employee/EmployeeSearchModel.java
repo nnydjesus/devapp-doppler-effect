@@ -1,17 +1,30 @@
 package ar.edu.unq.dopplereffect.presentation.employee;
 
-import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.presentation.search.SearchByExampleModel;
-import ar.edu.unq.dopplereffect.service.PersistenceService;
+import java.util.List;
 
-public class EmployeeSearchModel extends SearchByExampleModel<Employee> {
+import ar.edu.unq.dopplereffect.presentation.search.SearchByExampleModel;
+import ar.edu.unq.dopplereffect.service.DTO;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeDTO;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeDetailDTO;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeService;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+
+public class EmployeeSearchModel extends SearchByExampleModel<EmployeeViewDTO> {
 
     private static final long serialVersionUID = -4428182030184876921L;
 
-    private PersistenceService<Employee> service;
+    private EmployeeService service;
+
+    public EmployeeService getService() {
+        return service;
+    }
+
+    public void setService(final EmployeeService service) {
+        this.service = service;
+    }
 
     public EmployeeSearchModel() {
-        super(Employee.class);
+        super(EmployeeViewDTO.class);
     }
 
     public String getSearchByName() {
@@ -23,17 +36,42 @@ public class EmployeeSearchModel extends SearchByExampleModel<Employee> {
     }
 
     @Override
-    public Class<Employee> getEntityType() {
-        return Employee.class;
+    public Class<EmployeeViewDTO> getEntityType() {
+        return EmployeeViewDTO.class;
     }
 
     @Override
-    public PersistenceService<Employee> getService() {
-        return service;
+    public List<EmployeeViewDTO> searchByExample(final EmployeeViewDTO theExample) {
+        return this.getService().searchAllByExample(theExample);
     }
 
     @Override
-    public void setService(final PersistenceService<Employee> service) {
-        this.service = service;
+    protected List<EmployeeViewDTO> getAllResultsFromService() {
+        return this.getService().searchAllEmployees();
+    }
+
+    @Override
+    protected <D extends DTO> void callSaveOnService(final D employee) {
+        this.getService().newEmployee((EmployeeDTO) employee);
+    }
+
+    @Override
+    protected void callRemoveOnService(final EmployeeViewDTO employee) {
+        this.getService().deleteEmployee(employee);
+    }
+
+    @Override
+    protected <D extends DTO> void callUpdateOnService(final D employee) {
+        this.getService().updateEmployee((EmployeeDTO) employee);
+    }
+
+    public EmployeeDetailDTO getDetailForEmployee(final EmployeeViewDTO employeeViewDTO) {
+        return this.getService().getDetailForEmployee(employeeViewDTO);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public EmployeeDTO createEditDTO(final EmployeeViewDTO viewDTO) {
+        return this.getService().createEditDTO(viewDTO);
     }
 }
