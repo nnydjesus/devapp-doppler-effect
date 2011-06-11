@@ -16,10 +16,11 @@ import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
 import ar.edu.unq.dopplereffect.presentation.util.ITable;
 import ar.edu.unq.dopplereffect.presentation.util.ReflectionAjaxButton;
+import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 @SuppressWarnings("rawtypes")
-public abstract class AbstractSearchPanel<T extends SearchModel> extends AbstractCallbackPanel<T> {
+public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> extends AbstractCallbackPanel<T> {
     private static final long serialVersionUID = 1L;
 
     private Component ajaxSectionResult;
@@ -64,8 +65,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
                         AbstractSearchPanel.this.getId(), AbstractSearchPanel.this);
             }
         }));
-        this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), (Component) null,
-                new StringResourceModel("backButton", new Model<String>(""))));
+        this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), null, new StringResourceModel(
+                "backButton", new Model<String>(""))));
     }
 
     protected void addResultSection(final ITable iTable) {
@@ -95,8 +96,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
     @SuppressWarnings("unchecked")
     protected AjaxDataTablePage createAjaxTable() {
         return new AjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
-                ((SearchModel<T>) this.getDefaultModelObject()), this.getCallback(), this.getFields(),
-                this.getAbmClass());
+                ((SearchModel) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbmClass());
     }
 
     // protected GridPanel<T> createAjaxGrid() {
@@ -152,9 +152,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel> extends Abstrac
         return "name";
     }
 
-    @SuppressWarnings("unchecked")
     protected String getBeanName() {
-        return ((SearchModel<T>) this.getDefaultModelObject()).getEntityType().getSimpleName();
+        return ((SearchModel) this.getDefaultModelObject()).getEntityType().getSimpleName();
     }
 
     public Component getAjaxSectionResult() {

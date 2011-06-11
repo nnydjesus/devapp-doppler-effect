@@ -12,39 +12,41 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
-import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
+import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
+import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestViewDTO;
 
-public class LeaveRequestAjaxDataTablePage extends AjaxDataTablePage<LeaveRequest> {
+public class LeaveRequestAjaxDataTablePage extends AjaxDataTablePage<LeaveRequestViewDTO, LeaveRequestSearchModel> {
 
     private static final long serialVersionUID = -2014336162839157158L;
 
     public LeaveRequestAjaxDataTablePage(final Panel parent, final String id, final String sortName,
-            final SearchModel<LeaveRequest> aSearch, final AjaxCallBack<Component> aCallBack,
-            final List<String> fields, final Class<? extends Component> abm) {
+            final LeaveRequestSearchModel aSearch, final AjaxCallBack<Component> aCallBack, final List<String> fields,
+            final Class<? extends Component> abm) {
         super(parent, id, sortName, aSearch, aCallBack, fields, abm);
     }
 
     @Override
-    protected void addCustomColumns(final List<IColumn<LeaveRequest>> columns) {
-        columns.add(new AbstractColumn<LeaveRequest>(new Model<String>("Detalle")) {
+    protected void addCustomColumns(final List<IColumn<LeaveRequestViewDTO>> columns) {
+        columns.add(new AbstractColumn<LeaveRequestViewDTO>(new Model<String>("Detalle")) {
 
             private static final long serialVersionUID = -2909724564965473105L;
 
             @Override
-            public void populateItem(final Item<ICellPopulator<LeaveRequest>> cellItem, final String componentId,
-                    final IModel<LeaveRequest> rowModel) {
+            public void populateItem(final Item<ICellPopulator<LeaveRequestViewDTO>> cellItem,
+                    final String componentId, final IModel<LeaveRequestViewDTO> rowModel) {
                 cellItem.add(new AjaxActionPanel(componentId, "details.png", "../") {
 
                     private static final long serialVersionUID = 1026116621448693265L;
 
                     @SuppressWarnings({ "rawtypes", "unchecked" })
-                    LeaveRequestDetailPanel comp = new LeaveRequestDetailPanel("body", rowModel.getObject(),
-                            (AbstractCallbackPanel) LeaveRequestAjaxDataTablePage.this.getParentPanel());
+                    LeaveRequestDetailPanel comp = new LeaveRequestDetailPanel("body",
+                            LeaveRequestAjaxDataTablePage.this.getSearchModel().getDetailForLeaveRequest(
+                                    rowModel.getObject()), (AbstractCallbackPanel) LeaveRequestAjaxDataTablePage.this
+                                    .getParentPanel());
 
                     @Override
                     public void onAction(final AjaxRequestTarget target) {

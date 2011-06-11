@@ -1,63 +1,79 @@
 package ar.edu.unq.dopplereffect.presentation.search.leaverequest;
 
 import java.util.Date;
+import java.util.List;
 
-import org.joda.time.DateTime;
-
-import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
-import ar.edu.unq.dopplereffect.service.LeaveRequestServiceImpl;
-import ar.edu.unq.dopplereffect.service.PersistenceService;
+import ar.edu.unq.dopplereffect.service.DTO;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestDTO;
+import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestDetailDTO;
+import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestService;
+import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestViewDTO;
 
-public class LeaveRequestSearchModel extends SearchModel<LeaveRequest> {
+public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
 
     private static final long serialVersionUID = -2535940685385343959L;
 
-    private PersistenceService<LeaveRequest> service;
+    private LeaveRequestService service;
 
-    private DateTime searchByDate;
+    private Date searchByDate;
 
-    private Employee searchByEmployee;
+    private EmployeeViewDTO searchByEmployee;
 
     public LeaveRequestSearchModel() {
-        super(LeaveRequest.class);
+        super(LeaveRequestViewDTO.class);
     }
 
     public Date getSearchByDate() {
-        return searchByDate == null ? null : searchByDate.toDate();
+        return searchByDate;
     }
 
     public void setSearchByDate(final Date searchByDate) {
-        this.searchByDate = new DateTime(searchByDate);
+        this.searchByDate = searchByDate;
     }
 
-    public Employee getSearchByEmployee() {
+    public EmployeeViewDTO getSearchByEmployee() {
         return searchByEmployee;
     }
 
-    public void setSearchByEmployee(final Employee searchByEmployee) {
+    public void setSearchByEmployee(final EmployeeViewDTO searchByEmployee) {
         this.searchByEmployee = searchByEmployee;
     }
 
-    @Override
-    public PersistenceService<LeaveRequest> getService() {
+    public LeaveRequestService getService() {
         return service;
     }
 
-    @Override
-    public void setService(final PersistenceService<LeaveRequest> service) {
+    public void setService(final LeaveRequestService service) {
         this.service = service;
     }
 
     @Override
     public void search() {
-        // TODO mejorar!
-        if (this.getSearchByEmployee() == null) {
-            this.setResults(((LeaveRequestServiceImpl) this.getService()).searchByDate(searchByDate));
+        if (this.searchingByEmployee()) {
+            if (this.searchingByDate()) {
+                this.setResults(this.getService().searchAllByDateAndEmployee(this.getSearchByDate(),
+                        this.getSearchByEmployee().getFirstName(), this.getSearchByEmployee().getLastName()));
+            } else {
+                this.setResults(this.getService().searchAllByEmployee(this.getSearchByEmployee().getFirstName(),
+                        this.getSearchByEmployee().getLastName()));
+            }
         } else {
-            this.setResults(((LeaveRequestServiceImpl) this.getService()).searchByEmployee(searchByEmployee));
+            if (this.searchingByDate()) {
+                this.setResults(this.getService().searchAllByDate(this.getSearchByDate()));
+            } else {
+                this.setResults(this.getService().searchAllLeaveRequests());
+            }
         }
+    }
+
+    private boolean searchingByDate() {
+        return this.getSearchByDate() != null;
+    }
+
+    private boolean searchingByEmployee() {
+        return this.getSearchByEmployee() != null;
     }
 
     @Override
@@ -65,5 +81,35 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequest> {
         super.reset();
         searchByEmployee = null;
         searchByDate = null;
+    }
+
+    @Override
+    protected List<LeaveRequestViewDTO> getAllResultsFromService() {
+        return this.getService().searchAllLeaveRequests();
+    }
+
+    @Override
+    protected <D extends DTO> void callSaveOnService(final D leaveReqDTO) {
+        this.getService().newLeaveRequest((LeaveRequestDTO) leaveReqDTO);
+    }
+
+    @Override
+    protected void callRemoveOnService(final LeaveRequestViewDTO leaveReqDTO) {
+        this.getService().deleteLeaveRequest(leaveReqDTO);
+    }
+
+    @Override
+    protected <D extends DTO> void callUpdateOnService(final D leaveReqDTO) {
+        this.getService().updateLeaveRequest((LeaveRequestDTO) leaveReqDTO);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public LeaveRequestDTO createEditDTO(final LeaveRequestViewDTO viewDTO) {
+        return this.getService().createEditDTO(viewDTO);
+    }
+
+    public LeaveRequestDetailDTO getDetailForLeaveRequest(final LeaveRequestViewDTO leaveReqDTO) {
+        return this.getService().getDetailForLeaveRequest(leaveReqDTO);
     }
 }

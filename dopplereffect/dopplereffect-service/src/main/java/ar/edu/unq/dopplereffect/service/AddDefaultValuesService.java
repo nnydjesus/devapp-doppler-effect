@@ -12,13 +12,13 @@ import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;
-import ar.edu.unq.dopplereffect.persistence.repositories.CareerPlanLevelRepositoryImpl;
-import ar.edu.unq.dopplereffect.persistence.repositories.EmployeeRepositoryImpl;
-import ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestRepositoryImpl;
-import ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestTypeRepositoryImpl;
-import ar.edu.unq.dopplereffect.persistence.repositories.ProjectRepositoryImpl;
-import ar.edu.unq.dopplereffect.persistence.repositories.SalarySpecificationRepositoryImpl;
-import ar.edu.unq.dopplereffect.persistence.repositories.SkillRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.employee.CareerPlanLevelRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.employee.EmployeeRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.employee.SalarySpecificationRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestTypeRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.project.ProjectRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.project.SkillRepositoryImpl;
 import ar.edu.unq.dopplereffect.projects.Project;
 import ar.edu.unq.dopplereffect.projects.ProjectBuilder;
 import ar.edu.unq.dopplereffect.projects.Skill;
@@ -27,7 +27,9 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
 
 @Service
-public class AddDefaultValuesService {
+public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service.Service {
+
+    private static final long serialVersionUID = -5992295762743150896L;
 
     // @formatter:off
     private static final LeaveRequestCustomType
@@ -93,7 +95,8 @@ public class AddDefaultValuesService {
         this.addLeaveRequestTypes();
         this.addLeaveRequests();
         this.addProjects();
-        // this.addSkills();
+        this.addSkills();
+        this.addSalarySpecs();
     }
 
     private void addSalarySpecs() {
@@ -194,19 +197,19 @@ public class AddDefaultValuesService {
         this.leaveReqTypeRepo = leaveReqTypeRepo;
     }
 
-    public void setSkillRepo(final SkillRepositoryImpl skillRepo) {
-        this.skillRepo = skillRepo;
-    }
-
     public SkillRepositoryImpl getSkillRepo() {
         return skillRepo;
     }
 
-    public void setSalarySpecRepo(final SalarySpecificationRepositoryImpl salarySpecRepo) {
-        this.salarySpecRepo = salarySpecRepo;
+    public void setSkillRepo(final SkillRepositoryImpl skillRepo) {
+        this.skillRepo = skillRepo;
     }
 
     public SalarySpecificationRepositoryImpl getSalarySpecRepo() {
         return salarySpecRepo;
+    }
+
+    public void setSalarySpecRepo(final SalarySpecificationRepositoryImpl salarySpecRepo) {
+        this.salarySpecRepo = salarySpecRepo;
     }
 }

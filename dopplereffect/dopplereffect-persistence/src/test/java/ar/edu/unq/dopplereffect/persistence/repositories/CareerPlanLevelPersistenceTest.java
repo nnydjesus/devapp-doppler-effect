@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
+import ar.edu.unq.dopplereffect.persistence.employee.CareerPlanLevelRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.util.SpringPersistenceTest;
 
 public class CareerPlanLevelPersistenceTest extends SpringPersistenceTest {

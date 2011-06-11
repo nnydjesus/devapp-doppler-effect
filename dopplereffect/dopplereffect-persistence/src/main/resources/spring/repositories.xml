@@ -3,39 +3,36 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	
-	<bean id="projectRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.ProjectRepositoryImpl">
+	<bean id="repo.project" class="ar.edu.unq.dopplereffect.persistence.project.ProjectRepositoryImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<bean id="skillRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.SkillRepositoryImpl">
+	<bean id="repo.skill" class="ar.edu.unq.dopplereffect.persistence.project.SkillRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="repo.employee" class="ar.edu.unq.dopplereffect.persistence.employee.EmployeeRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="repo.career_plan_level" class="ar.edu.unq.dopplereffect.persistence.employee.CareerPlanLevelRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="repo.salary_spec" class="ar.edu.unq.dopplereffect.persistence.employee.SalarySpecificationRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="repo.leave_request" class="ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="repo.leave_request_type" class="ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestTypeRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="repo.user" class="ar.edu.unq.dopplereffect.persistence.user.UserRepositoryImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="careerDataRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.CareerDataRepositoryImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<bean id="employeeRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.EmployeeRepositoryImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
-	<bean id="careerPlanLevelRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.CareerPlanLevelRepositoryImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
-	<bean id="salarySpecRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.SalarySpecificationRepositoryImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
-	<bean id="leaveReqRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestRepositoryImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
-	<bean id="leaveReqTypeRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.LeaveRequestTypeRepositoryImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
-	<bean id="userRepo" class="ar.edu.unq.dopplereffect.persistence.repositories.UserRepositoryImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
 </beans>

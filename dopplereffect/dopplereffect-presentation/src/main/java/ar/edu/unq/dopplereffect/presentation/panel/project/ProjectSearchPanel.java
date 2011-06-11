@@ -8,8 +8,6 @@ import ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
-/**
- */
 public class ProjectSearchPanel extends AbstractSearchPanel<ProjectSearchModel> {
     private static final long serialVersionUID = 1L;
 
@@ -22,4 +20,13 @@ public class ProjectSearchPanel extends AbstractSearchPanel<ProjectSearchModel> 
     // return this.createAjaxGrid();
     // }
 
+    @Override
+    protected String getFormWicketId() {
+        return "searchProjectForm";
+    }
+
+    @Override
+    protected String getNewFromBeanWicketId() {
+        return "newProject";
+    }
 }

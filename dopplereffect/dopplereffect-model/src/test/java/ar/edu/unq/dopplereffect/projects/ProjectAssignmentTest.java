@@ -1,7 +1,6 @@
 package ar.edu.unq.dopplereffect.projects;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import junit.framework.Assert;
 
 import org.joda.time.Interval;
@@ -9,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class ProjectAssignmentTest {

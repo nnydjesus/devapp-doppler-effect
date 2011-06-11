@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -81,7 +82,8 @@ public class CalendarPanel extends Panel {
         monthStrategy = new MonthStrategy(day);
         weekdayStrategy = new WeekdayStrategy(day);
         calendar = new Calendar(monthStrategy);
-        matrix = calendar.getCalendar(employeeService.getResults());
+        // TODO
+        // matrix = calendar.getCalendar(employeeService.getResults());
         scrollpane = new WebMarkupContainer("scrollpane");
         scrollpane.add(new ScrollPaneBehavior());
         this.makePage();
@@ -89,16 +91,16 @@ public class CalendarPanel extends Panel {
     }
 
     private void makePage() {
-
         hastaModel = new Model<String>("");
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         this.updateTable();
         this.addComponents();
     }
 
     protected MarkupContainer updateTable() {
         employeeService.search();
-        matrix = calendar.getCalendar(employeeService.getResults());
+        // TODO
+        // matrix = calendar.getCalendar(employeeService.getResults());
         return scrollpane.addOrReplace(this.createTable());
     }
 

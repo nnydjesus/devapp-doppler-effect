@@ -1,22 +1,25 @@
 package ar.edu.unq.dopplereffect.presentation.search.salaryspec;
 
-import ar.edu.unq.dopplereffect.presentation.search.SearchByExampleModel;
-import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
-import ar.edu.unq.dopplereffect.service.PersistenceService;
+import java.util.List;
 
-public class SalarySpecSearchModel extends SearchByExampleModel<SalarySpecification> {
+import ar.edu.unq.dopplereffect.presentation.search.SearchByExampleModel;
+import ar.edu.unq.dopplereffect.service.DTO;
+import ar.edu.unq.dopplereffect.service.salaryspec.SalarySpecDTO;
+import ar.edu.unq.dopplereffect.service.salaryspec.SalarySpecService;
+
+public class SalarySpecSearchModel extends SearchByExampleModel<SalarySpecDTO> {
 
     private static final long serialVersionUID = 3767171379328961777L;
 
-    private PersistenceService<SalarySpecification> service;
+    private SalarySpecService service;
 
     public SalarySpecSearchModel() {
-        super(SalarySpecification.class);
+        super(SalarySpecDTO.class);
     }
 
     @Override
-    public Class<SalarySpecification> getEntityType() {
-        return SalarySpecification.class;
+    public Class<SalarySpecDTO> getEntityType() {
+        return SalarySpecDTO.class;
     }
 
     public int getSearchByYear() {
@@ -27,13 +30,43 @@ public class SalarySpecSearchModel extends SearchByExampleModel<SalarySpecificat
         this.getExample().setYear(year);
     }
 
-    @Override
-    public PersistenceService<SalarySpecification> getService() {
+    public SalarySpecService getService() {
         return service;
     }
 
-    @Override
-    public void setService(final PersistenceService<SalarySpecification> service) {
+    public void setService(final SalarySpecService service) {
         this.service = service;
+    }
+
+    @Override
+    protected List<SalarySpecDTO> getAllResultsFromService() {
+        return this.getService().searchAllSalarySpecs();
+    }
+
+    @Override
+    protected <D extends DTO> void callSaveOnService(final D entity) {
+        this.getService().newSalarySpecification((SalarySpecDTO) entity);
+    }
+
+    @Override
+    protected void callRemoveOnService(final SalarySpecDTO entity) {
+        this.getService().deleteSalarySpecification(entity);
+    }
+
+    @Override
+    protected <D extends DTO> void callUpdateOnService(final D entity) {
+        this.getService().updateSalarySpecification((SalarySpecDTO) entity);
+    }
+
+    @Override
+    public List<SalarySpecDTO> searchByExample(final SalarySpecDTO example) {
+        return this.getService().searchAllByExample(example);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public SalarySpecDTO createEditDTO(final SalarySpecDTO viewDTO) {
+        // en este caso se usa el mismo dto
+        return viewDTO;
     }
 }

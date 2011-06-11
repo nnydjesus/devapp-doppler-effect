@@ -13,35 +13,32 @@ import org.odlabs.wiquery.core.javascript.JsScope;
 
 import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.pages.basic.EntityPanel;
-import ar.edu.unq.dopplereffect.projects.Project;
+import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
 
 import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
 
-/**
- */
-
-public class ProjectPanel extends EntityPanel<Project> {
+public class ProjectPanel extends EntityPanel<ProjectDTO> {
     private static final long serialVersionUID = 1L;
 
-    public ProjectPanel(final String id, final ProjectSearchPanel previousPage, final Project model,
+    public ProjectPanel(final String id, final ProjectSearchPanel previousPage, final ProjectDTO model,
             final Boolean editMode) {
         super(id, model, previousPage, editMode);
     }
 
-    public ProjectPanel(final String id, final ProjectSearchPanel previousPage, final Project model) {
+    public ProjectPanel(final String id, final ProjectSearchPanel previousPage, final ProjectDTO model) {
         super(id, model, previousPage);
     }
 
     public ProjectPanel(final String id, final ProjectSearchPanel previousPage) {
-        super(id, new Project(), previousPage);
+        super(id, new ProjectDTO(), previousPage);
     }
 
     @Override
-    protected void addFields(final Form<Project> form) {
+    protected void addFields(final Form<ProjectDTO> form) {
         final AddSkillDialog addSkillDialog = new AddSkillDialog("addSkillDialog", this.getModelObject());
         form.add(this.getFeedbackPanel());
-        form.add(new RequiredTextField<Project>("name").add(new TextFieldWatermarkBehaviour("Project Name")));
-        form.add(new TextField<Project>("maxEffort"));
+        form.add(new RequiredTextField<String>("name").add(new TextFieldWatermarkBehaviour("Project Name")));
+        form.add(new TextField<Long>("maxEffort"));
         Button addSkill = (Button) CustomComponent.addButtonSking(new Button("addSkill", new StringResourceModel(
                 "addSkill", new Model<String>(""))));
         form.add(addSkill);
@@ -55,8 +52,12 @@ public class ProjectPanel extends EntityPanel<Project> {
             public JsScope callback() {
                 return JsScope.quickScope(addSkillDialog.open().render());
             }
-
         }));
+    }
+
+    @Override
+    protected String getFormWicketId() {
+        return "projectForm";
     }
 
     @Override

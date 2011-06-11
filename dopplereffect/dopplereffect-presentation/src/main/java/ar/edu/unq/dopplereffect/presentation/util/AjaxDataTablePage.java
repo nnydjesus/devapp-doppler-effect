@@ -20,11 +20,12 @@ import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
+import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
  */
-public class AjaxDataTablePage<T extends Serializable> implements Serializable, ITable {
+public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implements Serializable, ITable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +33,7 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
 
     private Component parentPage;
 
-    private SearchModel<T> searchModel;
+    private S searchModel;
 
     private List<String> fields;
 
@@ -50,9 +51,8 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
 
     private String sortName;
 
-    public AjaxDataTablePage(final Panel parent, final String id, final String sortName,
-            final SearchModel<T> searchModel, final AjaxCallBack<Component> callBack, final List<String> fields,
-            final Class<? extends Component> abmClass) {
+    public AjaxDataTablePage(final Panel parent, final String id, final String sortName, final S searchModel,
+            final AjaxCallBack<Component> callBack, final List<String> fields, final Class<? extends Component> abmClass) {
 
         this.setId(id);
         this.setSortName(sortName);
@@ -85,7 +85,8 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
                     public void onAction(final AjaxRequestTarget target) {
                         Component page = ReflectionUtils.instanciate(AjaxDataTablePage.this.getAbmClass(),
                                 AjaxDataTablePage.this.getParentPanel().getId(),
-                                AjaxDataTablePage.this.getParentPage(), model.getObject(), true);
+                                AjaxDataTablePage.this.getParentPage(), AjaxDataTablePage.this.getSearchModel()
+                                        .createEditDTO(model.getObject()), true);
                         callBack.execute(target, page);
                     }
 
@@ -104,14 +105,14 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
 
                     @Override
                     public void onAction(final AjaxRequestTarget target) {
-                        AjaxDataTablePage.this.getSearch().remove(rowModel.getObject());
+                        AjaxDataTablePage.this.getSearchModel().remove(rowModel.getObject());
                         target.addComponent(AjaxDataTablePage.this.getAjaxdataTable());
                     }
                 });
             }
         });
         this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(this.getId(), columns,
-                new GenericSortableDataProvider<T>(this.getId(), this.getSearch(), this.getSortName()),
+                new GenericSortableDataProvider<T>(this.getId(), this.getSearchModel(), this.getSortName()),
                 SearchModel.PAGE_SIZE));
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
@@ -145,14 +146,6 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
     @Override
     public void setParentPage(final Component page) {
         this.parentPage = page;
-    }
-
-    public SearchModel<T> getSearch() {
-        return this.getSearchModel();
-    }
-
-    public void setSearch(final SearchModel<T> search) {
-        this.setSearchModel(search);
     }
 
     public AjaxFallbackDefaultDataTable<T> getAjaxdataTable() {
@@ -204,11 +197,11 @@ public class AjaxDataTablePage<T extends Serializable> implements Serializable, 
         this.callBack = callBack;
     }
 
-    public SearchModel<T> getSearchModel() {
+    public S getSearchModel() {
         return searchModel;
     }
 
-    public void setSearchModel(final SearchModel<T> searchModel) {
+    public void setSearchModel(final S searchModel) {
         this.searchModel = searchModel;
     }
 

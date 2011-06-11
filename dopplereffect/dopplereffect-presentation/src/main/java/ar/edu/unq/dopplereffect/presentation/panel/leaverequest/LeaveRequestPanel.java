@@ -2,44 +2,64 @@ package ar.edu.unq.dopplereffect.presentation.panel.leaverequest;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.wicket.datetime.StyleDateConverter;
 import org.apache.wicket.datetime.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.joda.time.DateTime;
 
-import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.presentation.pages.basic.EntityPanel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
-import ar.edu.unq.dopplereffect.service.ServiceImpl;
-import ar.edu.unq.dopplereffect.time.DurationStrategy;
-import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
-import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeService;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestDTO;
+import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestService;
 
-public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
+public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
 
     private static final long serialVersionUID = 1511189466309907850L;
 
-    @SpringBean(name = "leaveReqTypeService")
-    private ServiceImpl<LeaveRequestType> leaveReqTypeService;
+    @SpringBean(name = "service.leave_request")
+    private LeaveRequestService leaveRequestService;
 
-    @SpringBean(name = "employeeService")
-    private ServiceImpl<Employee> employeeService;
+    @SpringBean(name = "service.employee")
+    private EmployeeService employeeService;
 
-    private Employee employee;
+    private EmployeeViewDTO employee;
 
-    public LeaveRequestPanel(final String id, final LeaveRequestSearchPanel previousPage) {
-        super(id, new LeaveRequest(), previousPage);
+    public LeaveRequestService getLeaveRequestService() {
+        return leaveRequestService;
     }
 
-    public LeaveRequestPanel(final String id, final LeaveRequestSearchPanel previousPage, final LeaveRequest model,
+    public void setLeaveRequestService(final LeaveRequestService leaveRequestService) {
+        this.leaveRequestService = leaveRequestService;
+    }
+
+    public EmployeeViewDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(final EmployeeViewDTO employee) {
+        this.employee = employee;
+    }
+
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
+
+    public void setEmployeeService(final EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    public LeaveRequestPanel(final String id, final LeaveRequestSearchPanel previousPage) {
+        super(id, new LeaveRequestDTO(), previousPage);
+    }
+
+    public LeaveRequestPanel(final String id, final LeaveRequestSearchPanel previousPage, final LeaveRequestDTO model,
             final Boolean editMode) {
         super(id, model, previousPage, editMode);
     }
@@ -50,7 +70,7 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
     }
 
     @Override
-    protected void addFields(final Form<LeaveRequest> form) {
+    protected void addFields(final Form<LeaveRequestDTO> form) {
         form.add(this.getFeedbackPanel());
         this.addEmployeeCombo(form);
         this.addTypeCombo(form);
@@ -59,136 +79,57 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequest> {
         this.addEndDateField(form);
     }
 
-    private void addEmployeeCombo(final Form<LeaveRequest> form) {
-        DropDownChoice<Employee> ddc = new DropDownChoice<Employee>("employeeCombo", new PropertyModel<Employee>(
-                form.getDefaultModelObject(), "employee"), this.getEmployeeService().searchAll());
+    private void addEmployeeCombo(final Form<LeaveRequestDTO> form) {
+        DropDownChoice<EmployeeViewDTO> ddc = new DropDownChoice<EmployeeViewDTO>("employeeCombo",
+                new PropertyModel<EmployeeViewDTO>(form.getDefaultModelObject(), "employee"), this.getEmployeeService()
+                        .searchAllEmployees());
         ddc.setNullValid(true);
         ddc.setRequired(true);
         if (this.getEmployee() != null) {
-            ddc.setModelObject(this.getEmployee());
+            for (EmployeeViewDTO choice : ddc.getChoices()) {
+                if (choice.getDni() == this.getEmployee().getDni()) {
+                    ddc.setModelObject(choice);
+                }
+            }
             ddc.setEnabled(false);
         }
         form.add(ddc);
     }
 
-    protected void addDurationTypeCombo(final Form<LeaveRequest> form) {
-        @SuppressWarnings({ "rawtypes", "unchecked" })
-        DropDownChoice durationTypeDropDownChoice = new DropDownChoice("duration", new PropertyModel<DurationStrategy>(
-                form.getDefaultModelObject(), "durationStrategy"), Arrays.asList(new OneDayDurationStrategy(),
-                new IntervalDurationStrategy()));
+    protected void addDurationTypeCombo(final Form<LeaveRequestDTO> form) {
+        List<String> choices = Arrays.asList("One Day", "Interval");
+        DropDownChoice<String> durationTypeDropDownChoice = new DropDownChoice<String>("durationType", choices);
         durationTypeDropDownChoice.setRequired(true);
         durationTypeDropDownChoice.setNullValid(true);
         form.add(durationTypeDropDownChoice);
     }
 
-    protected void addTypeCombo(final Form<LeaveRequest> form) {
-        @SuppressWarnings({ "rawtypes", "unchecked" })
-        DropDownChoice typeDropDownChoice = new DropDownChoice("type", new PropertyModel<LeaveRequestType>(
-                form.getDefaultModelObject(), "type"), this.getLeaveReqTypeService().searchAll());
-        typeDropDownChoice.setRequired(true);
-        typeDropDownChoice.setNullValid(true);
-        form.add(typeDropDownChoice);
+    protected void addTypeCombo(final Form<LeaveRequestDTO> form) {
+        DropDownChoice<String> ddc = new DropDownChoice<String>("reason", this.getLeaveRequestService()
+                .searchAllReasons());
+        ddc.setRequired(true);
+        ddc.setNullValid(true);
+        form.add(ddc);
     }
 
-    private void addStartDateField(final Form<LeaveRequest> form) {
-        // TODO una chanchada, prometo mejorarlo
-        StyleDateConverter converter = new StyleDateConverter(true);
-        Model<Date> model = new Model<Date>() {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public Date getObject() {
-                DurationStrategy durStrategy = ((LeaveRequest) form.getDefaultModelObject()).getDurationStrategy();
-                if (durStrategy == null) {
-                    return null;
-                }
-                if (durStrategy instanceof IntervalDurationStrategy) {
-                    DateTime startDate = ((IntervalDurationStrategy) durStrategy).getStartDate();
-                    return startDate == null ? null : startDate.toDate();
-                }
-                if (durStrategy instanceof OneDayDurationStrategy) {
-                    DateTime date = ((OneDayDurationStrategy) durStrategy).getDate();
-                    return date == null ? null : date.toDate();
-                }
-                return null;
-            }
-
-            @Override
-            public void setObject(final Date object) {
-                DurationStrategy durStrategy = ((LeaveRequest) form.getDefaultModelObject()).getDurationStrategy();
-                if (durStrategy instanceof IntervalDurationStrategy) {
-                    ((IntervalDurationStrategy) durStrategy).setStartDate(new DateTime(object));
-                }
-                if (durStrategy instanceof OneDayDurationStrategy) {
-                    ((OneDayDurationStrategy) durStrategy).setDate(new DateTime(object));
-                }
-            }
-        };
-        DateTextField dateTextField = new DateTextField("startDate", model, converter);
+    private void addStartDateField(final Form<LeaveRequestDTO> form) {
+        DateTextField dateTextField = new DateTextField("startDate", new PropertyModel<Date>(
+                form.getDefaultModelObject(), "startDate"), new StyleDateConverter(true));
         dateTextField.add(new DatePicker());
         dateTextField.setRequired(true);
         form.add(dateTextField);
     }
 
-    private void addEndDateField(final Form<LeaveRequest> form) {
-        StyleDateConverter converter = new StyleDateConverter(true);
-        Model<Date> model = new Model<Date>() {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public Date getObject() {
-                DurationStrategy durStrategy = ((LeaveRequest) form.getDefaultModelObject()).getDurationStrategy();
-                if (durStrategy == null) {
-                    return null;
-                }
-                if (durStrategy instanceof IntervalDurationStrategy) {
-                    DateTime endDate = ((IntervalDurationStrategy) durStrategy).getEndDate();
-                    return endDate == null ? null : endDate.toDate();
-                }
-                return null;
-            }
-
-            @Override
-            public void setObject(final Date object) {
-                DurationStrategy durStrategy = ((LeaveRequest) form.getDefaultModelObject()).getDurationStrategy();
-                if (durStrategy instanceof IntervalDurationStrategy) {
-                    ((IntervalDurationStrategy) durStrategy).setEndDate(new DateTime(object));
-                }
-            }
-        };
-        DateTextField dateTextField = new DateTextField("endDate", model, converter);
+    private void addEndDateField(final Form<LeaveRequestDTO> form) {
+        DateTextField dateTextField = new DateTextField("endDate", new PropertyModel<Date>(
+                form.getDefaultModelObject(), "endDate"), new StyleDateConverter(true));
         dateTextField.add(new DatePicker());
+        dateTextField.setRequired(true);
         form.add(dateTextField);
     }
 
     @Override
     protected String getFormWicketId() {
         return "leaveRequestForm";
-    }
-
-    public ServiceImpl<LeaveRequestType> getLeaveReqTypeService() {
-        return leaveReqTypeService;
-    }
-
-    public void setLeaveReqTypeService(final ServiceImpl<LeaveRequestType> leaveReqTypeService) {
-        this.leaveReqTypeService = leaveReqTypeService;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(final Employee employee) {
-        this.employee = employee;
-    }
-
-    public ServiceImpl<Employee> getEmployeeService() {
-        return employeeService;
-    }
-
-    public void setEmployeeService(final ServiceImpl<Employee> employeeService) {
-        this.employeeService = employeeService;
     }
 }

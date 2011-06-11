@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import ar.edu.unq.dopplereffect.service.PersistenceService;
+import ar.edu.unq.dopplereffect.service.DTO;
 
-public abstract class SearchModel<T> implements Serializable {
+public abstract class SearchModel<T extends DTO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,26 +29,22 @@ public abstract class SearchModel<T> implements Serializable {
         this.results = resultado;
     }
 
-    public void save(final T entity) {
-        this.getService().save(entity);
-        this.getResults().add(entity);
+    public <D extends DTO> void save(final D entity) {
+        this.callSaveOnService(entity);
         this.search();
     }
 
     public void search() {
-        this.setResults(this.getService().searchAll());
+        this.setResults(this.getAllResultsFromService());
     }
 
     public void remove(final T entity) {
-        this.getService().delete(entity);
-        this.getResults().remove(entity);
+        this.callRemoveOnService(entity);
         this.search();
     }
 
-    public void update(final T entity) {
-        this.getService().update(entity);
-        this.getResults().remove(entity);
-        this.getResults().add(entity);
+    public <D extends DTO> void update(final D entity) {
+        this.callUpdateOnService(entity);
         this.search();
     }
 
@@ -64,7 +60,13 @@ public abstract class SearchModel<T> implements Serializable {
         this.setResults(new LinkedList<T>());
     }
 
-    public abstract PersistenceService<T> getService();
+    protected abstract List<T> getAllResultsFromService();
 
-    public abstract void setService(PersistenceService<T> service);
+    protected abstract <D extends DTO> void callSaveOnService(D entity);
+
+    protected abstract void callRemoveOnService(T entity);
+
+    protected abstract <D extends DTO> void callUpdateOnService(D entity);
+
+    public abstract <D extends DTO> D createEditDTO(T viewDTO);
 }
