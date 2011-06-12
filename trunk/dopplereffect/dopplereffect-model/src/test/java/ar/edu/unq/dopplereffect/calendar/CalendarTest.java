@@ -1,7 +1,8 @@
 package ar.edu.unq.dopplereffect.calendar;
 
 import static ar.edu.unq.dopplereffect.helpers.DateHelpers.D_2011_04_05;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +44,8 @@ public class CalendarTest {
         return this.getEmployees();
     }
 
-    protected Calendar getCalendar() {
-        return new Calendar(this.getCalendarStrategy());
+    protected Calendar<Employee> getCalendar() {
+        return new Calendar<Employee>(this.getCalendarStrategy());
     }
 
     @Test
