@@ -15,20 +15,19 @@ public class NavigablePanel<T> extends AbstractPanel<T> {
 
     private static final long serialVersionUID = 1L;
 
-    private AbstractCallbackPanel<? extends Serializable> previousPage;
+    private AbstractCallbackPanel<? extends Serializable> callBackPrevuousPanel;
 
-    public NavigablePanel(final String id, final T model,
-            final AbstractCallbackPanel<? extends Serializable> previousPage) {
+    public NavigablePanel(final String id, final T model, final AbstractCallbackPanel<? extends Serializable> callback) {
         super(id, model);
-        this.setPreviousPage(previousPage);
+        this.setCallBackPrevuousPanel(callback);
     }
 
-    public AbstractCallbackPanel<? extends Serializable> getPreviousPage() {
-        return previousPage;
+    public AbstractCallbackPanel<? extends Serializable> getCallBackPrevuousPanel() {
+        return callBackPrevuousPanel;
     }
 
     public void back(final AjaxRequestTarget ajaxTarget) {
-        this.getPreviousPage().back(ajaxTarget);
+        this.getCallBackPrevuousPanel().back(ajaxTarget);
     }
 
     public Link<Object> getBackLink(final String wicketId) {
@@ -43,7 +42,7 @@ public class NavigablePanel<T> extends AbstractPanel<T> {
         };
     }
 
-    public void setPreviousPage(final AbstractCallbackPanel<? extends Serializable> previousPage) {
-        this.previousPage = previousPage;
+    public void setCallBackPrevuousPanel(final AbstractCallbackPanel<? extends Serializable> previousPage) {
+        this.callBackPrevuousPanel = previousPage;
     }
 }

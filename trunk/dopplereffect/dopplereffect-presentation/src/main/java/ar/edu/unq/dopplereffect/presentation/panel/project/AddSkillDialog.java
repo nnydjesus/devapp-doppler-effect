@@ -33,15 +33,14 @@ public class AddSkillDialog extends Dialog {
     public AddSkillDialog(final String id, final ProjectDTO project) {
         super(id);
         this.setWidth(300);
-        this.setHeight(500);
-        this.setResizable(false);
+        this.setHeight(400);
         this.setProject(project);
         this.setSkills(new ArrayList<SkillDTO>());
         this.getSkills().addAll(project.getSkills());
         this.setResults(this.getSkillService().searchAllSkills());
         this.getResults().removeAll(this.getSkills());
-        this.add(new SortablePanel<SkillDTO>("skill1", this.getSkills(), true));
-        this.add(new SortablePanel<SkillDTO>("skill2", this.getResults(), false));
+        this.add(new SortablePanel<SkillDTO>("skill1", this.getSkills()));
+        this.add(new SortablePanel<SkillDTO>("skill2", this.getResults()));
         this.add(CustomComponent.addButtonSking(new Link<String>("aceptar") {
             private static final long serialVersionUID = 1L;
 

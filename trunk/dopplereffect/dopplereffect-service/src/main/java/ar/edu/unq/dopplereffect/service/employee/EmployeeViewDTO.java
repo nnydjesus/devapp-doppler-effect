@@ -1,8 +1,15 @@
 package ar.edu.unq.dopplereffect.service.employee;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.joda.time.DateTime;
+
+import ar.edu.unq.dopplereffect.assignments.Assignable;
+import ar.edu.unq.dopplereffect.calendar.Calendareable;
 import ar.edu.unq.dopplereffect.service.DTO;
 
-public class EmployeeViewDTO implements DTO {
+public class EmployeeViewDTO implements DTO, Calendareable {
 
     private static final long serialVersionUID = -2377606763449769912L;
 
@@ -11,6 +18,8 @@ public class EmployeeViewDTO implements DTO {
     private String lastName;
 
     private int dni;
+
+    private Set<Assignable> assignments = new HashSet<Assignable>();
 
     public String getFirstName() {
         return firstName;
@@ -39,6 +48,25 @@ public class EmployeeViewDTO implements DTO {
     @Override
     public String toString() {
         return this.getFirstName() + " " + this.getLastName();
+    }
+
+    @Override
+    public Assignable getAssignableForDay(final DateTime date) {
+        for (Assignable assignable : this.getAssignments()) {
+            if (assignable.includesDay(date)) {
+                return assignable;
+            }
+        }
+        return null;
+
+    }
+
+    public void setAssignments(final Set<Assignable> set) {
+        assignments = set;
+    }
+
+    public Set<Assignable> getAssignments() {
+        return assignments;
     }
 
 }

@@ -95,7 +95,6 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
         this.addLeaveRequestTypes();
         this.addLeaveRequests();
         this.addProjects();
-        this.addSkills();
         this.addSalarySpecs();
     }
 

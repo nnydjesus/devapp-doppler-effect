@@ -3,6 +3,7 @@ package ar.edu.unq.dopplereffect.service.employee;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,6 +104,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         result.setFirstName(employee.getFirstName());
         result.setLastName(employee.getLastName());
         result.setDni(employee.getDni());
+        Hibernate.initialize(employee.getAssignments());
+        result.getAssignments().addAll(employee.getAssignments());
         return result;
     }
 

@@ -2,6 +2,8 @@ package ar.edu.unq.dopplereffect.presentation.panel.employee;
 
 import java.util.Arrays;
 
+import org.apache.wicket.markup.html.panel.Panel;
+
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
@@ -18,10 +20,16 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<Employe
 
     private EmployeeAjaxDataTable employeeAjaxDataTable;
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "rawtypes" })
     public EmployeeSearchPanel(final String id, final AjaxCallBack parentPage, final EmployeeSearchModel model,
             final LeaveRequestSearchModel leaveRequestSearchModel) {
-        super(id, parentPage, model, Arrays.asList("firstName", "lastName", "dni"), EmployeePanel.class);
+        this(id, parentPage, null, model, leaveRequestSearchModel);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public EmployeeSearchPanel(final String id, final AjaxCallBack parentPage, final Panel backPanel,
+            final EmployeeSearchModel model, final LeaveRequestSearchModel leaveRequestSearchModel) {
+        super(id, parentPage, backPanel, model, Arrays.asList("firstName", "lastName", "dni"), EmployeePanel.class);
         this.getEmployeeAjaxDataTable().setLeaveRequestSearchModel(leaveRequestSearchModel);
     }
 

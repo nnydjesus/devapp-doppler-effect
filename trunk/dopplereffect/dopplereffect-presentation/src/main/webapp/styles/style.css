@@ -252,7 +252,7 @@ p {
 table.dataview {
 	margin-bottom: 10px;
 	border-bottom: 1px solid #0079d6;
-	font-size: 1em;
+	font-size: 10px;
 	font-family: arial;
 	border: 1px solid #CCC;
 }
@@ -367,7 +367,7 @@ table.dataview tfoot td,tfoot th {
 
 caption {
 	text-align: left;
-	font-size: 120%;
+	font-size: 80%;
 	padding: 10px 0;
 	color: #666;
 }

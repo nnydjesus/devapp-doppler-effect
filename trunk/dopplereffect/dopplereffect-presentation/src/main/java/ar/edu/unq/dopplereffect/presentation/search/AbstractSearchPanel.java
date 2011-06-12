@@ -6,6 +6,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
@@ -35,10 +36,15 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
      * @param parameters
      *            Page parameters
      */
-    @SuppressWarnings({ "unchecked" })
     public AbstractSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final T model,
             final List<String> fields, final Class abm) {
-        super(id, parentPage, model);
+        this(id, parentPage, null, model, fields, abm);
+    }
+
+    @SuppressWarnings("unchecked")
+    public AbstractSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final Panel backPanel,
+            final T model, final List<String> fields, final Class abm) {
+        super(id, parentPage, backPanel, model);
         this.setFields(fields);
         this.setAbm(abm);
         this.init(this.createForm(this.getFormWicketId()));
@@ -65,8 +71,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
                         AbstractSearchPanel.this.getId(), AbstractSearchPanel.this);
             }
         }));
-        this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), null, new StringResourceModel(
-                "backButton", new Model<String>(""))));
+        this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), this.getBackPanel(),
+                new StringResourceModel("backButton", new Model<String>(""))));
     }
 
     protected void addResultSection(final ITable iTable) {

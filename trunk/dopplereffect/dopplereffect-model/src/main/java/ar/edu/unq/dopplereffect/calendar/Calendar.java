@@ -5,12 +5,11 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import ar.edu.unq.dopplereffect.assignments.Assignable;
-import ar.edu.unq.dopplereffect.employees.Employee;
 
 /**
  * Representa una calendario semanal para de los empleados
  */
-public class Calendar extends AbstractCalendar {
+public class Calendar<T extends Calendareable> extends AbstractCalendar<T> {
 
     /* ************************ INSTANCE VARIABLES ************************ */
     /* *************************** CONSTRUCTORS *************************** */
@@ -25,13 +24,13 @@ public class Calendar extends AbstractCalendar {
     /* **************************** OPERATIONS **************************** */
 
     @Override
-    public Matrix<Employee, DateTime, Assignable> getCalendar(final List<Employee> employees) {
-        final Matrix<Employee, DateTime, Assignable> matrix = new Matrix<Employee, DateTime, Assignable>();
+    public Matrix<T, DateTime, Assignable> getCalendar(final List<T> calendareables) {
+        final Matrix<T, DateTime, Assignable> matrix = new Matrix<T, DateTime, Assignable>();
         CalendarStrategy day;
-        for (Employee employee : employees) {
+        for (T calendareable : calendareables) {
             day = this.getStrategy().cloneStrategy();
             for (int i = 0; i < this.getStrategy().getTotalDays(); i++) {
-                matrix.put(employee, day.getDay(), employee.getAssignableForDay(day.getDay()));
+                matrix.put(calendareable, day.getDay(), calendareable.getAssignableForDay(day.getDay()));
                 day.plus();
             }
         }

@@ -20,6 +20,7 @@ import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSea
 import ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.service.AddDefaultValuesService;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 /**
  * Simple home page.
@@ -62,7 +63,8 @@ public class HomePage extends AbstractWebPage<Component> {
         // this.add(this.createPanelLink("career_plans", new
         // CareerPlanPanel(bodyId, callback)));
 
-        this.add(this.createPanelLink("calendar", new CalendarPanel(bodyId, employeeSearchModel)));
+        this.add(this.createPanelLink("calendar", new CalendarPanel<EmployeeViewDTO>(bodyId, employeeSearchModel,
+                leaveReqSearchModel, callback)));
         this.add(new HeaderPanel("items"));
     }
 
@@ -76,38 +78,6 @@ public class HomePage extends AbstractWebPage<Component> {
                 ((SearchModel) panel.getDefaultModelObject()).reset();
                 HomePage.this.generateCallback().execute(target, panel);
             }
-
-            // @Override
-            // protected IAjaxCallDecorator getAjaxCallDecorator() {
-            // return new AjaxCallDecorator() {
-            //
-            // private static final long serialVersionUID = 1L;
-            //
-            // @Override
-            // public CharSequence decorateOnSuccessScript(final CharSequence
-            // script) {
-            // SlideDown effect = new SlideDown(EffectSpeed.SLOW);
-            // return new
-            // JsStatement().$(panel).chain(effect).render(true).toString() +
-            // script + ";";
-            // }
-            //
-            // @Override
-            // public CharSequence decorateScript(final CharSequence script) {
-            // Effect effect = new FadeIn(EffectSpeed.SLOW);
-            // effect.setCallback(new JsScope() {
-            // private static final long serialVersionUID = 1L;
-            //
-            // @Override
-            // protected void execute(final JsScopeContext scopeContext) {
-            // scopeContext.append(script);
-            // }
-            // });
-            // return new JsStatement().$(panel).chain(effect).render(true);
-            // }
-            // };
-            // }
-
         };
     }
 
