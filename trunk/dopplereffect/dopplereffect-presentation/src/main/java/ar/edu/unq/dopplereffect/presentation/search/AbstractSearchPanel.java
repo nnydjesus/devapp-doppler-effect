@@ -59,8 +59,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     }
 
     protected void addButtons(final Form<T> form) {
-        form.add(new ReflectionAjaxButton<T>(this.getSubmitButtonWicketId(), form, this.getAjaxSectionResult(),
-                new StringResourceModel("searchButton", new Model<String>(""))));
+        form.add(new ReflectionAjaxButton<AbstractSearchPanel<T>>(this.getSubmitButtonWicketId(), this, this
+                .getAjaxSectionResult(), new StringResourceModel("searchButton", new Model<String>(""))));
         form.add(new PanelCallbackLink(this.getNewFromBeanWicketId(), this.getCallback(), new StringResourceModel(
                 "newEntityButton", new Model<String>("")), new WebComponentFactory<Component>() {
             private static final long serialVersionUID = 1L;
@@ -156,6 +156,17 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
 
     protected String getSortName() {
         return "name";
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        ajaxSectionResult.setVisible(false);
+    }
+
+    public void search() {
+        this.getModelObject().search();
+        ajaxSectionResult.setVisible(true);
     }
 
     protected String getBeanName() {

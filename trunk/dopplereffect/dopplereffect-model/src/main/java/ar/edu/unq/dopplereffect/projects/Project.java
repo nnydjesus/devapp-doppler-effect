@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.Period;
 
+import ar.edu.unq.dopplereffect.data.PersonalData;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
@@ -25,7 +26,7 @@ public class Project extends Entity {
 
     private String name;
 
-    private ClientData clientData;
+    private PersonalData clientData;
 
     private Period timeProyect;
 
@@ -43,6 +44,7 @@ public class Project extends Entity {
 
     public Project() {
         super();
+        clientData = new PersonalData();
         this.setCurrentEffort(0L);
     }
 
@@ -140,11 +142,11 @@ public class Project extends Entity {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public ClientData getClientData() {
+    public PersonalData getClientData() {
         return clientData;
     }
 
-    public void setClientData(final ClientData clientData) {
+    public void setClientData(final PersonalData clientData) {
         this.clientData = clientData;
     }
 

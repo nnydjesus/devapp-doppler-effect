@@ -29,29 +29,29 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
 
     private T object;
 
-    public ReflectionAjaxButton(final String id, final Form<T> form, final Component ajaxTarget,
+    public ReflectionAjaxButton(final String id, final T objectModel, final Component ajaxTarget,
             final IModel<String> model) {
-        this(id, id, form, ajaxTarget, model);
+        this(id, id, objectModel, ajaxTarget, model);
     }
 
-    public ReflectionAjaxButton(final String id, final Form<T> form, final Component ajaxTarget) {
-        this(id, form, ajaxTarget, new Model<String>(""));
+    public ReflectionAjaxButton(final String id, final T objectModel, final Component ajaxTarget) {
+        this(id, objectModel, ajaxTarget, new Model<String>(""));
 
     }
 
-    public ReflectionAjaxButton(final String id, final String action, final Form<T> form, final Component anAjaxTarget,
-            final IModel<String> model) {
+    public ReflectionAjaxButton(final String id, final String action, final T objectModel,
+            final Component anAjaxTarget, final IModel<String> model) {
         super(id, model);
         this.add(new ButtonBehavior());
         this.setAction(action);
         this.ajaxTarget = anAjaxTarget;
-        this.setObject(form.getModel().getObject());
+        this.setObject(objectModel);
     }
 
     @Override
     protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
         this.execute();
-        target.addComponent(this.getAjaxTarget());
+        target.addComponent((Component) this.getObject());
     }
 
     protected void execute() {

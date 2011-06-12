@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.builders.salaries.SalarySpecificationBuilder;
+import ar.edu.unq.dopplereffect.data.PersonalData;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
@@ -67,10 +68,10 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
         AOP_M = new Skill("AOP", SkillLevel.MEDIUM);
     
     private static final Project 
-        SERENITO = new ProjectBuilder().withName("Serenito").addSkill(JAVA_E).withEstimatedEffort(12552).build(),
-        CINDOR = new ProjectBuilder().withName("Cindor").addSkill(HIBERNATE_B).withEstimatedEffort(3214).build(),
-        CINE_PLEX = new ProjectBuilder().withName("Cine Plex").addSkill(POO_E).withEstimatedEffort(545214).build(),
-        SANTANDER = new ProjectBuilder().withName("Santander").addSkill(AOP_M).withEstimatedEffort(252525).build();
+        SERENITO = new ProjectBuilder().withName("Serenito").addSkill(JAVA_E).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(12552).build(),
+        CINDOR = new ProjectBuilder().withName("Cindor").addSkill(HIBERNATE_B).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(3214).build(),
+        CINE_PLEX = new ProjectBuilder().withName("Cine Plex").addSkill(POO_E).withInformationClient(new PersonalData("De Niro",null)).withEstimatedEffort(545214).build(),
+        SANTANDER = new ProjectBuilder().withName("Santander").addSkill(AOP_M).withInformationClient(new PersonalData("Rio",null)).withEstimatedEffort(252525).build();
         
     
     // @formatter:on

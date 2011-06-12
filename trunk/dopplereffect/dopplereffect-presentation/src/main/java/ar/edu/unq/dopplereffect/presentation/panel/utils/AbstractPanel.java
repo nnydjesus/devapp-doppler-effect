@@ -55,4 +55,5 @@ public class AbstractPanel<T> extends Panel {
     protected IModel<T> getModel() {
         return (IModel<T>) this.getDefaultModel();
     }
+
 }

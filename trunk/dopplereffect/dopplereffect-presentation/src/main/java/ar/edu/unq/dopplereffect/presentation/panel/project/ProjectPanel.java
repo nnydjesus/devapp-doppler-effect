@@ -1,5 +1,7 @@
 package ar.edu.unq.dopplereffect.presentation.panel.project;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -42,7 +44,7 @@ public class ProjectPanel extends EntityPanel<ProjectDTO> {
         Button addSkill = (Button) CustomComponent.addButtonSking(new Button("addSkill", new StringResourceModel(
                 "addSkill", new Model<String>(""))));
         form.add(addSkill);
-        form.add(addSkillDialog);
+        this.add(addSkillDialog);
 
         addSkill.add(new WiQueryEventBehavior(new Event(MouseEvent.CLICK) {
 
@@ -53,6 +55,21 @@ public class ProjectPanel extends EntityPanel<ProjectDTO> {
                 return JsScope.quickScope(addSkillDialog.open().render());
             }
         }));
+
+        form.add(new AjaxLink<String>("assignemt") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(final AjaxRequestTarget target) {
+                ProjectPanel.this
+                        .getCallBackPrevuousPanel()
+                        .getCallback()
+                        .execute(target,
+                                new AssignmentProjectPanel("body", ProjectPanel.this.getCallBackPrevuousPanel()));
+            }
+
+        });
     }
 
     @Override

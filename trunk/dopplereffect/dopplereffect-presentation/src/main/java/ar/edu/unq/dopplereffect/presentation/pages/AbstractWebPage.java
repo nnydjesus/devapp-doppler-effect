@@ -25,7 +25,11 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     protected static final String HEADER = "header";
 
-    protected static final String HEADER2 = "header2";
+    protected static final String SIDEBAR = "sidebar";
+
+    protected static final String TITLE = "title";
+
+    protected static final String TITLE2 = "title2";
 
     private Component defaultBody = new Label("body", new Model<String>("Welcome to de dance of death"));
 
@@ -46,16 +50,19 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         this.add(ajaxPanel);
         this.add(this.createFooter());
         this.add(this.createHeader());
-        this.add(this.createHeader2());
+        this.add(this.createTitle());
+        this.add(this.createTitle2());
+        this.add(this.createSidebar());
         this.add(new LanguageSelectorPanel("language_select"));
 
-        // bodyPanel = component;
-        // bodyPanel.setOutputMarkupId(true);
-        // this.add(bodyPanel);
     }
 
     protected Component getBody() {
         return body;
+    }
+
+    protected Component createSidebar() {
+        return new Label(SIDEBAR, new Model<String>("Sidebar"));
     }
 
     protected Component createFooter() {
@@ -66,13 +73,16 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         return new Label(HEADER, new Model<String>("Doopler"));
     }
 
-    protected Component createHeader2() {
-        return new Label(HEADER2, new Model<String>("Effect"));
+    protected Component createTitle() {
+        return new Label(TITLE, new Model<String>("Doopler"));
+    }
+
+    protected Component createTitle2() {
+        return new Label(TITLE2, new Model<String>("Effect"));
     }
 
     public AbstractWebPage() {
-        this(new Label("body", new Model<String>("Welcome to de dance of death")));
-        // this(new EmptyPanel(BODY));
+        this(new Label(BODY, new Model<String>("Welcome to de dance of death")));
     }
 
     public void setDefaultBody() {
@@ -82,8 +92,6 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
     public void setBody(final Component component) {
         component.setOutputMarkupId(true);
         ajaxPanel.addOrReplace(component);
-
-        // this.addOrReplace(component);
     }
 
     public void setAjaxPanel(final Panel bodyPanel) {

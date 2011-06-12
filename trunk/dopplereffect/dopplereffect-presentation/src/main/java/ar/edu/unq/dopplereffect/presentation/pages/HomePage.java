@@ -3,24 +3,19 @@ package ar.edu.unq.dopplereffect.presentation.pages;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.unq.dopplereffect.presentation.App;
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.calendar.CalendarPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.leaverequest.LeaveRequestSearchPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.salaryspec.SalarySpecSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.SidebarPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.service.AddDefaultValuesService;
-import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 /**
  * Simple home page.
@@ -50,25 +45,22 @@ public class HomePage extends AbstractWebPage<Component> {
             addDefaultValuesService.addAllData();
             App.setCreate(true);
         }
-
-        final AjaxCallBack<Component> callback = this.generateCallback();
-        String bodyId = "body";
-        this.add(this.createPanelLink("projects", new ProjectSearchPanel(bodyId, callback, projectSearchModel)));
-        this.add(this.createPanelLink("employees", new EmployeeSearchPanel(bodyId, callback, employeeSearchModel,
-                leaveReqSearchModel)));
-        this.add(this.createPanelLink("salary_percentages", new SalarySpecSearchPanel(bodyId, callback,
-                salarySpecSearchModel)));
-        this.add(this.createPanelLink("leave_requests", new LeaveRequestSearchPanel(bodyId, callback,
-                leaveReqSearchModel)));
-        // this.add(this.createPanelLink("career_plans", new
-        // CareerPlanPanel(bodyId, callback)));
-
-        this.add(this.createPanelLink("calendar", new CalendarPanel<EmployeeViewDTO>(bodyId, employeeSearchModel,
-                leaveReqSearchModel, callback)));
-        this.add(new HeaderPanel("items"));
     }
 
-    private Component createPanelLink(final String id, final Panel panel) {
+    @Override
+    protected Component createHeader() {
+        return new HeaderPanel(AbstractWebPage.HEADER);
+    }
+
+    @Override
+    protected Component createSidebar() {
+        final AjaxCallBack<Component> callback = this.generateCallback();
+        SidebarPanel container = new SidebarPanel(SIDEBAR, BODY, callback, this);
+        return container;
+
+    }
+
+    public Component createPanelLink(final String id, final AbstractCallbackPanel<?> panel) {
         return new AjaxLink<Object>(id) {
             private static final long serialVersionUID = 1L;
 
@@ -76,6 +68,7 @@ public class HomePage extends AbstractWebPage<Component> {
             @SuppressWarnings("rawtypes")
             public void onClick(final AjaxRequestTarget target) {
                 ((SearchModel) panel.getDefaultModelObject()).reset();
+                panel.reset();
                 HomePage.this.generateCallback().execute(target, panel);
             }
         };

@@ -62,7 +62,8 @@ public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
                 try {
                     // invoca la logica de negocio
                     T object = EntityPanel.this.getModelObject();
-                    SearchModel<T> search = (SearchModel<T>) EntityPanel.this.getCallBackPrevuousPanel().getDefaultModelObject();
+                    SearchModel<T> search = (SearchModel<T>) EntityPanel.this.getCallBackPrevuousPanel()
+                            .getDefaultModelObject();
                     if (EntityPanel.this.isEditMode()) {
                         search.update(object);
                     } else {
@@ -92,9 +93,7 @@ public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
 
             @Override
             protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-                // target.addComponent(form);
                 EntityPanel.this.back(target);
-                // this.setResponsePage(EntityPage.this.getPreviousPage());
             }
         };
         button.setDefaultFormProcessing(false);
