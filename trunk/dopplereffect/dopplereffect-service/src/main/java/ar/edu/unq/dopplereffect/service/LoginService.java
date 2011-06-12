@@ -1,14 +1,16 @@
 package ar.edu.unq.dopplereffect.service;
 
-import ar.edu.unq.dopplereffect.persistence.user.UserRepositoryImpl;
+import ar.edu.unq.dopplereffect.persistence.repositories.UserRepositoryImpl;
 import ar.edu.unq.dopplereffect.repositories.Repository;
 import ar.edu.unq.dopplereffect.user.User;
 import ar.edu.unq.tpi.util.common.HashUtils;
 
 /**
  */
-public class LoginService extends ServiceImpl<User> {
+public class LoginService implements Service {
     private static final long serialVersionUID = 1L;
+
+    private Repository<User> repository;
 
     public User login(final String userName, final String password) {
         return this.getUserRepository().login(userName, password);
@@ -23,10 +25,12 @@ public class LoginService extends ServiceImpl<User> {
     }
 
     // Solo para probar rapidamente la aplicacion
-    @Override
     public void setRepository(final Repository<User> repository) {
-        super.setRepository(repository);
+        this.repository = repository;
         this.signUp("a", HashUtils.hash("a"));
     }
 
+    public Repository<User> getRepository() {
+        return repository;
+    }
 }

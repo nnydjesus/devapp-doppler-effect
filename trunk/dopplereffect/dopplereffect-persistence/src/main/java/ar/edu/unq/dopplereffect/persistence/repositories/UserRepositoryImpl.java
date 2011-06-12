@@ -19,6 +19,7 @@ public class UserRepositoryImpl extends HibernatePersistentRepository<User> {
     }
 
     // XXX - Si no existe crea un usuario ???
+    // tira exception.. y si quiere entrar que se cree una cuenta
     public void signUp(final String userName, final String password) {
         User user = this.getByName(userName);
         if (user != null) {
@@ -28,8 +29,7 @@ public class UserRepositoryImpl extends HibernatePersistentRepository<User> {
     }
 
     public User login(final String userName, final String password) {
-        User user = this.getByName(userName); // Cuando Este bien el abm e
-        // user
+        User user = this.getByName(userName);
         if (user == null) {
             throw new UserException(USER_NOT_EXIST);
         }
@@ -40,16 +40,6 @@ public class UserRepositoryImpl extends HibernatePersistentRepository<User> {
             throw new UserException(INCORRECT_PASSWORD);
         }
         return user;
-
-        // if (userName.equals("a")) {
-        // if (password.equals(HashUtils.hash("a"))) {
-        // return new User(userName, password);
-        // } else {
-        // throw new UserException(INCORRECT_PASSWORD);
-        // }
-        // } else {
-        // throw new UserException(USER_NOT_EXIST);
-        // }
     }
 
 }

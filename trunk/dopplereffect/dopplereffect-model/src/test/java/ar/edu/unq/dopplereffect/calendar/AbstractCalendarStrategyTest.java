@@ -9,27 +9,27 @@ public abstract class AbstractCalendarStrategyTest {
 
     protected abstract CalendarStrategy getWeekday();
 
-    private static DateTime DATE;
+    private static DateTime date;
 
-    public AbstractCalendarStrategyTest(final DateTime date) {
-        DATE = date;
+    public AbstractCalendarStrategyTest(final DateTime aDate) {
+        date = aDate;
     }
 
     @Test
     public void testNext() {
         final CalendarStrategy weekday = this.getWeekday();
-        Assert.assertEquals("", DATE, weekday.getDay());
+        Assert.assertEquals("", date, weekday.getDay());
         final int totalDays = weekday.getTotalDays();
         weekday.next();
-        Assert.assertEquals("Fallo en avanzar al siguiente ", DATE.plusDays(totalDays), weekday.getDay());
+        Assert.assertEquals("Fallo en avanzar al siguiente ", date.plusDays(totalDays), weekday.getDay());
     }
 
     @Test
     public void testPlus() {
         final CalendarStrategy weekday = this.getWeekday();
-        Assert.assertEquals("", DATE, weekday.getDay());
+        Assert.assertEquals("", date, weekday.getDay());
         weekday.plus();
-        Assert.assertEquals("Fallo al sumar los dias", DATE.plusDays(1), weekday.getDay());
+        Assert.assertEquals("Fallo al sumar los dias", date.plusDays(1), weekday.getDay());
     }
 
 }

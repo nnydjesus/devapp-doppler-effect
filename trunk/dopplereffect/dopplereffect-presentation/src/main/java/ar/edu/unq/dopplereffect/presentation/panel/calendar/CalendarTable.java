@@ -29,7 +29,6 @@ import ar.edu.unq.dopplereffect.presentation.util.Model;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 /**
- * TODO: description
  */
 public class CalendarTable<T extends Calendareable> {
 
