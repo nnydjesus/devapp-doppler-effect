@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.calendar;
 
-public abstract class AbstractCalendar implements ICalendar {
+public abstract class AbstractCalendar<T> implements ICalendar<T> {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 

@@ -13,6 +13,8 @@ public class ProjectDTO implements DTO {
 
     private Long maxEffort;
 
+    private Long currentEffort;
+
     private List<SkillDTO> skills = new LinkedList<SkillDTO>();
 
     public String getName() {
@@ -37,6 +39,14 @@ public class ProjectDTO implements DTO {
 
     public void setSkills(final List<SkillDTO> skills) {
         this.skills = skills;
+    }
+
+    public void setCurrentEffort(final Long currentEffort) {
+        this.currentEffort = currentEffort;
+    }
+
+    public Long getCurrentEffort() {
+        return currentEffort;
     }
 
 }

@@ -2,17 +2,21 @@ package ar.edu.unq.dopplereffect.presentation.panel;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.Model;
+
+import ar.edu.unq.dopplereffect.presentation.util.Model;
 
 public abstract class AjaxActionPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    public AjaxActionPanel(final String id, final String image, final String prevPath) {
+    private AjaxLink<String> ajaxLink;
+
+    public AjaxActionPanel(final String id) {
         super(id, new Model<String>(""));
-        AjaxLink<String> ajaxLink = new AjaxLink<String>("action") {
+        setAjaxLink(new AjaxLink<String>("action") {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -20,9 +24,19 @@ public abstract class AjaxActionPanel extends Panel {
                 AjaxActionPanel.this.onAction(target);
             }
 
-        };
-        ajaxLink.add(new Image("image", new Model<String>(prevPath + "../Images/" + image)));
-        this.add(ajaxLink);
+        });
+    }
+
+    public AjaxActionPanel(final String id, final String image, final String prevPath) {
+        this(id);
+        getAjaxLink().add(new Image("image", new Model<String>(prevPath + "../Images/" + image)));
+        this.add(getAjaxLink());
+    }
+
+    public AjaxActionPanel(final String id, final Model<?> model) {
+        this(id);
+        getAjaxLink().add(new Label("image", model));
+        this.add(getAjaxLink());
     }
 
     public AjaxActionPanel(final String id, final String image) {
@@ -30,4 +44,12 @@ public abstract class AjaxActionPanel extends Panel {
     }
 
     public abstract void onAction(final AjaxRequestTarget target);
+
+    public void setAjaxLink(AjaxLink<String> ajaxLink) {
+        this.ajaxLink = ajaxLink;
+    }
+
+    public AjaxLink<String> getAjaxLink() {
+        return ajaxLink;
+    }
 }

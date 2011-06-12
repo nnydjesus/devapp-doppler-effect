@@ -66,7 +66,7 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
 
     @Override
     protected void beforeConstruct() {
-        this.setEmployee(((LeaveRequestSearchModel) this.getPreviousPage().getModelObject()).getSearchByEmployee());
+        this.setEmployee(((LeaveRequestSearchModel) this.getCallBackPrevuousPanel().getModelObject()).getSearchByEmployee());
     }
 
     @Override

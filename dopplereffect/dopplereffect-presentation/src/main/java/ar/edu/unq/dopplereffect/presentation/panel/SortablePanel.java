@@ -10,6 +10,8 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.odlabs.wiquery.ui.draggable.DraggableAjaxBehavior;
+import org.odlabs.wiquery.ui.droppable.DroppableAjaxBehavior;
 import org.odlabs.wiquery.ui.sortable.SortableAjaxBehavior.SortedEvent;
 
 import ar.edu.unq.dopplereffect.presentation.panel.utils.SortableAjax;
@@ -19,6 +21,10 @@ import ar.edu.unq.dopplereffect.presentation.panel.utils.SortableAjax;
 public class SortablePanel<T extends Serializable> extends Panel {
 
     private static final long serialVersionUID = 1L;
+
+    public final Boolean mutex = true;
+
+    private static final String CELL_ID = "item";
 
     private String message = "No sorting done yet!";
 
@@ -38,64 +44,120 @@ public class SortablePanel<T extends Serializable> extends Panel {
      * @param parameters
      *            Page parameters
      */
-    public SortablePanel(final String idd, final List<T> list, final boolean onAction) {
+    public SortablePanel(final String idd, final List<T> list) {
         super(idd);
         this.list = list;
-        this.setSortable(new SortableAjax<WebMarkupContainer>(SortedEvent.RECEIVE, SortedEvent.REMOVE) {
+        SortableAjax<WebMarkupContainer> sortable2 = new SortableAjax<WebMarkupContainer>(SortedEvent.RECEIVE,
+                SortedEvent.REMOVE) {
             private static final long serialVersionUID = 1L;
 
             @SuppressWarnings("unchecked")
             @Override
             public void onReceive(final WebMarkupContainer sortedComponent, final int index,
                     final Component parentSorted, final AjaxRequestTarget ajaxRequestTarget) {
-                if (onAction) {
-                    Label label = (Label) sortedComponent.get("item");
-                    SortablePanel.this.getList().add((T) label.getDefaultModelObject());
-                    // ajaxRequestTarget.addComponent(SortablePanel.this);
+                if (sortedComponent != null) {
+                    synchronized (mutex) {
+                        Label label = (Label) sortedComponent.get(CELL_ID);
+                        if (!SortablePanel.this.getList().contains(label.getDefaultModelObject())) {
+                            SortablePanel.this.getList().add((T) label.getDefaultModelObject());
+                        }
+                    }
+                    ajaxRequestTarget.addComponent(SortablePanel.this);
                 }
-
             }
 
             @Override
             public void onRemove(final WebMarkupContainer sortedComponent, final AjaxRequestTarget ajaxRequestTarget) {
-                if (onAction) {
-
-                    Label label = (Label) sortedComponent.get("item");
-                    SortablePanel.this.getList().remove(label.getDefaultModelObject());
-                    // ajaxRequestTarget.addComponent(SortablePanel.this);
+                if (sortedComponent != null) {
+                    synchronized (mutex) {
+                        Label label = (Label) sortedComponent.get(CELL_ID);
+                        SortablePanel.this.getList().remove(label.getDefaultModelObject());
+                        ajaxRequestTarget.addComponent(SortablePanel.this);
+                    }
                 }
-
             }
 
-        });
+        };
+
+        WebMarkupContainer panel = new WebMarkupContainer("panel");
         this.setSortableW(new WebMarkupContainer("sortable"));
+
+        panel.add(this.createDroppableBehavior());
+        sortable2.setDropOnEmpty(true);
+        sortable2.setScroll(true);
+        // panel.add(new ScrollPaneBehavior().setShowArrows(true));
+        this.setSortable(sortable2);
         this.getSortableW().setOutputMarkupId(true).add(this.getSortable());
         this.getSortable().setConnectWith(".sortable-example");
-        this.add(this.getSortableW());
-
+        panel.add(this.getSortableW());
+        this.add(panel);
         final ListView<T> listView = new ListView<T>("items", list) {
             private static final long serialVersionUID = 1L;
 
-            /*
-             * (non-Javadoc)
-             * 
-             * @see
-             * org.apache.wicket.markup.html.list.ListView#populateItem(org.
-             * apache.wicket.markup.html.list.ListItem)
-             */
             @Override
             protected void populateItem(final ListItem<T> item) {
-                Label label = new Label("item", item.getModel());
+                Label label = new Label(CELL_ID, item.getModel());
                 label.setOutputMarkupId(true);
                 item.add(label);
+                // item.add(SortablePanel.this.createDragableBehavior());
                 item.setOutputMarkupId(true);
             }
         };
 
         listView.setOutputMarkupId(true);
-
+        this.setOutputMarkupId(true);
         this.getSortableW().add(listView);
 
+    }
+
+    protected DroppableAjaxBehavior<WebMarkupContainer> createDroppableBehavior() {
+        return new DroppableAjaxBehavior<WebMarkupContainer>() {
+            private static final long serialVersionUID = 1L;
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public void onDrop(final WebMarkupContainer droppedComponent, final AjaxRequestTarget ajaxRequestTarget) {
+                if (droppedComponent != null) {
+                    synchronized (mutex) {
+
+                        Label label = (Label) droppedComponent.get(CELL_ID);
+                        if (!SortablePanel.this.getList().contains(label.getDefaultModelObject())) {
+                            SortablePanel.this.getList().add((T) label.getDefaultModelObject());
+                        }
+                        ajaxRequestTarget.addComponent(SortablePanel.this);
+                    }
+                }
+            }
+        };
+    }
+
+    protected DraggableAjaxBehavior createDragableBehavior() {
+        return new DraggableAjaxBehavior() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onDrag(final Component component, final AjaxRequestTarget ajaxRequestTarget) {
+                //
+            }
+
+            @Override
+            public void onStart(final Component component, final AjaxRequestTarget ajaxRequestTarget) {
+                //
+            }
+
+            @Override
+            public void onStop(final Component component, final AjaxRequestTarget ajaxRequestTarget) {
+                if (component != null) {
+                    synchronized (mutex) {
+
+                        Label label = (Label) ((WebMarkupContainer) component).get(CELL_ID);
+                        SortablePanel.this.getList().remove(label.getDefaultModelObject());
+                        ajaxRequestTarget.addComponent(SortablePanel.this);
+                    }
+                }
+            }
+
+        };
     }
 
     public String getMessage() {

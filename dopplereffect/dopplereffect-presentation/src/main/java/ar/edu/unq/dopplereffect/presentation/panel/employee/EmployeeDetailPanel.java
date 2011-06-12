@@ -21,8 +21,8 @@ public class EmployeeDetailPanel extends NavigablePanel<EmployeeDetailDTO> {
     private static final long serialVersionUID = 7612811876399884445L;
 
     public EmployeeDetailPanel(final String id, final EmployeeDetailDTO employeeViewDTO,
-            final AbstractCallbackPanel<? extends Serializable> previousPage) {
-        super(id, employeeViewDTO, previousPage);
+            final AbstractCallbackPanel<? extends Serializable> callback) {
+        super(id, employeeViewDTO, callback);
         this.addEmployeeDetails();
         this.addNavigationButtons();
     }
@@ -49,8 +49,8 @@ public class EmployeeDetailPanel extends NavigablePanel<EmployeeDetailDTO> {
     }
 
     protected void addNavigationButtons() {
-        this.add(new PanelCallbackLink("back_button", this.getPreviousPage().getCallback(), null,
-                new StringResourceModel("back_button", new Model<String>(""))));
+        this.add(new PanelCallbackLink("back_button", this.getCallBackPrevuousPanel().getCallback(), this
+                .getCallBackPrevuousPanel(), new StringResourceModel("back_button", new Model<String>(""))));
     }
 
 }

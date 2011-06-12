@@ -13,7 +13,7 @@ public class LanguageSelectorPanel extends AbstractPanel<Object> {
     public LanguageSelectorPanel(final String id) {
         super(id);
         this.addLanguageSelectorLinkFor("select_spanish_link", new Locale("es"));
-        this.addLanguageSelectorLinkFor("select_english_link", new Locale("en"));
+        this.addLanguageSelectorLinkFor("select_english_link", Locale.US);
     }
 
     private void addLanguageSelectorLinkFor(final String wicketId, final Locale locale) {

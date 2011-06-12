@@ -7,7 +7,7 @@ import java.util.List;
 
 import ar.edu.unq.dopplereffect.service.DTO;
 
-public abstract class SearchModel<T extends DTO> implements Serializable {
+public abstract class SearchModel<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
