@@ -47,4 +47,7 @@ public abstract class AbstractCallbackPanel<T> extends AbstractPanel<T> {
         return backPanel;
     }
 
+    public void reset() {
+    }
+
 }

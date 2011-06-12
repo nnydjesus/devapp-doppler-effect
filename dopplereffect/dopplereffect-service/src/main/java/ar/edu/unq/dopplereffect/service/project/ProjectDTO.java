@@ -3,6 +3,8 @@ package ar.edu.unq.dopplereffect.service.project;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.joda.time.Period;
+
 import ar.edu.unq.dopplereffect.service.DTO;
 
 public class ProjectDTO implements DTO {
@@ -10,6 +12,10 @@ public class ProjectDTO implements DTO {
     private static final long serialVersionUID = -8252682533584334062L;
 
     private String name;
+
+    private String clientName;
+
+    private Period timeProject;
 
     private Long maxEffort;
 
@@ -47,6 +53,22 @@ public class ProjectDTO implements DTO {
 
     public Long getCurrentEffort() {
         return currentEffort;
+    }
+
+    public void setClientName(final String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setTimeProject(final Period timeProject) {
+        this.timeProject = timeProject;
+    }
+
+    public Period getTimeProject() {
+        return timeProject;
     }
 
 }

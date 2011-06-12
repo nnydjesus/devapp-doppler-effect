@@ -4,14 +4,9 @@ import ar.edu.unq.dopplereffect.presentation.panel.LoginPanel;
 
 public class Login extends AbstractWebPage<LoginPanel> {
 
-    /**
-     * Login page constituents are the same as Login.html except that it is made
-     * up of equivalent Wicket components
-     */
-
     public Login() {
         // super(GridPanel.class, BODY);
-        super(LoginPanel.class, BODY);
+        super(LoginPanel.class, "body");
         ((LoginPanel) this.getBody()).init();
     }
 }

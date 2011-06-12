@@ -54,6 +54,8 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectDTO convert(final Project project) {
         ProjectDTO pDTO = new ProjectDTO();
         pDTO.setName(project.getName());
+        pDTO.setClientName(project.getClientData().getFirstName());
+        pDTO.setTimeProject(project.getTimeProyect());
         pDTO.setMaxEffort(project.getMaxEffort());
         pDTO.setSkills(this.getSkillService().convertAll(project.getSkills()));
         return pDTO;
@@ -65,6 +67,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = new Project();
         project.setName(entity.getName());
         project.setMaxEffort(entity.getMaxEffort());
+        project.setTimeProyect(entity.getTimeProject());
         Set<Skill> skills = new HashSet<Skill>();
         for (SkillDTO skDTO : entity.getSkills()) {
             skills.add(this.getSkillService().getSkillRepo().findOrCreate(skDTO.getName(), skDTO.getLevel()));

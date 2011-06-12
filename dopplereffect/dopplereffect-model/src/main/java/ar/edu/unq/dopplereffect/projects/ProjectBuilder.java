@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.joda.time.Period;
 
+import ar.edu.unq.dopplereffect.data.PersonalData;
 import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 
 public class ProjectBuilder {
@@ -42,7 +43,7 @@ public class ProjectBuilder {
         return this;
     }
 
-    public ProjectBuilder withInformationClient(final ClientData information) {
+    public ProjectBuilder withInformationClient(final PersonalData information) {
         this.getProyect().setClientData(information);
         return this;
     }

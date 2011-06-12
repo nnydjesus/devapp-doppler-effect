@@ -8,7 +8,6 @@ import java.util.Locale;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.joda.time.DateTime;
@@ -25,13 +24,14 @@ import ar.edu.unq.dopplereffect.calendar.WeekdayStrategy;
 import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.jquery.scroolpane.ScrollPaneBehavior;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxReflextionActionPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.Model;
 import ar.edu.unq.dopplereffect.presentation.util.ReflextionAjaxLink;
 
-public class CalendarPanel<T extends Calendareable> extends Panel {
+public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPanel<Model<SearchModel<T>>> {
     private static final long serialVersionUID = 1L;
 
     // @formatter:off
@@ -67,7 +67,7 @@ public class CalendarPanel<T extends Calendareable> extends Panel {
 
     public CalendarPanel(final String id, final SearchModel<T> employeeSearchModel,
             final LeaveRequestSearchModel leaveReqSearchModel, final AjaxCallBack<Component> callback) {
-        super(id, new Model<SearchModel<T>>(employeeSearchModel));
+        super(id, null, null, new Model<SearchModel<T>>(employeeSearchModel));
         model = employeeSearchModel;
         this.setLeaveRequestSearchModel(leaveReqSearchModel);
         this.setCallback(callback);
@@ -150,10 +150,12 @@ public class CalendarPanel<T extends Calendareable> extends Panel {
         return datePicketModel;
     }
 
+    @Override
     public void setCallback(final AjaxCallBack<Component> callback) {
         this.callback = callback;
     }
 
+    @Override
     public AjaxCallBack<Component> getCallback() {
         return callback;
     }

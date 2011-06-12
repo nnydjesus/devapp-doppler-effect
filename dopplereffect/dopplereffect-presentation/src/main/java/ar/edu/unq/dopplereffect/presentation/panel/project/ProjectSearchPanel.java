@@ -12,7 +12,8 @@ public class ProjectSearchPanel extends AbstractSearchPanel<ProjectSearchModel> 
     private static final long serialVersionUID = 1L;
 
     public ProjectSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final ProjectSearchModel model) {
-        super(id, parentPage, model, Arrays.asList("name", "maxEffort", "currentEffort"), ProjectPanel.class);
+        super(id, parentPage, model, Arrays.asList("name", "clientName", "timeProject.days", "currentEffort"),
+                ProjectPanel.class);
     }
 
     // @Override
