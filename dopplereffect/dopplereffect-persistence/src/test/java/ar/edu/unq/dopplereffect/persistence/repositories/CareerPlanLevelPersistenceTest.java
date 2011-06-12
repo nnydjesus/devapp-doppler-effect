@@ -18,7 +18,8 @@ public class CareerPlanLevelPersistenceTest extends SpringPersistenceTest {
     public void testSaveAndRetrieve() {
         // CREATE
         CareerPlanLevel junior = new CareerPlanLevel("Junior");
-        CareerPlanLevel semiSenior = new CareerPlanLevel("SemiSenior");
+        String semisenior = "SemiSenior";
+        CareerPlanLevel semiSenior = new CareerPlanLevel(semisenior);
         CareerPlanLevel senior = new CareerPlanLevel("Senior");
         // SET RELATIONSHIPS
         junior.setNext(semiSenior);
@@ -27,14 +28,14 @@ public class CareerPlanLevelPersistenceTest extends SpringPersistenceTest {
         careerPlanLevelRepo.save(junior); // el resto se guarda por cascade
         // GET
         CareerPlanLevel getJunior = careerPlanLevelRepo.getByName("Junior");
-        CareerPlanLevel getSemiSenior = careerPlanLevelRepo.getByName("SemiSenior");
+        CareerPlanLevel getSemiSenior = careerPlanLevelRepo.getByName(semisenior);
         CareerPlanLevel getSenior = careerPlanLevelRepo.getByName("Senior");
         // ASSERT
         Assert.assertNull(getJunior.getPrevious());
         Assert.assertNull(getSenior.getNext());
-        Assert.assertEquals("SemiSenior", getJunior.getNext().getName());
+        Assert.assertEquals(semisenior, getJunior.getNext().getName());
         Assert.assertEquals("Senior", getSemiSenior.getNext().getName());
         Assert.assertEquals("Junior", getSemiSenior.getPrevious().getName());
-        Assert.assertEquals("SemiSenior", getSenior.getPrevious().getName());
+        Assert.assertEquals(semisenior, getSenior.getPrevious().getName());
     }
 }

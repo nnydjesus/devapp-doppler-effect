@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Years;
 
 import ar.edu.unq.dopplereffect.assignments.Assignable;
+import ar.edu.unq.dopplereffect.calendar.Calendareable;
 import ar.edu.unq.dopplereffect.entity.Entity;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
@@ -22,7 +23,7 @@ import ar.edu.unq.dopplereffect.projects.SkillLevel;
  * 
  * Ademas el empleado tiene asignaciones, ya sean a licencias o a proyectos.
  */
-public class Employee extends Entity {
+public class Employee extends Entity implements Calendareable {
 
     private static final long serialVersionUID = 2985643249801148589L;
 
@@ -180,6 +181,7 @@ public class Employee extends Entity {
      * que este de licencia, o este asignado a un proyecto, o bien que no este
      * asignado, en ese caso se retorna null.
      */
+    @Override
     public Assignable getAssignableForDay(final DateTime date) {
         for (Assignable assignable : this.getAssignments()) {
             if (assignable.includesDay(date)) {
