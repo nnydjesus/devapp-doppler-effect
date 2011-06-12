@@ -22,7 +22,7 @@
 		<property name="maxSalary" column="max_salary" not-null="true" />
 		
 		<list name="percentages" table="salary_spec_percentage"
-				cascade="all, delete-orphan">
+				cascade="all, delete-orphan" lazy="false" >
 
 			<key column="salary_specification_id" />
 

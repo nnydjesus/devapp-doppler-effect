@@ -1,9 +1,10 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
 <wicket:panel>
-	<a wicket:id="back" href="#">Atrás</a>
+	<a wicket:id="back" href="#"><wicket:message key="link.back" /></a>
 	<form wicket:id="searchLeaveRequestForm">
 		<table align="center" id="panel">
 			<tr>
-				<td>Buscar por fecha:</td>
+				<td><wicket:message key="search_by.date" /></td>
 				<td><input wicket:id="searchByDate" type="text" /></td>
 			</tr>
 			<tr>
@@ -19,13 +20,10 @@
 	<br />
 
 	<div wicket:id="resultSecction" class="resultSecction">
-		<ul wicket:id="markup" id="tabla">
-			<li>
-				<table align="center" id="tabla" class="dataview" BORDER wicket:id="results">
-					[table]
-				</table>
-			</li>
-		</ul>
+		<div wicket:id="markup" id="tabla">
+			<table align="center" id="tabla" class="dataview" BORDER wicket:id="results"></table>
+		</div>
 	</div>
 
 </wicket:panel>
+</html>

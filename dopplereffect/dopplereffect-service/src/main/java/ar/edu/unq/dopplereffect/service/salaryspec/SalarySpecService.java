@@ -2,6 +2,7 @@ package ar.edu.unq.dopplereffect.service.salaryspec;
 
 import java.util.List;
 
+import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.service.Service;
 
 public interface SalarySpecService extends Service {
@@ -15,5 +16,7 @@ public interface SalarySpecService extends Service {
     List<SalarySpecDTO> searchAllSalarySpecs();
 
     List<SalarySpecDTO> searchAllByExample(SalarySpecDTO example);
+
+    List<SalarySpecDTO> searchByCareerPlanAndLevel(CareerPlan careerPlan, String careerPlanLevel);
 
 }

@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.service.salaryspec;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
@@ -20,6 +21,10 @@ public class SalarySpecDTO implements DTO {
     private String careerPlanLevel;
 
     private List<Integer> percentages;
+
+    public SalarySpecDTO() {
+        percentages = new LinkedList<Integer>();
+    }
 
     public int getYear() {
         return year;
@@ -67,5 +72,16 @@ public class SalarySpecDTO implements DTO {
 
     public void setPercentages(final List<Integer> percentages) {
         this.percentages = percentages;
+    }
+
+    public String getViewPercentages() {
+        String result = "";
+        for (int perc : this.getPercentages()) {
+            result += perc + ",";
+        }
+        if (!this.getPercentages().isEmpty()) {
+            result = result.substring(0, result.length() - 1);
+        }
+        return result;
     }
 }

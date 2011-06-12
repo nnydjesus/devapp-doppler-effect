@@ -38,12 +38,6 @@ public class SalarySpecificationRepositoryImpl extends HibernatePersistentReposi
         super.save(salarySpec);
     }
 
-    @Override
-    public void update(final SalarySpecification salarySpec) {
-        this.checkForExistentSalarySpec(salarySpec);
-        super.update(salarySpec);
-    }
-
     private void checkForExistentSalarySpec(final SalarySpecification salarySpec) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         criteria.add(Restrictions.eq("year", salarySpec.getYear()));
@@ -52,5 +46,17 @@ public class SalarySpecificationRepositoryImpl extends HibernatePersistentReposi
         if (!criteria.list().isEmpty()) {
             throw new UserException("Ya existe una banda de sueldo para los parametros dados");
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<SalarySpecification> searchByCareerPlanAndLevel(final CareerPlan careerPlan, final CareerPlanLevel level) {
+        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
+        if (careerPlan != null) {
+            criteria.add(Restrictions.eq("plan", careerPlan));
+        }
+        if (level != null) {
+            criteria.add(Restrictions.eq("level", level));
+        }
+        return criteria.list();
     }
 }
