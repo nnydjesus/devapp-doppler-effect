@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.persistence.employee.SalarySpecificationRepositoryImpl;
 import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
@@ -82,6 +83,13 @@ public class SalarySpecServiceImpl implements SalarySpecService {
         return result;
     }
 
+    @Override
+    @Transactional
+    public List<SalarySpecDTO> searchByCareerPlanAndLevel(final CareerPlan careerPlan, final String careerPlanLevel) {
+        CareerPlanLevel level = this.getCareerPlanService().findFirstLevelWithName(careerPlanLevel);
+        return this.convertAll(this.getRepository().searchByCareerPlanAndLevel(careerPlan, level));
+    }
+
     private SalarySpecification convert(final SalarySpecDTO salarySpecDTO) {
         CareerPlanLevel careerPlanLevel = this.getCareerPlanService().findFirstLevelWithName(
                 salarySpecDTO.getCareerPlanLevel());
@@ -98,5 +106,13 @@ public class SalarySpecServiceImpl implements SalarySpecService {
         salarySpecDTO.setMaxSalary(spec.getMaxSalary());
         salarySpecDTO.setPercentages(spec.getPercentages());
         return salarySpecDTO;
+    }
+
+    private List<SalarySpecDTO> convertAll(final List<SalarySpecification> specs) {
+        List<SalarySpecDTO> results = new LinkedList<SalarySpecDTO>();
+        for (SalarySpecification spec : specs) {
+            results.add(this.convert(spec));
+        }
+        return results;
     }
 }

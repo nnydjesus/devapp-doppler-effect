@@ -1,7 +1,10 @@
 package ar.edu.unq.dopplereffect.presentation.panel.salaryspec;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -28,17 +31,28 @@ public class SalarySpecPanel extends EntityPanel<SalarySpecDTO> {
         this.careerPlanService = careerPlanService;
     }
 
-    public SalarySpecPanel(final String id, final SalarySpecSearchPanel previousPage, final SalarySpecDTO model,
-            final Boolean editMode) {
-        super(id, model, previousPage, editMode);
+    public SalarySpecPanel(final String id, final SalarySpecSearchPanel previousPage) {
+        this(id, previousPage, new SalarySpecDTO());
     }
 
     public SalarySpecPanel(final String id, final SalarySpecSearchPanel previousPage, final SalarySpecDTO model) {
-        super(id, model, previousPage);
+        this(id, previousPage, model, false);
     }
 
-    public SalarySpecPanel(final String id, final SalarySpecSearchPanel previousPage) {
-        super(id, new SalarySpecDTO(), previousPage);
+    public SalarySpecPanel(final String id, final SalarySpecSearchPanel previousPage, final SalarySpecDTO model,
+            final Boolean editMode) {
+        super(id, model, previousPage, editMode);
+        this.initPercentagesView();
+    }
+
+    @Override
+    protected String getFormWicketId() {
+        return "salarySpecForm";
+    }
+
+    @Override
+    protected void beforeConstruct() {
+        // x
     }
 
     @Override
@@ -51,29 +65,33 @@ public class SalarySpecPanel extends EntityPanel<SalarySpecDTO> {
         this.addCareerPlanLevelCombo(form);
     }
 
-    protected void addCareerPlanCombo(final Form<SalarySpecDTO> form) {
+    private void initPercentagesView() {
+        List<PercentageView> percentages = new ArrayList<PercentageView>();
+        WebMarkupContainer showPercentages = new PercentagesContainer("showPercentages", percentages);
+        this.add(showPercentages);
+        this.add(new AddPercentagesContainer("addPercentages", percentages, showPercentages, (SalarySpecDTO) this
+                .getDefaultModelObject()));
+    }
+
+    private void addCareerPlanCombo(final Form<SalarySpecDTO> form) {
         PropertyModel<CareerPlan> pm = new PropertyModel<CareerPlan>(form.getDefaultModelObject(), "careerPlan");
         DropDownChoice<CareerPlan> ddc = new DropDownChoice<CareerPlan>("careerPlan", pm, Arrays.asList(CareerPlan
                 .values()));
         ddc.setRequired(true);
+        if (this.isEditMode()) {
+            ddc.setEnabled(false);
+        }
         form.add(ddc);
     }
 
-    protected void addCareerPlanLevelCombo(final Form<SalarySpecDTO> form) {
+    private void addCareerPlanLevelCombo(final Form<SalarySpecDTO> form) {
         PropertyModel<String> pm = new PropertyModel<String>(form.getDefaultModelObject(), "careerPlanLevel");
         DropDownChoice<String> ddc = new DropDownChoice<String>("careerPlanLevel", pm, this.getCareerPlanService()
                 .searchAllLevels());
         ddc.setRequired(true);
+        if (this.isEditMode()) {
+            ddc.setEnabled(false);
+        }
         form.add(ddc);
-    }
-
-    @Override
-    protected String getFormWicketId() {
-        return "salarySpecForm";
-    }
-
-    @Override
-    protected void beforeConstruct() {
-        // x
     }
 }
