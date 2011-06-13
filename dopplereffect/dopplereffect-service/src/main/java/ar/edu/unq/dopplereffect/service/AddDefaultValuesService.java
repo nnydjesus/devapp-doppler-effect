@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
-import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.builders.salaries.SalarySpecificationBuilder;
 import ar.edu.unq.dopplereffect.data.PersonalData;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
