@@ -7,6 +7,7 @@ import ar.edu.unq.dopplereffect.entity.Entity;
  * por ejemplo su nombre o su direccion.
  */
 public class PersonalData extends Entity {
+
     private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
@@ -36,8 +37,7 @@ public class PersonalData extends Entity {
     }
 
     public PersonalData() {
-        // Usado unicamente por Hibernate
-        super();
+        super(); // Usado unicamente por Hibernate
     }
 
     /* **************************** ACCESSORS ***************************** */

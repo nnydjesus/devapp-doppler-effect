@@ -56,7 +56,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
             public void onReceive(final WebMarkupContainer sortedComponent, final int index,
                     final Component parentSorted, final AjaxRequestTarget ajaxRequestTarget) {
                 if (sortedComponent != null) {
-                    synchronized (getMutex()) {
+                    synchronized (SortablePanel.this.getMutex()) {
                         Label label = (Label) sortedComponent.get(CELL_ID);
                         if (!SortablePanel.this.getList().contains(label.getDefaultModelObject())) {
                             SortablePanel.this.getList().add((T) label.getDefaultModelObject());
@@ -69,7 +69,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
             @Override
             public void onRemove(final WebMarkupContainer sortedComponent, final AjaxRequestTarget ajaxRequestTarget) {
                 if (sortedComponent != null) {
-                    synchronized (getMutex()) {
+                    synchronized (SortablePanel.this.getMutex()) {
                         Label label = (Label) sortedComponent.get(CELL_ID);
                         SortablePanel.this.getList().remove(label.getDefaultModelObject());
                         ajaxRequestTarget.addComponent(SortablePanel.this);
@@ -118,7 +118,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
             @Override
             public void onDrop(final WebMarkupContainer droppedComponent, final AjaxRequestTarget ajaxRequestTarget) {
                 if (droppedComponent != null) {
-                    synchronized (getMutex()) {
+                    synchronized (SortablePanel.this.getMutex()) {
 
                         Label label = (Label) droppedComponent.get(CELL_ID);
                         if (!SortablePanel.this.getList().contains(label.getDefaultModelObject())) {
@@ -148,7 +148,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
             @Override
             public void onStop(final Component component, final AjaxRequestTarget ajaxRequestTarget) {
                 if (component != null) {
-                    synchronized (getMutex()) {
+                    synchronized (SortablePanel.this.getMutex()) {
 
                         Label label = (Label) ((WebMarkupContainer) component).get(CELL_ID);
                         SortablePanel.this.getList().remove(label.getDefaultModelObject());

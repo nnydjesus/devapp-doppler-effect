@@ -7,6 +7,9 @@ import org.joda.time.Days;
 import org.joda.time.Months;
 import org.joda.time.Years;
 
+/**
+ * Representa una forma de organizar los datos de un calendario.
+ */
 public abstract class CalendarStrategy implements Serializable {
 
     /* ************************ INSTANCE VARIABLES ************************ */
@@ -59,11 +62,11 @@ public abstract class CalendarStrategy implements Serializable {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public void setDay(final DateTime day) {
-        this.day = this.stabilize(day);
-    }
-
     public DateTime getDay() {
         return day;
+    }
+
+    public void setDay(final DateTime day) {
+        this.day = this.stabilize(day);
     }
 }

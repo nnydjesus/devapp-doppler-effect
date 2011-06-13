@@ -75,13 +75,14 @@ public class SalarySpecDTO implements DTO {
     }
 
     public String getViewPercentages() {
-        String result = "";
+        StringBuilder builder = new StringBuilder();
         for (int perc : this.getPercentages()) {
-            result += perc + ",";
+            builder.append(perc);
+            builder.append(",");
         }
         if (!this.getPercentages().isEmpty()) {
-            result = result.substring(0, result.length() - 1);
+            builder.deleteCharAt(builder.length());
         }
-        return result;
+        return builder.toString();
     }
 }

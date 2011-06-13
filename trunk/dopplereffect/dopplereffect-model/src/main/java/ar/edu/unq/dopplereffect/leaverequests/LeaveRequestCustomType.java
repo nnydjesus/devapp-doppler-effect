@@ -16,6 +16,7 @@ import ar.edu.unq.dopplereffect.exceptions.UserException;
  * una razon, un motivo que identifica a cada tipo de licencia.
  */
 public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
+
     private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************* */
@@ -180,6 +181,8 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
             return this.getConfigurations().get(this.getConfigurations().size() - 1).getCorrespondingDays();
         }
     }
+
+    /* ****************** EQUALS, HASHCODE, TOSTRING ********************** */
 
     @Override
     public String toString() {

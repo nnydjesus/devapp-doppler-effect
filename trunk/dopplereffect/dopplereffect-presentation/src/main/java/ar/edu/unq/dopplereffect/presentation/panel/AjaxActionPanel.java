@@ -16,7 +16,7 @@ public abstract class AjaxActionPanel extends Panel {
 
     public AjaxActionPanel(final String id) {
         super(id, new Model<String>(""));
-        setAjaxLink(new AjaxLink<String>("action") {
+        this.setAjaxLink(new AjaxLink<String>("action") {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -29,14 +29,14 @@ public abstract class AjaxActionPanel extends Panel {
 
     public AjaxActionPanel(final String id, final String image, final String prevPath) {
         this(id);
-        getAjaxLink().add(new Image("image", new Model<String>(prevPath + "../Images/" + image)));
-        this.add(getAjaxLink());
+        this.getAjaxLink().add(new Image("image", new Model<String>(prevPath + "../Images/" + image)));
+        this.add(this.getAjaxLink());
     }
 
     public AjaxActionPanel(final String id, final Model<?> model) {
         this(id);
-        getAjaxLink().add(new Label("image", model));
-        this.add(getAjaxLink());
+        this.getAjaxLink().add(new Label("image", model));
+        this.add(this.getAjaxLink());
     }
 
     public AjaxActionPanel(final String id, final String image) {
@@ -45,7 +45,7 @@ public abstract class AjaxActionPanel extends Panel {
 
     public abstract void onAction(final AjaxRequestTarget target);
 
-    public void setAjaxLink(AjaxLink<String> ajaxLink) {
+    public void setAjaxLink(final AjaxLink<String> ajaxLink) {
         this.ajaxLink = ajaxLink;
     }
 

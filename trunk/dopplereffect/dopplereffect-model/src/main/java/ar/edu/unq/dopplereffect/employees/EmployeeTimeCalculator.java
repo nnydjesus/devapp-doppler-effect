@@ -17,6 +17,8 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
  */
 public class EmployeeTimeCalculator {
 
+    /* **************************** OPERATIONS **************************** */
+
     /**
      * Calcula la cantidad de dias que el empleado pidio en un año, para un
      * determinado tipo de licencia.
@@ -119,6 +121,8 @@ public class EmployeeTimeCalculator {
         int freeDays = totalDays - this.calculateSuperpositionDays(employee, intervalDS);
         return freeDays * 100 / totalDays;
     }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     private int calculateSuperpositionDays(final Employee employee, final IntervalDurationStrategy ids) {
         int result = 0;

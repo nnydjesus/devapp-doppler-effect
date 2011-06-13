@@ -7,6 +7,7 @@ import ar.edu.unq.dopplereffect.data.PersonalData;
  * Datos personales propios del empleado.
  */
 public class EmployeeData extends PersonalData {
+
     private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
@@ -31,8 +32,7 @@ public class EmployeeData extends PersonalData {
     }
 
     public EmployeeData() {
-        // solo utilizado por Hibernate
-        super();
+        super(); // solo utilizado por Hibernate
     }
 
     /* **************************** ACCESSORS ***************************** */

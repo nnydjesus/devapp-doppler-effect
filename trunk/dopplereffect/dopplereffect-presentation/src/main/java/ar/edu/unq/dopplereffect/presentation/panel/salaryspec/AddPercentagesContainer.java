@@ -115,6 +115,7 @@ public class AddPercentagesContainer extends WebMarkupContainer {
 
                 @Override
                 protected void onError(final AjaxRequestTarget target, final Form<?> form) {
+                    // x
                 }
             }.add(new ButtonBehavior()));
 
@@ -128,6 +129,7 @@ public class AddPercentagesContainer extends WebMarkupContainer {
 
                 @Override
                 protected void onError(final AjaxRequestTarget target, final Form<?> form) {
+                    // x
                 }
             }.add(new ButtonBehavior()));
         }
@@ -139,12 +141,12 @@ public class AddPercentagesContainer extends WebMarkupContainer {
         }
     }
 
-    void onShowForm(final AjaxRequestTarget target) {
+    public void onShowForm(final AjaxRequestTarget target) {
         linkVisible = false;
         target.addComponent(this);
     }
 
-    void onRemoveCompletedPercentages(final AjaxRequestTarget target) {
+    public void onRemoveCompletedPercentages(final AjaxRequestTarget target) {
         List<PercentageView> ready = new LinkedList<PercentageView>();
         List<Integer> percs = new LinkedList<Integer>();
         for (PercentageView perc : percentages) {
@@ -159,7 +161,7 @@ public class AddPercentagesContainer extends WebMarkupContainer {
         target.addComponent(showPercentages);
     }
 
-    void onAdd(final PercentageView item, final AjaxRequestTarget target) {
+    public void onAdd(final PercentageView item, final AjaxRequestTarget target) {
         boolean validValue = item.getValue() >= 0 && item.getValue() <= 100;
         boolean nonExistentPercentage = !salarySpec.getPercentages().contains(item.getValue());
         if (nonExistentPercentage && validValue) {
@@ -175,7 +177,7 @@ public class AddPercentagesContainer extends WebMarkupContainer {
         }
     }
 
-    void onCancelPercentage(final AjaxRequestTarget target) {
+    public void onCancelPercentage(final AjaxRequestTarget target) {
         linkVisible = true;
         target.addComponent(this);
     }

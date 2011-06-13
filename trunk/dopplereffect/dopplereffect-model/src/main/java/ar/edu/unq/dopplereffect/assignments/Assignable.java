@@ -42,7 +42,16 @@ public interface Assignable extends IEntity {
      */
     int getSuperpositionDaysWith(IntervalDurationStrategy intervalDurationStrategy);
 
+    /**
+     * @return el empleado al cual le corresponde esta asignacion.
+     */
     Employee getEmployee();
 
+    /**
+     * Asocia un empleado a esta asignacion.
+     * 
+     * @param employee
+     *            el empleado al que le pertenece la asignacion.
+     */
     void setEmployee(Employee employee);
 }
