@@ -2,6 +2,7 @@ package ar.edu.unq.dopplereffect.presentation.search;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
@@ -29,6 +30,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     private Class<Component> entityPanel;
 
     private List<String> fields;
+
+	private Model<String> modelSearchByName;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -77,8 +80,6 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
 
     protected void addResultSection(final ITable iTable) {
         this.addGeneralResultSection(iTable);
-        // this.addGeneralResultSection(this.createListView());
-        // this.addGeneralResultSection(createAjaxTable());
     }
 
     /**
@@ -111,16 +112,13 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     // }
 
     protected void buildForm(final Form<T> form) {
-        form.add(new TextField<String>(this.getDefaultInputSearchWicketId()));
-        // formulario.add(new TextField<String>("busquedaDireccion"));
+        modelSearchByName = new Model<String>("");
+		form.add(new TextField<String>(this.getDefaultInputSearchWicketId(), modelSearchByName));
     }
 
     protected void addGeneralResultSection(final ITable listView) {
         WebMarkupContainer panel = new WebMarkupContainer(this.getResultSectionWicketId());
-        // para que refresque por Ajax
         panel.setOutputMarkupId(true);
-        // listView.setResultSection(panel);
-        // listView.setSearch(this.getModelObject());
         listView.setParentPage(this);
         panel.add(listView.getSortableAjaxWicket());
         this.setAjaxSectionResult(panel);
@@ -165,7 +163,11 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     }
 
     public void search() {
-        this.getModelObject().search();
+    	if(modelSearchByName != null && StringUtils.isBlank(modelSearchByName.getObject())){
+    		this.getModelObject().searchByName(modelSearchByName.getObject());	
+    	}else{
+    		this.getModelObject().search();
+    	}
         ajaxSectionResult.setVisible(true);
     }
 

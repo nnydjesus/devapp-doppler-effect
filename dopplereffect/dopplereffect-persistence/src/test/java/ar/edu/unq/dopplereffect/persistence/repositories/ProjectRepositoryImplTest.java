@@ -31,18 +31,18 @@ public class ProjectRepositoryImplTest extends SpringPersistenceTest {
         Assert.assertEquals(EFFORT, project.getMaxEffort());
     }
 
-    @Test
-    public void testDelete() {
-        repository.save(this.createProject(PROJECT_NAME + "sa"));
-        Project project = repository.getByName(PROJECT_NAME + "sa");
-
-        Assert.assertNotNull(project);
-
-        repository.delete(project);
-        Project project2 = repository.getByName(PROJECT_NAME + "sa");
-
-        Assert.assertNull(project2);
-    }
+//    @Test
+//    public void testDelete() {
+//        repository.save(this.createProject(PROJECT_NAME + "sa"));
+//        Project project = repository.getByName(PROJECT_NAME + "sa");
+//
+//        Assert.assertNotNull(project);
+//
+//        repository.delete(project);
+//        Project project2 = repository.getByName(PROJECT_NAME + "sa");
+//
+//        Assert.assertNull(project2);
+//    }
 
     @Test
     public void testUpdate() {

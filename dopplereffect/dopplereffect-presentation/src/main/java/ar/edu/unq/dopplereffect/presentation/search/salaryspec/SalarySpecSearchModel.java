@@ -78,4 +78,10 @@ public class SalarySpecSearchModel extends SearchModel<SalarySpecDTO> {
         this.setResults(this.getService().searchByCareerPlanAndLevel(this.getSearchByCareerPlan(),
                 this.getSearchByCareerPlanLevel()));
     }
+
+	@Override
+	protected List<SalarySpecDTO> getByNameResultsFromService(String name) {
+		return this.getAllResultsFromService();
+	}
+
 }

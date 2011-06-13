@@ -8,7 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
-import ar.edu.unq.dopplereffect.persistence.HibernatePersistentRepository;
+import ar.edu.unq.dopplereffect.persistence.repositories.HibernatePersistentRepository;
 import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
 
 public class SalarySpecificationRepositoryImpl extends HibernatePersistentRepository<SalarySpecification> {

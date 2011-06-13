@@ -13,6 +13,8 @@ public interface Repository<T> {
     List<T> searchAll();
 
     List<T> searchByExample(T object);
+    
+    List<T> searchByName(String name);
 
     T getByName(String name);
 

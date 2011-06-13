@@ -7,6 +7,8 @@ import ar.edu.unq.dopplereffect.service.Service;
 public interface ProjectService extends Service {
 
     List<ProjectDTO> searchAllProjects();
+    
+    List<ProjectDTO> searchByNameProjects(String name);
 
     void newProject(ProjectDTO entity);
 

@@ -97,4 +97,9 @@ public class ProjectServiceImpl implements ProjectService {
         this.getProjectRepo().update(project);
     }
 
+	@Override
+	public List<ProjectDTO> searchByNameProjects(String name) {
+		return convertAll(this.getProjectRepo().searchByName(name));
+	}
+
 }

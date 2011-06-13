@@ -74,4 +74,10 @@ public class EmployeeSearchModel extends SearchByExampleModel<EmployeeViewDTO> {
     public EmployeeDTO createEditDTO(final EmployeeViewDTO viewDTO) {
         return this.getService().createEditDTO(viewDTO);
     }
+
+	@Override
+	protected List<EmployeeViewDTO> getByNameResultsFromService(String name) {
+		return this.getAllResultsFromService();
+	}
+
 }

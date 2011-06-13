@@ -53,7 +53,6 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> impl
                 + StringUtils.capitalize(id)));
     }
 
-    @SuppressWarnings("null")
     @Override
     public Iterator<? extends T> iterator(final int first, final int count) {
         List<T> aList = this.getData();
