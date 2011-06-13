@@ -20,205 +20,215 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
  * para abordarlo, y por ultimo una lista de asignaciones de empleados.
  */
 public class Project extends Entity {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /* ************************ INSTANCE VARIABLES ************************ */
+	/* ************************ INSTANCE VARIABLES ************************ */
 
-    private String name;
+	private String name;
 
-    private PersonalData clientData;
+	private PersonalData clientData;
 
-    private Period timeProyect;
+	private Period timeProyect;
 
-    private Set<Skill> skills = new HashSet<Skill>();
+	private Set<Skill> skills = new HashSet<Skill>();
 
-    private Long maxEffort;
+	private Long maxEffort;
 
-    private Long currentEffort;
+	private Long currentEffort;
 
-    private Set<ProjectAssignment> projectAssignment = new HashSet<ProjectAssignment>();
+	private Set<ProjectAssignment> projectAssignment = new HashSet<ProjectAssignment>();
 
-    private ProjectAssignmentStrategy projectAssignmentStrategy;
+	private ProjectAssignmentStrategy projectAssignmentStrategy;
 
-    /* *************************** CONSTRUCTORS *************************** */
+	/* *************************** CONSTRUCTORS *************************** */
 
-    public Project() {
-        super();
-        clientData = new PersonalData();
-        this.setCurrentEffort(0L);
-    }
+	public Project() {
+		super();
+		clientData = new PersonalData();
+		this.setCurrentEffort(0L);
+	}
 
-    public Project(final ProjectAssignmentStrategy strategy) {
-        this();
-        this.setProjectAssignmentStrategy(strategy);
-    }
+	public Project(final ProjectAssignmentStrategy strategy) {
+		this();
+		this.setProjectAssignmentStrategy(strategy);
+	}
 
-    /* **************************** OPERATIONS **************************** */
+	/* **************************** OPERATIONS **************************** */
 
-    /**
-     * Lleva a cabo una asignacion, para lo cual recibe el empleado a asignar y
-     * el intervalo de la asignacion.
-     */
-    public void manualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
-        this.getProjectAssignmentStrategy().manualAssignment(this, employee, interval);
-    }
+	/**
+	 * Lleva a cabo una asignacion, para lo cual recibe el empleado a asignar y
+	 * el intervalo de la asignacion.
+	 */
+	public void manualAssignment(final Employee employee,
+			final IntervalDurationStrategy interval) {
+		this.getProjectAssignmentStrategy().manualAssignment(this, employee,
+				interval);
+	}
 
-    /**
-     * @param date
-     *            es el dia en el que se quiere asignar y abrir el proyecto, pro
-     *            ejemplo: yo creo el proyecto ahora y qiero que se haga la
-     *            asignacion automatica, pero lo voy abrir dentro de 2 semanas,
-     *            entonces quiero que se realize todas las verificaciones a
-     *            partir de esa fecha
-     * 
-     */
-    public void automaticAssignment(final List<Employee> employees, final DateTime date) {
-        IntervalDurationStrategy intervalDurationStrategy = new IntervalDurationStrategy(new Interval(date,
-                date.plus(this.getTimeProyect())));
-        this.getProjectAssignmentStrategy().automaticAssignment(this, employees, intervalDurationStrategy);
-    }
+	/**
+	 * @param date
+	 *            es el dia en el que se quiere asignar y abrir el proyecto, pro
+	 *            ejemplo: yo creo el proyecto ahora y qiero que se haga la
+	 *            asignacion automatica, pero lo voy abrir dentro de 2 semanas,
+	 *            entonces quiero que se realize todas las verificaciones a
+	 *            partir de esa fecha
+	 * 
+	 */
+	public void automaticAssignment(final List<Employee> employees,
+			final DateTime date) {
+		IntervalDurationStrategy intervalDurationStrategy = new IntervalDurationStrategy(
+				new Interval(date, date.plus(this.getTimeProyect())));
+		this.getProjectAssignmentStrategy().automaticAssignment(this,
+				employees, intervalDurationStrategy);
+	}
 
-    protected boolean validateEffort(final IntervalDurationStrategy interval) {
-        long hoursAssignment = this.getHoursOfEffort(interval);
-        return maxEffort >= this.getCurrentEffort() + hoursAssignment;
-    }
+	protected boolean validateEffort(final IntervalDurationStrategy interval) {
+		long hoursAssignment = this.getHoursOfEffort(interval);
+		return maxEffort >= this.getCurrentEffort() + hoursAssignment;
+	}
 
-    protected long getHoursOfEffort(final IntervalDurationStrategy interval) {
-        return ProjectHelper.daysToHoursEffort(interval.getAmountOfDays());
-    }
+	protected long getHoursOfEffort(final IntervalDurationStrategy interval) {
+		return ProjectHelper.daysToHoursEffort(interval.getAmountOfDays());
+	}
 
-    /**
-     * Verifica si un empleado esta asignado en este proyecto.
-     */
-    public boolean isAssigned(final Employee employee) {
-        return this.getAssignment(employee) != null;
-    }
+	/**
+	 * Verifica si un empleado esta asignado en este proyecto.
+	 */
+	public boolean isAssigned(final Employee employee) {
+		return this.getAssignment(employee) != null;
+	}
 
-    /**
-     * Agrega un skill a la lista de skills del proyecto.
-     */
-    public void addSkill(final Skill skill) {
-        this.getSkills().add(skill);
-    }
+	/**
+	 * Agrega un skill a la lista de skills del proyecto.
+	 */
+	public void addSkill(final Skill skill) {
+		this.getSkills().add(skill);
+	}
 
-    /**
-     * Busca la asignacion de un empleado dado.
-     * 
-     * @param employee
-     *            el empleado.
-     * @return la asignacion correspondiente al empleado, o <code>null</code> si
-     *         no existe tal asignacion.
-     */
-    public ProjectAssignment getAssignment(final Employee employee) {
-        return CollectionUtils.find(this.getAssignedEmployees(), new ProjectAssignmentPredicate(employee));
-    }
+	/**
+	 * Busca la asignacion de un empleado dado.
+	 * 
+	 * @param employee
+	 *            el empleado.
+	 * @return la asignacion correspondiente al empleado, o <code>null</code> si
+	 *         no existe tal asignacion.
+	 */
+	public ProjectAssignment getAssignment(final Employee employee) {
+		return CollectionUtils.find(this.getAssignedEmployees(),
+				new ProjectAssignmentPredicate(employee));
+	}
 
-    /**
-     * Busca la asignacion de un empleado, en caso de que no tenga crea una y se
-     * la guarda.
-     */
-    public ProjectAssignment findOrCreateAssignment(final Employee employee) {
-        ProjectAssignment assignment = this.getAssignment(employee);
-        if (assignment == null) {
-            assignment = new ProjectAssignment(employee);
-            this.getAssignedEmployees().add(assignment);
-        }
-        return assignment;
-    }
+	/**
+	 * Busca la asignacion de un empleado, en caso de que no tenga crea una y se
+	 * la guarda.
+	 */
+	public ProjectAssignment findOrCreateAssignment(final Employee employee) {
+		ProjectAssignment assignment = this.getAssignment(employee);
+		if (assignment == null) {
+			assignment = new ProjectAssignment(employee);
+			this.getAssignedEmployees().add(assignment);
+		}
+		return assignment;
+	}
 
-    /**
-     * Verifica si un empleado esta asignado en un intervalo dado.
-     * 
-     * @param employee
-     *            el empleado que se desea verificar.
-     * @param interval
-     *            el intervalo que se desea verificar.
-     * @return <code>true</code> si esta asignado, <code>false</code> en caso
-     *         contrario.
-     */
-    public boolean isAssignedInInterval(final Employee employee, final IntervalDurationStrategy interval) {
-        return this.isAssigned(employee) && this.getAssignment(employee).containsInterval(interval);
-    }
+	/**
+	 * Verifica si un empleado esta asignado en un intervalo dado.
+	 * 
+	 * @param employee
+	 *            el empleado que se desea verificar.
+	 * @param interval
+	 *            el intervalo que se desea verificar.
+	 * @return <code>true</code> si esta asignado, <code>false</code> en caso
+	 *         contrario.
+	 */
+	public boolean isAssignedInInterval(final Employee employee,
+			final IntervalDurationStrategy interval) {
+		return this.isAssigned(employee)
+				&& this.getAssignment(employee).containsInterval(interval);
+	}
 
-    /* **************************** ACCESSORS ***************************** */
+	/* **************************** ACCESSORS ***************************** */
 
-    public PersonalData getClientData() {
-        return clientData;
-    }
+	public PersonalData getClientData() {
+		return clientData;
+	}
 
-    public void setClientData(final PersonalData clientData) {
-        this.clientData = clientData;
-    }
+	public void setClientData(final PersonalData clientData) {
+		this.clientData = clientData;
+	}
 
-    public Set<Skill> getSkills() {
-        return skills;
-    }
+	public Set<Skill> getSkills() {
+		return skills;
+	}
 
-    public void setSkills(final Set<Skill> skills) {
-        this.skills = skills;
-    }
+	public void setSkills(final Set<Skill> skills) {
+		this.skills = skills;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(final String name) {
-        this.name = name;
-    }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
-    public Set<ProjectAssignment> getAssignedEmployees() {
-        return this.getProjectAssignment();
-    }
+	public Set<ProjectAssignment> getAssignedEmployees() {
+		return this.getProjectAssignment();
+	}
 
-    public void setConsideredEffort(final Period consideredEffort) {
-        this.setTimeProyect(consideredEffort);
-    }
+	public void setConsideredEffort(final Period consideredEffort) {
+		this.setTimeProyect(consideredEffort);
+	}
 
-    public Long getCurrentEffort() {
-        return currentEffort;
-    }
+	public Long getCurrentEffort() {
+		return currentEffort;
+	}
 
-    public void setMaxEffort(final Long maxEffort) {
-        this.maxEffort = maxEffort;
-    }
+	public void setMaxEffort(final Long maxEffort) {
+		this.maxEffort = maxEffort;
+	}
 
-    public Long getMaxEffort() {
-        return maxEffort;
-    }
+	public Long getMaxEffort() {
+		return maxEffort;
+	}
 
-    public void setTimeProyect(final Period timeProyect) {
-        this.timeProyect = timeProyect;
-    }
+	public void setTimeProyect(final Period timeProyect) {
+		this.timeProyect = timeProyect;
+	}
 
-    public Period getTimeProyect() {
-        return timeProyect;
-    }
+	public Period getTimeProyect() {
+		return timeProyect;
+	}
 
-    public void setAssignedEmployees(final Set<ProjectAssignment> assignedEmployees) {
-        this.setProjectAssignment(assignedEmployees);
-    }
+	public void setAssignedEmployees(
+			final Set<ProjectAssignment> assignedEmployees) {
+		this.setProjectAssignment(assignedEmployees);
+	}
 
-    public void setProjectAssignmentStrategy(final ProjectAssignmentStrategy projectAssignmentStrategy) {
-        this.projectAssignmentStrategy = projectAssignmentStrategy;
-    }
+	public void setProjectAssignmentStrategy(
+			final ProjectAssignmentStrategy projectAssignmentStrategy) {
+		this.projectAssignmentStrategy = projectAssignmentStrategy;
+	}
 
-    public IProjectAssignmentStrategy getProjectAssignmentStrategy() {
-        return projectAssignmentStrategy;
-    }
+	public IProjectAssignmentStrategy getProjectAssignmentStrategy() {
+		return projectAssignmentStrategy;
+	}
 
-    public void setCurrentEffort(final Long currentEffort) {
-        this.currentEffort = currentEffort;
-    }
+	public void setCurrentEffort(final Long currentEffort) {
+		this.currentEffort = currentEffort;
+	}
 
-    public void plusEffort(final long hoursAssignment) {
-        this.setCurrentEffort(this.getCurrentEffort() + hoursAssignment);
-    }
+	public void plusEffort(final long hoursAssignment) {
+		this.setCurrentEffort(this.getCurrentEffort() + hoursAssignment);
+	}
 
-    public void setProjectAssignment(final Set<ProjectAssignment> projectAssignment) {
-        this.projectAssignment = projectAssignment;
-    }
+	public void setProjectAssignment(
+			final Set<ProjectAssignment> projectAssignment) {
+		this.projectAssignment = projectAssignment;
+	}
 
-    public Set<ProjectAssignment> getProjectAssignment() {
-        return projectAssignment;
-    }
+	public Set<ProjectAssignment> getProjectAssignment() {
+		return projectAssignment;
+	}
 }
