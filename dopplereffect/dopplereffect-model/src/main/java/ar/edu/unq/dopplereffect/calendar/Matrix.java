@@ -73,7 +73,7 @@ public class Matrix<X, Y, V> implements Serializable {
 
     /**
      * Metodo que no es del modelo!!! Solo esta para poder ver el calendario.
-     * Una vez termidado el modelo este metodo sera eliminado
+     * Una vez terminado el modelo este metodo sera eliminado
      */
     public void loggerMatrixCalendar() {
         final StringBuilder sBuilder = new StringBuilder();

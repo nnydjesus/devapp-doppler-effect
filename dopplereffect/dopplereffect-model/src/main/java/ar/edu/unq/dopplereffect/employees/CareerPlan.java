@@ -6,6 +6,11 @@ package ar.edu.unq.dopplereffect.employees;
 public enum CareerPlan {
     TECHNICIAN, TESTER, FUNCTIONAL, DESIGNER;
 
+    /**
+     * @return el plan de carrera anterior, es decir aquel mas principiante.
+     *         Para el plan de carrera mas principiante, se retorna
+     *         <code>null</code>.
+     */
     public CareerPlan getPrevious() {
         switch (this) {
         case TECHNICIAN:
@@ -21,6 +26,10 @@ public enum CareerPlan {
         }
     }
 
+    /**
+     * @return el siguiente plan de carrera, es decir aquel mas avanzado. Para
+     *         el plan de carrera mas avanzado, se retorna <code>null</code>.
+     */
     public CareerPlan getNext() {
         switch (this) {
         case TECHNICIAN:

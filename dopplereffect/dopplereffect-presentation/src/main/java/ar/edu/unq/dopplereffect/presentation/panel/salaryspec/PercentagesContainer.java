@@ -29,6 +29,7 @@ public class PercentagesContainer extends WebMarkupContainer {
 
                     @Override
                     protected void onUpdate(final AjaxRequestTarget target) {
+                        // x
                     }
                 });
                 item.add(new Label("value", new PropertyModel<Integer>(item.getDefaultModel(), "value")));

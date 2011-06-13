@@ -27,7 +27,7 @@ public class LeaveRequest extends Entity implements Assignable {
     /* *************************** CONSTRUCTORS *************************** */
 
     public LeaveRequest() {
-        super();
+        super(); // preferentemente usado solo por Hibernate
     }
 
     public LeaveRequest(final LeaveRequestType type, final DurationStrategy durationStrategy) {
@@ -171,9 +171,14 @@ public class LeaveRequest extends Entity implements Assignable {
         return this.getDurationStrategy().getFirstDate();
     }
 
+    /**
+     * Retorna el motivo que distingue a la licencia.
+     */
     public String getReason() {
         return this.getType().getReason();
     }
+
+    /* ****************** EQUALS, HASHCODE, TOSTRING ********************** */
 
     @Override
     public String toString() {

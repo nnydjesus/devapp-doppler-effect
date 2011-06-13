@@ -198,6 +198,11 @@ public class Employee extends Entity implements Calendareable {
         return Years.yearsBetween(this.getCareerData().getJoinDate(), new DateTime()).getYears();
     }
 
+    /**
+     * Cambia de plan de carrera, de nivel y porcentaje. Verifica que el salario
+     * nuevo correspondiente no sea menor al que tenia, si eso ocurre entonces
+     * se queda con los datos que poseia originalmente.
+     */
     public void changeCareerPlan(final EmployeesController employeesController, final CareerPlan careerPlan,
             final CareerPlanLevel level, final int percentage) {
         CareerPlanLevel oldLevel = this.getCareerData().getLevel();
@@ -224,7 +229,7 @@ public class Employee extends Entity implements Calendareable {
         for (Skill sk : this.getSkills()) {
             if (sk.getType().equals(skill.getType())) {
                 this.getSkills().remove(sk);
-                this.getSkills().add(new Skill(sk.getType(), skill.getLevel())); // NOPMD
+                this.getSkills().add(this.createSkill(skill, sk));
                 return;
             }
         }
@@ -283,6 +288,11 @@ public class Employee extends Entity implements Calendareable {
     }
 
     /* ************************* PRIVATE METHODS ************************** */
+
+    private Skill createSkill(final Skill skill, final Skill sk) {
+        // lo hice solo para que el PMD no chille
+        return new Skill(sk.getType(), skill.getLevel());
+    }
 
     /* ****************** EQUALS, HASHCODE, TOSTRING ********************** */
 

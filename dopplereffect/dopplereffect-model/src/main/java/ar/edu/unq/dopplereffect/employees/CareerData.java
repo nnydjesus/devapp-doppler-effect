@@ -9,6 +9,7 @@ import ar.edu.unq.dopplereffect.entity.Entity;
  * de carrera, su nivel y su porcentaje de sueldo.
  */
 public class CareerData extends Entity {
+
     private static final long serialVersionUID = 1L;
 
     /* ************************ INSTANCE VARIABLES ************************ */
@@ -24,8 +25,7 @@ public class CareerData extends Entity {
     /* *************************** CONSTRUCTORS *************************** */
 
     public CareerData() {
-        // solo debe ser utilizado por Hibernate
-        super();
+        super(); // solo debe ser utilizado por Hibernate
     }
 
     public CareerData(final DateTime joinDate, final CareerPlan careerPlan, final CareerPlanLevel level,

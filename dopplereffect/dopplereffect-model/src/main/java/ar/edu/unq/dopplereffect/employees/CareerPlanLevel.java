@@ -5,8 +5,9 @@ import java.io.Serializable;
 import ar.edu.unq.dopplereffect.entity.Entity;
 
 /**
- * Representa el nivel (conocimientos y experiencia) que tiene un empleado. Por
- * ejemplo: Junior, Senior, etc.
+ * Representa el nivel (conocimientos y experiencia) que tiene un empleado, el
+ * cual se aplica al plan de carrera que posean. Por ejemplo: Junior, Senior,
+ * etc.
  */
 public class CareerPlanLevel extends Entity implements Serializable {
 
@@ -46,7 +47,7 @@ public class CareerPlanLevel extends Entity implements Serializable {
     }
 
     public CareerPlanLevel() {
-        super();
+        super(); // Usado solo por Hibernate
     }
 
     /* **************************** ACCESSORS ***************************** */
@@ -63,6 +64,10 @@ public class CareerPlanLevel extends Entity implements Serializable {
         return previous;
     }
 
+    /**
+     * Asigna el nivel previo. Es reciproco, con lo cual tambien asigna el
+     * siguiente al nivel recibido como parametro.
+     */
     public void setPrevious(final CareerPlanLevel previous) {
         this.setNewPrevious(previous);
         if (this.getPrevious() != null) {
@@ -74,6 +79,10 @@ public class CareerPlanLevel extends Entity implements Serializable {
         return next;
     }
 
+    /**
+     * Asigna el nivel siguiente. Es reciproco, con lo cual tambien asigna el
+     * previo al nivel recibido como parametro.
+     */
     public void setNext(final CareerPlanLevel next) {
         this.setNewNext(next);
         if (this.getNext() != null) {
