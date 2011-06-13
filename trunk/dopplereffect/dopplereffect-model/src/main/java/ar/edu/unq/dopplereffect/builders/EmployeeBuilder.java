@@ -1,55 +1,56 @@
-package ar.edu.unq.dopplereffect.builders.employees;
+package ar.edu.unq.dopplereffect.builders;
 
 import org.joda.time.DateTime;
 
+import ar.edu.unq.dopplereffect.employees.CareerData;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.employees.EmployeeData;
 
-public class EmployeeBuilder {
+public class EmployeeBuilder implements Builder<Employee> {
 
-    private transient Employee employee;
+    protected transient EmployeeData employeeData = new EmployeeDataBuilder().build();
 
-    public EmployeeBuilder() {
-        employee = new Employee();
-    }
+    protected transient CareerData careerData = new CareerDataBuilder().build();
 
     public EmployeeBuilder withFirstName(final String firstName) {
-        employee.setFirstName(firstName);
+        employeeData.setFirstName(firstName);
         return this;
     }
 
     public EmployeeBuilder withLastName(final String lastName) {
-        employee.setLastName(lastName);
+        employeeData.setLastName(lastName);
         return this;
     }
 
     public EmployeeBuilder withDNI(final int dni) {
-        employee.setDni(dni);
+        employeeData.setDni(dni);
         return this;
     }
 
     public EmployeeBuilder withPercentage(final int percentage) {
-        employee.getCareerData().setPercentage(percentage);
+        careerData.setPercentage(percentage);
         return this;
     }
 
     public EmployeeBuilder withJoinDate(final DateTime date) {
-        employee.getCareerData().setJoinDate(date);
+        careerData.setJoinDate(date);
         return this;
     }
 
     public EmployeeBuilder withCareerPlan(final CareerPlan plan) {
-        employee.getCareerData().setCareerPlan(plan);
+        careerData.setCareerPlan(plan);
         return this;
     }
 
     public EmployeeBuilder withCareerPlanLevel(final CareerPlanLevel level) {
-        employee.getCareerData().setLevel(level);
+        careerData.setLevel(level);
         return this;
     }
 
+    @Override
     public Employee build() {
-        return employee;
+        return new Employee(employeeData, careerData);
     }
 }

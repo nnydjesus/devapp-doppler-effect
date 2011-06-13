@@ -14,7 +14,7 @@ import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.junit.Test;
 
-import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 import ar.edu.unq.dopplereffect.exceptions.UserException;

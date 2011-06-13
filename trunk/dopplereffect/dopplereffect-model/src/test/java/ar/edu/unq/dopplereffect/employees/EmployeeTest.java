@@ -12,7 +12,7 @@ import java.util.Set;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.helpers.SkillHelpers;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestBuilder;

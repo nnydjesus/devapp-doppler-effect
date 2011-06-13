@@ -81,7 +81,7 @@ public class SalarySpecDTO implements DTO {
             builder.append(",");
         }
         if (!this.getPercentages().isEmpty()) {
-            builder.deleteCharAt(builder.length());
+            builder.deleteCharAt(builder.toString().length() - 1);
         }
         return builder.toString();
     }
