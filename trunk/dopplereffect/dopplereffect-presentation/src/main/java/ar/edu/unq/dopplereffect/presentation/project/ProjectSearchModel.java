@@ -70,4 +70,10 @@ public class ProjectSearchModel extends SearchModel<ProjectDTO> {
         // es el mismo en este caso??
         return viewDTO;
     }
+
+	@Override
+	protected List<ProjectDTO> getByNameResultsFromService(String name) {
+		return service.searchByNameProjects(name);
+	}
+
 }

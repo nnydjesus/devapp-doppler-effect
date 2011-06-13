@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.persistence.leaverequest;
 
-import ar.edu.unq.dopplereffect.persistence.HibernatePersistentRepository;
+import ar.edu.unq.dopplereffect.persistence.repositories.HibernatePersistentRepository;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
 
 public class DurationStrategyRepositoryImpl extends HibernatePersistentRepository<DurationStrategy> {

@@ -9,7 +9,7 @@ import org.joda.time.DateTime;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
-import ar.edu.unq.dopplereffect.persistence.HibernatePersistentRepository;
+import ar.edu.unq.dopplereffect.persistence.repositories.HibernatePersistentRepository;
 
 public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<LeaveRequest> {
 

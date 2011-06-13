@@ -112,4 +112,10 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
     public LeaveRequestDetailDTO getDetailForLeaveRequest(final LeaveRequestViewDTO leaveReqDTO) {
         return this.getService().getDetailForLeaveRequest(leaveReqDTO);
     }
+
+	@Override
+	protected List<LeaveRequestViewDTO> getByNameResultsFromService(String name) {
+		return this.getAllResultsFromService();
+	}
+
 }

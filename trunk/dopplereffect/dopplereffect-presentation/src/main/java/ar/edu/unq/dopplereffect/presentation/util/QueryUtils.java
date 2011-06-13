@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.presentation.util;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,11 +14,13 @@ import com.wiquery.plugins.jqgrid.model.SortOrder;
 import com.wiquery.plugins.jqgrid.util.ReflectionUtils;
 
 /**
+ * Clase que ordena.. estaba en el ejemplo de wiqueryplugins
  * 
  */
-public class QueryUtils {
+public class QueryUtils implements Serializable{
+	private static final long serialVersionUID = 1L;
 
-    private class IOrderComparator<T> implements Comparator<T> {
+	private class IOrderComparator<T> implements Comparator<T> {
 
         private SortInfo order;
 
@@ -41,7 +44,7 @@ public class QueryUtils {
                     }
                 }
             } catch (Exception e) {
-                new UserException(e);
+                throw new UserException(e);
             }
             return 0;
         }

@@ -1,6 +1,6 @@
 package ar.edu.unq.dopplereffect.persistence.project;
 
-import ar.edu.unq.dopplereffect.persistence.HibernatePersistentRepository;
+import ar.edu.unq.dopplereffect.persistence.repositories.HibernatePersistentRepository;
 import ar.edu.unq.dopplereffect.projects.Project;
 
 public class ProjectRepositoryImpl extends HibernatePersistentRepository<Project> {
