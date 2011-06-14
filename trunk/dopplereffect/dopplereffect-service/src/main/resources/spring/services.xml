@@ -48,6 +48,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="leaveReqTypeRepo" ref="repo.leave_request_type" />
 		<property name="skillRepo" ref="repo.skill" />
 		<property name="salarySpecRepo" ref="repo.salary_spec" />
+		<property name="loginService" ref="service.user" />
 	</bean>
 
 </beans>

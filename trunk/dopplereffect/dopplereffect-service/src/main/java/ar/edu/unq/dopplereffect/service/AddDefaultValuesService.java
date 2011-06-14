@@ -26,6 +26,7 @@ import ar.edu.unq.dopplereffect.projects.Skill;
 import ar.edu.unq.dopplereffect.projects.SkillLevel;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
+import ar.edu.unq.tpi.util.common.HashUtils;
 
 @Service
 public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service.Service {
@@ -90,6 +91,8 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
 
     private SkillRepositoryImpl skillRepo;
 
+    private LoginService loginService;
+
     public void addAllData() {
         this.addCareerPlanLevels();
         this.addEmployees();
@@ -97,6 +100,11 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
         this.addLeaveRequests();
         this.addProjects();
         this.addSalarySpecs();
+        this.addDefaultUser();
+    }
+
+    private void addDefaultUser() {
+        this.getLoginService().signUp("a", HashUtils.hash("a"));
     }
 
     private void addSalarySpecs() {
@@ -211,5 +219,13 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
 
     public void setSalarySpecRepo(final SalarySpecificationRepositoryImpl salarySpecRepo) {
         this.salarySpecRepo = salarySpecRepo;
+    }
+
+    public LoginService getLoginService() {
+        return loginService;
+    }
+
+    public void setLoginService(final LoginService loginService) {
+        this.loginService = loginService;
     }
 }
