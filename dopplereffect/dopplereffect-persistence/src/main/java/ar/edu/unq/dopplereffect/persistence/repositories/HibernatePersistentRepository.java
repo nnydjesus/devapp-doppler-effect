@@ -57,19 +57,19 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
     }
 
     private T getByCriterion(final Criterion criterion) {
-    	return getByCriterionList(criterion).get(0);
+        List<T> criterionList = this.getByCriterionList(criterion);
+        if (criterionList.isEmpty()) {
+            return null;
+        } else {
+            return criterionList.get(0);
+        }
     }
-    
+
     @SuppressWarnings("unchecked")
     private List<T> getByCriterionList(final Criterion criterion) {
         Criteria criteria = this.getSession().createCriteria(this.entityClass);
         criteria.add(criterion);
-        List<T> results = criteria.list();
-        if (results.isEmpty()) {
-            return null;
-        } else {
-            return criteria.list();
-        }
+        return criteria.list();
     }
 
     @Override
@@ -86,8 +86,8 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
         return entityClass;
     }
 
-	@Override
-	public List<T> searchByName(String name) {
-		return getByCriterionList(Restrictions.like("name", "%" + name + "%"));
-	}
+    @Override
+    public List<T> searchByName(final String name) {
+        return this.getByCriterionList(Restrictions.like("name", "%" + name + "%"));
+    }
 }
