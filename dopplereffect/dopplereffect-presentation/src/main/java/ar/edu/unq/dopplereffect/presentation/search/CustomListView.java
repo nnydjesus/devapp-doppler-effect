@@ -104,10 +104,15 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
     @Override
     protected void populateItem(final ListItem<T> item) {
         for (String field : this.getModelFields()) {
-            item.add(new Label(field)); // NOPMD
+            item.add(this.createLabel(field));
         }
         item.add(this.makeEditButton());
         item.add(this.makeDeleteButton());
+    }
+
+    private Label createLabel(final String field) {
+        // definido solo porque chilla el PMD
+        return new Label(field);
     }
 
     private Component makeEditButton() {

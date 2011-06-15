@@ -4,11 +4,11 @@ import ar.edu.unq.dopplereffect.data.Address;
 
 public class AddressBuilder implements Builder<Address> {
 
-    private String street = "xxx";
+    protected transient String street = "xxx";
 
-    private int number = 123;
+    protected transient int number = 123;
 
-    private String city = "XXX";
+    protected transient String city = "XXX";
 
     public AddressBuilder withStreet(final String theStreet) {
         street = theStreet;

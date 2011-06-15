@@ -107,7 +107,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
         this.setSubmitButton(this.createSubmitButton());
         this.setRegisterButton(this.createRegisterButton());
-        this.setSubmit(this.getSubmitButton().add(new ButtonBehavior()));
+        this.setSubmit(this.getSubmitButton().add(new ButtonBehavior().setLabel(this.getLoginSubmitModel())));
         this.setRegisterBehavior(new ButtonBehavior().setLabel(this.getLoginRegisterModel()));
         this.setRegister(this.getRegisterButton().add(this.getRegisterBehavior()));
 

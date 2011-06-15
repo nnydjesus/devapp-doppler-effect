@@ -37,8 +37,8 @@ public abstract class SearchModel<T> implements Serializable {
     public void search() {
         this.setResults(this.getAllResultsFromService());
     }
-    
-    public void searchByName(String name) {
+
+    public void searchByName(final String name) {
         this.setResults(this.getByNameResultsFromService(name));
     }
 
@@ -65,7 +65,7 @@ public abstract class SearchModel<T> implements Serializable {
     }
 
     protected abstract List<T> getAllResultsFromService();
-    
+
     protected abstract List<T> getByNameResultsFromService(String name);
 
     protected abstract <D extends DTO> void callSaveOnService(D entity);

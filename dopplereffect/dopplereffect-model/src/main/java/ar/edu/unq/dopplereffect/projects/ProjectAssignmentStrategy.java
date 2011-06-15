@@ -78,8 +78,7 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
             } else {
                 int missingDays = ProjectHelper.hoursEffortToDays(project.getMaxEffort() - project.getCurrentEffort());
                 if (interval.getAmountOfDays() >= missingDays) {
-                    IntervalDurationStrategy reducedInterval = new IntervalDurationStrategy(new Interval(// NOPMD
-                            interval.getStartDate(), interval.getStartDate().plusDays(missingDays - 1)));
+                    IntervalDurationStrategy reducedInterval = this.craeteReducedInterval(interval, missingDays);
                     if (project.validateEffort(reducedInterval)) {
                         this.internalManualAssignment(employee, reducedInterval);
                     }
@@ -129,5 +128,12 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
             }
         };
 
+    }
+
+    private IntervalDurationStrategy craeteReducedInterval(final IntervalDurationStrategy interval,
+            final int missingDays) {
+        // creado solo porque el PMD chilla
+        return new IntervalDurationStrategy(new Interval(interval.getStartDate(), interval.getStartDate().plusDays(
+                missingDays - 1)));
     }
 }

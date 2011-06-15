@@ -54,10 +54,7 @@ public class HomePage extends AbstractWebPage<Component> {
 
     @Override
     protected Component createSidebar() {
-        final AjaxCallBack<Component> callback = this.generateCallback();
-        SidebarPanel container = new SidebarPanel(SIDEBAR, BODY, callback, this);
-        return container;
-
+        return new SidebarPanel(SIDEBAR, BODY, this.generateCallback(), this);
     }
 
     public Component createPanelLink(final String id, final AbstractCallbackPanel<?> panel) {

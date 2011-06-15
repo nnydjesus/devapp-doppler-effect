@@ -1,8 +1,7 @@
 package ar.edu.unq.dopplereffect.projects;
 
-/**
- */
-public class ProjectHelper {// NOPMD
+public class ProjectHelper {
+
     private static final int HOURS_PER_DAY = 8;
 
     private ProjectHelper() {

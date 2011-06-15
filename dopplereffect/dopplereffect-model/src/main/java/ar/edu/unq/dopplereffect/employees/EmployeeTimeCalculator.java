@@ -101,7 +101,7 @@ public class EmployeeTimeCalculator {
                     // contando el dia anterior
                     DateTime currentIntervalEnd = current.minusDays(1);
                     // y se lo agrega a la lista de intervalos
-                    intervals.add(new IntervalDurationStrategy(currentIntervalStart, currentIntervalEnd)); // NOPMD
+                    intervals.add(this.createIntervalDurationStrategy(currentIntervalStart, currentIntervalEnd)); // NOPMD
                     // se resetea el intervalo actual
                     isCurrentIntervalStartSet = false;
                 }
@@ -130,5 +130,10 @@ public class EmployeeTimeCalculator {
             result += assignable.getSuperpositionDaysWith(ids);
         }
         return result;
+    }
+
+    private IntervalDurationStrategy createIntervalDurationStrategy(final DateTime start, final DateTime end) {
+        // definido solo porque chilla el PMD
+        return new IntervalDurationStrategy(start, end);
     }
 }

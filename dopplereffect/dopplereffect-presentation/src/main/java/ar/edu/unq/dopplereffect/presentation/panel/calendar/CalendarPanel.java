@@ -143,11 +143,11 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
     }
 
     public void setDatePicketModel(final Date datePicketModel) {
-        this.datePicketModel = datePicketModel;
+        this.datePicketModel = (Date) datePicketModel.clone();
     }
 
     public Date getDatePicketModel() {
-        return datePicketModel;
+        return (Date) datePicketModel.clone();
     }
 
     @Override

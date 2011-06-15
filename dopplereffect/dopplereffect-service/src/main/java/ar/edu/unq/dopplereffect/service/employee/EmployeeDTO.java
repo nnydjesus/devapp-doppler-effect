@@ -90,11 +90,11 @@ public class EmployeeDTO implements DTO {
     }
 
     public Date getJoinDate() {
-        return joinDate;
+        return (Date) joinDate.clone();
     }
 
     public void setJoinDate(final Date joinDate) {
-        this.joinDate = joinDate;
+        this.joinDate = (Date) joinDate.clone();
     }
 
     public CareerPlan getCareerPlan() {

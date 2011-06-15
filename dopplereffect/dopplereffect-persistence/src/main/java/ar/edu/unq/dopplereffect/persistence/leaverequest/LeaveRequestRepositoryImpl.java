@@ -15,18 +15,21 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
 
     private static final long serialVersionUID = 8356707238183454593L;
 
+    // esto lo hice por el PMD, es realmente absurdo
+    private static final String UNCHECKED = "unchecked";
+
     public LeaveRequestRepositoryImpl() {
         super(LeaveRequest.class);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     public List<LeaveRequest> searchAllByEmployee(final Employee employee) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         criteria.add(Restrictions.eq("employee", employee));
         return criteria.list();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     public List<LeaveRequest> searchAllByDateAndEmployee(final DateTime dateTime, final Employee employee) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         criteria.add(Restrictions.eq("employee", employee));
@@ -41,7 +44,7 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
         return criteria.list();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     public LeaveRequest searchByStartDateAndEmployee(final DateTime dateTime, final Employee employee) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         criteria.add(Restrictions.eq("employee", employee));
@@ -60,7 +63,7 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
         return results.get(0);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     public List<LeaveRequest> searchAllByDate(final DateTime dateTime) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         // necesito joinear

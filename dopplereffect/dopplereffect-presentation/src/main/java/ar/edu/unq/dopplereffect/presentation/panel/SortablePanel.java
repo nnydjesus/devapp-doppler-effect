@@ -22,7 +22,8 @@ public class SortablePanel<T extends Serializable> extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    private final Boolean mutex = true;
+    // definido asi porque al findbugs no le gusta los booleanos
+    private final Object mutex = new Object();
 
     private static final String CELL_ID = "item";
 
@@ -208,7 +209,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
         return sortableW;
     }
 
-    public Boolean getMutex() {
+    public Object getMutex() {
         return mutex;
     }
 }

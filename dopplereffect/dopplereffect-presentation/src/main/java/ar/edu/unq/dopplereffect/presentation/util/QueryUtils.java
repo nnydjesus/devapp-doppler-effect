@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import ar.edu.unq.tpi.util.commons.exeption.UserException;
 
 import com.wiquery.plugins.jqgrid.model.SortInfo;
-import com.wiquery.plugins.jqgrid.model.SortOrder;
 import com.wiquery.plugins.jqgrid.util.ReflectionUtils;
 
 /**
@@ -20,45 +17,7 @@ import com.wiquery.plugins.jqgrid.util.ReflectionUtils;
 public class QueryUtils implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	private class IOrderComparator<T> implements Comparator<T> {
-
-        private SortInfo order;
-
-        public IOrderComparator(final SortInfo order) {
-            this.setOrder(order);
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        public int compare(final T o1, final T o2) {
-            try {
-                Object ov1 = ReflectionUtils.getPropertyValue(o1, this.getOrder().getProperty());
-                Object ov2 = ReflectionUtils.getPropertyValue(o2, this.getOrder().getProperty());
-                if (ov1 instanceof Comparable && ov2 instanceof Comparable) {
-                    Comparable<Object> c1 = (Comparable<Object>) ov1;
-                    Comparable<Object> c2 = (Comparable<Object>) ov2;
-                    if (this.getOrder().getSortOrder().equals(SortOrder.asc)) {
-                        return c1.compareTo(c2);
-                    } else if (this.getOrder().getSortOrder().equals(SortOrder.desc)) {
-                        return c2.compareTo(c1);
-                    }
-                }
-            } catch (Exception e) {
-                throw new UserException(e);
-            }
-            return 0;
-        }
-
-        public void setOrder(final SortInfo order) {
-            this.order = order;
-        }
-
-        public SortInfo getOrder() {
-            return order;
-        }
-    }
-
-    public <T> T matchQuery(final T bean, final T searchBean, final String... searchFields) {
+	public <T> T matchQuery(final T bean, final T searchBean, final String... searchFields) {
         if (bean == null) {
             return null;
         }

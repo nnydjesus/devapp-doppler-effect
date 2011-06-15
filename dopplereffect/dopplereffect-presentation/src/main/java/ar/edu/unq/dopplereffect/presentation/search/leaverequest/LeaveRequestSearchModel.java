@@ -26,11 +26,15 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
     }
 
     public Date getSearchByDate() {
-        return searchByDate;
+        if (searchByDate == null) {
+            return null;
+        } else {
+            return (Date) searchByDate.clone();
+        }
     }
 
     public void setSearchByDate(final Date searchByDate) {
-        this.searchByDate = searchByDate;
+        this.searchByDate = (Date) searchByDate.clone();
     }
 
     public EmployeeViewDTO getSearchByEmployee() {
@@ -76,12 +80,12 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
         return this.getSearchByEmployee() != null;
     }
 
-    @Override
-    public void reset() {
-        super.reset();
-        searchByEmployee = null;
-        searchByDate = null;
-    }
+    // @Override
+    // public void reset() {
+    // super.reset();
+    // // searchByEmployee = null;
+    // // searchByDate = null;
+    // }
 
     @Override
     protected List<LeaveRequestViewDTO> getAllResultsFromService() {
@@ -113,9 +117,9 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
         return this.getService().getDetailForLeaveRequest(leaveReqDTO);
     }
 
-	@Override
-	protected List<LeaveRequestViewDTO> getByNameResultsFromService(String name) {
-		return this.getAllResultsFromService();
-	}
+    @Override
+    protected List<LeaveRequestViewDTO> getByNameResultsFromService(final String name) {
+        return this.getAllResultsFromService();
+    }
 
 }
