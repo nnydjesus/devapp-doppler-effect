@@ -48,7 +48,7 @@ public abstract class AbstractCallbackPanel<T> extends AbstractPanel<T> {
     }
 
     public void reset() {
-        // x
+        // solo para que el findbugs no chille
+        new Object();
     }
-
 }

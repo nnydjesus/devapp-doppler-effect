@@ -58,9 +58,7 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> impl
         List<T> aList = this.getData();
         SortParam sort = this.getSort();
         SortInfo sortInfo = new SortInfo(sort.getProperty(), sort.isAscending() ? SortOrder.asc : SortOrder.desc);
-        if (sortInfo != null) {
-            this.getQueryUtils().sortList(aList, sortInfo);
-        }
+        this.getQueryUtils().sortList(aList, sortInfo);
         int toIndex = first + count;
         if (toIndex > aList.size()) {
             toIndex = aList.size();

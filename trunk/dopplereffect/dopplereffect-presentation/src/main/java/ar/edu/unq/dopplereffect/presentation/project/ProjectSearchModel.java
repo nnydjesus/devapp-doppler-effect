@@ -71,9 +71,8 @@ public class ProjectSearchModel extends SearchModel<ProjectDTO> {
         return viewDTO;
     }
 
-	@Override
-	protected List<ProjectDTO> getByNameResultsFromService(String name) {
-		return service.searchByNameProjects(name);
-	}
-
+    @Override
+    protected List<ProjectDTO> getByNameResultsFromService(final String searchName) {
+        return service.searchByNameProjects(searchName);
+    }
 }

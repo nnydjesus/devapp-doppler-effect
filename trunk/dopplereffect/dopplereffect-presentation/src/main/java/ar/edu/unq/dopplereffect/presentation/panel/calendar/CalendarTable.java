@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.presentation.panel.calendar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,7 +31,9 @@ import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 /**
  */
-public class CalendarTable<T extends Calendareable> {
+public class CalendarTable<T extends Calendareable> implements Serializable {
+
+    private static final long serialVersionUID = -2312382166995179303L;
 
     private CalendarPanel<T> calendarPanel;
 

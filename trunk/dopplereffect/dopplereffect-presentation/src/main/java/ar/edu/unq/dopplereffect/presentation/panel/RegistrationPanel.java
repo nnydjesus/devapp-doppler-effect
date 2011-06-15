@@ -36,7 +36,7 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
 
     private Authenticate service;
 
-    private WebPage dafaultPage;
+    private WebPage defaultPage;
 
     public RegistrationPanel(final String id) {
         super(id);
@@ -67,7 +67,7 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
 
         this.getPassField().setResetPassword(true);
 
-        this.setDafaultPage(new HomePage());
+        this.setDefaultPage(new HomePage());
         form.add(this.getUserIdField());
         form.add(this.getPassField());
         form.add(rememberMeRow);
@@ -124,7 +124,7 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
 
             @Override
             public void execute(final AjaxRequestTarget ajaxTarget, final Object component) {
-                RegistrationPanel.this.setResponsePage(RegistrationPanel.this.getDafaultPage());
+                RegistrationPanel.this.setResponsePage(RegistrationPanel.this.getDefaultPage());
             }
         };
     }
@@ -153,16 +153,15 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
         return userIdField;
     }
 
-    public void setDafaultPage(final WebPage dafaultPage) {
-        this.dafaultPage = dafaultPage;
+    public void setDefaultPage(final WebPage defaultPage) {
+        this.defaultPage = defaultPage;
     }
 
-    public WebPage getDafaultPage() {
-        return dafaultPage;
+    public WebPage getDefaultPage() {
+        return defaultPage;
     }
 
     public boolean isRememberMe() {
         return rememberMe;
     }
-
 }

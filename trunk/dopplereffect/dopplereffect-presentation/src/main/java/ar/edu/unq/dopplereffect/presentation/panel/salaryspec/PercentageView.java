@@ -38,4 +38,28 @@ public class PercentageView implements IClusterable, Comparable<PercentageView> 
     public int compareTo(final PercentageView pView) {
         return this.getValue() == pView.getValue() ? 0 : this.getValue() > pView.getValue() ? 1 : -1;
     }
+
+    @Override
+    public int hashCode() {
+        int prime = 31;
+        return prime * 1 + value;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        PercentageView other = (PercentageView) obj;
+        if (value != other.value) {
+            return false;
+        }
+        return true;
+    }
 }
