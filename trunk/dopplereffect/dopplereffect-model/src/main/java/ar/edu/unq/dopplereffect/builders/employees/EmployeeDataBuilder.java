@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.builders;
+package ar.edu.unq.dopplereffect.builders.employees;
 
 import ar.edu.unq.dopplereffect.employees.EmployeeData;
 

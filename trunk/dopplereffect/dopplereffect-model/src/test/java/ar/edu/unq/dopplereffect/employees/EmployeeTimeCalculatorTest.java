@@ -10,11 +10,12 @@ import org.joda.time.Interval;
 import org.junit.Test;
 
 import ar.edu.unq.dopplereffect.assignments.Assignable;
-import ar.edu.unq.dopplereffect.builders.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.IntervalDurationStrategyBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.LeaveRequestBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.LeaveRequestCustomTypeBuilder;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestBuilder;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestTypeBuilder;
 import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
@@ -24,10 +25,15 @@ public class EmployeeTimeCalculatorTest {
     public void testDaysRequestedInAYear() {
         EmployeeTimeCalculator calculator = new EmployeeTimeCalculator();
         Employee empl = new EmployeeBuilder().build();
-        LeaveRequestCustomType leaveReqType = new LeaveRequestTypeBuilder().withReason("Holiday").build();
-        LeaveRequest sevenDaysReq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11)
+        LeaveRequestCustomType leaveReqType = new LeaveRequestCustomTypeBuilder().withReason("Holiday").build();
+        LeaveRequest sevenDaysReq = new LeaveRequestBuilder()
+                .withDurationStrategy(
+                        new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_11).build())
                 .withType(leaveReqType).build();
-        LeaveRequest fiveDaysReq = new LeaveRequestBuilder().withInterval(getDate(2011, 02, 26), getDate(2011, 03, 02))
+        LeaveRequest fiveDaysReq = new LeaveRequestBuilder()
+                .withDurationStrategy(
+                        new IntervalDurationStrategyBuilder()
+                                .withInterval(getDate(2011, 02, 26), getDate(2011, 03, 02)).build())
                 .withType(leaveReqType).build();
         empl.addAssignment(sevenDaysReq); // 7 dias de vacaciones
         empl.addAssignment(fiveDaysReq); // 5 dias de vacaciones
@@ -39,9 +45,11 @@ public class EmployeeTimeCalculatorTest {
     public void testDaysRequestedInAYearFromAnotherReason() {
         EmployeeTimeCalculator calculator = new EmployeeTimeCalculator();
         Employee empl = new EmployeeBuilder().build();
-        LeaveRequestCustomType holidayLeaveReqType = new LeaveRequestTypeBuilder().withReason("Holiday").build();
-        LeaveRequestCustomType movingLeaveReqType = new LeaveRequestTypeBuilder().withReason("Moving").build();
-        LeaveRequest sevenDaysReq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11)
+        LeaveRequestCustomType holidayLeaveReqType = new LeaveRequestCustomTypeBuilder().withReason("Holiday").build();
+        LeaveRequestCustomType movingLeaveReqType = new LeaveRequestCustomTypeBuilder().withReason("Moving").build();
+        LeaveRequest sevenDaysReq = new LeaveRequestBuilder()
+                .withDurationStrategy(
+                        new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_11).build())
                 .withType(holidayLeaveReqType).build();
         empl.addAssignment(sevenDaysReq); // 7 dias de vacaciones
         assertEquals("la cantidad de dias de licencia fallo", 0,
@@ -52,8 +60,10 @@ public class EmployeeTimeCalculatorTest {
     public void testDaysRequestedInAYearFromAnotherYear() {
         EmployeeTimeCalculator calculator = new EmployeeTimeCalculator();
         Employee empl = new EmployeeBuilder().build();
-        LeaveRequestCustomType holidayLeaveReqType = new LeaveRequestTypeBuilder().withReason("Holiday").build();
-        LeaveRequest sevenDaysReq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11)
+        LeaveRequestCustomType holidayLeaveReqType = new LeaveRequestCustomTypeBuilder().withReason("Holiday").build();
+        LeaveRequest sevenDaysReq = new LeaveRequestBuilder()
+                .withDurationStrategy(
+                        new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_11).build())
                 .withType(holidayLeaveReqType).build();
         empl.addAssignment(sevenDaysReq); // 7 dias de vacaciones
         assertEquals("la cantidad de dias de licencia fallo", 0,
@@ -64,7 +74,8 @@ public class EmployeeTimeCalculatorTest {
     public void testIsFreeAtInterval() {
         EmployeeTimeCalculator calculator = new EmployeeTimeCalculator();
         Employee empl = new EmployeeBuilder().build();
-        LeaveRequest req = new LeaveRequestBuilder().withInterval(D_2011_04_06, D_2011_04_08).build();
+        LeaveRequest req = new LeaveRequestBuilder().withDurationStrategy(
+                new IntervalDurationStrategyBuilder().withInterval(D_2011_04_06, D_2011_04_08).build()).build();
         empl.addAssignment(req);
         assertTrue("el empleado deberia estar libre en el intervalo dado",
                 calculator.isFreeAtInterval(empl, new Interval(D_2011_04_01, D_2011_04_05)));
@@ -76,7 +87,8 @@ public class EmployeeTimeCalculatorTest {
     public void testIsntFreeAtInterval() {
         EmployeeTimeCalculator calculator = new EmployeeTimeCalculator();
         Employee empl = new EmployeeBuilder().build();
-        LeaveRequest req = new LeaveRequestBuilder().withInterval(D_2011_04_08, D_2011_04_11).build();
+        LeaveRequest req = new LeaveRequestBuilder().withDurationStrategy(
+                new IntervalDurationStrategyBuilder().withInterval(D_2011_04_08, D_2011_04_11).build()).build();
         empl.addAssignment(req);
         assertFalse("el empleado NO deberia estar libre en el intervalo dado",
                 calculator.isFreeAtInterval(empl, new Interval(D_2011_04_05, D_2011_04_13)));
