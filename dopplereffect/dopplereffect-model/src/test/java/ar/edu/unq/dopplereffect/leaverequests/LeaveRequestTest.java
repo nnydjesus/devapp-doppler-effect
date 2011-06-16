@@ -10,6 +10,9 @@ import java.util.Set;
 import org.joda.time.Interval;
 import org.junit.Test;
 
+import ar.edu.unq.dopplereffect.builders.leaverequests.IntervalDurationStrategyBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.LeaveRequestBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.LeaveRequestCustomTypeBuilder;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
@@ -67,8 +70,8 @@ public class LeaveRequestTest {
     public void testValidateEmployeeWhenRequestingLessDaysThanSpecified() {
         // @formatter:off
         LeaveRequest request = new LeaveRequestBuilder()
-            .withType(new LeaveRequestTypeBuilder().withMinLimit(7).build())
-            .withInterval(D_2011_04_05, D_2011_04_08)
+            .withType(new LeaveRequestCustomTypeBuilder().withMinLimit(7).build())
+            .withDurationStrategy(new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_08).build())
             .build();
         // @formatter:on
         assertFalse("Licencia de 4 dias no debe ser valida (minimo 7)", request.isValidFor(mock(Employee.class)));
@@ -78,8 +81,8 @@ public class LeaveRequestTest {
     public void testValidateEmployeeWhenRequestingMoreDaysThanSpecified() {
         // @formatter:off
         LeaveRequest request = new LeaveRequestBuilder()
-            .withType(new LeaveRequestTypeBuilder().withMaxLimit(7).build())
-            .withInterval(D_2011_04_05, D_2011_04_13)
+            .withType(new LeaveRequestCustomTypeBuilder().withMaxLimit(7).build())
+            .withDurationStrategy(new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_13).build())
             .build();
         // @formatter:on
         assertFalse("Licencia de 9 dias no debe ser valida (maximo 7)", request.isValidFor(mock(Employee.class)));
@@ -89,8 +92,9 @@ public class LeaveRequestTest {
     public void testValidateEmployeeWhenRequestingTheMinimumPossibleInterval() {
         // @formatter:off
         LeaveRequest request = new LeaveRequestBuilder()
-            .withType(new LeaveRequestTypeBuilder().withMinLimit(2).build())
-            .withInterval(D_2011_04_05, D_2011_04_06)      // 2 dias de licencia
+            // 2 dias de licencia
+            .withType(new LeaveRequestCustomTypeBuilder().withMinLimit(2).build())
+            .withDurationStrategy(new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_06).build())
             .build();
         // @formatter:on
         assertTrue("La validacion de la licencia fallo (deberia validarla correctamente)",
@@ -101,8 +105,9 @@ public class LeaveRequestTest {
     public void testValidateEmployeeWhenRequestingTheMaximumPossibleInterval() {
         // @formatter:off
         LeaveRequest request = new LeaveRequestBuilder()
-            .withType(new LeaveRequestTypeBuilder().withMaxLimit(7).build())
-            .withInterval(D_2011_04_05, D_2011_04_11)      // 7 dias de licencia
+            // 7 dias de licencia
+            .withType(new LeaveRequestCustomTypeBuilder().withMaxLimit(7).build())
+            .withDurationStrategy(new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_11).build())
             .build();
         // @formatter:on
         assertTrue("La validacion de la licencia fallo (deberia validarla correctamente)",
@@ -113,8 +118,9 @@ public class LeaveRequestTest {
     public void testValidateEmployeeWhenRequestingRightAmountOfDays() {
         // @formatter:off
         LeaveRequest request = new LeaveRequestBuilder()
-            .withType(new LeaveRequestTypeBuilder().withMinLimit(2).withMaxLimit(7).build())
-            .withInterval(D_2011_04_05, D_2011_04_08)      // 4 dias de licencia
+            // 4 dias de licencia
+            .withType(new LeaveRequestCustomTypeBuilder().withMinLimit(2).withMaxLimit(7).build())
+            .withDurationStrategy(new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_08).build())
             .build();
         // @formatter:on
         assertTrue("La validacion de la licencia fallo (deberia validarla correctamente)",
@@ -126,10 +132,12 @@ public class LeaveRequestTest {
         int maxDays = 15;
         Employee empl = mock(Employee.class);
         EmployeeTimeCalculator calculator = mock(EmployeeTimeCalculator.class);
-        LeaveRequestCustomType leaveReqType = new LeaveRequestTypeBuilder().withMaxDaysInYear(maxDays)
+        LeaveRequestCustomType leaveReqType = new LeaveRequestCustomTypeBuilder().withMaxDaysInYear(maxDays)
                 .withEmployeeTimeCalculator(calculator).build();
-        LeaveRequest request = new LeaveRequestBuilder().withType(leaveReqType)
-                .withInterval(D_2011_04_05, D_2011_04_08).build();
+        LeaveRequest request = new LeaveRequestBuilder()
+                .withType(leaveReqType)
+                .withDurationStrategy(
+                        new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_08).build()).build();
         when(calculator.daysRequestedInYear(empl, leaveReqType, 2011)).thenReturn(maxDays);
         assertFalse("la validacion de la licencia fallo", request.isValidFor(empl));
     }
@@ -138,10 +146,10 @@ public class LeaveRequestTest {
     public void testValidateEmployeeWhenAlreadyRequestedForTheSameDays() {
         // GIVEN
         Employee empl = mock(Employee.class);
-        LeaveRequest request1 = new LeaveRequestBuilder().withType(new LeaveRequestTypeBuilder().build())
-                .withInterval(D_2011_04_05, D_2011_04_08).build();
-        LeaveRequest request2 = new LeaveRequestBuilder().withType(new LeaveRequestTypeBuilder().build())
-                .withInterval(D_2011_04_06, D_2011_04_11).build();
+        LeaveRequest request1 = new LeaveRequestBuilder().withDurationStrategy(
+                new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_08).build()).build();
+        LeaveRequest request2 = new LeaveRequestBuilder().withDurationStrategy(
+                new IntervalDurationStrategyBuilder().withInterval(D_2011_04_06, D_2011_04_11).build()).build();
         Set<LeaveRequest> reqs = new HashSet<LeaveRequest>();
         // WHEN
         reqs.add(request1);
@@ -160,7 +168,8 @@ public class LeaveRequestTest {
     @Test
     public void testGetSuperpositionDays() {
         // GIVEN
-        LeaveRequest lreq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_08).build();
+        LeaveRequest lreq = new LeaveRequestBuilder().withDurationStrategy(
+                new IntervalDurationStrategyBuilder().withInterval(D_2011_04_05, D_2011_04_08).build()).build();
         IntervalDurationStrategy ids = mock(IntervalDurationStrategy.class);
         // WHEN
         when(ids.getStartDate()).thenReturn(D_2011_04_05);

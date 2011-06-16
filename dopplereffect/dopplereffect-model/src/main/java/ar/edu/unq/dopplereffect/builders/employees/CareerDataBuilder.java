@@ -1,7 +1,8 @@
-package ar.edu.unq.dopplereffect.builders;
+package ar.edu.unq.dopplereffect.builders.employees;
 
 import org.joda.time.DateTime;
 
+import ar.edu.unq.dopplereffect.builders.Builder;
 import ar.edu.unq.dopplereffect.employees.CareerData;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;

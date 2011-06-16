@@ -12,11 +12,12 @@ import java.util.Set;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import ar.edu.unq.dopplereffect.builders.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.IntervalDurationStrategyBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.LeaveRequestBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.LeaveRequestCustomTypeBuilder;
 import ar.edu.unq.dopplereffect.helpers.SkillHelpers;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestBuilder;
-import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestTypeBuilder;
 import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
 import ar.edu.unq.dopplereffect.projects.Skill;
 import ar.edu.unq.dopplereffect.projects.SkillLevel;
@@ -51,8 +52,13 @@ public class EmployeeTest {
     public void testHasLeaveRequestInADay() {
         // GIVEN
         Employee empl = new EmployeeBuilder().build();
-        LeaveRequest leaveReq = new LeaveRequestBuilder().withInterval(D_2011_04_05, D_2011_04_11)
-                .withType(new LeaveRequestTypeBuilder().build()).build();
+        // @formatter:off
+        LeaveRequest leaveReq = new LeaveRequestBuilder()
+                .withDurationStrategy(new IntervalDurationStrategyBuilder()
+                    .withInterval(D_2011_04_05, D_2011_04_11).build())
+                .withType(new LeaveRequestCustomTypeBuilder().build())
+                .build();
+        // @formatter:on
         // WHEN
         empl.addAssignment(leaveReq);
         // THEN
@@ -65,8 +71,13 @@ public class EmployeeTest {
     public void testHasntLeaveRequestInADay() {
         // GIVEN
         Employee empl = new EmployeeBuilder().build();
-        LeaveRequest leaveReq = new LeaveRequestBuilder().withInterval(D_2011_04_06, D_2011_04_08)
-                .withType(new LeaveRequestTypeBuilder().build()).build();
+        // @formatter:off
+        LeaveRequest leaveReq = new LeaveRequestBuilder()
+                .withDurationStrategy(new IntervalDurationStrategyBuilder()
+                    .withInterval(D_2011_04_06, D_2011_04_08).build())
+                .withType(new LeaveRequestCustomTypeBuilder().build())
+                .build();
+        // @formatter:on
         // WHEN
         empl.addAssignment(leaveReq);
         // THEN

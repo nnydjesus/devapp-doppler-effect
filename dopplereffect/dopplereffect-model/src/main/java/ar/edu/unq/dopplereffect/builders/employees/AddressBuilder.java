@@ -1,5 +1,6 @@
-package ar.edu.unq.dopplereffect.builders;
+package ar.edu.unq.dopplereffect.builders.employees;
 
+import ar.edu.unq.dopplereffect.builders.Builder;
 import ar.edu.unq.dopplereffect.data.Address;
 
 public class AddressBuilder implements Builder<Address> {

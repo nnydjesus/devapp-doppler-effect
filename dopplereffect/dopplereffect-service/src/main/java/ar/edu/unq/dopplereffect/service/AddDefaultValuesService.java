@@ -5,7 +5,8 @@ import java.util.Arrays;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
-import ar.edu.unq.dopplereffect.builders.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
+import ar.edu.unq.dopplereffect.builders.projects.ProjectBuilder;
 import ar.edu.unq.dopplereffect.builders.salaries.SalarySpecificationBuilder;
 import ar.edu.unq.dopplereffect.data.PersonalData;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
@@ -21,7 +22,6 @@ import ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestTypeReposit
 import ar.edu.unq.dopplereffect.persistence.project.ProjectRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.project.SkillRepositoryImpl;
 import ar.edu.unq.dopplereffect.projects.Project;
-import ar.edu.unq.dopplereffect.projects.ProjectBuilder;
 import ar.edu.unq.dopplereffect.projects.Skill;
 import ar.edu.unq.dopplereffect.projects.SkillLevel;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
@@ -69,10 +69,10 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
         AOP_M = new Skill("AOP", SkillLevel.MEDIUM);
     
     private static final Project 
-        SERENITO = new ProjectBuilder().withName("Serenito").addSkill(JAVA_E).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(12552).build(),
-        CINDOR = new ProjectBuilder().withName("Cindor").addSkill(HIBERNATE_B).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(3214).build(),
-        CINE_PLEX = new ProjectBuilder().withName("Cine Plex").addSkill(POO_E).withInformationClient(new PersonalData("De Niro",null)).withEstimatedEffort(545214).build(),
-        SANTANDER = new ProjectBuilder().withName("Santander").addSkill(AOP_M).withInformationClient(new PersonalData("Rio",null)).withEstimatedEffort(252525).build();
+        SERENITO = new ProjectBuilder().withName("Serenito").withSkill(JAVA_E).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(12552).build(),
+        CINDOR = new ProjectBuilder().withName("Cindor").withSkill(HIBERNATE_B).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(3214).build(),
+        CINE_PLEX = new ProjectBuilder().withName("Cine Plex").withSkill(POO_E).withInformationClient(new PersonalData("De Niro",null)).withEstimatedEffort(545214).build(),
+        SANTANDER = new ProjectBuilder().withName("Santander").withSkill(AOP_M).withInformationClient(new PersonalData("Rio",null)).withEstimatedEffort(252525).build();
         
     
     // @formatter:on
