@@ -26,6 +26,9 @@ public class LeaveRequestViewDTO implements DTO {
     }
 
     public Date getStartDate() {
+        if (startDate == null) {
+            return null;
+        }
         return (Date) startDate.clone();
     }
 

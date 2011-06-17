@@ -34,5 +34,9 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="repo.user" class="ar.edu.unq.dopplereffect.persistence.repositories.UserRepositoryImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<bean id="repo.generic" class="ar.edu.unq.dopplereffect.persistence.repositories.HibernatePersistentRepository">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
 </beans>

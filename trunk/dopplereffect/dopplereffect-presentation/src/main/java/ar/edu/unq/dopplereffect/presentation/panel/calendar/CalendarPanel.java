@@ -147,6 +147,9 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
     }
 
     public Date getDatePicketModel() {
+        if (datePicketModel == null) {
+            return null;
+        }
         return (Date) datePicketModel.clone();
     }
 

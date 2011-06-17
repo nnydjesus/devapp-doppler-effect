@@ -36,6 +36,9 @@ public class LeaveRequestDTO implements DTO {
     }
 
     public Date getStartDate() {
+        if (startDate == null) {
+            return null;
+        }
         return (Date) startDate.clone();
     }
 
@@ -44,6 +47,9 @@ public class LeaveRequestDTO implements DTO {
     }
 
     public Date getEndDate() {
+        if (endDate == null) {
+            return null;
+        }
         return (Date) endDate.clone();
     }
 

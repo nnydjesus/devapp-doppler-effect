@@ -1,9 +1,10 @@
 package ar.edu.unq.dopplereffect.builders.leaverequests;
 
+import ar.edu.unq.dopplereffect.builders.Builder;
 import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;
 
-public class LeaveRequestCustomTypeBuilder {
+public class LeaveRequestCustomTypeBuilder implements Builder<LeaveRequestCustomType> {
 
     protected transient int minLimit = 1;
 
@@ -40,6 +41,7 @@ public class LeaveRequestCustomTypeBuilder {
         return this;
     }
 
+    @Override
     public LeaveRequestCustomType build() {
         return new LeaveRequestCustomType(reason, daysInYear, minLimit, maxLimit, employeeTimeCalculator);
     }

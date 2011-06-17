@@ -21,11 +21,11 @@
 
 			<many-to-one name="type"
 				class="ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType"
-				column="type_id" not-null="true" lazy="false" />
+				column="type_id" lazy="false" />
 
 			<many-to-one name="durationStrategy"
 				class="ar.edu.unq.dopplereffect.time.DurationStrategy" column="duration_strategy_id"
-				unique="true" not-null="true" cascade="all" lazy="false"/>
+				unique="true" cascade="all" lazy="false"/>
 
 		</joined-subclass>
 
