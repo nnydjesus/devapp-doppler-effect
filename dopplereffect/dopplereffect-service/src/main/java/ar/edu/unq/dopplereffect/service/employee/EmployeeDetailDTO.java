@@ -77,6 +77,9 @@ public class EmployeeDetailDTO implements DTO {
     }
 
     public Date getJoinDate() {
+        if (joinDate == null) {
+            return null;
+        }
         return (Date) joinDate.clone();
     }
 

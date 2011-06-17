@@ -10,9 +10,18 @@ import ar.edu.unq.dopplereffect.persistence.util.CustomHibernateRepositorySuppor
 import ar.edu.unq.dopplereffect.repositories.Repository;
 
 public class HibernatePersistentRepository<T> extends CustomHibernateRepositorySupport implements Repository<T> {
+
     private static final long serialVersionUID = 1L;
 
+    // es cualquiera esto, pero sino chilla el PMD
+    private static final String UNCHECKED = "unchecked";
+
     private Class<T> entityClass;
+
+    @SuppressWarnings(UNCHECKED)
+    public HibernatePersistentRepository() {
+        this((Class<T>) Object.class);
+    }
 
     public HibernatePersistentRepository(final Class<T> clazz) {
         super();
@@ -40,7 +49,7 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
         this.getHibernateTemplate().delete(object);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     @Override
     public List<T> searchAll() {
         return this.getHibernateTemplate().loadAll(this.getEntityClass());
@@ -65,7 +74,7 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
         }
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     private List<T> getByCriterionList(final Criterion criterion) {
         Criteria criteria = this.getSession().createCriteria(this.entityClass);
         criteria.add(criterion);
@@ -73,7 +82,7 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     public List<T> searchByExample(final T object) {
         return this.getHibernateTemplate().findByExample(object);
     }

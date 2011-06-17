@@ -5,7 +5,7 @@ import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 
 public class CareerPlanLevelBuilder implements Builder<CareerPlanLevel> {
 
-    protected transient String name;
+    protected transient String name = "PT";
 
     public CareerPlanLevelBuilder withName(final String theName) {
         name = theName;

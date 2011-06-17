@@ -9,13 +9,13 @@ import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 
 public class CareerDataBuilder implements Builder<CareerData> {
 
-    protected transient DateTime joinDate;
+    protected transient DateTime joinDate = new DateTime();
 
-    protected transient CareerPlan careerPlan;
+    protected transient CareerPlan careerPlan = CareerPlan.TESTER;
 
     protected transient CareerPlanLevel level = new CareerPlanLevelBuilder().build();
 
-    protected transient int percentage;
+    protected transient int percentage = 0;
 
     public CareerDataBuilder withJoinDate(final DateTime theJoinDate) {
         joinDate = theJoinDate;

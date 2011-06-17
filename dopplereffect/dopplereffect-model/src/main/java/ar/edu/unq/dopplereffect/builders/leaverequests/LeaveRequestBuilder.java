@@ -1,10 +1,11 @@
 package ar.edu.unq.dopplereffect.builders.leaverequests;
 
+import ar.edu.unq.dopplereffect.builders.Builder;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
 
-public class LeaveRequestBuilder {
+public class LeaveRequestBuilder implements Builder<LeaveRequest> {
 
     protected transient LeaveRequestType type = new LeaveRequestCustomTypeBuilder().build();
 
@@ -20,6 +21,7 @@ public class LeaveRequestBuilder {
         return this;
     }
 
+    @Override
     public LeaveRequest build() {
         return new LeaveRequest(type, durationStrategy);
     }

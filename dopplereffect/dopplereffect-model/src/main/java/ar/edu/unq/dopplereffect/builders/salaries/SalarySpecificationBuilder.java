@@ -3,12 +3,13 @@ package ar.edu.unq.dopplereffect.builders.salaries;
 import java.util.Arrays;
 import java.util.List;
 
+import ar.edu.unq.dopplereffect.builders.Builder;
 import ar.edu.unq.dopplereffect.builders.employees.CareerPlanLevelBuilder;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
 
-public class SalarySpecificationBuilder {
+public class SalarySpecificationBuilder implements Builder<SalarySpecification> {
 
     protected transient int minSalary = 2000;
 
@@ -52,6 +53,7 @@ public class SalarySpecificationBuilder {
         return this;
     }
 
+    @Override
     public SalarySpecification build() {
         return new SalarySpecification(year, careerPlan, careerPlanLevel, minSalary, maxSalary, percentages);
     }

@@ -90,6 +90,9 @@ public class EmployeeDTO implements DTO {
     }
 
     public Date getJoinDate() {
+        if (joinDate == null) {
+            return null;
+        }
         return (Date) joinDate.clone();
     }
 
