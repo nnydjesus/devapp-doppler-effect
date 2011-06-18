@@ -16,7 +16,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.model.util.CollectionModel;
 import org.apache.wicket.model.util.ListModel;
 
-import ar.edu.unq.dopplereffect.presentation.pages.basic.NavigablePanel;
+import ar.edu.unq.dopplereffect.presentation.panel.NavigablePanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;

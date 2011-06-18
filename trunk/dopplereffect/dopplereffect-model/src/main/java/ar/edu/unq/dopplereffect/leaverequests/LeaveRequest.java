@@ -116,6 +116,10 @@ public class LeaveRequest extends Entity implements Assignable {
         return !this.overlapOtherLeaveRequest(anEmployee) && this.getType().isValidFor(this, anEmployee);
     }
 
+    public boolean isValid() {
+        return this.isValidFor(this.getEmployee());
+    }
+
     /**
      * Verifica si la licencia se superpone con alguna licencia que el empleado
      * (pasado como parametro) ya tenia.

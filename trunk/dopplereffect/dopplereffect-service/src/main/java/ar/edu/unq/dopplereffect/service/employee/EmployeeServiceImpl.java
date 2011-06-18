@@ -12,6 +12,7 @@ import ar.edu.unq.dopplereffect.data.Address;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.persistence.employee.CareerPlanLevelRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.employee.EmployeeRepositoryImpl;
+import ar.edu.unq.dopplereffect.service.validations.Validator;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -43,6 +44,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void newEmployee(final EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         this.synchronizeWithDTO(employeeDTO, employee);
+        // @formatter:off
+        new Validator(employee)
+            .notBlank("firstName").notBlank("lastName")
+            .notNull("firstName").notNull("lastName");
+        new Validator(employee.getPersonalData()).isEmail("email");
+        // @formatter:on
         this.getEmployeeRepo().save(employee);
     }
 
@@ -58,25 +65,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee emp = this.getEmployeeRepo().searchByDni(employeeDTO.getDni());
         this.synchronizeWithDTO(employeeDTO, emp);
         this.getEmployeeRepo().update(emp);
-    }
-
-    private void synchronizeWithDTO(final EmployeeDTO employeeDTO, final Employee emp) {
-        emp.setFirstName(employeeDTO.getFirstName());
-        emp.setLastName(employeeDTO.getLastName());
-        emp.setDni(employeeDTO.getDni());
-        emp.getPersonalData().setPhoneNumber(employeeDTO.getPhoneNumber());
-        emp.getPersonalData().setEmail(employeeDTO.getEmail());
-        emp.getPersonalData().setEmail(employeeDTO.getEmail());
-        if (employeeDTO.getAddressStreet() == null) {
-            emp.getPersonalData().setAddress(
-                    new Address(employeeDTO.getAddressStreet(), employeeDTO.getAddressNumber(), employeeDTO
-                            .getAddressCity()));
-
-        }
-        emp.getCareerData().setJoinDate(new DateTime(employeeDTO.getJoinDate()));
-        emp.getCareerData().setCareerPlan(employeeDTO.getCareerPlan());
-        emp.getCareerData().setLevel(this.getCareerPlanLevelRepo().getByName(employeeDTO.getCareerPlanLevel()));
-        emp.getCareerData().setPercentage(employeeDTO.getPercentage());
     }
 
     @Override
@@ -152,5 +140,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         result.setJoinDate(emp.getCareerData().getJoinDate().toDate());
         result.setPercentage(emp.getCareerData().getPercentage());
         return result;
+    }
+
+    private void synchronizeWithDTO(final EmployeeDTO employeeDTO, final Employee emp) {
+        emp.setFirstName(employeeDTO.getFirstName());
+        emp.setLastName(employeeDTO.getLastName());
+        emp.setDni(employeeDTO.getDni());
+        emp.getPersonalData().setPhoneNumber(employeeDTO.getPhoneNumber());
+        emp.getPersonalData().setEmail(employeeDTO.getEmail());
+        emp.getPersonalData().setEmail(employeeDTO.getEmail());
+        if (employeeDTO.getAddressStreet() == null) {
+            emp.getPersonalData().setAddress(
+                    new Address(employeeDTO.getAddressStreet(), employeeDTO.getAddressNumber(), employeeDTO
+                            .getAddressCity()));
+
+        }
+        emp.getCareerData().setJoinDate(new DateTime(employeeDTO.getJoinDate()));
+        emp.getCareerData().setCareerPlan(employeeDTO.getCareerPlan());
+        emp.getCareerData().setLevel(this.getCareerPlanLevelRepo().getByName(employeeDTO.getCareerPlanLevel()));
+        emp.getCareerData().setPercentage(employeeDTO.getPercentage());
     }
 }

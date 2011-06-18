@@ -15,7 +15,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
-import ar.edu.unq.dopplereffect.presentation.pages.basic.EntityPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
 import ar.edu.unq.dopplereffect.service.employee.CareerPlanService;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeDTO;
 
