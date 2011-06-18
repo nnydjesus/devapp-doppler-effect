@@ -6,9 +6,9 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
+import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.persistence.repositories.HibernatePersistentRepository;
-import ar.edu.unq.tpi.util.commons.exeption.UserException;
 
 public class LeaveRequestTypeRepositoryImpl extends HibernatePersistentRepository<LeaveRequestType> {
 

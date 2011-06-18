@@ -101,7 +101,7 @@ public class EmployeeTimeCalculator {
                     // contando el dia anterior
                     DateTime currentIntervalEnd = current.minusDays(1);
                     // y se lo agrega a la lista de intervalos
-                    intervals.add(this.createIntervalDurationStrategy(currentIntervalStart, currentIntervalEnd)); // NOPMD
+                    intervals.add(this.createIntervalDurationStrategy(currentIntervalStart, currentIntervalEnd));
                     // se resetea el intervalo actual
                     isCurrentIntervalStartSet = false;
                 }

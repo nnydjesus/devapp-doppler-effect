@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.helpers;
+package ar.edu.unq.dopplereffect.service.helpers;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -13,4 +13,12 @@ public class UserException extends RuntimeException {
     public UserException(final Throwable throwable) {
         super(throwable);
     }
+
+    public UserException() {
+        super();
+    }
+
+    public UserException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 }

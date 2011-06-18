@@ -7,7 +7,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 
-import ar.edu.unq.dopplereffect.presentation.pages.basic.NavigablePanel;
+import ar.edu.unq.dopplereffect.presentation.panel.NavigablePanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeDetailDTO;

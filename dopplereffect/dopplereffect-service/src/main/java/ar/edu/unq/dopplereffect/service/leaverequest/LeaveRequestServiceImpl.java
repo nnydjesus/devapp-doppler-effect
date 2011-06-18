@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
+import ar.edu.unq.dopplereffect.exceptions.ValidationException;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestTypeRepositoryImpl;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl;
+import ar.edu.unq.dopplereffect.service.helpers.DateHelpers;
+import ar.edu.unq.dopplereffect.service.validations.Validator;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 import ar.edu.unq.dopplereffect.time.OneDayDurationStrategy;
@@ -91,15 +95,16 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     @Override
     @Transactional
     public void newLeaveRequest(final LeaveRequestDTO leaveReqDTO) {
-        LeaveRequestType type = this.getLeaveRequestTypeRepo().searchByReason(leaveReqDTO.getReason());
-        Employee employee = this.getEmployeeService().getEmployeeRepo().searchByDni(leaveReqDTO.getEmployee().getDni());
-        DurationStrategy durationStrategy = null;
-        if (leaveReqDTO.getDurationType().equals("One Day")) {
-            durationStrategy = new OneDayDurationStrategy(new DateTime(leaveReqDTO.getStartDate()));
-        } else {
-            durationStrategy = new IntervalDurationStrategy(new DateTime(leaveReqDTO.getStartDate()), new DateTime(
-                    leaveReqDTO.getEndDate()));
+        // validaciones
+        new Validator(leaveReqDTO).notNull("reason").notNull("employee").notNull("durationType").notBlank("reason");
+        LeaveRequestType type;
+        try {
+            type = this.getLeaveRequestTypeRepo().searchByReason(leaveReqDTO.getReason());
+        } catch (UserException e) {
+            throw new ValidationException("validations.inexistentReason", e);
         }
+        DurationStrategy durationStrategy = this.getAndValidateDurationStrategy(leaveReqDTO);
+        Employee employee = this.getAndValidateEmployee(leaveReqDTO);
         LeaveRequest leaveRequest = new LeaveRequest(type, durationStrategy);
         leaveRequest.setEmployee(employee);
         this.getLeaveRequestRepo().save(leaveRequest);
@@ -117,7 +122,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     @Override
     @Transactional
     public void updateLeaveRequest(final LeaveRequestDTO leaveReqDTO) {
-        Employee emp = this.getEmployeeService().getEmployeeRepo().searchByDni(leaveReqDTO.getEmployee().getDni());
+        Employee emp = this.getAndValidateEmployee(leaveReqDTO);
         LeaveRequest leaveRequest = this.getLeaveRequestRepo().searchByStartDateAndEmployee(
                 new DateTime(leaveReqDTO.getStartDate()), emp);
         this.getLeaveRequestRepo().update(leaveRequest);
@@ -162,5 +167,38 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
         result.setEmployee(this.getEmployeeService().convert(leaveRequest.getEmployee()));
         result.setStartDate(leaveRequest.getFirstDate().toDate());
         return result;
+    }
+
+    private Employee getAndValidateEmployee(final LeaveRequestDTO leaveReqDTO) {
+        Employee employee = this.getEmployeeService().getEmployeeRepo().searchByDni(leaveReqDTO.getEmployee().getDni());
+        for (DateTime date : this.startEndDates(leaveReqDTO)) {
+            if (employee.hasLeaveRequestInDay(date)) {
+                throw new ValidationException("validations.daysAlreadyRequested");
+            }
+        }
+        return employee;
+    }
+
+    private DurationStrategy getAndValidateDurationStrategy(final LeaveRequestDTO leaveReqDTO) {
+        DurationStrategy dStrategy = null;
+        new Validator(leaveReqDTO).notNull("startDate");
+        if (leaveReqDTO.getDurationType().equals("One Day")) {
+            dStrategy = new OneDayDurationStrategy(new DateTime(leaveReqDTO.getStartDate()));
+        } else if (leaveReqDTO.getDurationType().equals("Interval")) {
+            new Validator(leaveReqDTO).notNull("endDate");
+            if (leaveReqDTO.getStartDate().after(leaveReqDTO.getEndDate())) {
+                throw new ValidationException("validations.wrongInterval");
+            }
+            dStrategy = new IntervalDurationStrategy(new DateTime(leaveReqDTO.getStartDate()), new DateTime(
+                    leaveReqDTO.getEndDate()));
+        } else {
+            throw new ValidationException("validations.wrongDurationType");
+        }
+        return dStrategy;
+    }
+
+    private List<DateTime> startEndDates(final LeaveRequestDTO leaveReqDTO) {
+        // solo porque el PMD chilla
+        return DateHelpers.getDates(new DateTime(leaveReqDTO.getStartDate()), new DateTime(leaveReqDTO.getEndDate()));
     }
 }
