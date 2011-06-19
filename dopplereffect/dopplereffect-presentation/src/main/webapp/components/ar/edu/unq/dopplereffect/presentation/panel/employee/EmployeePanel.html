@@ -1,0 +1,57 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
+<wicket:panel>
+	<form wicket:id="employeeForm">
+		<table align="center" width="80%" >
+			<tr>
+				<td height="20" colspan="2">
+				<div wicket:id="feedbackPanel"></div></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="first_name" />:</td>
+				<td align="left"><input wicket:id="firstName" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="last_name" />:</td>
+				<td align="left"><input wicket:id="lastName" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="dni" />:</td>
+				<td align="left"><input wicket:id="dni" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="phone_number" />:</td>
+				<td align="left"><input wicket:id="phoneNumber" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="address" />:</td>
+				<td align="left"><input wicket:id="addressStreet" type="text" /></td>
+				<td align="left"><input wicket:id="addressNumber" type="text" /></td>
+				<td align="left"><input wicket:id="addressCity" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="email" />:</td>
+				<td align="left"><input wicket:id="email" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="join_date" />:</td>
+				<td align="left"><input wicket:id="joinDate" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="career_plan" />:</td>
+				<td align="left"><select wicket:id="careerPlan"></select></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="career_plan_level" />:</td>
+				<td align="left"><select wicket:id="careerPlanLevel"></select></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input wicket:id="accept" type="submit" name="aceptar" value="Aceptar" />
+					<input wicket:id="cancel" type="submit" name="cancelar" value="Cancelar" />
+				</td>
+			</tr>
+		</table>
+		<br />
+	</form>
+</wicket:panel>
+</html>
