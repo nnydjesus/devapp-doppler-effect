@@ -1,5 +1,7 @@
 package ar.edu.unq.dopplereffect.presentation.util;
 
+import java.io.Serializable;
+
 import org.apache.wicket.model.IDetachable;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Objects;
@@ -7,7 +9,7 @@ import org.apache.wicket.util.lang.Objects;
 /**
  * Model para cuando queremos usar un T que no es serializable
  */
-public class Model<T> implements IModel<T> {
+public class Model<T> implements IModel<T>, Serializable {
     private static final long serialVersionUID = 1L;
 
     /** Backing object. */

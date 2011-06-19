@@ -69,10 +69,10 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
         AOP_M = new Skill("AOP", SkillLevel.MEDIUM);
     
     private static final Project 
-        SERENITO = new ProjectBuilder().withName("Serenito").withSkill(JAVA_E).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(12552).build(),
-        CINDOR = new ProjectBuilder().withName("Cindor").withSkill(HIBERNATE_B).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(3214).build(),
-        CINE_PLEX = new ProjectBuilder().withName("Cine Plex").withSkill(POO_E).withInformationClient(new PersonalData("De Niro",null)).withEstimatedEffort(545214).build(),
-        SANTANDER = new ProjectBuilder().withName("Santander").withSkill(AOP_M).withInformationClient(new PersonalData("Rio",null)).withEstimatedEffort(252525).build();
+        SERENITO = new ProjectBuilder().withName("Serenito").withSkill(JAVA_E).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(12552555).build(),
+        CINDOR = new ProjectBuilder().withName("Cindor").withSkill(HIBERNATE_B).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(32145555).build(),
+        CINE_PLEX = new ProjectBuilder().withName("Cine Plex").withSkill(POO_E).withInformationClient(new PersonalData("De Niro",null)).withEstimatedEffort(545214555).build(),
+        SANTANDER = new ProjectBuilder().withName("Santander").withSkill(AOP_M).withInformationClient(new PersonalData("Rio",null)).withEstimatedEffort(5555555).build();
         
     
     // @formatter:on

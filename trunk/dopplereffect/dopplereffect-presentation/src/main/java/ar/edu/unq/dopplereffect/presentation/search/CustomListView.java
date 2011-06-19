@@ -16,7 +16,7 @@ import org.apache.wicket.model.IModel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.SortableAjax;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.ITable;
-import ar.edu.unq.dopplereffect.presentation.util.SelectTable;
+import ar.edu.unq.dopplereffect.presentation.util.SelectableBehavior;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
@@ -28,7 +28,7 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    private Component parentPage;
+    private AbstractSearchPanel<?> parentPage;
 
     private S search;
 
@@ -58,7 +58,7 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
         SortableAjax<Component> sortableAjaxBehavior = new SortableAjax<Component>();
         sortableAjaxBehavior.getSortableBehavior().setConnectWith(".connectedSortable");
 
-        SelectTable selectTable = new SelectTable();
+        SelectableBehavior selectTable = new SelectableBehavior();
 
         this.getSortableAjaxWicket().add(sortableAjaxBehavior);
         this.sortableAjaxWicket.add(selectTable);
@@ -72,7 +72,7 @@ public class CustomListView<T, S> extends ListView<T> implements ITable {
     }
 
     @Override
-    public void setParentPage(final Component parentPage) {
+    public void setParentPage(final AbstractSearchPanel<?> parentPage) {
         this.parentPage = parentPage;
     }
 

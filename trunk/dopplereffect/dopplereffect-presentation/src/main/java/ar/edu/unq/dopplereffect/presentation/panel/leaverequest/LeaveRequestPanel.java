@@ -55,18 +55,17 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
         this.employeeService = employeeService;
     }
 
-    public LeaveRequestPanel(final String id, final LeaveRequestSearchPanel previousPage) {
-        super(id, new LeaveRequestDTO(), previousPage);
+    public LeaveRequestPanel(final String id) {
+        super(id, new LeaveRequestDTO());
     }
 
-    public LeaveRequestPanel(final String id, final LeaveRequestSearchPanel previousPage, final LeaveRequestDTO model,
-            final Boolean editMode) {
-        super(id, model, previousPage, editMode);
+    public LeaveRequestPanel(final String id, final LeaveRequestDTO model) {
+        super(id, model, true);
     }
 
     @Override
     protected void beforeConstruct() {
-        this.setEmployee(((LeaveRequestSearchModel) this.getCallBackPrevuousPanel().getModelObject()).getSearchByEmployee());
+        this.setEmployee(((LeaveRequestSearchModel) this.getBackPanel().getModelObject()).getSearchByEmployee());
     }
 
     @Override

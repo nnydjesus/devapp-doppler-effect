@@ -20,4 +20,6 @@ public interface EmployeeService extends Service {
 
     EmployeeDTO createEditDTO(EmployeeViewDTO viewDTO);
 
+    List<EmployeeViewDTO> searchEmployeeByName(String name);
+
 }

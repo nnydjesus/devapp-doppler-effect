@@ -60,8 +60,8 @@ public class Project extends Entity {
      * Lleva a cabo una asignacion, para lo cual recibe el empleado a asignar y
      * el intervalo de la asignacion.
      */
-    public void manualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
-        this.getProjectAssignmentStrategy().manualAssignment(this, employee, interval);
+    public ProjectAssignment manualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
+        return this.getProjectAssignmentStrategy().manualAssignment(this, employee, interval);
     }
 
     /**

@@ -31,18 +31,19 @@ public class ProjectAssignmentStrategy extends Entity implements IProjectAssignm
     }
 
     @Override
-    public void manualAssignment(final Project aProject, final Employee employee,
+    public ProjectAssignment manualAssignment(final Project aProject, final Employee employee,
             final IntervalDurationStrategy interval) {
         project = aProject;
         employeeTimeCalculator = new EmployeeTimeCalculator();
-        this.internalManualAssignment(employee, interval);
+        return this.internalManualAssignment(employee, interval);
     }
 
-    private void internalManualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
+    private ProjectAssignment internalManualAssignment(final Employee employee, final IntervalDurationStrategy interval) {
         this.validateAssignment(employee, interval);
         final ProjectAssignment projectAssignment = project.findOrCreateAssignment(employee);
         projectAssignment.addInterval(interval);
         employee.addAssignment(projectAssignment);
+        return projectAssignment;
     }
 
     /**

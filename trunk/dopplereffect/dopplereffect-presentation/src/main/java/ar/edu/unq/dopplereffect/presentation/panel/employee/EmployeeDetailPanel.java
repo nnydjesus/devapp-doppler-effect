@@ -1,15 +1,15 @@
 package ar.edu.unq.dopplereffect.presentation.panel.employee;
 
-import java.io.Serializable;
-
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.presentation.panel.NavigablePanel;
-import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeDetailDTO;
 
 /**
@@ -21,8 +21,9 @@ public class EmployeeDetailPanel extends NavigablePanel<EmployeeDetailDTO> {
     private static final long serialVersionUID = 7612811876399884445L;
 
     public EmployeeDetailPanel(final String id, final EmployeeDetailDTO employeeViewDTO,
-            final AbstractCallbackPanel<? extends Serializable> callback) {
-        super(id, employeeViewDTO, callback);
+            final AjaxCallBack<Component> callback, final AbstractPanel<?> backPanel) {
+        super(id, employeeViewDTO);
+        super.init(callback, backPanel);
         this.addEmployeeDetails();
         this.addNavigationButtons();
     }
@@ -49,8 +50,8 @@ public class EmployeeDetailPanel extends NavigablePanel<EmployeeDetailDTO> {
     }
 
     protected void addNavigationButtons() {
-        this.add(new PanelCallbackLink("back_button", this.getCallBackPrevuousPanel().getCallback(), this
-                .getCallBackPrevuousPanel(), new StringResourceModel("back_button", new Model<String>(""))));
+        this.add(new PanelCallbackLink("back_button", this.getCallback(), this.getBackPanel(), new StringResourceModel(
+                "back_button", new Model<String>(""))));
     }
 
 }

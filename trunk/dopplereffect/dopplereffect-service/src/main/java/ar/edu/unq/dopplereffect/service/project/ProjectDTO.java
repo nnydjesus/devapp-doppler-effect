@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.service.project;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class ProjectDTO implements DTO {
     private Long currentEffort;
 
     private List<SkillDTO> skills = new LinkedList<SkillDTO>();
+
+    private List<ProjectAssignmentDTO> assignment = new ArrayList<ProjectAssignmentDTO>();
 
     public String getName() {
         return name;
@@ -69,6 +72,14 @@ public class ProjectDTO implements DTO {
 
     public Period getTimeProject() {
         return timeProject;
+    }
+
+    public void setAssignment(final List<ProjectAssignmentDTO> assignment) {
+        this.assignment = assignment;
+    }
+
+    public List<ProjectAssignmentDTO> getAssignment() {
+        return assignment;
     }
 
 }

@@ -10,6 +10,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="service.project" class="ar.edu.unq.dopplereffect.service.project.ProjectServiceImpl">
 		<property name="projectRepo" ref="repo.project" />
 		<property name="skillService" ref="service.skill" />
+		<property name="employeeService" ref="service.employee" />
 	</bean>
 	
 	<bean id="service.employee" class="ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl">

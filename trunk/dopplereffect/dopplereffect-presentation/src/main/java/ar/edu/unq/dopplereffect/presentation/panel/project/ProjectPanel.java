@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.presentation.panel.project;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.form.Button;
@@ -15,6 +16,8 @@ import org.odlabs.wiquery.core.javascript.JsScope;
 
 import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
+import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
 
 import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
@@ -22,17 +25,12 @@ import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
 public class ProjectPanel extends EntityPanel<ProjectDTO> {
     private static final long serialVersionUID = 1L;
 
-    public ProjectPanel(final String id, final ProjectSearchPanel previousPage, final ProjectDTO model,
-            final Boolean editMode) {
-        super(id, model, previousPage, editMode);
+    public ProjectPanel(final String id, final ProjectDTO model) {
+        super(id, model, true);
     }
 
-    public ProjectPanel(final String id, final ProjectSearchPanel previousPage, final ProjectDTO model) {
-        super(id, model, previousPage);
-    }
-
-    public ProjectPanel(final String id, final ProjectSearchPanel previousPage) {
-        super(id, new ProjectDTO(), previousPage);
+    public ProjectPanel(final String id) {
+        super(id, new ProjectDTO());
     }
 
     @Override
@@ -56,20 +54,25 @@ public class ProjectPanel extends EntityPanel<ProjectDTO> {
             }
         }));
 
-        form.add(new AjaxLink<String>("assignemt") {
+        Component assignmentLink = CustomComponent.addButtonSking(new AjaxLink<String>("assignemt",
+                new StringResourceModel("add", new Model<String>(""))) {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick(final AjaxRequestTarget target) {
-                ProjectPanel.this
-                        .getCallBackPrevuousPanel()
-                        .getCallback()
-                        .execute(target,
-                                new AssignmentProjectPanel("body", ProjectPanel.this.getCallBackPrevuousPanel()));
+                ProjectPanel.this.getCallback().execute(
+                        target,
+                        new AssignmentProjectPanel("body", ProjectPanel.this.getModelObject(), ProjectPanel.this
+                                .getCallback(), ProjectPanel.this,
+                                (AbstractSearchPanel<SearchModel<ProjectDTO>>) ProjectPanel.this.getBackPanel()));
             }
 
         });
+        if (!this.isEditMode()) {
+            assignmentLink.setVisible(false);
+        }
+        form.add(assignmentLink);
     }
 
     @Override

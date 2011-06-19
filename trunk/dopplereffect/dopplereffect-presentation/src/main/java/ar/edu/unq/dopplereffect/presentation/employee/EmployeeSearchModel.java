@@ -77,7 +77,8 @@ public class EmployeeSearchModel extends SearchByExampleModel<EmployeeViewDTO> {
 
     @Override
     protected List<EmployeeViewDTO> getByNameResultsFromService(final String name) {
-        return this.getAllResultsFromService();
+        return this.getService().searchEmployeeByName(name);
+
     }
 
 }

@@ -20,7 +20,6 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
 
     @SuppressWarnings("unchecked")
     public Employee findFirstWithName(final String firstName, final String lastName) {
-        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         Criteria personalDataCriteria = this.getSession().createCriteria(PersonalData.class);
         personalDataCriteria.add(Restrictions.eq("firstName", firstName));
         personalDataCriteria.add(Restrictions.eq("lastName", lastName));
@@ -29,17 +28,20 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
             throw new UserException("No se pudieron encontrar los datos personales del empleado");
         }
         PersonalData personaldata = personalDataResults.get(0);
-        criteria.add(Restrictions.eq("personalData", personaldata));
-        List<Employee> results = criteria.list();
-        if (results.isEmpty()) {
-            throw new UserException("No se pudo encontrar ningun empleado con los nombres dados");
-        }
-        return results.get(0);
+        return this.getByCriterion(Restrictions.eq("personalData", personaldata));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Employee> searchByName(final String name) {
+        Criteria personalDataCriteria = this.getSession().createCriteria(PersonalData.class);
+        personalDataCriteria.add(Restrictions.like("firstName", "%" + name + "%"));
+        List<PersonalData> personalDataResults = personalDataCriteria.list();
+        return this.getByCriterionList(Restrictions.in("personalData", personalDataResults));
     }
 
     @SuppressWarnings("unchecked")
     public Employee searchByDni(final int dni) {
-        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         Criteria personalDataCriteria = this.getSession().createCriteria(PersonalData.class);
         personalDataCriteria.add(Restrictions.eq("dni", dni));
         List<PersonalData> personalDataResults = personalDataCriteria.list();
@@ -47,11 +49,6 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
             throw new UserException("No se pudieron encontrar los datos personales del empleado");
         }
         PersonalData personaldata = personalDataResults.get(0);
-        criteria.add(Restrictions.eq("personalData", personaldata));
-        List<Employee> results = criteria.list();
-        if (results.isEmpty()) {
-            throw new UserException("No se pudo encontrar ningun empleado con el dni dado");
-        }
-        return results.get(0);
+        return this.getByCriterion(Restrictions.eq("personalData", personaldata));
     }
 }

@@ -15,7 +15,7 @@ public class AjaxReflextionActionPanel<T extends Component> extends Panel {
             final String prevPath) {
         super(id, new Model<String>(""));
         ReflextionAjaxLink<T> ajaxLink = new ReflextionAjaxLink<T>("action", action, host, host);
-        ajaxLink.add(new Image("image", new Model<String>(prevPath + "../Images/" + image)));
+        ajaxLink.add(new Image("image", new Model<String>(image)));
         this.add(ajaxLink);
     }
 
