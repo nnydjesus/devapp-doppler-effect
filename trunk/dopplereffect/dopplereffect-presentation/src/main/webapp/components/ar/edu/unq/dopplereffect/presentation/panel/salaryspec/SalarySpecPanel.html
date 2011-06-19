@@ -1,0 +1,60 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd" >
+<wicket:panel>
+	<wicket:message key="percentages" />
+    <div wicket:id="showPercentages" align="center">
+		<div class="percentage" wicket:id="percentage">
+    		<div class="percentageSelected"><input type="checkbox" wicket:id="selected" /></div>
+        	<div class="percentageValue"><span wicket:id="value">value</span></div>
+    	</div>
+	</div>
+    <div class="percentage" align="center">
+        <div class="percentageSelected">&nbsp;</div>
+        <div class="percentageValue" wicket:id="addPercentages">
+	    	<a href="#" wicket:id="link"><wicket:message key="new_percentage" /></a>
+	    	&nbsp;&nbsp;&nbsp;&nbsp;
+	    	<a href="#" wicket:id="remove"><wicket:message key="remove_percentages" /></a>
+            <form wicket:id="form">
+                <input type="text" wicket:id="value" /> 
+                <input type="button" wicket:id="add" value="Add item" /> or 
+                <input type="button" wicket:id="cancel" value="Cancel" />
+            </form>
+		</div>
+    </div>
+	<form wicket:id="salarySpecForm">
+		<table align="center" width="80%">
+			<tr>
+				<td height="20" colspan="2">
+					<div wicket:id="feedbackPanel"></div>
+				</td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="year" /></td>
+				<td align="left"><input wicket:id="year" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="min_salary" /></td>
+				<td align="left"><input wicket:id="minSalary" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="max_salary" /></td>
+				<td align="left"><input wicket:id="maxSalary" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="career_plan" /></td>
+				<td align="left"><select wicket:id="careerPlan"></select></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="career_plan_level" /></td>
+				<td align="left"><select wicket:id="careerPlanLevel"></select></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input wicket:id="accept" type="submit" name="aceptar" value="Aceptar" />
+					<input wicket:id="cancel" type="submit" name="cancelar" value="Cancelar" />
+				</td>
+			</tr>
+		</table>
+		<br />
+	</form>
+</wicket:panel>
+</html>

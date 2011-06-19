@@ -1,0 +1,34 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
+<wicket:panel id="panel">
+	<form wicket:id="loginForm" id="login">
+		<table align="center" width="50%"  >
+			<tr>
+				<td align="right">por ahora ingresa</td>
+				<td align="right">a para ambos</td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="userName"/></td>
+				<td align="left"><input type="text" wicket:id="name" class="ui-state-active"/></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="password"/></td>
+				<td align="left"><input	type="password" wicket:id="password" class="ui-state-active"/></td>
+			</tr>
+			<tr wicket:id="rememberMeRow">
+				<td></td>
+				<td><input wicket:id="rememberMe" class="ui-state-active" type="checkbox" /><tt></tt><wicket:message key="rememberMe"/></td>
+			</tr>
+			<tr>
+				<td height="20" colspan="2">
+				<div wicket:id="feedbackPanel" class="feedbackPanelERROR"></div></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" wicket:id="submit"/>
+					<input type="button" wicket:id="register"/>
+				</td>
+			</tr>
+		</table>
+	</form>
+</wicket:panel>
+</html>

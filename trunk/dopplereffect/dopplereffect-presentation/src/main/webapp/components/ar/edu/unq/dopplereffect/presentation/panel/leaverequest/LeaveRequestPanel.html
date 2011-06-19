@@ -1,0 +1,39 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
+<wicket:panel >
+	<form wicket:id="leaveRequestForm">
+		<table align="center" width="80%" >
+			<tr>
+				<td height="20" colspan="2">
+				<div wicket:id="feedbackPanel"></div></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="form.employee"/>:</td>
+				<td align="left"><select wicket:id="employeeCombo"></select></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="form.reason"/>:</td>
+				<td align="left"><select wicket:id="reason"></select></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="form.duration_type"/>:</td>
+				<td align="left"><select wicket:id="durationType"></select></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="form.start_date"/>:</td>
+				<td align="left"><input wicket:id="startDate" type="text" /></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="form.end_date"/>:</td>
+				<td align="left"><input wicket:id="endDate" type="text" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input wicket:id="accept" type="submit" name="aceptar" value="Aceptar" />
+					<input wicket:id="cancel" type="submit" name="cancelar" value="Cancelar" />
+				</td>
+			</tr>
+		</table>
+		<br />
+	</form>
+</wicket:panel>
+</html>
