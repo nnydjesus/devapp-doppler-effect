@@ -141,7 +141,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         result.setPercentage(emp.getCareerData().getPercentage());
         return result;
     }
-
     private void synchronizeWithDTO(final EmployeeDTO employeeDTO, final Employee emp) {
         emp.setFirstName(employeeDTO.getFirstName());
         emp.setLastName(employeeDTO.getLastName());
@@ -159,5 +158,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         emp.getCareerData().setCareerPlan(employeeDTO.getCareerPlan());
         emp.getCareerData().setLevel(this.getCareerPlanLevelRepo().getByName(employeeDTO.getCareerPlanLevel()));
         emp.getCareerData().setPercentage(employeeDTO.getPercentage());
+    }
+
+    @Override
+    public List<EmployeeViewDTO> searchEmployeeByName(final String name) {
+        return this.convertAll(this.getEmployeeRepo().searchByName(name));
+    }
+
+    public Employee getEmployeeByDTO(final EmployeeViewDTO employeeViewDTO) {
+        return this.getEmployeeRepo().searchByDni(employeeViewDTO.getDni());
     }
 }

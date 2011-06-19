@@ -15,8 +15,9 @@ public class CareerPlanPanel extends AbstractCallbackPanel<Object> {
     private ServiceImpl<CareerPlanLevel> careerPlanLevelService;
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public CareerPlanPanel(final String id, final AjaxCallBack parent) {
-        super(id, parent, null, null);
+    public CareerPlanPanel(final String id, final AjaxCallBack callback) {
+        super(id, null);
+        this.init(callback, null);
         this.init();
     }
 

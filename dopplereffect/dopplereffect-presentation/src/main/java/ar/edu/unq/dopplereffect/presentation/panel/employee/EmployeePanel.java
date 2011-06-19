@@ -34,17 +34,16 @@ public class EmployeePanel extends EntityPanel<EmployeeDTO> {
         this.careerPlanService = careerPlanService;
     }
 
-    public EmployeePanel(final String id, final EmployeeSearchPanel previousPage, final EmployeeDTO model,
-            final Boolean editMode) {
-        super(id, model, previousPage, editMode);
+    public EmployeePanel(final String id, final EmployeeDTO model, final Boolean editMode) {
+        super(id, model, editMode);
     }
 
-    public EmployeePanel(final String id, final EmployeeSearchPanel previousPage, final EmployeeDTO model) {
-        super(id, model, previousPage);
+    public EmployeePanel(final String id, final EmployeeDTO model) {
+        super(id, model);
     }
 
-    public EmployeePanel(final String id, final EmployeeSearchPanel previousPage) {
-        super(id, new EmployeeDTO(), previousPage);
+    public EmployeePanel(final String id) {
+        super(id, new EmployeeDTO());
     }
 
     @Override

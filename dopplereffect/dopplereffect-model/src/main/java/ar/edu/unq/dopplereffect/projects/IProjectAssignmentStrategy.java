@@ -7,7 +7,8 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public interface IProjectAssignmentStrategy {
 
-    void manualAssignment(final Project anProject, final Employee employee, final IntervalDurationStrategy interval);
+    ProjectAssignment manualAssignment(final Project anProject, final Employee employee,
+            final IntervalDurationStrategy interval);
 
     void automaticAssignment(final Project anProject, final List<Employee> employees,
             final IntervalDurationStrategy intervalDurationStrategy);

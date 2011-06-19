@@ -12,13 +12,15 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColu
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
+import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
@@ -31,7 +33,7 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
 
     private Component resultSection;
 
-    private Component parentPage;
+    private AbstractSearchPanel<?> parentPage;
 
     private S searchModel;
 
@@ -43,7 +45,7 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
 
     private WebMarkupContainer sortableAjaxWicket;
 
-    private Panel parentPanel;
+    private AbstractPanel<?> parentPanel;
 
     private AjaxCallBack<Component> callBack;
 
@@ -51,8 +53,9 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
 
     private String sortName;
 
-    public AjaxDataTablePage(final Panel parent, final String id, final String sortName, final S searchModel,
-            final AjaxCallBack<Component> callBack, final List<String> fields, final Class<? extends Component> abmClass) {
+    public AjaxDataTablePage(final AbstractPanel<?> parent, final String id, final String sortName,
+            final S searchModel, final AjaxCallBack<Component> callBack, final List<String> fields,
+            final Class<? extends Component> abmClass) {
 
         this.setId(id);
         this.setSortName(sortName);
@@ -83,10 +86,7 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
                     @Override
                     @SuppressWarnings("synthetic-access")
                     public void onAction(final AjaxRequestTarget target) {
-                        Component page = ReflectionUtils.instanciate(AjaxDataTablePage.this.getAbmClass(),
-                                AjaxDataTablePage.this.getParentPanel().getId(),
-                                AjaxDataTablePage.this.getParentPage(), AjaxDataTablePage.this.getSearchModel()
-                                        .createEditDTO(model.getObject()), true);
+                        Component page = AjaxDataTablePage.this.createEditPanel(model);
                         callBack.execute(target, page);
                     }
 
@@ -118,6 +118,13 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
     }
 
+    protected Component createEditPanel(final IModel<T> model) {
+        EntityPanel<? extends DTO> entityPanel = (EntityPanel<?>) ReflectionUtils.instanciate(this.getAbmClass(), this
+                .getParentPanel().getId(), this.getSearchModel().createEditDTO(model.getObject()));
+        entityPanel.init(this.getCallBack(), this.getParentPage());
+        return entityPanel;
+    }
+
     /**
      * Agrega columnas personalizadas a las columnas ya existentes, pasadas como
      * parametro.
@@ -138,12 +145,12 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
         this.resultSection = resultSection;
     }
 
-    public Component getParentPage() {
+    public AbstractSearchPanel<?> getParentPage() {
         return parentPage;
     }
 
     @Override
-    public void setParentPage(final Component page) {
+    public void setParentPage(final AbstractSearchPanel<?> page) {
         this.parentPage = page;
     }
 
@@ -180,11 +187,11 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
         this.sortableAjaxWicket = sortableAjaxWicket;
     }
 
-    public Panel getParentPanel() {
+    public AbstractPanel<?> getParentPanel() {
         return parentPanel;
     }
 
-    public void setParentPanel(final Panel parentPanel) {
+    public void setParentPanel(final AbstractPanel<?> parentPanel) {
         this.parentPanel = parentPanel;
     }
 
@@ -219,4 +226,5 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
     public void setSortName(final String sortName) {
         this.sortName = sortName;
     }
+
 }

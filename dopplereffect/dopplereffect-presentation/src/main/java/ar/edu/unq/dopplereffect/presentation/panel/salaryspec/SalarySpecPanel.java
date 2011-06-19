@@ -31,17 +31,16 @@ public class SalarySpecPanel extends EntityPanel<SalarySpecDTO> {
         this.careerPlanService = careerPlanService;
     }
 
-    public SalarySpecPanel(final String id, final SalarySpecSearchPanel previousPage) {
-        this(id, previousPage, new SalarySpecDTO());
+    public SalarySpecPanel(final String id) {
+        this(id, new SalarySpecDTO(), false);
     }
 
-    public SalarySpecPanel(final String id, final SalarySpecSearchPanel previousPage, final SalarySpecDTO model) {
-        this(id, previousPage, model, false);
+    public SalarySpecPanel(final String id, final SalarySpecDTO model) {
+        this(id, model, true);
     }
 
-    public SalarySpecPanel(final String id, final SalarySpecSearchPanel previousPage, final SalarySpecDTO model,
-            final Boolean editMode) {
-        super(id, model, previousPage, editMode);
+    public SalarySpecPanel(final String id, final SalarySpecDTO model, final Boolean editMode) {
+        super(id, model, editMode);
         this.initPercentagesView();
     }
 

@@ -1,7 +1,6 @@
 package ar.edu.unq.dopplereffect.presentation.panel;
 
-import java.io.Serializable;
-
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Button;
@@ -13,8 +12,9 @@ import org.apache.wicket.model.StringResourceModel;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
-import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
+import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.service.DTO;
 
 public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
@@ -22,11 +22,14 @@ public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
 
     private boolean editMode;
 
-    public EntityPanel(final String id, final T model,
-            final AbstractCallbackPanel<? extends Serializable> previousPage, final boolean editMode) {
-        super(id, model, previousPage);
+    public EntityPanel(final String id, final T model, final boolean isEditMode) {
+        super(id, model);
+        this.editMode = isEditMode;
+    }
+
+    public void init(final AjaxCallBack<Component> callback, final AbstractSearchPanel<?> backPanel) {
+        super.init(callback, backPanel);
         this.beforeConstruct();
-        this.editMode = editMode;
         this.setFeedbackPanel(new FeedbackPanel(this.getFeedbackPanelWicketId()));
         Form<T> form = new Form<T>(this.getFormWicketId(), new CompoundPropertyModel<T>(this.getModelObject()));
         this.add(form);
@@ -34,12 +37,12 @@ public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
         this.addButtons(form);
     }
 
+    public EntityPanel(final String id, final T model) {
+        this(id, model, false);
+    }
+
     // abstracto porque el PMD se queja
     protected abstract void beforeConstruct();
-
-    public EntityPanel(final String id, final T model, final AbstractCallbackPanel<? extends Serializable> previousPage) {
-        this(id, model, previousPage, false);
-    }
 
     public boolean isEditMode() {
         return editMode;
@@ -62,8 +65,7 @@ public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
                 try {
                     // invoca la logica de negocio
                     T object = EntityPanel.this.getModelObject();
-                    SearchModel<T> search = (SearchModel<T>) EntityPanel.this.getCallBackPrevuousPanel()
-                            .getDefaultModelObject();
+                    SearchModel<T> search = (SearchModel<T>) EntityPanel.this.getBackPanel().getDefaultModelObject();
                     if (EntityPanel.this.isEditMode()) {
                         search.update(object);
                     } else {

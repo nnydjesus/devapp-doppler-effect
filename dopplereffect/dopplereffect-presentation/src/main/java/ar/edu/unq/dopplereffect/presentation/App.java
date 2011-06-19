@@ -37,10 +37,10 @@ public class App extends AuthenticatedWebApplication {// implements
     }
 
     private void addResources() {
+        this.getResourceSettings().addResourceFolder("Images");
         this.getResourceSettings().addResourceFolder("i18n");
         this.getResourceSettings().addResourceFolder("pages");
-        this.getResourceSettings().addResourceFolder("panel");
-        this.getResourceSettings().addResourceFolder("Images");
+        this.getResourceSettings().addResourceFolder("components");
         this.getResourceSettings().addResourceFolder("theme");
     }
 

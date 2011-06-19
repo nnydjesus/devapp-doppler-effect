@@ -67,7 +67,7 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
 
     public CalendarPanel(final String id, final SearchModel<T> employeeSearchModel,
             final LeaveRequestSearchModel leaveReqSearchModel, final AjaxCallBack<Component> callback) {
-        super(id, null, null, new Model<SearchModel<T>>(employeeSearchModel));
+        super(id, new Model<SearchModel<T>>(employeeSearchModel));
         model = employeeSearchModel;
         this.setLeaveRequestSearchModel(leaveReqSearchModel);
         this.setCallback(callback);

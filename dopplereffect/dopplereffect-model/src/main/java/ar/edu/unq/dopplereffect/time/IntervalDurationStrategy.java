@@ -207,7 +207,7 @@ public class IntervalDurationStrategy extends Entity implements DurationStrategy
             strBuilder.append(" starting at: " + this.getStartDate().toString());
         }
         if (this.getEndDate() != null) {
-            strBuilder.append(" finishing at: " + this.getStartDate().toString());
+            strBuilder.append(" finishing at: " + this.getEndDate().toString());
         }
         return strBuilder.toString();
     }

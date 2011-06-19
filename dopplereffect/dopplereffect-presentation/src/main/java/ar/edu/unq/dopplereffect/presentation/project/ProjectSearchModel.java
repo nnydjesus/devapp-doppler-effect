@@ -4,8 +4,11 @@ import java.util.List;
 
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.DTO;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.project.ProjectAssignmentDTO;
 import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
 import ar.edu.unq.dopplereffect.service.project.ProjectService;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public class ProjectSearchModel extends SearchModel<ProjectDTO> {
 
@@ -73,6 +76,11 @@ public class ProjectSearchModel extends SearchModel<ProjectDTO> {
 
     @Override
     protected List<ProjectDTO> getByNameResultsFromService(final String searchName) {
-        return service.searchByNameProjects(searchName);
+        return this.getService().searchByNameProjects(searchName);
+    }
+
+    public ProjectAssignmentDTO assignmentEmployee(final ProjectDTO projectDTO, final EmployeeViewDTO employeeViewDTO,
+            final IntervalDurationStrategy intervalDurationStrategy) {
+        return this.getService().assignmentEmployee(projectDTO, employeeViewDTO, intervalDurationStrategy);
     }
 }

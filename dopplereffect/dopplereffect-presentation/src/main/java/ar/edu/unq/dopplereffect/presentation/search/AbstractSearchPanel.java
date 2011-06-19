@@ -7,12 +7,13 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
+import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
@@ -31,7 +32,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
 
     private List<String> fields;
 
-	private Model<String> modelSearchByName;
+    private Model<String> modelSearchByName;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -45,11 +46,12 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     }
 
     @SuppressWarnings("unchecked")
-    public AbstractSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final Panel backPanel,
-            final T model, final List<String> fields, final Class abm) {
-        super(id, parentPage, backPanel, model);
+    public AbstractSearchPanel(final String id, final AjaxCallBack<Component> aCallback,
+            final AbstractPanel<?> backPanel, final T model, final List<String> fields, final Class abm) {
+        super(id, model);
         this.setFields(fields);
         this.setAbm(abm);
+        super.init(aCallback, backPanel);
         this.init(this.createForm(this.getFormWicketId()));
     }
 
@@ -70,8 +72,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
 
             @Override
             public Component createPage() {
-                return ReflectionUtils.instanciate(AbstractSearchPanel.this.getAbmClass(),
-                        AbstractSearchPanel.this.getId(), AbstractSearchPanel.this);
+                return AbstractSearchPanel.this.createEntityPanel();
             }
         }));
         this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), this.getBackPanel(),
@@ -113,7 +114,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
 
     protected void buildForm(final Form<T> form) {
         modelSearchByName = new Model<String>("");
-		form.add(new TextField<String>(this.getDefaultInputSearchWicketId(), modelSearchByName));
+        form.add(new TextField<String>(this.getDefaultInputSearchWicketId(), modelSearchByName));
     }
 
     protected void addGeneralResultSection(final ITable listView) {
@@ -122,6 +123,13 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
         listView.setParentPage(this);
         panel.add(listView.getSortableAjaxWicket());
         this.setAjaxSectionResult(panel);
+    }
+
+    protected Component createEntityPanel() {
+        EntityPanel<? extends DTO> newEntityPanel = (EntityPanel<?>) ReflectionUtils.instanciate(
+                AbstractSearchPanel.this.getAbmClass(), this.getId());
+        newEntityPanel.init(this.getCallback(), this);
+        return newEntityPanel;
     }
 
     protected String getFormWicketId() {
@@ -163,11 +171,11 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     }
 
     public void search() {
-    	if(modelSearchByName != null && StringUtils.isBlank(modelSearchByName.getObject())){
-    		this.getModelObject().searchByName(modelSearchByName.getObject());	
-    	}else{
-    		this.getModelObject().search();
-    	}
+        if (modelSearchByName != null && !StringUtils.isBlank(modelSearchByName.getObject())) {
+            this.getModelObject().searchByName(modelSearchByName.getObject());
+        } else {
+            this.getModelObject().search();
+        }
         ajaxSectionResult.setVisible(true);
     }
 
@@ -206,4 +214,5 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     public void setEntityPanel(final Class<Component> entityPanel) {
         this.entityPanel = entityPanel;
     }
+
 }

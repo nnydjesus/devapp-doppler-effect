@@ -57,7 +57,6 @@ public class AddSkillDialog extends Dialog {
                 AddSkillDialog.this.getProject().setSkills(new LinkedList<SkillDTO>(hashSet));
                 AddSkillDialog.this.getResults().removeAll(AddSkillDialog.this.getSkills());
                 AddSkillDialog.this.close();
-
             }
 
         }));

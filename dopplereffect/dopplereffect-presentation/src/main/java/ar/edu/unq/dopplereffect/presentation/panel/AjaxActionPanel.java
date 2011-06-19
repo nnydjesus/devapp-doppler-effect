@@ -29,7 +29,7 @@ public abstract class AjaxActionPanel extends Panel {
 
     public AjaxActionPanel(final String id, final String image, final String prevPath) {
         this(id);
-        this.getAjaxLink().add(new Image("image", new Model<String>(prevPath + "../Images/" + image)));
+        this.getAjaxLink().add(new Image("image", new Model<String>(image)));
         this.add(this.getAjaxLink());
     }
 

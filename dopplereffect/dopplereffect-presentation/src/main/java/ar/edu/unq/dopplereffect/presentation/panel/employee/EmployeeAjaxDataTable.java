@@ -7,7 +7,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -15,11 +14,12 @@ import org.apache.wicket.model.Model;
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.leaverequest.LeaveRequestSearchPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestDTO;
 
 /**
  * Similar a una {@link AjaxDataTablePage} pero con el agregado de un link con
@@ -31,7 +31,7 @@ public class EmployeeAjaxDataTable extends AjaxDataTablePage<EmployeeViewDTO, Em
 
     private LeaveRequestSearchModel leaveRequestSearchModel;
 
-    public EmployeeAjaxDataTable(final Panel parent, final String id, final String sortName,
+    public EmployeeAjaxDataTable(final AbstractPanel<?> parent, final String id, final String sortName,
             final EmployeeSearchModel searchModel, final AjaxCallBack<Component> aCallBack, final List<String> fields,
             final Class<? extends Component> abm) {
         super(parent, id, sortName, searchModel, aCallBack, fields, abm);
@@ -55,7 +55,7 @@ public class EmployeeAjaxDataTable extends AjaxDataTablePage<EmployeeViewDTO, Em
                         @SuppressWarnings({ "rawtypes", "unchecked" })
                         EmployeeDetailPanel comp = new EmployeeDetailPanel("body", EmployeeAjaxDataTable.this
                                 .getSearchModel().getDetailForEmployee(rowModel.getObject()),
-                                (AbstractCallbackPanel) EmployeeAjaxDataTable.this.getParentPanel());
+                                EmployeeAjaxDataTable.this.getCallBack(), EmployeeAjaxDataTable.this.getParentPanel());
                         EmployeeAjaxDataTable.this.getCallBack().execute(target, comp);
                     }
                 });
@@ -68,17 +68,19 @@ public class EmployeeAjaxDataTable extends AjaxDataTablePage<EmployeeViewDTO, Em
             @Override
             public void populateItem(final Item<ICellPopulator<EmployeeViewDTO>> cellItem, final String componentId,
                     final IModel<EmployeeViewDTO> rowModel) {
-                cellItem.add(new AjaxActionPanel(componentId, "details.png", "../") {
+                cellItem.add(new AjaxActionPanel(componentId, "../details.png") {
 
                     private static final long serialVersionUID = 1026116621448693265L;
 
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void onAction(final AjaxRequestTarget target) {
                         AjaxCallBack<Component> callback = EmployeeAjaxDataTable.this.getCallBack();
                         LeaveRequestSearchModel leaveReqSearchModel = EmployeeAjaxDataTable.this
                                 .getLeaveRequestSearchModel();
                         LeaveRequestSearchPanel comp = new LeaveRequestSearchPanel("body", callback,
-                                EmployeeAjaxDataTable.this.getParentPanel(), leaveReqSearchModel);
+                                (AbstractPanel<LeaveRequestDTO>) EmployeeAjaxDataTable.this.getParentPanel(),
+                                leaveReqSearchModel);
                         leaveReqSearchModel.setSearchByEmployee(rowModel.getObject());
                         leaveReqSearchModel.search();
                         callback.execute(target, comp);
