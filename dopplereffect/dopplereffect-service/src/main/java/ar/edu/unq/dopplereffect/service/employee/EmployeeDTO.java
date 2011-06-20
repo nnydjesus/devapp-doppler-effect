@@ -33,6 +33,10 @@ public class EmployeeDTO implements DTO {
 
     private int percentage;
 
+    public EmployeeDTO() {
+        joinDate = new Date();
+    }
+
     public String getFirstName() {
         return firstName;
     }

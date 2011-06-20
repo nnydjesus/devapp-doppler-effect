@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.service.Service;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 public interface LeaveRequestService extends Service {
 
@@ -33,5 +34,7 @@ public interface LeaveRequestService extends Service {
     LeaveRequestDTO createEditDTO(LeaveRequestViewDTO viewDTO);
 
     List<String> searchAllReasons();
+
+    List<LeaveRequestViewDTO> searchAllByReasonAndEmployee(String reason, EmployeeViewDTO employee);
 
 }

@@ -4,8 +4,12 @@
     <form wicket:id="searchEmployeeForm">
       <table align="center" id="panel">
 	    <tr>
-          <td align="right"><wicket:message key="search_by.name" /></td>
-          <td align="left"><input wicket:id="searchByName" type="text" name="name"/></td>
+          <td align="right"><wicket:message key="search_by.first_name" /></td>
+          <td align="left"><input wicket:id="searchByFirstName" type="text" name="name"/></td>
+        </tr>
+        <tr>
+          <td align="right"><wicket:message key="search_by.last_name" /></td>
+          <td align="left"><input wicket:id="searchByLastName" type="text" name="name"/></td>
         </tr>
         <tr>
           <td colspan="2"><input type="submit" wicket:id="search" value="Buscar" />          

@@ -2,6 +2,9 @@ package ar.edu.unq.dopplereffect.presentation.panel.employee;
 
 import java.util.Arrays;
 
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+
 import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
@@ -16,6 +19,8 @@ import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<EmployeeViewDTO>> {
 
     private static final long serialVersionUID = -7425688577267166062L;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private EmployeeAjaxDataTable employeeAjaxDataTable;
 
@@ -61,5 +66,11 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<Employe
     @Override
     protected String getNewFromBeanWicketId() {
         return "newEmployee";
+    }
+
+    @Override
+    protected void buildForm(final Form<SearchModel<EmployeeViewDTO>> form) {
+        form.add(new TextField<String>("searchByFirstName"));
+        form.add(new TextField<String>("searchByLastName"));
     }
 }

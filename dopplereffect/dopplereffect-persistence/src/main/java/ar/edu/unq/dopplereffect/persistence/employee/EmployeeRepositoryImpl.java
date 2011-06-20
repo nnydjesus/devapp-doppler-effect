@@ -14,12 +14,23 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
 
     private static final long serialVersionUID = 1L;
 
+    private static final String UNCHECKED = "unchecked";
+
+    /* ************************ INSTANCE VARIABLES ************************ */
+
+    /* *************************** CONSTRUCTORS *************************** */
+
     public EmployeeRepositoryImpl() {
         super(Employee.class);
     }
 
-    @SuppressWarnings("unchecked")
+    /* **************************** ACCESSORS ***************************** */
+
+    /* **************************** OPERATIONS **************************** */
+
+    @SuppressWarnings(UNCHECKED)
     public Employee findFirstWithName(final String firstName, final String lastName) {
+        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         Criteria personalDataCriteria = this.getSession().createCriteria(PersonalData.class);
         personalDataCriteria.add(Restrictions.eq("firstName", firstName));
         personalDataCriteria.add(Restrictions.eq("lastName", lastName));
@@ -28,20 +39,42 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
             throw new UserException("No se pudieron encontrar los datos personales del empleado");
         }
         PersonalData personaldata = personalDataResults.get(0);
-        return this.getByCriterion(Restrictions.eq("personalData", personaldata));
+        criteria.add(Restrictions.eq("personalData", personaldata));
+        List<Employee> results = criteria.list();
+        if (results.isEmpty()) {
+            throw new UserException("No se pudo encontrar ningun empleado con los nombres dados");
+        }
+        return results.get(0);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Employee> searchByName(final String name) {
-        Criteria personalDataCriteria = this.getSession().createCriteria(PersonalData.class);
-        personalDataCriteria.add(Restrictions.like("firstName", "%" + name + "%"));
-        List<PersonalData> personalDataResults = personalDataCriteria.list();
-        return this.getByCriterionList(Restrictions.in("personalData", personalDataResults));
-    }
-
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     public Employee searchByDni(final int dni) {
+        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
+        criteria.add(Restrictions.eq("personalData", this.getPersonalDataByDni(dni)));
+        List<Employee> results = criteria.list();
+        if (results.isEmpty()) {
+            throw new UserException("No se pudo encontrar ningun empleado con el dni dado");
+        }
+        return results.get(0);
+    }
+
+    /**
+     * Realiza una busqueda de aquellos empleados, por nombre y apellido.
+     */
+    @SuppressWarnings(UNCHECKED)
+    public List<Employee> searchByFirstAndLastName(final String firstName, final String lastName) {
+        String searchFirstName = firstName == null ? "" : firstName;
+        String searchLastName = lastName == null ? "" : lastName;
+        Criteria criteria = this.getSession().createCriteria(this.getEntityClass()).createCriteria("personalData")
+                .add(Restrictions.like("firstName", "%" + searchFirstName + "%"))
+                .add(Restrictions.like("lastName", "%" + searchLastName + "%"));
+        return criteria.list();
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
+
+    @SuppressWarnings(UNCHECKED)
+    private PersonalData getPersonalDataByDni(final int dni) {
         Criteria personalDataCriteria = this.getSession().createCriteria(PersonalData.class);
         personalDataCriteria.add(Restrictions.eq("dni", dni));
         List<PersonalData> personalDataResults = personalDataCriteria.list();
@@ -49,6 +82,6 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
             throw new UserException("No se pudieron encontrar los datos personales del empleado");
         }
         PersonalData personaldata = personalDataResults.get(0);
-        return this.getByCriterion(Restrictions.eq("personalData", personaldata));
+        return personaldata;
     }
 }

@@ -16,6 +16,7 @@ import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestTypeRepositoryImpl;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 import ar.edu.unq.dopplereffect.service.helpers.DateHelpers;
 import ar.edu.unq.dopplereffect.service.validations.Validator;
 import ar.edu.unq.dopplereffect.time.DurationStrategy;
@@ -200,5 +201,14 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     private List<DateTime> startEndDates(final LeaveRequestDTO leaveReqDTO) {
         // solo porque el PMD chilla
         return DateHelpers.getDates(new DateTime(leaveReqDTO.getStartDate()), new DateTime(leaveReqDTO.getEndDate()));
+    }
+
+    @Override
+    public List<LeaveRequestViewDTO> searchAllByReasonAndEmployee(final String reason, final EmployeeViewDTO employee) {
+        Employee emp = null;
+        if (employee != null) {
+            emp = this.getEmployeeService().getEmployeeRepo().searchByDni(employee.getDni());
+        }
+        return this.convertAll(this.getLeaveRequestRepo().searchAllByReasonAndEmployee(reason, emp));
     }
 }
