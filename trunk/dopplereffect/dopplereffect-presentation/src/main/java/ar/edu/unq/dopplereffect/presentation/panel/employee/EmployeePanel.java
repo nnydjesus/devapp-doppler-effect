@@ -10,7 +10,6 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.odlabs.wiquery.ui.datepicker.DatePicker;
-import org.odlabs.wiquery.ui.datepicker.DatePicker.ShowOnEnum;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
@@ -95,9 +94,7 @@ public class EmployeePanel extends EntityPanel<EmployeeDTO> {
     }
 
     protected void addJoinDateField(final Form<EmployeeDTO> form) {
-        DatePicker<Date> datePicker = new DatePicker<Date>("joinDate", Date.class)
-                .setButtonText("<div class=\"ui-icon ui-icon-calendar\"></div>").setShowOn(ShowOnEnum.BOTH)
-                .setShowButtonPanel(true);
+        DatePicker<Date> datePicker = new DatePicker<Date>("joinDate");
         form.add(datePicker);
     }
 

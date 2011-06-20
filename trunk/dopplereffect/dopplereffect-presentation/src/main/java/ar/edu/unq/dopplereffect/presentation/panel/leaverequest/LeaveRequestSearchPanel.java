@@ -48,9 +48,11 @@ public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSea
     @Override
     protected void buildForm(final Form<LeaveRequestSearchModel> form) {
         DatePicker<Date> datePicker = new DatePicker<Date>("searchByDate");
+        datePicker.setEnabled(false);
         form.add(datePicker);
         List<String> choices = this.getModelObject().getService().searchAllReasons();
         DropDownChoice<String> reasonCombo = new DropDownChoice<String>("searchByReason", choices);
+        reasonCombo.setNullValid(true);
         form.add(reasonCombo);
     }
 }

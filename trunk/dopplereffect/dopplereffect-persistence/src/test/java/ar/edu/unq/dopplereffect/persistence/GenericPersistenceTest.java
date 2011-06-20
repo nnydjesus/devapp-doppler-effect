@@ -14,6 +14,8 @@ import ar.edu.unq.dopplereffect.builders.employees.AddressBuilder;
 import ar.edu.unq.dopplereffect.builders.employees.CareerDataBuilder;
 import ar.edu.unq.dopplereffect.builders.employees.EmployeeBuilder;
 import ar.edu.unq.dopplereffect.builders.employees.PersonalDataBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.HolidayLeaveRequestBuilder;
+import ar.edu.unq.dopplereffect.builders.leaverequests.HolidayLeaveRequestTypeBuilder;
 import ar.edu.unq.dopplereffect.builders.leaverequests.IntervalDurationStrategyBuilder;
 import ar.edu.unq.dopplereffect.builders.leaverequests.LeaveRequestBuilder;
 import ar.edu.unq.dopplereffect.builders.leaverequests.LeaveRequestCustomTypeBuilder;
@@ -53,6 +55,8 @@ public class GenericPersistenceTest extends SpringPersistenceTest {
             new SkillBuilder(),
             new LeaveRequestBuilder(),
             new LeaveRequestCustomTypeBuilder(),
+            new HolidayLeaveRequestTypeBuilder(),
+            new HolidayLeaveRequestBuilder(),
             new IntervalDurationStrategyBuilder(),
             new OneDayDurationStrategyBuilder(),
             new AddressBuilder(),

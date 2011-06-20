@@ -8,12 +8,12 @@
 	<class name="LeaveRequestDaysConfiguration" table="leave_request_days_configuration">
 		
 		<id name="id" type="java.lang.Long">
-			<generator class="assigned" />
+<!-- 			<generator class="native" /> -->
 		</id>
 	
-		<property name="minYear" column="min_year" not-null="true" />
+		<property name="minYear" column="min_year" />
 		
-		<property name="correspondingDays" column="corresponding_days" not-null="true" />
+		<property name="correspondingDays" column="corresponding_days" />
 		
 	</class>
 

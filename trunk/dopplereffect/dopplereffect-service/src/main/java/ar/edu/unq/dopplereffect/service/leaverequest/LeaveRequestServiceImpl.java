@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.service.leaverequest;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,16 +72,14 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public void newLeaveRequest(final LeaveRequestDTO leaveReqDTO) {
         // validaciones
         new Validator(leaveReqDTO).notNull("reason").notNull("employee").notNull("durationType").notBlank("reason");
-        LeaveRequestType type;
-        try {
-            type = this.getLeaveRequestTypeRepo().searchByReason(leaveReqDTO.getReason());
-        } catch (UserException e) {
-            throw new ValidationException("validations.inexistentReason", e);
-        }
+        LeaveRequestType type = this.validateExistentType(leaveReqDTO);
         DurationStrategy durationStrategy = this.getAndValidateDurationStrategy(leaveReqDTO);
         Employee employee = this.getAndValidateEmployee(leaveReqDTO);
         LeaveRequest leaveRequest = new LeaveRequest(type, durationStrategy);
         leaveRequest.setEmployee(employee);
+        if (!leaveRequest.isValid()) {
+            throw new ValidationException("validations.wrongDays");
+        }
         this.getLeaveRequestRepo().save(leaveRequest);
     }
 
@@ -97,8 +96,13 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     @Transactional
     public void updateLeaveRequest(final LeaveRequestDTO leaveReqDTO) {
         Employee emp = this.getAndValidateEmployee(leaveReqDTO);
+        this.validateExistentType(leaveReqDTO);
+        this.getAndValidateDurationStrategy(leaveReqDTO);
         LeaveRequest leaveRequest = this.getLeaveRequestRepo().searchByStartDateAndEmployee(
                 new DateTime(leaveReqDTO.getStartDate()), emp);
+        if (!leaveRequest.isValid()) {
+            throw new ValidationException("validations.wrongDays");
+        }
         this.getLeaveRequestRepo().update(leaveRequest);
     }
 
@@ -218,8 +222,20 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
         return dStrategy;
     }
 
+    private LeaveRequestType validateExistentType(final LeaveRequestDTO leaveReqDTO) {
+        LeaveRequestType type;
+        try {
+            type = this.getLeaveRequestTypeRepo().searchByReason(leaveReqDTO.getReason());
+        } catch (UserException e) {
+            throw new ValidationException("validations.inexistentReason", e);
+        }
+        return type;
+    }
+
     private List<DateTime> startEndDates(final LeaveRequestDTO leaveReqDTO) {
-        // solo porque el PMD chilla
+        if (leaveReqDTO.getEndDate() == null) {
+            return Arrays.asList(new DateTime(leaveReqDTO.getStartDate()));
+        }
         return DateHelpers.getDates(new DateTime(leaveReqDTO.getStartDate()), new DateTime(leaveReqDTO.getEndDate()));
     }
 }

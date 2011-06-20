@@ -35,17 +35,13 @@ public abstract class AjaxActionPanel extends Panel {
         });
     }
 
-    public AjaxActionPanel(final String id, final String image) {
-        this(id, image, "");
-    }
-
     public AjaxActionPanel(final String id, final Model<?> model) {
         this(id);
         this.getAjaxLink().add(new Label("image", model));
         this.add(this.getAjaxLink());
     }
 
-    public AjaxActionPanel(final String id, final String image, final String prevPath) {
+    public AjaxActionPanel(final String id, final String image) {
         this(id);
         this.getAjaxLink().add(new Image("image", new Model<String>(image)));
         this.add(this.getAjaxLink());

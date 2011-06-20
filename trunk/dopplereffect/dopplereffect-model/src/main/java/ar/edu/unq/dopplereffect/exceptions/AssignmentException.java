@@ -11,6 +11,7 @@ public class AssignmentException extends UserException {
     private String extraData = "";
 
     public AssignmentException(final String key) {
+        super();
         this.key = key;
     }
 

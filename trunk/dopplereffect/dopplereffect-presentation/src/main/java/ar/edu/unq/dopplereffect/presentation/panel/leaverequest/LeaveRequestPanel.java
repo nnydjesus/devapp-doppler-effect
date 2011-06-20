@@ -4,13 +4,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.wicket.datetime.StyleDateConverter;
-import org.apache.wicket.datetime.markup.html.form.DateTextField;
-import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.odlabs.wiquery.ui.datepicker.DatePicker;
 
 import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
@@ -120,19 +118,13 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
     }
 
     private void addStartDateField(final Form<LeaveRequestDTO> form) {
-        DateTextField dateTextField = new DateTextField("startDate", new PropertyModel<Date>(
-                form.getDefaultModelObject(), "startDate"), new StyleDateConverter(true));
-        dateTextField.add(new DatePicker());
-        dateTextField.setRequired(true);
-        form.add(dateTextField);
+        DatePicker<Date> startDatePicker = new DatePicker<Date>("startDate");
+        form.add(startDatePicker);
     }
 
     private void addEndDateField(final Form<LeaveRequestDTO> form) {
-        DateTextField dateTextField = new DateTextField("endDate", new PropertyModel<Date>(
-                form.getDefaultModelObject(), "endDate"), new StyleDateConverter(true));
-        dateTextField.add(new DatePicker());
-        dateTextField.setRequired(true);
-        form.add(dateTextField);
+        DatePicker<Date> endDatePicker = new DatePicker<Date>("endDate");
+        form.add(endDatePicker);
     }
 
     @Override

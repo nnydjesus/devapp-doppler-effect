@@ -66,8 +66,8 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
         String searchFirstName = firstName == null ? "" : firstName;
         String searchLastName = lastName == null ? "" : lastName;
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass()).createCriteria("personalData")
-                .add(Restrictions.like("firstName", "%" + searchFirstName + "%"))
-                .add(Restrictions.like("lastName", "%" + searchLastName + "%"));
+                .add(Restrictions.ilike("firstName", "%" + searchFirstName + "%"))
+                .add(Restrictions.ilike("lastName", "%" + searchLastName + "%"));
         return criteria.list();
     }
 
