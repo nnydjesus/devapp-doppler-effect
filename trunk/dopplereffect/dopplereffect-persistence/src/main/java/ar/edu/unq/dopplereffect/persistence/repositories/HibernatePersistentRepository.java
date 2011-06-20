@@ -78,7 +78,7 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
 
     @Override
     public T getByLikeName(final String name) {
-        return this.getByCriterion(Restrictions.like("name", "%" + name + "%"));
+        return this.getByCriterion(Restrictions.ilike("name", "%" + name + "%"));
     }
 
     @Override
@@ -93,7 +93,7 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
     }
 
     public List<T> searchByName(final String field, final String name) {
-        return this.getByCriterionList(Restrictions.like(field, "%" + name + "%"));
+        return this.getByCriterionList(Restrictions.ilike(field, "%" + name + "%"));
     }
 
     protected T getByCriterion(final Criterion criterion) {

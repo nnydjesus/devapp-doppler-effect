@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
+import ar.edu.unq.dopplereffect.presentation.grid.GridPanel;
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
@@ -154,10 +155,10 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
                 ((SearchModel) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbmClass());
     }
 
-    // protected GridPanel<T> createAjaxGrid() {
-    // return new GridPanel<T>(this.getTableWicketId(),
-    // this.getModelObject().getEntityType(), this.getFields());
-    // }
+    protected GridPanel createAjaxGrid() {
+        return new GridPanel(this.getTableWicketId(), this.getModelObject(), this.getModelObject().getEntityType(),
+                this.getFields());
+    }
 
     protected void buildForm(final Form<T> form) {
         this.setModelSearchByName(new Model<String>(""));

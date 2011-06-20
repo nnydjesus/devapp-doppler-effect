@@ -53,6 +53,10 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         ajaxPanel = new SimplePanel(BODY);
         ajaxPanel.add(component);
         ajaxPanel.setOutputMarkupId(true);
+        this.makePage();
+    }
+
+    protected void makePage() {
         this.add(ajaxPanel);
         this.add(this.createFooter());
         this.add(this.createHeader());
@@ -60,7 +64,6 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         this.add(this.createTitle2());
         this.add(this.createSidebar());
         this.add(new LanguageSelectorPanel("language_select"));
-
     }
 
     /* **************************** ACCESSORS ***************************** */

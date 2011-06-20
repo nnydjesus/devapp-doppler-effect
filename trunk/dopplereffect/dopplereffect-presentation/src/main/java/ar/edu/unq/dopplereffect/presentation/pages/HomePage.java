@@ -18,13 +18,11 @@ import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.service.AddDefaultValuesService;
 
 /**
- * Pagina principal de la aplicacion.
+ * Simple home page.
  */
 public class HomePage extends AbstractWebPage<Component> {
 
     private static final long serialVersionUID = 1L;
-
-    /* ************************ INSTANCE VARIABLES ************************ */
 
     @SpringBean(name = "search_model.employee")
     private EmployeeSearchModel employeeSearchModel;
@@ -41,17 +39,56 @@ public class HomePage extends AbstractWebPage<Component> {
     @SpringBean(name = "service.default_values")
     private AddDefaultValuesService addDefaultValuesService;
 
-    /* *************************** CONSTRUCTORS *************************** */
-
-    public HomePage() {
-        super();
+    @Override
+    protected void makePage() {
         if (!App.isCreate()) {
             addDefaultValuesService.addAllData();
             App.setCreate(true);
         }
+        super.makePage();
     }
 
-    /* **************************** ACCESSORS ***************************** */
+    @Override
+    protected Component createHeader() {
+        return new HeaderPanel(AbstractWebPage.HEADER);
+    }
+
+    @Override
+    protected Component createSidebar() {
+        return new SidebarPanel(SIDEBAR, BODY, this.generateCallback(), this);
+    }
+
+    public Component createPanelLink(final String id, final AbstractCallbackPanel<?> panel) {
+        return new AjaxLink<Object>(id) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            @SuppressWarnings("rawtypes")
+            public void onClick(final AjaxRequestTarget target) {
+                ((SearchModel) panel.getDefaultModelObject()).reset();
+                panel.reset();
+                HomePage.this.generateCallback().execute(target, panel);
+            }
+        };
+    }
+
+    protected AjaxCallBack<Component> generateCallback() {
+        return new AjaxCallBack<Component>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void execute(final AjaxRequestTarget ajaxTarget, final Component component) {
+                if (component == null) {
+                    HomePage.this.setDefaultBody();
+                } else {
+                    HomePage.this.setBody(component);
+                }
+                ajaxTarget.addComponent(HomePage.this.getAjaxPanel());
+            }
+        };
+    }
+
+    /* definidos porque el PMD chilla */
 
     public EmployeeSearchModel getEmployeeSearchModel() {
         return employeeSearchModel;
@@ -91,52 +128,5 @@ public class HomePage extends AbstractWebPage<Component> {
 
     public void setAddDefaultValuesService(final AddDefaultValuesService addDefaultValuesService) {
         this.addDefaultValuesService = addDefaultValuesService;
-    }
-
-    /* **************************** OPERATIONS **************************** */
-
-    /**
-     * Crea un link a un panel, el cual se guardara en un callback.
-     */
-    public Component createPanelLink(final String id, final AbstractCallbackPanel<?> panel) {
-        return new AjaxLink<Object>(id) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            @SuppressWarnings("rawtypes")
-            public void onClick(final AjaxRequestTarget target) {
-                ((SearchModel) panel.getDefaultModelObject()).reset();
-                panel.reset();
-                HomePage.this.generateCallback().execute(target, panel);
-            }
-        };
-    }
-
-    /* ************************* PRIVATE METHODS ************************** */
-
-    @Override
-    protected Component createHeader() {
-        return new HeaderPanel(AbstractWebPage.HEADER);
-    }
-
-    @Override
-    protected Component createSidebar() {
-        return new SidebarPanel(SIDEBAR, BODY, this.generateCallback(), this);
-    }
-
-    protected AjaxCallBack<Component> generateCallback() {
-        return new AjaxCallBack<Component>() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void execute(final AjaxRequestTarget ajaxTarget, final Component component) {
-                if (component == null) {
-                    HomePage.this.setDefaultBody();
-                } else {
-                    HomePage.this.setBody(component);
-                }
-                ajaxTarget.addComponent(HomePage.this.getAjaxPanel());
-            }
-        };
     }
 }
