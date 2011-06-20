@@ -13,11 +13,27 @@ class IOrderComparator<T> implements Comparator<T>, Serializable {
 
     private static final long serialVersionUID = -1519486578091464384L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private SortInfo order;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public IOrderComparator(final SortInfo order) {
         this.setOrder(order);
     }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public SortInfo getOrder() {
+        return order;
+    }
+
+    public void setOrder(final SortInfo order) {
+        this.order = order;
+    }
+
+    /* **************************** OPERATIONS **************************** */
 
     @Override
     @SuppressWarnings("unchecked")
@@ -38,13 +54,5 @@ class IOrderComparator<T> implements Comparator<T>, Serializable {
             throw new UserException(e);
         }
         return 0;
-    }
-
-    public void setOrder(final SortInfo order) {
-        this.order = order;
-    }
-
-    public SortInfo getOrder() {
-        return order;
     }
 }

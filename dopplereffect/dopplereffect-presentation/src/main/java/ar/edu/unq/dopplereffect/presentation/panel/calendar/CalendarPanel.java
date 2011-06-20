@@ -29,7 +29,7 @@ import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.Model;
-import ar.edu.unq.dopplereffect.presentation.util.ReflextionAjaxLink;
+import ar.edu.unq.dopplereffect.presentation.util.ReflectionAjaxLink;
 
 /**
  * Panel que muestra en forma de calendario diferentes tipos de asignaciones.
@@ -243,10 +243,10 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
         this.add(CustomComponent.addButtonSking(new AjaxReflectionActionPanel<CalendarPanel<T>>("previousMonth", this,
                 PREVIOUS_METHOD, "previous.png")));
 
-        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel<T>>("mensual", MONTHLY_METHOD,
+        this.add(CustomComponent.addButtonSking(new ReflectionAjaxLink<CalendarPanel<T>>("mensual", MONTHLY_METHOD,
                 this, this, new StringResourceModel("monthday", new Model<String>("")))));
 
-        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel<T>>("semanal", WEEKLY_METHOD,
+        this.add(CustomComponent.addButtonSking(new ReflectionAjaxLink<CalendarPanel<T>>("semanal", WEEKLY_METHOD,
                 this, this, new StringResourceModel("weekday", new Model<String>("")))));
     }
 }

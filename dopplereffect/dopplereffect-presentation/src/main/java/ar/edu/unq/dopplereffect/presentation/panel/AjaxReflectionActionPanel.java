@@ -5,7 +5,7 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 
-import ar.edu.unq.dopplereffect.presentation.util.ReflextionAjaxLink;
+import ar.edu.unq.dopplereffect.presentation.util.ReflectionAjaxLink;
 
 public class AjaxReflectionActionPanel<T extends Component> extends Panel {
 
@@ -13,7 +13,7 @@ public class AjaxReflectionActionPanel<T extends Component> extends Panel {
 
     public AjaxReflectionActionPanel(final String id, final T host, final String action, final String image) {
         super(id, new Model<String>(""));
-        ReflextionAjaxLink<T> ajaxLink = new ReflextionAjaxLink<T>("action", action, host, host);
+        ReflectionAjaxLink<T> ajaxLink = new ReflectionAjaxLink<T>("action", action, host, host);
         ajaxLink.add(new Image("image", new Model<String>(image)));
         this.add(ajaxLink);
     }

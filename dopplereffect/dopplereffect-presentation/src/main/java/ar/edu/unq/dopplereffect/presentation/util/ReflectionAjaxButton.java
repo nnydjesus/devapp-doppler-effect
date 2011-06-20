@@ -17,6 +17,8 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
 
     private static final long serialVersionUID = 8596073328172540060L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     /**
      * Metodo a ejecutarse en el modelo.
      */
@@ -29,6 +31,8 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
 
     private T object;
 
+    /* *************************** CONSTRUCTORS *************************** */
+
     public ReflectionAjaxButton(final String id, final T objectModel, final Component ajaxTarget,
             final IModel<String> model) {
         this(id, id, objectModel, ajaxTarget, model);
@@ -36,7 +40,6 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
 
     public ReflectionAjaxButton(final String id, final T objectModel, final Component ajaxTarget) {
         this(id, objectModel, ajaxTarget, new Model<String>(""));
-
     }
 
     public ReflectionAjaxButton(final String id, final String action, final T objectModel,
@@ -48,20 +51,7 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
         this.setObject(objectModel);
     }
 
-    @Override
-    protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-        this.execute();
-        target.addComponent((Component) this.getObject());
-    }
-
-    protected void execute() {
-        ReflectionUtils.invokeMethod(this.getObject(), this.getAction());
-    }
-
-    @Override
-    protected void onError(final AjaxRequestTarget target, final Form<?> arg1) {
-        target.addComponent(this.getAjaxTarget());
-    }
+    /* **************************** ACCESSORS ***************************** */
 
     public String getAction() {
         return action;
@@ -84,7 +74,23 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
     }
 
     public void setAjaxTarget(final Component ajaxTarget) {
-        // solo porque rompe las bolas el PMD
-        this.ajaxTarget = ajaxTarget;
+        this.ajaxTarget = ajaxTarget; // solo porque rompe las bolas el PMD
+    }
+
+    /* ************************ ABSTRACT METHODS ************************** */
+
+    @Override
+    protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
+        this.execute();
+        target.addComponent((Component) this.getObject());
+    }
+
+    protected void execute() {
+        ReflectionUtils.invokeMethod(this.getObject(), this.getAction());
+    }
+
+    @Override
+    protected void onError(final AjaxRequestTarget target, final Form<?> arg1) {
+        target.addComponent(this.getAjaxTarget());
     }
 }

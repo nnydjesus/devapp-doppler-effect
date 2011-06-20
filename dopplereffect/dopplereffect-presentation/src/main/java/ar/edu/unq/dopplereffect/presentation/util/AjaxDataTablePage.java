@@ -27,11 +27,11 @@ import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-/**
- */
 public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implements Serializable, ITable {
 
     private static final long serialVersionUID = 1L;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private Component resultSection;
 
@@ -55,6 +55,8 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
 
     private String sortName;
 
+    /* *************************** CONSTRUCTORS *************************** */
+
     public AjaxDataTablePage(final AbstractPanel<?> parent, final String id, final String sortName,
             final S searchModel, final AjaxCallBack<Component> callBack, final List<String> fields,
             final Class<? extends Component> abmClass) {
@@ -68,77 +70,7 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
         this.abmClass = abmClass;
     }
 
-    public void init() {
-        ArrayList<IColumn<T>> columns = new ArrayList<IColumn<T>>();
-
-        for (String field : this.getFields()) {
-            columns.add(this.createPropertyColumn(field));
-        }
-        this.addCustomColumns(columns);
-
-        columns.add(new AbstractColumn<T>(new StringResourceModel("header.edit", new Model<String>(""))) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
-                    final IModel<T> model) {
-                cellItem.add(new AjaxActionPanel(componentId, "edit.png") {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    @SuppressWarnings("synthetic-access")
-                    public void onAction(final AjaxRequestTarget target) {
-                        Component page = AjaxDataTablePage.this.createEditPanel(model);
-                        callBack.execute(target, page);
-                    }
-
-                });
-            }
-        });
-
-        columns.add(new AbstractColumn<T>(new StringResourceModel("header.delete", new Model<String>(""))) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
-                    final IModel<T> rowModel) {
-                String confirmText = new Localizer().getString("confirm.delete", AjaxDataTablePage.this.getParentPage());
-                cellItem.add(new AjaxActionPanelWithConfirm(componentId, "delete.png", confirmText) {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void onAction(final AjaxRequestTarget target) {
-                        AjaxDataTablePage.this.getSearchModel().remove(rowModel.getObject());
-                        target.addComponent(AjaxDataTablePage.this.getAjaxdataTable());
-                    }
-                });
-            }
-        });
-        this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(this.getId(), columns,
-                new GenericSortableDataProvider<T>(this.getId(), this.getSearchModel(), this.getSortName()),
-                SearchModel.PAGE_SIZE));
-        this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
-        this.getSortableAjaxWicket().add(this.getAjaxdataTable());
-    }
-
-    protected Component createEditPanel(final IModel<T> model) {
-        EntityPanel<? extends DTO> entityPanel = (EntityPanel<?>) ReflectionUtils.instanciate(this.getAbmClass(), this
-                .getParentPanel().getId(), this.getSearchModel().createEditDTO(model.getObject()));
-        entityPanel.init(this.getCallBack(), this.getParentPage());
-        return entityPanel;
-    }
-
-    /**
-     * Agrega columnas personalizadas a las columnas ya existentes, pasadas como
-     * parametro.
-     */
-    protected void addCustomColumns(final List<IColumn<T>> columns) {
-        // el PMD me dice que documente esto (?)
-    }
-
-    private PropertyColumn<T> createPropertyColumn(final String field) {
-        return new PropertyColumn<T>(new StringResourceModel("header." + field, new Model<String>("")), field);
-    }
+    /* **************************** ACCESSORS ***************************** */
 
     public Component getResultSection() {
         return resultSection;
@@ -230,4 +162,79 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
         this.sortName = sortName;
     }
 
+    /* **************************** OPERATIONS **************************** */
+
+    public void init() {
+        ArrayList<IColumn<T>> columns = new ArrayList<IColumn<T>>();
+
+        for (String field : this.getFields()) {
+            columns.add(this.createPropertyColumn(field));
+        }
+        this.addCustomColumns(columns);
+
+        columns.add(new AbstractColumn<T>(new StringResourceModel("header.edit", new Model<String>(""))) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
+                    final IModel<T> model) {
+                cellItem.add(new AjaxActionPanel(componentId, "edit.png") {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    @SuppressWarnings("synthetic-access")
+                    public void onAction(final AjaxRequestTarget target) {
+                        Component page = AjaxDataTablePage.this.createEditPanel(model);
+                        callBack.execute(target, page);
+                    }
+
+                });
+            }
+        });
+
+        columns.add(new AbstractColumn<T>(new StringResourceModel("header.delete", new Model<String>(""))) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
+                    final IModel<T> rowModel) {
+                String confirmText = new Localizer().getString("confirm.delete", AjaxDataTablePage.this.getParentPage());
+                cellItem.add(new AjaxActionPanelWithConfirm(componentId, "delete.png", confirmText) {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onAction(final AjaxRequestTarget target) {
+                        AjaxDataTablePage.this.getSearchModel().remove(rowModel.getObject());
+                        target.addComponent(AjaxDataTablePage.this.getAjaxdataTable());
+                    }
+                });
+            }
+        });
+        this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(this.getId(), columns,
+                new GenericSortableDataProvider<T>(this.getId(), this.getSearchModel(), this.getSortName()),
+                SearchModel.PAGE_SIZE));
+        this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
+        this.getSortableAjaxWicket().add(this.getAjaxdataTable());
+    }
+
+    protected Component createEditPanel(final IModel<T> model) {
+        EntityPanel<? extends DTO> entityPanel = (EntityPanel<?>) ReflectionUtils.instanciate(this.getAbmClass(), this
+                .getParentPanel().getId(), this.getSearchModel().createEditDTO(model.getObject()));
+        entityPanel.init(this.getCallBack(), this.getParentPage());
+        return entityPanel;
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
+
+    /**
+     * Agrega columnas personalizadas a las columnas ya existentes, pasadas como
+     * parametro.
+     */
+    protected void addCustomColumns(final List<IColumn<T>> columns) {
+        // x
+    }
+
+    private PropertyColumn<T> createPropertyColumn(final String field) {
+        return new PropertyColumn<T>(new StringResourceModel("header." + field, new Model<String>("")), field);
+    }
 }

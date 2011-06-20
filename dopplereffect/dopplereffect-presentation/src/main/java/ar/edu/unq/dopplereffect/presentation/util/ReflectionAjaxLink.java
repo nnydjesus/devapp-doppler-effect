@@ -9,11 +9,11 @@ import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-/**
- */
-public class ReflextionAjaxLink<T> extends AjaxLink<String> {
+public class ReflectionAjaxLink<T> extends AjaxLink<String> {
 
     private static final long serialVersionUID = 8596073328172540060L;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     /**
      * Metodo a ejecutarse en el modelo.
@@ -27,11 +27,13 @@ public class ReflextionAjaxLink<T> extends AjaxLink<String> {
 
     private T object;
 
-    public ReflextionAjaxLink(final String id, final String action, final T host, final Component ajaxTarget) {
+    /* *************************** CONSTRUCTORS *************************** */
+
+    public ReflectionAjaxLink(final String id, final String action, final T host, final Component ajaxTarget) {
         this(id, action, host, ajaxTarget, new Model<String>(""));
     }
 
-    public ReflextionAjaxLink(final String id, final String action, final T host, final Component anAjaxTarget,
+    public ReflectionAjaxLink(final String id, final String action, final T host, final Component anAjaxTarget,
             final IModel<String> model) {
         super(id, model);
         this.add(new ButtonBehavior());
@@ -40,15 +42,7 @@ public class ReflextionAjaxLink<T> extends AjaxLink<String> {
         this.setObject(host);
     }
 
-    @Override
-    public void onClick(final AjaxRequestTarget target) {
-        this.execute();
-        target.addComponent(this.getAjaxTarget());
-    }
-
-    protected void execute() {
-        ReflectionUtils.invokeMethod(this.getObject(), this.getAction());
-    }
+    /* **************************** ACCESSORS ***************************** */
 
     public String getAction() {
         return action;
@@ -71,8 +65,21 @@ public class ReflextionAjaxLink<T> extends AjaxLink<String> {
     }
 
     public void setAjaxTarget(final Component ajaxTarget) {
-        // solo porque rompe las bolas el PMD
-        this.ajaxTarget = ajaxTarget;
+        this.ajaxTarget = ajaxTarget; // solo porque rompe las bolas el PMD
+    }
+
+    /* **************************** OPERATIONS **************************** */
+
+    @Override
+    public void onClick(final AjaxRequestTarget target) {
+        this.execute();
+        target.addComponent(this.getAjaxTarget());
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
+
+    protected void execute() {
+        ReflectionUtils.invokeMethod(this.getObject(), this.getAction());
     }
 
 }
