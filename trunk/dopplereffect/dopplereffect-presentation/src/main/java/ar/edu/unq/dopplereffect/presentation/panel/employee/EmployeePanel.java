@@ -4,15 +4,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.wicket.datetime.StyleDateConverter;
-import org.apache.wicket.datetime.markup.html.form.DateTextField;
-import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.odlabs.wiquery.ui.datepicker.DatePicker;
+import org.odlabs.wiquery.ui.datepicker.DatePicker.ShowOnEnum;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
@@ -52,6 +50,14 @@ public class EmployeePanel extends EntityPanel<EmployeeDTO> {
         this.addJoinDateField(form);
         this.addCareerPlanCombo(form);
         this.addCareerPlanLevelCombo(form);
+        this.addPercentageField(form);
+    }
+
+    private void addPercentageField(final Form<EmployeeDTO> form) {
+        TextField<Integer> percentageTextField = new TextField<Integer>("percentage");
+        form.add(percentageTextField);
+        percentageTextField.setRequired(this.isEditMode());
+        percentageTextField.setVisible(this.isEditMode());
     }
 
     protected void addPersonalDataFields(final Form<EmployeeDTO> form) {
@@ -81,11 +87,10 @@ public class EmployeePanel extends EntityPanel<EmployeeDTO> {
     }
 
     protected void addJoinDateField(final Form<EmployeeDTO> form) {
-        DateTextField dateTextField = new DateTextField("joinDate", new PropertyModel<Date>(
-                form.getDefaultModelObject(), "joinDate"), new StyleDateConverter(true));
-        dateTextField.add(new DatePicker());
-        dateTextField.setRequired(true);
-        form.add(dateTextField);
+        DatePicker<Date> datePicker = new DatePicker<Date>("joinDate", Date.class)
+                .setButtonText("<div class=\"ui-icon ui-icon-calendar\"></div>").setShowOn(ShowOnEnum.BOTH)
+                .setShowButtonPanel(true);
+        form.add(datePicker);
     }
 
     @Override

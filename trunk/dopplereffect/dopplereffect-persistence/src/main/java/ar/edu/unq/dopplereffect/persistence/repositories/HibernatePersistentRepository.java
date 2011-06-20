@@ -16,7 +16,11 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
     // es cualquiera esto, pero sino chilla el PMD
     private static final String UNCHECKED = "unchecked";
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private Class<T> entityClass;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     @SuppressWarnings(UNCHECKED)
     public HibernatePersistentRepository() {
@@ -27,6 +31,18 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
         super();
         this.setEntityClass(clazz);
     }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
+
+    public void setEntityClass(final Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
+
+    /* **************************** OPERATIONS **************************** */
 
     @Override
     public void save(final T object) {
@@ -49,8 +65,8 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
         this.getHibernateTemplate().delete(object);
     }
 
-    @SuppressWarnings(UNCHECKED)
     @Override
+    @SuppressWarnings(UNCHECKED)
     public List<T> searchAll() {
         return this.getHibernateTemplate().loadAll(this.getEntityClass());
     }
@@ -65,6 +81,21 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
         return this.getByCriterion(Restrictions.like("name", "%" + name + "%"));
     }
 
+    @Override
+    @SuppressWarnings(UNCHECKED)
+    public List<T> searchByExample(final T object) {
+        return this.getHibernateTemplate().findByExample(object);
+    }
+
+    @Override
+    public List<T> searchByName(final String name) {
+        return this.searchByName("name", name);
+    }
+
+    public List<T> searchByName(final String field, final String name) {
+        return this.getByCriterionList(Restrictions.like(field, "%" + name + "%"));
+    }
+
     protected T getByCriterion(final Criterion criterion) {
         List<T> criterionList = this.getByCriterionList(criterion);
         if (criterionList.isEmpty()) {
@@ -76,27 +107,8 @@ public class HibernatePersistentRepository<T> extends CustomHibernateRepositoryS
 
     @SuppressWarnings(UNCHECKED)
     protected List<T> getByCriterionList(final Criterion criterion) {
-        Criteria criteria = this.getSession().createCriteria(this.entityClass);
+        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         criteria.add(criterion);
         return criteria.list();
-    }
-
-    @Override
-    @SuppressWarnings(UNCHECKED)
-    public List<T> searchByExample(final T object) {
-        return this.getHibernateTemplate().findByExample(object);
-    }
-
-    public void setEntityClass(final Class<T> entityClass) {
-        this.entityClass = entityClass;
-    }
-
-    public Class<T> getEntityClass() {
-        return entityClass;
-    }
-
-    @Override
-    public List<T> searchByName(final String name) {
-        return this.getByCriterionList(Restrictions.like("name", "%" + name + "%"));
     }
 }

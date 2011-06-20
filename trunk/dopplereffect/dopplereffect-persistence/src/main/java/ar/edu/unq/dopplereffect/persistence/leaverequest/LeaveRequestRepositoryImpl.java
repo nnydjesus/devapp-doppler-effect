@@ -18,47 +18,44 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
     // esto lo hice por el PMD, es realmente absurdo
     private static final String UNCHECKED = "unchecked";
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
+    /* *************************** CONSTRUCTORS *************************** */
+
     public LeaveRequestRepositoryImpl() {
         super(LeaveRequest.class);
     }
 
-    @SuppressWarnings(UNCHECKED)
+    /* **************************** OPERATIONS **************************** */
+
     public List<LeaveRequest> searchAllByEmployee(final Employee employee) {
-        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
-        criteria.add(Restrictions.eq("employee", employee));
-        return criteria.list();
+        return this.getByCriterionList(Restrictions.eq("employee", employee));
     }
 
     @SuppressWarnings(UNCHECKED)
     public List<LeaveRequest> searchAllByDateAndEmployee(final DateTime dateTime, final Employee employee) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         criteria.add(Restrictions.eq("employee", employee));
-        // se me complica para buscar si la fecha cae dentro de inicio y fin
-        // necesito joinear
-        // DurationStrategy oneDayDS = new OneDayDurationStrategy(dateTime);
-        // DurationStrategy intervalDS = new IntervalDurationStrategy(dateTime,
-        // dateTime);
-        // criteria.add(Restrictions.or(Restrictions.eq("durationStrategy",
-        // oneDayDS),
-        // Restrictions.eq("durationStrategy", intervalDS)));
         return criteria.list();
     }
 
+    /**
+     * Busca una licencia por su fecha de inicio y empleado correspondiente.
+     */
     @SuppressWarnings(UNCHECKED)
     public LeaveRequest searchByStartDateAndEmployee(final DateTime dateTime, final Employee employee) {
-        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
-        criteria.add(Restrictions.eq("employee", employee));
-        // se me complica para buscar si la fecha cae dentro de inicio y fin
-        // necesito joinear
-        // DurationStrategy oneDayDS = new OneDayDurationStrategy(dateTime);
-        // DurationStrategy intervalDS = new IntervalDurationStrategy(dateTime,
-        // dateTime);
-        // criteria.add(Restrictions.or(Restrictions.eq("durationStrategy",
-        // oneDayDS),
-        // Restrictions.eq("durationStrategy", intervalDS)));
+        // @formatter:off
+        Criteria criteria = this.getSession().createCriteria(this.getEntityClass())
+                .add(Restrictions.eq("employee", employee))
+                .createCriteria("durationStrategy")
+                    .add(Restrictions.disjunction()
+                        .add(Restrictions.eq("date", dateTime))
+                        .add(Restrictions.sqlRestriction("{alias}.start_date = '" + dateTime.toString("yyyy-MM-dd HH:mm:ss.SSS") + "'"))
+                    );
+        // @formatter:on
         List<LeaveRequest> results = criteria.list();
         if (results.isEmpty()) {
-            throw new UserException("no se pudo encontrar la licencia");
+            throw new UserException("no se pudo encontrar la licencia con los datos dados");
         }
         return results.get(0);
     }
@@ -66,13 +63,21 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
     @SuppressWarnings(UNCHECKED)
     public List<LeaveRequest> searchAllByDate(final DateTime dateTime) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
-        // necesito joinear
-        // DurationStrategy oneDayDS = new OneDayDurationStrategy(dateTime);
-        // DurationStrategy intervalDS = new IntervalDurationStrategy(dateTime,
-        // dateTime);
-        // criteria.add(Restrictions.or(Restrictions.eq("durationStrategy",
-        // oneDayDS),
-        // Restrictions.eq("durationStrategy", intervalDS)));
+        return criteria.list();
+    }
+
+    @SuppressWarnings(UNCHECKED)
+    public List<LeaveRequest> searchAllByReasonAndEmployee(final String reason, final Employee employee) {
+        String searchReason = reason == null ? "" : reason;
+        Criteria criteria;
+        if (employee == null) {
+            criteria = this.getSession().createCriteria(this.getEntityClass()).createCriteria("type")
+                    .add(Restrictions.like("reason", "%" + searchReason + "%"));
+        } else {
+            criteria = this.getSession().createCriteria(this.getEntityClass())
+                    .add(Restrictions.eq("employee", employee)).createCriteria("type")
+                    .add(Restrictions.like("reason", "%" + searchReason + "%"));
+        }
         return criteria.list();
     }
 }

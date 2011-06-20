@@ -2,18 +2,53 @@ package ar.edu.unq.dopplereffect.presentation.employee;
 
 import java.util.List;
 
-import ar.edu.unq.dopplereffect.presentation.search.SearchByExampleModel;
+import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeDTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeDetailDTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeService;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
-public class EmployeeSearchModel extends SearchByExampleModel<EmployeeViewDTO> {
+/**
+ * Modelo de busqueda de empleados, que permite buscar por nombre y apellido.
+ */
+public class EmployeeSearchModel extends SearchModel<EmployeeViewDTO> {
 
     private static final long serialVersionUID = -4428182030184876921L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private EmployeeService service;
+
+    private String searchByFirstName;
+
+    private String searchByLastName;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    public EmployeeSearchModel() {
+        super(EmployeeViewDTO.class);
+        searchByFirstName = "";
+        searchByLastName = "";
+    }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public String getSearchByFirstName() {
+        return searchByFirstName;
+    }
+
+    public void setSearchByFirstName(final String searchByFirstName) {
+        this.searchByFirstName = searchByFirstName;
+    }
+
+    public String getSearchByLastName() {
+        return searchByLastName;
+    }
+
+    public void setSearchByLastName(final String searchByLastName) {
+        this.searchByLastName = searchByLastName;
+    }
 
     public EmployeeService getService() {
         return service;
@@ -23,27 +58,7 @@ public class EmployeeSearchModel extends SearchByExampleModel<EmployeeViewDTO> {
         this.service = service;
     }
 
-    public EmployeeSearchModel() {
-        super(EmployeeViewDTO.class);
-    }
-
-    public String getSearchByName() {
-        return this.getExample().getFirstName();
-    }
-
-    public void setSearchByName(final String aName) {
-        this.getExample().setFirstName(aName);
-    }
-
-    @Override
-    public Class<EmployeeViewDTO> getEntityType() {
-        return EmployeeViewDTO.class;
-    }
-
-    @Override
-    public List<EmployeeViewDTO> searchByExample(final EmployeeViewDTO theExample) {
-        return this.getService().searchAllByExample(theExample);
-    }
+    /* **************************** OPERATIONS **************************** */
 
     @Override
     protected List<EmployeeViewDTO> getAllResultsFromService() {
@@ -65,6 +80,9 @@ public class EmployeeSearchModel extends SearchByExampleModel<EmployeeViewDTO> {
         this.getService().updateEmployee((EmployeeDTO) employee);
     }
 
+    /**
+     * Construye un empleado con un detalle mayor de sus datos.
+     */
     public EmployeeDetailDTO getDetailForEmployee(final EmployeeViewDTO employeeViewDTO) {
         return this.getService().getDetailForEmployee(employeeViewDTO);
     }
@@ -76,9 +94,13 @@ public class EmployeeSearchModel extends SearchByExampleModel<EmployeeViewDTO> {
     }
 
     @Override
-    protected List<EmployeeViewDTO> getByNameResultsFromService(final String name) {
-        return this.getService().searchEmployeeByName(name);
-
+    public void search() {
+        this.setResults(this.getService().searchAllByFirstAndLastName(this.getSearchByFirstName(),
+                this.getSearchByLastName()));
     }
 
+    @Override
+    protected List<EmployeeViewDTO> getByNameResultsFromService(final String name) {
+        return this.getService().searchAllByFirstAndLastName(this.getSearchByFirstName(), this.getSearchByLastName());
+    }
 }

@@ -1,6 +1,5 @@
 package ar.edu.unq.dopplereffect.presentation.search.leaverequest;
 
-import java.util.Date;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
@@ -15,26 +14,28 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
 
     private static final long serialVersionUID = -2535940685385343959L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private LeaveRequestService service;
 
-    private Date searchByDate;
+    private String searchByReason;
 
     private EmployeeViewDTO searchByEmployee;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public LeaveRequestSearchModel() {
         super(LeaveRequestViewDTO.class);
     }
 
-    public Date getSearchByDate() {
-        if (searchByDate == null) {
-            return null;
-        } else {
-            return (Date) searchByDate.clone();
-        }
+    /* **************************** ACCESSORS ***************************** */
+
+    public LeaveRequestService getService() {
+        return service;
     }
 
-    public void setSearchByDate(final Date searchByDate) {
-        this.searchByDate = (Date) searchByDate.clone();
+    public void setService(final LeaveRequestService service) {
+        this.service = service;
     }
 
     public EmployeeViewDTO getSearchByEmployee() {
@@ -45,47 +46,21 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
         this.searchByEmployee = searchByEmployee;
     }
 
-    public LeaveRequestService getService() {
-        return service;
+    public String getSearchByReason() {
+        return searchByReason;
     }
 
-    public void setService(final LeaveRequestService service) {
-        this.service = service;
+    public void setSearchByReason(final String searchByReason) {
+        this.searchByReason = searchByReason;
     }
+
+    /* **************************** OPERATIONS **************************** */
 
     @Override
     public void search() {
-        if (this.searchingByEmployee()) {
-            if (this.searchingByDate()) {
-                this.setResults(this.getService().searchAllByDateAndEmployee(this.getSearchByDate(),
-                        this.getSearchByEmployee().getFirstName(), this.getSearchByEmployee().getLastName()));
-            } else {
-                this.setResults(this.getService().searchAllByEmployee(this.getSearchByEmployee().getFirstName(),
-                        this.getSearchByEmployee().getLastName()));
-            }
-        } else {
-            if (this.searchingByDate()) {
-                this.setResults(this.getService().searchAllByDate(this.getSearchByDate()));
-            } else {
-                this.setResults(this.getService().searchAllLeaveRequests());
-            }
-        }
+        this.setResults(this.getService().searchAllByReasonAndEmployee(this.getSearchByReason(),
+                this.getSearchByEmployee()));
     }
-
-    private boolean searchingByDate() {
-        return this.getSearchByDate() != null;
-    }
-
-    private boolean searchingByEmployee() {
-        return this.getSearchByEmployee() != null;
-    }
-
-    // @Override
-    // public void reset() {
-    // super.reset();
-    // // searchByEmployee = null;
-    // // searchByDate = null;
-    // }
 
     @Override
     protected List<LeaveRequestViewDTO> getAllResultsFromService() {
@@ -121,5 +96,4 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
     protected List<LeaveRequestViewDTO> getByNameResultsFromService(final String name) {
         return this.getAllResultsFromService();
     }
-
 }

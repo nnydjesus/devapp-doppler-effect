@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
+import ar.edu.unq.dopplereffect.exceptions.ValidationException;
 import ar.edu.unq.dopplereffect.persistence.employee.SalarySpecificationRepositoryImpl;
 import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
 import ar.edu.unq.dopplereffect.service.employee.CareerPlanServiceImpl;
@@ -17,9 +18,15 @@ public class SalarySpecServiceImpl implements SalarySpecService {
 
     private static final long serialVersionUID = -2063769171841444433L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private SalarySpecificationRepositoryImpl repository;
 
     private CareerPlanServiceImpl careerPlanService;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    /* **************************** ACCESSORS ***************************** */
 
     public SalarySpecificationRepositoryImpl getRepository() {
         return repository;
@@ -43,6 +50,7 @@ public class SalarySpecServiceImpl implements SalarySpecService {
     @Transactional
     public void newSalarySpecification(final SalarySpecDTO salarySpecDTO) {
         SalarySpecification salarySpec = this.convert(salarySpecDTO);
+        this.doValidations(salarySpecDTO, salarySpec);
         this.getRepository().save(salarySpec);
     }
 
@@ -59,6 +67,7 @@ public class SalarySpecServiceImpl implements SalarySpecService {
     public void updateSalarySpecification(final SalarySpecDTO salarySpecDTO) {
         CareerPlanLevel level = this.getCareerPlanService().findFirstLevelWithName(salarySpecDTO.getCareerPlanLevel());
         SalarySpecification sspec = this.getRepository().getByPlanAndLevel(salarySpecDTO.getCareerPlan(), level);
+        this.doValidations(salarySpecDTO, sspec);
         this.getRepository().update(sspec);
     }
 
@@ -85,10 +94,19 @@ public class SalarySpecServiceImpl implements SalarySpecService {
 
     @Override
     @Transactional
-    public List<SalarySpecDTO> searchByCareerPlanAndLevel(final CareerPlan careerPlan, final String careerPlanLevel) {
-        CareerPlanLevel level = this.getCareerPlanService().findFirstLevelWithName(careerPlanLevel);
-        return this.convertAll(this.getRepository().searchByCareerPlanAndLevel(careerPlan, level));
+    public List<SalarySpecDTO> searchByCareerPlanAndLevel(final CareerPlan plan, final String level) {
+        CareerPlanLevel careerPlanLevel = this.getCareerPlanService().findFirstLevelWithName(level);
+        return this.convertAll(this.getRepository().searchByCareerPlanAndLevel(plan, careerPlanLevel));
     }
+
+    @Override
+    @Transactional
+    public boolean existSalarySpecification(final int year, final CareerPlan plan, final String level) {
+        CareerPlanLevel careerPlanLevel = this.getCareerPlanService().findFirstLevelWithName(level);
+        return this.getRepository().searchByYearCareerPlanAndLevel(year, plan, careerPlanLevel) != null;
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     private SalarySpecification convert(final SalarySpecDTO salarySpecDTO) {
         CareerPlanLevel careerPlanLevel = this.getCareerPlanService().findFirstLevelWithName(
@@ -114,5 +132,26 @@ public class SalarySpecServiceImpl implements SalarySpecService {
             results.add(this.convert(spec));
         }
         return results;
+    }
+
+    private void validatePercentages(final List<Integer> percentages) {
+        if (!percentages.contains(0) || !percentages.contains(100)) {
+            throw new ValidationException("validations.percentages.basic");
+        }
+        for (int perc : percentages) {
+            if (perc < 0 || perc > 100) {
+                throw new ValidationException("validations.percentages.outOfBounds");
+            }
+        }
+    }
+
+    private void doValidations(final SalarySpecDTO salarySpecDTO, final SalarySpecification salarySpec) {
+        this.validatePercentages(salarySpecDTO.getPercentages());
+        if (this.getRepository().checkForExistentSalarySpec(salarySpec)) {
+            throw new ValidationException("validations.existent");
+        }
+        if (salarySpecDTO.getMinSalary() >= salarySpecDTO.getMaxSalary()) {
+            throw new ValidationException("validations.salary");
+        }
     }
 }
