@@ -18,11 +18,9 @@ public class GridPanel<T extends DTO> extends Panel implements ITable {
 
     private static final long serialVersionUID = 1L;
 
-    private boolean scoll = false;
+    /* ************************ INSTANCE VARIABLES ************************ */
 
-    /**
-     * @param id
-     */
+    /* *************************** CONSTRUCTORS *************************** */
     public GridPanel(final String id, final Object defaultmodel, final Class<T> beanClass, final List<String> fields) {
         super(id, new Model<Object>(defaultmodel));
 
@@ -33,14 +31,7 @@ public class GridPanel<T extends DTO> extends Panel implements ITable {
         this.add(grid);
     }
 
-    public boolean isScoll() {
-        return scoll;
-    }
-
-    public void setScoll(final boolean scoll) {
-        this.scoll = scoll;
-    }
-
+    /* **************************** ACCESSORS ***************************** */
     @Override
     public Component getSortableAjaxWicket() {
         return this;
@@ -48,7 +39,7 @@ public class GridPanel<T extends DTO> extends Panel implements ITable {
 
     @Override
     public void setParentPage(final AbstractSearchPanel<?> panel) {
-        // TODO
+        // TODO: para que el PMD no pinche
         this.getClass();
     }
 

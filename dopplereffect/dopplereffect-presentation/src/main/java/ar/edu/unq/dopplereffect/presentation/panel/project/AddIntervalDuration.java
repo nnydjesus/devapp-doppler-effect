@@ -37,30 +37,8 @@ public abstract class AddIntervalDuration extends Dialog implements Serializable
         form.add(new FeedbackPanel("feedback"));
         form.add(new DatePicker<Date>("endDate", new PropertyModel<Date>(this, "endDate")));
 
-        AjaxButton ajaxButton = new AjaxButton("acept", new Model<String>("acept")) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onSubmit(final AjaxRequestTarget target, final Form<?> theForm) {
-                try {
-                    AddIntervalDuration.this.validateDates();
-                    AddIntervalDuration.this.onAccept(
-                            new IntervalDurationStrategy(new DateTime(AddIntervalDuration.this.getStartDate()),
-                                    new DateTime(AddIntervalDuration.this.getEndDate())), target);
-                    target.appendJavascript(AddIntervalDuration.this.close().render().toString());
-                    AddIntervalDuration.this.clean();
-                } catch (AssignmentException e) {
-                    theForm.error(AddIntervalDuration.this.getLocalizer().getString(e.getKey(),
-                            AddIntervalDuration.this)
-                            + e.getExtraData());
-                    target.addComponent(theForm);
-                } catch (Exception e) {
-                    theForm.error(e.getMessage());
-                    target.addComponent(theForm);
-                }
-            }
-        };
-        form.add(ajaxButton);
+        AjaxButton aceptButton = this.createAceptButton();
+        form.add(aceptButton);
         this.add(form);
     }
 
@@ -90,6 +68,32 @@ public abstract class AddIntervalDuration extends Dialog implements Serializable
     }
 
     /* ************************* PRIVATE METHODS ************************** */
+
+    protected AjaxButton createAceptButton() {
+        return new AjaxButton("acept", new Model<String>("acept")) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(final AjaxRequestTarget target, final Form<?> theForm) {
+                try {
+                    AddIntervalDuration.this.validateDates();
+                    AddIntervalDuration.this.onAccept(
+                            new IntervalDurationStrategy(new DateTime(AddIntervalDuration.this.getStartDate()),
+                                    new DateTime(AddIntervalDuration.this.getEndDate())), target);
+                    target.appendJavascript(AddIntervalDuration.this.close().render().toString());
+                    AddIntervalDuration.this.clean();
+                } catch (AssignmentException e) {
+                    theForm.error(AddIntervalDuration.this.getLocalizer().getString(e.getKey(),
+                            AddIntervalDuration.this)
+                            + e.getExtraData());
+                    target.addComponent(theForm);
+                } catch (Exception e) {
+                    theForm.error(e.getMessage());
+                    target.addComponent(theForm);
+                }
+            }
+        };
+    }
 
     protected void validateDates() {
         if (this.getStartDate() == null || this.getEndDate() == null) {
