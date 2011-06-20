@@ -60,6 +60,7 @@ public class ProjectPanel extends EntityPanel<ProjectDTO> {
             private static final long serialVersionUID = 1L;
 
             @Override
+            @SuppressWarnings("unchecked")
             public void onClick(final AjaxRequestTarget target) {
                 ProjectPanel.this.getCallback().execute(
                         target,

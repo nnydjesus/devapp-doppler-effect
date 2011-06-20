@@ -81,7 +81,6 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
         if (personalDataResults.isEmpty()) {
             throw new UserException("No se pudieron encontrar los datos personales del empleado");
         }
-        PersonalData personaldata = personalDataResults.get(0);
-        return personaldata;
+        return personalDataResults.get(0);
     }
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Localizer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
@@ -18,6 +19,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanelWithConfirm;
 import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
@@ -100,7 +102,8 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
             @Override
             public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
                     final IModel<T> rowModel) {
-                cellItem.add(new AjaxActionPanel(componentId, "delete.png") {
+                String confirmText = new Localizer().getString("confirm.delete", AjaxDataTablePage.this.getParentPage());
+                cellItem.add(new AjaxActionPanelWithConfirm(componentId, "delete.png", confirmText) {
                     private static final long serialVersionUID = 1L;
 
                     @Override

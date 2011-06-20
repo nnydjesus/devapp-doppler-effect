@@ -12,6 +12,10 @@ import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
 
 public class SalarySpecificationRepositoryImpl extends HibernatePersistentRepository<SalarySpecification> {
 
+    private static final String PLAN_FIELD = "plan";
+
+    private static final String LEVEL_FIELD = "level";
+
     private static final long serialVersionUID = 1L;
 
     private static final String UNCHECKED = "unchecked";
@@ -31,8 +35,8 @@ public class SalarySpecificationRepositoryImpl extends HibernatePersistentReposi
     @SuppressWarnings(UNCHECKED)
     public SalarySpecification getByPlanAndLevel(final CareerPlan plan, final CareerPlanLevel level) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
-        criteria.add(Restrictions.eq("plan", plan));
-        criteria.add(Restrictions.eq("level", level));
+        criteria.add(Restrictions.eq(PLAN_FIELD, plan));
+        criteria.add(Restrictions.eq(LEVEL_FIELD, level));
         List<SalarySpecification> results = criteria.list();
         if (results.isEmpty()) {
             return null;
@@ -44,8 +48,8 @@ public class SalarySpecificationRepositoryImpl extends HibernatePersistentReposi
     public boolean checkForExistentSalarySpec(final SalarySpecification salarySpec) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         criteria.add(Restrictions.eq("year", salarySpec.getYear()));
-        criteria.add(Restrictions.eq("plan", salarySpec.getPlan()));
-        criteria.add(Restrictions.eq("level", salarySpec.getLevel()));
+        criteria.add(Restrictions.eq(PLAN_FIELD, salarySpec.getPlan()));
+        criteria.add(Restrictions.eq(LEVEL_FIELD, salarySpec.getLevel()));
         return !criteria.list().isEmpty();
     }
 
@@ -53,10 +57,10 @@ public class SalarySpecificationRepositoryImpl extends HibernatePersistentReposi
     public List<SalarySpecification> searchByCareerPlanAndLevel(final CareerPlan careerPlan, final CareerPlanLevel level) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         if (careerPlan != null) {
-            criteria.add(Restrictions.eq("plan", careerPlan));
+            criteria.add(Restrictions.eq(PLAN_FIELD, careerPlan));
         }
         if (level != null) {
-            criteria.add(Restrictions.eq("level", level));
+            criteria.add(Restrictions.eq(LEVEL_FIELD, level));
         }
         return criteria.list();
     }
@@ -67,10 +71,10 @@ public class SalarySpecificationRepositoryImpl extends HibernatePersistentReposi
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         criteria.add(Restrictions.eq("year", year));
         if (plan != null) {
-            criteria.add(Restrictions.eq("plan", plan));
+            criteria.add(Restrictions.eq(PLAN_FIELD, plan));
         }
         if (level != null) {
-            criteria.add(Restrictions.eq("level", level));
+            criteria.add(Restrictions.eq(LEVEL_FIELD, level));
         }
         List<SalarySpecification> results = criteria.list();
         if (results.isEmpty()) {
