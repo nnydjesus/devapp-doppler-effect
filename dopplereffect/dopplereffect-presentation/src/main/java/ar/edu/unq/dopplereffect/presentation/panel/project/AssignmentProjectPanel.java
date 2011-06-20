@@ -116,7 +116,7 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
     @SuppressWarnings("unchecked")
     protected AjaxActionPanel createremoveEmployeeButton(final List<EmployeeViewDTO> values,
             final List<ProjectAssignmentDTO> employees, final SelectableBehavior selectedSelecableBehavior) {
-        return new AjaxActionPanel("remove", "remove.png", "") {
+        return new AjaxActionPanel("remove", "remove.png") {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -135,7 +135,7 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
 
     protected AjaxActionPanel createAddemployeeButton(final SelectableBehavior availableSelectableBehavior,
             final AddIntervalDuration addIntervaDuration) {
-        return new AjaxActionPanel("add", "add.png", "") {
+        return new AjaxActionPanel("add", "add.png") {
             private static final long serialVersionUID = 1L;
 
             @Override

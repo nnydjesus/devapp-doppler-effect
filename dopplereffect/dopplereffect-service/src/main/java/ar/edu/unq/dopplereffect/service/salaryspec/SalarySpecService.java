@@ -17,7 +17,7 @@ public interface SalarySpecService extends Service {
 
     List<SalarySpecDTO> searchAllByExample(SalarySpecDTO example);
 
-    List<SalarySpecDTO> searchByCareerPlanAndLevel(CareerPlan plan, String Level);
+    List<SalarySpecDTO> searchByCareerPlanAndLevel(CareerPlan plan, String level);
 
     boolean existSalarySpecification(int year, CareerPlan plan, String level);
 

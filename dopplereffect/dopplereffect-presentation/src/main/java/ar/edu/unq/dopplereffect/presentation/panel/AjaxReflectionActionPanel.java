@@ -11,8 +11,7 @@ public class AjaxReflectionActionPanel<T extends Component> extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    public AjaxReflectionActionPanel(final String id, final T host, final String action, final String image,
-            final String prevPath) {
+    public AjaxReflectionActionPanel(final String id, final T host, final String action, final String image) {
         super(id, new Model<String>(""));
         ReflextionAjaxLink<T> ajaxLink = new ReflextionAjaxLink<T>("action", action, host, host);
         ajaxLink.add(new Image("image", new Model<String>(image)));

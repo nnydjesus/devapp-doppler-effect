@@ -67,19 +67,19 @@ public abstract class AddIntervalDuration extends Dialog implements Serializable
     /* **************************** ACCESSORS ***************************** */
 
     public Date getStartDate() {
-        return startDate;
+        return startDate == null ? null : (Date) startDate.clone();
     }
 
     public void setStartDate(final Date start) {
-        startDate = start;
+        startDate = (Date) start.clone();
     }
 
     public Date getEndDate() {
-        return endDate;
+        return endDate == null ? null : (Date) endDate.clone();
     }
 
     public void setEndDate(final Date endDate) {
-        this.endDate = endDate;
+        this.endDate = (Date) endDate.clone();
     }
 
     /* **************************** OPERATIONS **************************** */

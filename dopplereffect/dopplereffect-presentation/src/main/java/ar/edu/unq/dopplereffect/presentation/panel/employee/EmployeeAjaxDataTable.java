@@ -45,7 +45,7 @@ public class EmployeeAjaxDataTable extends AjaxDataTablePage<EmployeeViewDTO, Em
             @Override
             public void populateItem(final Item<ICellPopulator<EmployeeViewDTO>> cellItem, final String componentId,
                     final IModel<EmployeeViewDTO> rowModel) {
-                cellItem.add(new AjaxActionPanel(componentId, "details.png", "../") {
+                cellItem.add(new AjaxActionPanel(componentId, "details.png") {
 
                     private static final long serialVersionUID = 1026116621448693265L;
 

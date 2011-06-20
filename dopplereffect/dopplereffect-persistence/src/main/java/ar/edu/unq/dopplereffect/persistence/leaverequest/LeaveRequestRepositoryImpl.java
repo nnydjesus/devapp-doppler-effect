@@ -88,8 +88,8 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
             String dateString = dateTime.toString("yyyy-MM-dd HH:mm:ss.SSS");
             // @formatter:off
             String includedInIntervalCondition = 
-                "{alias}.start_date <= '" + dateString + 
-                "' and {alias}.end_date >= '" + dateString + "'";
+                "{alias}.start_date <= '" + dateString
+                + "' and {alias}.end_date >= '" + dateString + "'";
             Criteria criteria = this.getSession().createCriteria(this.getEntityClass())
                 .createCriteria("durationStrategy")
                     .add(Restrictions.disjunction()

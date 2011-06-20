@@ -238,10 +238,10 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
         this.add(new Label("hasta", this.getHastaModel()));
 
         this.add(CustomComponent.addButtonSking(new AjaxReflectionActionPanel<CalendarPanel<T>>("nextMonth", this,
-                NEXT_METHOD, "next.png", "")));
+                NEXT_METHOD, "next.png")));
 
         this.add(CustomComponent.addButtonSking(new AjaxReflectionActionPanel<CalendarPanel<T>>("previousMonth", this,
-                PREVIOUS_METHOD, "previous.png", "")));
+                PREVIOUS_METHOD, "previous.png")));
 
         this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel<T>>("mensual", MONTHLY_METHOD,
                 this, this, new StringResourceModel("monthday", new Model<String>("")))));
