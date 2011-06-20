@@ -21,7 +21,7 @@
 
 			<many-to-one name="type"
 				class="ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType"
-				column="type_id" cascade="all" />
+				column="type_id" cascade="all" lazy="false"/>
 
 			<many-to-one name="durationStrategy"
 				class="ar.edu.unq.dopplereffect.time.DurationStrategy" column="duration_strategy_id"

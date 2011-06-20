@@ -16,6 +16,7 @@ import org.odlabs.wiquery.ui.sortable.SortableAjaxBehavior.SortedEvent;
 
 import ar.edu.unq.dopplereffect.presentation.panel.utils.SortableAjax;
 
+@SuppressWarnings("synthetic-access")
 public class SortablePanel<T extends Serializable> extends Panel {
 
     private static final long serialVersionUID = 1L;
@@ -23,7 +24,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
     /* ************************ INSTANCE VARIABLES ************************ */
 
     // definido asi porque al findbugs no le gusta los booleanos
-    private final Object mutex = new Object();
+    private static final Object MUTEX = new Object();
 
     private static final String CELL_ID = "item";
 
@@ -59,7 +60,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
             public void onReceive(final WebMarkupContainer sortedComponent, final int index,
                     final Component parentSorted, final AjaxRequestTarget ajaxRequestTarget) {
                 if (sortedComponent != null) {
-                    synchronized (SortablePanel.this.getMutex()) {
+                    synchronized (SortablePanel.MUTEX) {
                         Label label = (Label) sortedComponent.get(CELL_ID);
                         if (!SortablePanel.this.getList().contains(label.getDefaultModelObject())) {
                             SortablePanel.this.getList().add((T) label.getDefaultModelObject());
@@ -72,7 +73,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
             @Override
             public void onRemove(final WebMarkupContainer sortedComponent, final AjaxRequestTarget ajaxRequestTarget) {
                 if (sortedComponent != null) {
-                    synchronized (SortablePanel.this.getMutex()) {
+                    synchronized (SortablePanel.MUTEX) {
                         Label label = (Label) sortedComponent.get(CELL_ID);
                         SortablePanel.this.getList().remove(label.getDefaultModelObject());
                         ajaxRequestTarget.addComponent(SortablePanel.this);
@@ -163,10 +164,6 @@ public class SortablePanel<T extends Serializable> extends Panel {
         this.sortableW = sortableW;
     }
 
-    public Object getMutex() {
-        return mutex;
-    }
-
     /* ************************* PRIVATE METHODS ************************** */
 
     protected DroppableAjaxBehavior<WebMarkupContainer> createDroppableBehavior() {
@@ -177,7 +174,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
             @Override
             public void onDrop(final WebMarkupContainer droppedComponent, final AjaxRequestTarget ajaxRequestTarget) {
                 if (droppedComponent != null) {
-                    synchronized (SortablePanel.this.getMutex()) {
+                    synchronized (SortablePanel.MUTEX) {
 
                         Label label = (Label) droppedComponent.get(CELL_ID);
                         if (!SortablePanel.this.getList().contains(label.getDefaultModelObject())) {
@@ -207,7 +204,7 @@ public class SortablePanel<T extends Serializable> extends Panel {
             @Override
             public void onStop(final Component component, final AjaxRequestTarget ajaxRequestTarget) {
                 if (component != null) {
-                    synchronized (SortablePanel.this.getMutex()) {
+                    synchronized (SortablePanel.MUTEX) {
 
                         Label label = (Label) ((WebMarkupContainer) component).get(CELL_ID);
                         SortablePanel.this.getList().remove(label.getDefaultModelObject());
