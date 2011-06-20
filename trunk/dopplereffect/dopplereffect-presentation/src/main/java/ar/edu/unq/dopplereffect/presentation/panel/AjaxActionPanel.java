@@ -31,7 +31,6 @@ public abstract class AjaxActionPanel extends Panel {
             public void onClick(final AjaxRequestTarget target) {
                 AjaxActionPanel.this.onAction(target);
             }
-
         });
     }
 

@@ -12,8 +12,10 @@
           <td align="left"><input wicket:id="searchByLastName" type="text" name="name" class="ui-state-default"/></td>
         </tr>
         <tr>
-          <td colspan="2"><input type="submit" wicket:id="search" value="Buscar" />          
-          <input type="submit" wicket:id="newEmployee" value="Nuevo Empleado" /></td>
+          <td colspan="2">
+          	<input type="submit" wicket:id="search" wicket:message="value:button.search" />          
+          	<input type="submit" wicket:id="newEmployee" wicket:message="value:button.new_employee" />
+          </td>
         </tr>
       </table>
     </form>

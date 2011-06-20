@@ -4,8 +4,6 @@ import org.apache.wicket.Component;
 
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 
-/**
- */
 public interface ITable {
 
     void setParentPage(AbstractSearchPanel<?> panel);

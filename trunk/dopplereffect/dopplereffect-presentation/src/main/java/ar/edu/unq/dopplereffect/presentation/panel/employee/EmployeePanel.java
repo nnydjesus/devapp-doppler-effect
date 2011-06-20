@@ -63,8 +63,6 @@ public class EmployeePanel extends EntityPanel<EmployeeDTO> {
     private void addPercentageField(final Form<EmployeeDTO> form) {
         TextField<Integer> percentageTextField = new TextField<Integer>("percentage");
         form.add(percentageTextField);
-        percentageTextField.setRequired(this.isEditMode());
-        percentageTextField.setVisible(this.isEditMode());
     }
 
     protected void addPersonalDataFields(final Form<EmployeeDTO> form) {

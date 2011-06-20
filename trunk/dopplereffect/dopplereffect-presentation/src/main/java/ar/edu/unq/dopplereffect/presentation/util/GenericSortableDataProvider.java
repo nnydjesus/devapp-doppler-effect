@@ -17,11 +17,11 @@ import ar.edu.unq.tpi.util.common.ReflectionUtils;
 import com.wiquery.plugins.jqgrid.model.SortInfo;
 import com.wiquery.plugins.jqgrid.model.SortOrder;
 
-/**
- * 
- */
 public class GenericSortableDataProvider<T> extends SortableDataProvider<T> implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private IModel<T> listModel;
 
@@ -31,9 +31,7 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> impl
 
     private SortableDataProviderComparator<T> comparator = new SortableDataProviderComparator<T>(this);
 
-    /**
-     * constructor
-     */
+    /* *************************** CONSTRUCTORS *************************** */
 
     public GenericSortableDataProvider(final String id, final Object model, final String sortName) {
         super();
@@ -42,43 +40,7 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> impl
         this.setSort(sortName, true);
     }
 
-    /**
-     * Subclass to lazy load the list
-     * 
-     * @return The list
-     */
-    @SuppressWarnings("unchecked")
-    protected List<T> getData() {
-        return new ArrayList<T>((Collection<T>) ReflectionUtils.invokeMethod(this.getListModel().getObject(), "get"
-                + StringUtils.capitalize(id)));
-    }
-
-    @Override
-    public Iterator<? extends T> iterator(final int first, final int count) {
-        List<T> aList = this.getData();
-        SortParam sort = this.getSort();
-        SortInfo sortInfo = new SortInfo(sort.getProperty(), sort.isAscending() ? SortOrder.asc : SortOrder.desc);
-        this.getQueryUtils().sortList(aList, sortInfo);
-        int toIndex = first + count;
-        if (toIndex > aList.size()) {
-            toIndex = aList.size();
-        }
-        return aList.subList(first, toIndex).listIterator();
-    }
-
-    /**
-     */
-    @Override
-    public int size() {
-        return this.getData().size();
-    }
-
-    /**
-     */
-    @Override
-    public IModel<T> model(final T object) {
-        return new Model<T>(object);
-    }
+    /* **************************** ACCESSORS ***************************** */
 
     public SortableDataProviderComparator<T> getComparator() {
         return comparator;
@@ -104,11 +66,47 @@ public class GenericSortableDataProvider<T> extends SortableDataProvider<T> impl
         this.id = id;
     }
 
+    public QueryUtils getQueryUtils() {
+        return queryUtils;
+    }
+
     public void setQueryUtils(final QueryUtils queryUtils) {
         this.queryUtils = queryUtils;
     }
 
-    public QueryUtils getQueryUtils() {
-        return queryUtils;
+    /* **************************** OPERATIONS **************************** */
+
+    /**
+     * Subclass to lazy load the list
+     * 
+     * @return The list
+     */
+    @SuppressWarnings("unchecked")
+    protected List<T> getData() {
+        return new ArrayList<T>((Collection<T>) ReflectionUtils.invokeMethod(this.getListModel().getObject(), "get"
+                + StringUtils.capitalize(id)));
+    }
+
+    @Override
+    public Iterator<? extends T> iterator(final int first, final int count) {
+        List<T> aList = this.getData();
+        SortParam sort = this.getSort();
+        SortInfo sortInfo = new SortInfo(sort.getProperty(), sort.isAscending() ? SortOrder.asc : SortOrder.desc);
+        this.getQueryUtils().sortList(aList, sortInfo);
+        int toIndex = first + count;
+        if (toIndex > aList.size()) {
+            toIndex = aList.size();
+        }
+        return aList.subList(first, toIndex).listIterator();
+    }
+
+    @Override
+    public int size() {
+        return this.getData().size();
+    }
+
+    @Override
+    public IModel<T> model(final T object) {
+        return new Model<T>(object);
     }
 }
