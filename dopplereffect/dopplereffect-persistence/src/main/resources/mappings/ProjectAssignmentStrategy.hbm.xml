@@ -5,12 +5,18 @@
 
 <hibernate-mapping package="ar.edu.unq.dopplereffect.projects" >
 
-	<class name="ProjectAssignmentStrategy" table="project_assignment_strategy" >
+	<class name="IProjectAssignmentStrategy" table="project_assignment_strategy" >
 	
 		<id name="id" type="java.lang.Long">
 			<generator class="native" />
 		</id>
-		
+
+		<discriminator column="subclass_type" type="string" />
+
+		<subclass name="ProjectAssignmentStrategyImpl" discriminator-value="strategyImpl" >
+		</subclass>
+
+
 	</class>
 
 </hibernate-mapping>

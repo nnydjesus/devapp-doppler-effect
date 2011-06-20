@@ -24,7 +24,7 @@
 			<property name="maxLimit" column="max_limit" />
 
 			<list name="configurations" table="leave_request_days_configuration"
-				cascade="all, delete-orphan" lazy="false" >
+				cascade="all, delete-orphan" lazy="false">
 
 				<key column="leave_request_type_id" />
 

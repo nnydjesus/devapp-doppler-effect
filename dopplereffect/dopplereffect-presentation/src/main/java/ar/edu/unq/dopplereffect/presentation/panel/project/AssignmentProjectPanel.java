@@ -1,7 +1,9 @@
 package ar.edu.unq.dopplereffect.presentation.panel.project;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections15.CollectionUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -46,9 +48,10 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
 
     public void makePanel() {
 
-        final List<EmployeeViewDTO> allEmployee = ((ProjectServiceImpl) projectSearchModel.getService())
-                .getEmployeeService().searchAllEmployees();
         final List<ProjectAssignmentDTO> assignments = project.getAssignment();
+        final List<EmployeeViewDTO> allEmployee = (List<EmployeeViewDTO>) CollectionUtils.disjunction(
+                ((ProjectServiceImpl) projectSearchModel.getService()).getEmployeeService().searchAllEmployees(),
+                this.getEmployeeAvailable(assignments));
 
         ListView<EmployeeViewDTO> availableListView = this.createListView("available", allEmployee);
 
@@ -77,6 +80,14 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
         this.add(addIntervaDuration);
         this.add(addEmployee);
         this.add(selectableAjaxWicket);
+    }
+
+    protected List<EmployeeViewDTO> getEmployeeAvailable(final List<ProjectAssignmentDTO> assignments) {
+        List<EmployeeViewDTO> result = new ArrayList<EmployeeViewDTO>();
+        for (ProjectAssignmentDTO assignment : assignments) {
+            result.add(assignment.getEmployeeDTO());
+        }
+        return result;
     }
 
     @SuppressWarnings("unchecked")

@@ -28,7 +28,7 @@
 			<one-to-many class="ar.edu.unq.dopplereffect.projects.ProjectAssignment" />
 		</set>
 
-		<many-to-one name="projectAssignmentStrategy" class="ProjectAssignmentStrategy"
+		<many-to-one name="projectAssignmentStrategy" class="IProjectAssignmentStrategy"
 			column="project_assignment_strategy_id"  cascade="all"	unique="true" />
 
 		<property type="org.joda.time.contrib.hibernate.PersistentPeriod" name="timeProyect" />

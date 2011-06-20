@@ -262,16 +262,19 @@ table.dataview caption {
 }
 
 table.dataview tr {
+	background-color: #9fda58;
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
 
+/* celdas impares */
 table.dataview tr.even {
-	background-color: #ffebcd;
+	background-color: #f5f8f9;
 }
 
+/* celdas pares */
 table.dataview tr.odd {
-	background-color: #fff;
+	background-color: #d8e7f3;
 }
 
 table.dataview tr td {
@@ -289,7 +292,6 @@ table.dataview tr th {
 	padding-bottom: 3px;
 	padding-left: 8px;
 	padding-right: 30px;
-	background-color: #c1e4ff;
 	border-bottom: 1px solid #0079d6;
 	border-top: 1px solid #0079d6;
 	text-align: left;
@@ -297,27 +299,10 @@ table.dataview tr th {
 	vertical-align: middle;
 }
 
-table.dataview tr th {
-	background-position: right;
-	background-repeat: no-repeat;
-}
-
-table.dataview tr th.wicket_orderDown {
-	background-color: #87cbff;
-	background-image: url(displaytag/img/arrow_down.png);
-}
-
-table.dataview tr th.wicket_orderUp {
-	background-color: #87cbff;
-	background-image: url(displaytag/img/arrow_up.png);
-}
-
-table.dataview tr th.wicket_orderNone {
-	background-image: url(displaytag/img/arrow_off.png);
-}
 
 table.dataview tr th a {
 	font-weight: normal;
+	font-color: #96f226;
 }
 
 table.dataview #message {
@@ -329,9 +314,9 @@ table.dataview caption {
 }
 
 table.dataview thead th,tbody th {
-	background: #FFF url(th_bck.gif) repeat-x;
-	color: #666;
+	color: #c77405;
 	padding: 5px 10px;
+	font-size:15px;
 	border-left: 1px solid #CCC;
 }
 
@@ -342,50 +327,39 @@ table.dataview tbody th {
 	font-weight: normal;
 }
 
+/* cada celda */
 table.dataview tbody tr td {
 	padding: 5px 10px;
-	color: #666;
+	color: #1d5987;
 }
 
+
+/* hover de las filas */
 table.dataview tbody tr:hover {
-	background: #FFF url(tr_bck.gif) repeat;
-	font-color: #FFF;
-	background-color: green;
+	background-color: #fdf5ce;
+	border-left: 1px solid #f6a828;
 }
 
+/* hover de las filas dentro de las celdas*/
 table.dataview tbody tr:hover td {
-	color: #454545;
+	color: #c77405;
 }
 
-table.dataview tfoot td,tfoot th {
-	border-left: none;
-	border-top: 1px solid #CCC;
-	padding: 4px;
-	background: #FFF url(foot_bck.gif) repeat;
-	color: #666;
-}
-
-caption {
-	text-align: left;
-	font-size: 80%;
-	padding: 10px 0;
-	color: #666;
-}
 
 table.dataview tr th a:link {
-	color: #666;
+	color: #96f226;
 }
 
 table.dataview tr th a:visited {
-	color: #666;	
+	color: #96f226;	
 }
 
 table.dataview tr th a:hover {
-	color: #003366;
+	color: #96f226;
 }
 
 table.dataview tr th a:active {
-	color: #003366;
+	color: #96f226;
 }
 
 .language_select {
@@ -393,5 +367,5 @@ table.dataview tr th a:active {
 	text-align: right;	
 }
 .login{
-background: url(../Images/login.png) ;
+	background: url(../Images/login.png) ;
 }

@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import org.odlabs.wiquery.ui.datepicker.DatePicker;
 import org.odlabs.wiquery.ui.dialog.Dialog;
 
+import ar.edu.unq.dopplereffect.exceptions.AssignmentException;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 /**
@@ -39,11 +40,16 @@ public abstract class AddIntervaDuration extends Dialog implements Serializable 
             @Override
             protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
                 try {
+                    AddIntervaDuration.this.validateDates();
                     AddIntervaDuration.this.onAcept(
                             new IntervalDurationStrategy(new DateTime(AddIntervaDuration.this.getStartDate()),
                                     new DateTime(AddIntervaDuration.this.getEndDate())), target);
                     target.appendJavascript(AddIntervaDuration.this.close().render().toString());
                     AddIntervaDuration.this.clean();
+                } catch (AssignmentException e) {
+                    form.error(AddIntervaDuration.this.getLocalizer().getString(e.getKey(), AddIntervaDuration.this)
+                            + e.getExtraData());
+                    target.addComponent(form);
                 } catch (Exception e) {
                     form.error(e.getMessage());
                     target.addComponent(form);
@@ -52,6 +58,15 @@ public abstract class AddIntervaDuration extends Dialog implements Serializable 
         };
         form.add(ajaxButton);
         this.add(form);
+    }
+
+    protected void validateDates() {
+        if (this.getStartDate() == null || this.getEndDate() == null) {
+            throw new AssignmentException("dateNull");
+        }
+        if (this.getStartDate().after(this.getEndDate())) {
+            throw new AssignmentException("afterDate");
+        }
     }
 
     public abstract void onAcept(final IntervalDurationStrategy intervalDurationStrategy, AjaxRequestTarget target);
