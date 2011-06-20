@@ -27,7 +27,6 @@ public class App extends AuthenticatedWebApplication {// implements
         this.addComponentInstantiationListener(new SpringComponentInjector(this));
         this.addResources();
         this.mounterURLs();
-        this.addComponentInstantiationListener(new SpringComponentInjector(this));
     }
 
     private void mounterURLs() {

@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.presentation.employee;
+package ar.edu.unq.dopplereffect.presentation.search.employee;
 
 import java.util.List;
 

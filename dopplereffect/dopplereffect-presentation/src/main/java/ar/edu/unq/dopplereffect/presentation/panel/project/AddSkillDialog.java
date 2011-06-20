@@ -18,11 +18,11 @@ import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
 import ar.edu.unq.dopplereffect.service.project.SkillDTO;
 import ar.edu.unq.dopplereffect.service.project.SkillService;
 
-/**
- */
 public class AddSkillDialog extends Dialog {
 
     private static final long serialVersionUID = 1L;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     @SpringBean(name = "service.skill")
     private SkillService skillService;
@@ -32,6 +32,8 @@ public class AddSkillDialog extends Dialog {
     private ProjectDTO project;
 
     private List<SkillDTO> results;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public AddSkillDialog(final String id, final ProjectDTO project) {
         super(id);
@@ -62,6 +64,8 @@ public class AddSkillDialog extends Dialog {
         }));
         this.add(form);
     }
+
+    /* **************************** ACCESSORS ***************************** */
 
     public List<SkillDTO> getResults() {
         return results;

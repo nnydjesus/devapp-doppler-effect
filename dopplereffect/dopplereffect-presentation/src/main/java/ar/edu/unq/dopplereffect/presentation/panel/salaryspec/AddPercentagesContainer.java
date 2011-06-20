@@ -19,6 +19,8 @@ public class AddPercentagesContainer extends WebMarkupContainer {
 
     private static final long serialVersionUID = 7384716813413600237L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private boolean linkVisible;
 
     private WebMarkupContainer showPercentages;
@@ -27,19 +29,100 @@ public class AddPercentagesContainer extends WebMarkupContainer {
 
     private SalarySpecDTO salarySpec;
 
+    /* *************************** CONSTRUCTORS *************************** */
+
     public AddPercentagesContainer(final String id, final List<PercentageView> percentages,
             final WebMarkupContainer showPercentages, final SalarySpecDTO salarySpec) {
         super(id);
-        this.salarySpec = salarySpec;
-        this.percentages = percentages;
-        this.percentages.addAll(this.toPercentageView(salarySpec.getPercentages()));
-        this.showPercentages = showPercentages;
-        linkVisible = true;
+        this.setSalarySpec(salarySpec);
+        this.setPercentages(percentages);
+        this.getPercentages().addAll(this.toPercentageView(salarySpec.getPercentages()));
+        this.setShowPercentages(showPercentages);
+        this.setLinkVisible(true);
         this.setOutputMarkupId(true);
         this.add(new AddPercentageLink("link").add(new ButtonBehavior()));
         this.add(new RemoveCheckedPercentagesLink("remove").add(new ButtonBehavior()));
         this.add(new AddPercentageForm("form"));
     }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public boolean isLinkVisible() {
+        return linkVisible;
+    }
+
+    public void setLinkVisible(final boolean linkVisible) {
+        this.linkVisible = linkVisible;
+    }
+
+    public WebMarkupContainer getShowPercentages() {
+        return showPercentages;
+    }
+
+    public void setShowPercentages(final WebMarkupContainer showPercentages) {
+        this.showPercentages = showPercentages;
+    }
+
+    public List<PercentageView> getPercentages() {
+        return percentages;
+    }
+
+    public void setPercentages(final List<PercentageView> percentages) {
+        this.percentages = percentages;
+    }
+
+    public SalarySpecDTO getSalarySpec() {
+        return salarySpec;
+    }
+
+    public void setSalarySpec(final SalarySpecDTO salarySpec) {
+        this.salarySpec = salarySpec;
+    }
+
+    /* **************************** OPERATIONS **************************** */
+
+    public void onShowForm(final AjaxRequestTarget target) {
+        this.setLinkVisible(false);
+        target.addComponent(this);
+    }
+
+    public void onRemoveCompletedPercentages(final AjaxRequestTarget target) {
+        List<PercentageView> ready = new LinkedList<PercentageView>();
+        List<Integer> percs = new LinkedList<Integer>();
+        for (PercentageView perc : this.getPercentages()) {
+            if (perc.isSelected()) {
+                ready.add(perc);
+                percs.add(perc.getValue());
+            }
+        }
+        this.getPercentages().removeAll(ready);
+        this.getSalarySpec().getPercentages().removeAll(percs);
+        target.addComponent(this);
+        target.addComponent(this.getShowPercentages());
+    }
+
+    public void onAdd(final PercentageView item, final AjaxRequestTarget target) {
+        boolean validValue = item.getValue() >= 0 && item.getValue() <= 100;
+        boolean nonExistentPercentage = !this.getSalarySpec().getPercentages().contains(item.getValue());
+        if (nonExistentPercentage && validValue) {
+            this.getSalarySpec().getPercentages().add(item.getValue());
+            Collections.sort(this.getSalarySpec().getPercentages());
+            this.getPercentages().add(new PercentageView(item));
+            Collections.sort(this.getPercentages());
+            item.setSelected(false);
+            item.setValue(0);
+            this.setLinkVisible(true);
+            target.addComponent(this);
+            target.addComponent(this.getShowPercentages());
+        }
+    }
+
+    public void onCancelPercentage(final AjaxRequestTarget target) {
+        this.setLinkVisible(true);
+        target.addComponent(this);
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     private List<PercentageView> toPercentageView(final List<Integer> percs) {
         List<PercentageView> results = new LinkedList<PercentageView>();
@@ -70,9 +153,8 @@ public class AddPercentagesContainer extends WebMarkupContainer {
         }
 
         @Override
-        @SuppressWarnings("synthetic-access")
         public boolean isVisible() {
-            return linkVisible;
+            return AddPercentagesContainer.this.isLinkVisible();
         }
     }
 
@@ -90,9 +172,8 @@ public class AddPercentagesContainer extends WebMarkupContainer {
         }
 
         @Override
-        @SuppressWarnings("synthetic-access")
         public boolean isVisible() {
-            return linkVisible;
+            return AddPercentagesContainer.this.isLinkVisible();
         }
     }
 
@@ -135,50 +216,8 @@ public class AddPercentagesContainer extends WebMarkupContainer {
         }
 
         @Override
-        @SuppressWarnings("synthetic-access")
         public boolean isVisible() {
-            return !linkVisible;
+            return !AddPercentagesContainer.this.isLinkVisible();
         }
-    }
-
-    public void onShowForm(final AjaxRequestTarget target) {
-        linkVisible = false;
-        target.addComponent(this);
-    }
-
-    public void onRemoveCompletedPercentages(final AjaxRequestTarget target) {
-        List<PercentageView> ready = new LinkedList<PercentageView>();
-        List<Integer> percs = new LinkedList<Integer>();
-        for (PercentageView perc : percentages) {
-            if (perc.isSelected()) {
-                ready.add(perc);
-                percs.add(perc.getValue());
-            }
-        }
-        percentages.removeAll(ready);
-        salarySpec.getPercentages().removeAll(percs);
-        target.addComponent(this);
-        target.addComponent(showPercentages);
-    }
-
-    public void onAdd(final PercentageView item, final AjaxRequestTarget target) {
-        boolean validValue = item.getValue() >= 0 && item.getValue() <= 100;
-        boolean nonExistentPercentage = !salarySpec.getPercentages().contains(item.getValue());
-        if (nonExistentPercentage && validValue) {
-            salarySpec.getPercentages().add(item.getValue());
-            Collections.sort(salarySpec.getPercentages());
-            percentages.add(new PercentageView(item));
-            Collections.sort(percentages);
-            item.setSelected(false);
-            item.setValue(0);
-            linkVisible = true;
-            target.addComponent(this);
-            target.addComponent(showPercentages);
-        }
-    }
-
-    public void onCancelPercentage(final AjaxRequestTarget target) {
-        linkVisible = true;
-        target.addComponent(this);
     }
 }

@@ -23,7 +23,7 @@ import ar.edu.unq.dopplereffect.calendar.MonthStrategy;
 import ar.edu.unq.dopplereffect.calendar.WeekdayStrategy;
 import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.jquery.scroolpane.ScrollPaneBehavior;
-import ar.edu.unq.dopplereffect.presentation.panel.AjaxReflextionActionPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.AjaxReflectionActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
@@ -31,15 +31,22 @@ import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.Model;
 import ar.edu.unq.dopplereffect.presentation.util.ReflextionAjaxLink;
 
+/**
+ * Panel que muestra en forma de calendario diferentes tipos de asignaciones.
+ */
 public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPanel<Model<SearchModel<T>>> {
+
     private static final long serialVersionUID = 1L;
 
     // @formatter:off
-    private static final String NEXT_METHOD = "next";
-    private static final String PREVIOUS_METHOD = "previous";
-    private static final String WEEKLY_METHOD = "weekly";
-    private static final String MONTHLY_METHOD = "monthly";
+    private static final String
+        NEXT_METHOD = "next",
+        PREVIOUS_METHOD = "previous",
+        WEEKLY_METHOD = "weekly",
+        MONTHLY_METHOD = "monthly";
     // @formatter:on
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private SearchModel<T> model;
 
@@ -53,7 +60,7 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
 
     private WebMarkupContainer scrollpane;
 
-    private Date datePicketModel;
+    private Date datePickerModel;
 
     private Model<String> hastaModel;
 
@@ -65,6 +72,8 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
 
     private CalendarTable<T> calendarTable;
 
+    /* *************************** CONSTRUCTORS *************************** */
+
     public CalendarPanel(final String id, final SearchModel<T> employeeSearchModel,
             final LeaveRequestSearchModel leaveReqSearchModel, final AjaxCallBack<Component> callback) {
         super(id, new Model<SearchModel<T>>(employeeSearchModel));
@@ -73,54 +82,113 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
         this.setCallback(callback);
         employeeSearchModel.search();
         DateTime day = new DateTime();
-        monthStrategy = new MonthStrategy(day);
-        weekdayStrategy = new WeekdayStrategy(day);
-        this.setCalendar(new Calendar<T>(monthStrategy));
+        this.setMonthStrategy(new MonthStrategy(day));
+        this.setWeekdayStrategy(new WeekdayStrategy(day));
+        this.setCalendar(new Calendar<T>(this.getMonthStrategy()));
         this.setMatrix(this.getCalendar().getCalendar(model.getResults()));
-        scrollpane = new WebMarkupContainer("scrollpane");
-        scrollpane.add(new ScrollPaneBehavior().setShowArrows(true));
-        calendarTable = new CalendarTable<T>(this);
+        this.setScrollpane(new WebMarkupContainer("scrollpane"));
+        this.getScrollpane().add(new ScrollPaneBehavior().setShowArrows(true));
+        this.setCalendarTable(new CalendarTable<T>(this));
         this.makePage();
-        this.add(scrollpane);
+        this.add(this.getScrollpane());
     }
 
-    private void makePage() {
-        hastaModel = new Model<String>("");
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        this.updateTable();
-        this.addComponents();
+    /* **************************** ACCESSORS ***************************** */
+
+    @Override
+    public AjaxCallBack<Component> getCallback() {
+        return callback;
     }
 
-    protected void updateTable() {
-        model.search();
-        this.setMatrix(this.getCalendar().getCalendar(model.getResults()));
-        CalendarStrategy strategy = this.getCalendar().getStrategy().cloneStrategy();
-        datePicketModel = this.getCalendar().getStrategy().getDay().toDate();
-        scrollpane.addOrReplace(calendarTable.updateTable());
-        hastaModel.setObject(dateFormat.format(strategy.getDay().toDate()));
+    @Override
+    public void setCallback(final AjaxCallBack<Component> callback) {
+        this.callback = callback;
     }
 
-    protected void addComponents() {
-        DatePicker<Date> datePicker = new DatePicker<Date>("datePicker", new PropertyModel<Date>(this,
-                "datePicketModel"), Date.class).setButtonText("<div class=\"ui-icon ui-icon-calendar\"></div>")
-                .setShowOn(ShowOnEnum.BOTH).setShowButtonPanel(true);
-
-        this.add(datePicker);
-
-        this.add(new Label("hasta", hastaModel));
-
-        this.add(CustomComponent.addButtonSking(new AjaxReflextionActionPanel<CalendarPanel<T>>("nextMonth", this,
-                NEXT_METHOD, "next.png", "")));
-
-        this.add(CustomComponent.addButtonSking(new AjaxReflextionActionPanel<CalendarPanel<T>>("previousMonth", this,
-                PREVIOUS_METHOD, "previous.png", "")));
-
-        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel<T>>("mensual", MONTHLY_METHOD,
-                this, this, new StringResourceModel("monthday", new Model<String>("")))));
-
-        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel<T>>("semanal", WEEKLY_METHOD,
-                this, this, new StringResourceModel("weekday", new Model<String>("")))));
+    public LeaveRequestSearchModel getLeaveRequestSearchModel() {
+        return leaveRequestSearchModel;
     }
+
+    public void setLeaveRequestSearchModel(final LeaveRequestSearchModel leaveRequestSearchModel) {
+        this.leaveRequestSearchModel = leaveRequestSearchModel;
+    }
+
+    public Calendar<T> getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(final Calendar<T> calendar) {
+        this.calendar = calendar;
+    }
+
+    public Matrix<T, DateTime, Assignable> getMatrix() {
+        return matrix;
+    }
+
+    public void setMatrix(final Matrix<T, DateTime, Assignable> matrix) {
+        this.matrix = matrix;
+    }
+
+    public Date getDatePickerModel() {
+        if (datePickerModel == null) {
+            return null;
+        }
+        return (Date) datePickerModel.clone();
+    }
+
+    public void setDatePickerModel(final Date datePickerModel) {
+        this.datePickerModel = (Date) datePickerModel.clone();
+    }
+
+    public MonthStrategy getMonthStrategy() {
+        return monthStrategy;
+    }
+
+    public void setMonthStrategy(final MonthStrategy monthStrategy) {
+        this.monthStrategy = monthStrategy;
+    }
+
+    public WeekdayStrategy getWeekdayStrategy() {
+        return weekdayStrategy;
+    }
+
+    public void setWeekdayStrategy(final WeekdayStrategy weekdayStrategy) {
+        this.weekdayStrategy = weekdayStrategy;
+    }
+
+    public WebMarkupContainer getScrollpane() {
+        return scrollpane;
+    }
+
+    public void setScrollpane(final WebMarkupContainer scrollpane) {
+        this.scrollpane = scrollpane;
+    }
+
+    public Model<String> getHastaModel() {
+        return hastaModel;
+    }
+
+    public void setHastaModel(final Model<String> hastaModel) {
+        this.hastaModel = hastaModel;
+    }
+
+    public DateFormat getDateFormat() {
+        return dateFormat;
+    }
+
+    public void setDateFormat(final DateFormat dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
+    public CalendarTable<T> getCalendarTable() {
+        return calendarTable;
+    }
+
+    public void setCalendarTable(final CalendarTable<T> calendarTable) {
+        this.calendarTable = calendarTable;
+    }
+
+    /* **************************** OPERATIONS **************************** */
 
     public void next() {
         this.getCalendar().getStrategy().next();
@@ -133,58 +201,52 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
     }
 
     public void weekly() {
-        this.getCalendar().setStrategy(weekdayStrategy);
+        this.getCalendar().setStrategy(this.getWeekdayStrategy());
         this.updateTable();
     }
 
     public void monthly() {
-        this.getCalendar().setStrategy(monthStrategy);
+        this.getCalendar().setStrategy(this.getMonthStrategy());
         this.updateTable();
     }
 
-    public void setDatePicketModel(final Date datePicketModel) {
-        this.datePicketModel = (Date) datePicketModel.clone();
+    /* ************************* PRIVATE METHODS ************************** */
+
+    private void makePage() {
+        this.setHastaModel(new Model<String>(""));
+        this.setDateFormat(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()));
+        this.updateTable();
+        this.addComponents();
     }
 
-    public Date getDatePicketModel() {
-        if (datePicketModel == null) {
-            return null;
-        }
-        return (Date) datePicketModel.clone();
+    protected void updateTable() {
+        model.search();
+        this.setMatrix(this.getCalendar().getCalendar(model.getResults()));
+        CalendarStrategy strategy = this.getCalendar().getStrategy().cloneStrategy();
+        datePickerModel = this.getCalendar().getStrategy().getDay().toDate();
+        this.getScrollpane().addOrReplace(this.getCalendarTable().updateTable());
+        this.getHastaModel().setObject(this.getDateFormat().format(strategy.getDay().toDate()));
     }
 
-    @Override
-    public void setCallback(final AjaxCallBack<Component> callback) {
-        this.callback = callback;
-    }
+    protected void addComponents() {
+        DatePicker<Date> datePicker = new DatePicker<Date>("datePicker", new PropertyModel<Date>(this,
+                "datePickerModel"), Date.class).setButtonText("<div class=\"ui-icon ui-icon-calendar\"></div>")
+                .setShowOn(ShowOnEnum.BOTH).setShowButtonPanel(true);
 
-    @Override
-    public AjaxCallBack<Component> getCallback() {
-        return callback;
-    }
+        this.add(datePicker);
 
-    public void setLeaveRequestSearchModel(final LeaveRequestSearchModel leaveRequestSearchModel) {
-        this.leaveRequestSearchModel = leaveRequestSearchModel;
-    }
+        this.add(new Label("hasta", this.getHastaModel()));
 
-    public LeaveRequestSearchModel getLeaveRequestSearchModel() {
-        return leaveRequestSearchModel;
-    }
+        this.add(CustomComponent.addButtonSking(new AjaxReflectionActionPanel<CalendarPanel<T>>("nextMonth", this,
+                NEXT_METHOD, "next.png", "")));
 
-    public void setCalendar(final Calendar<T> calendar) {
-        this.calendar = calendar;
-    }
+        this.add(CustomComponent.addButtonSking(new AjaxReflectionActionPanel<CalendarPanel<T>>("previousMonth", this,
+                PREVIOUS_METHOD, "previous.png", "")));
 
-    public Calendar<T> getCalendar() {
-        return calendar;
-    }
+        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel<T>>("mensual", MONTHLY_METHOD,
+                this, this, new StringResourceModel("monthday", new Model<String>("")))));
 
-    public void setMatrix(final Matrix<T, DateTime, Assignable> matrix) {
-        this.matrix = matrix;
+        this.add(CustomComponent.addButtonSking(new ReflextionAjaxLink<CalendarPanel<T>>("semanal", WEEKLY_METHOD,
+                this, this, new StringResourceModel("weekday", new Model<String>("")))));
     }
-
-    public Matrix<T, DateTime, Assignable> getMatrix() {
-        return matrix;
-    }
-
 }

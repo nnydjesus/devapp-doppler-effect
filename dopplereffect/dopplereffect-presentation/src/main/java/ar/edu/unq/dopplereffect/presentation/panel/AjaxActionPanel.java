@@ -8,6 +8,10 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 import ar.edu.unq.dopplereffect.presentation.util.Model;
 
+/**
+ * Representa un panel que internamente contiene un link que se ejecutara por
+ * Ajax.
+ */
 public abstract class AjaxActionPanel extends Panel {
 
     private static final long serialVersionUID = 1L;

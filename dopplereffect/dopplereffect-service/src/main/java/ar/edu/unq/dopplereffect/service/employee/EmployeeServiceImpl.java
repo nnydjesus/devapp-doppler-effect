@@ -19,9 +19,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private static final long serialVersionUID = -8896121177198817033L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private EmployeeRepositoryImpl employeeRepo;
 
     private CareerPlanLevelRepositoryImpl careerPlanLevelRepo;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    /* **************************** ACCESSORS ***************************** */
 
     public EmployeeRepositoryImpl getEmployeeRepo() {
         return employeeRepo;
@@ -38,6 +44,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void setCareerPlanLevelRepo(final CareerPlanLevelRepositoryImpl careerPlanLevelRepo) {
         this.careerPlanLevelRepo = careerPlanLevelRepo;
     }
+
+    /* **************************** OPERATIONS **************************** */
 
     @Override
     @Transactional
@@ -69,6 +77,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
+    public List<EmployeeViewDTO> searchAllEmployees() {
+        return this.convertAll(this.getEmployeeRepo().searchAll());
+    }
+
+    @Override
+    @Transactional
+    public List<EmployeeViewDTO> searchAllByFirstAndLastName(final String firstName, final String lastName) {
+        return this.convertAll(this.getEmployeeRepo().searchByFirstAndLastName(firstName, lastName));
+    }
+
+    @Override
+    @Transactional
     public List<EmployeeViewDTO> searchAllByExample(final EmployeeViewDTO theExample) {
         Employee example = new Employee();
         example.setDni(theExample.getDni());
@@ -79,33 +99,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public List<EmployeeViewDTO> searchAllEmployees() {
-        List<EmployeeViewDTO> employees = new LinkedList<EmployeeViewDTO>();
-        for (Employee e : this.getEmployeeRepo().searchAll()) {
-            employees.add(this.convert(e));
-        }
-        return employees;
-    }
-
-    public EmployeeViewDTO convert(final Employee employee) {
-        EmployeeViewDTO result = new EmployeeViewDTO();
-        result.setFirstName(employee.getFirstName());
-        result.setLastName(employee.getLastName());
-        result.setDni(employee.getDni());
-        Hibernate.initialize(employee.getAssignments());
-        result.getAssignments().addAll(employee.getAssignments());
-        return result;
-    }
-
-    private List<EmployeeViewDTO> convertAll(final List<Employee> employees) {
-        List<EmployeeViewDTO> results = new LinkedList<EmployeeViewDTO>();
-        for (Employee emp : employees) {
-            results.add(this.convert(emp));
-        }
-        return results;
+    public List<EmployeeViewDTO> searchEmployeeByName(final String name) {
+        return this.convertAll(this.getEmployeeRepo().searchByName(name));
     }
 
     @Override
+    @Transactional
     public EmployeeDetailDTO getDetailForEmployee(final EmployeeViewDTO employeeViewDTO) {
         EmployeeDetailDTO result = new EmployeeDetailDTO();
         Employee original = this.getEmployeeRepo().searchByDni(employeeViewDTO.getDni());
@@ -122,6 +121,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public EmployeeDTO createEditDTO(final EmployeeViewDTO employeeViewDTO) {
         Employee emp = this.getEmployeeRepo().searchByDni(employeeViewDTO.getDni());
         EmployeeDTO result = new EmployeeDTO();
@@ -142,6 +142,30 @@ public class EmployeeServiceImpl implements EmployeeService {
         return result;
     }
 
+    public EmployeeViewDTO convert(final Employee employee) {
+        EmployeeViewDTO result = new EmployeeViewDTO();
+        result.setFirstName(employee.getFirstName());
+        result.setLastName(employee.getLastName());
+        result.setDni(employee.getDni());
+        Hibernate.initialize(employee.getAssignments());
+        result.getAssignments().addAll(employee.getAssignments());
+        return result;
+    }
+
+    public Employee getEmployeeByDTO(final EmployeeViewDTO employeeViewDTO) {
+        return this.getEmployeeRepo().searchByDni(employeeViewDTO.getDni());
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
+
+    private List<EmployeeViewDTO> convertAll(final List<Employee> employees) {
+        List<EmployeeViewDTO> results = new LinkedList<EmployeeViewDTO>();
+        for (Employee emp : employees) {
+            results.add(this.convert(emp));
+        }
+        return results;
+    }
+
     private void synchronizeWithDTO(final EmployeeDTO employeeDTO, final Employee emp) {
         emp.setFirstName(employeeDTO.getFirstName());
         emp.setLastName(employeeDTO.getLastName());
@@ -159,19 +183,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         emp.getCareerData().setCareerPlan(employeeDTO.getCareerPlan());
         emp.getCareerData().setLevel(this.getCareerPlanLevelRepo().getByName(employeeDTO.getCareerPlanLevel()));
         emp.getCareerData().setPercentage(employeeDTO.getPercentage());
-    }
-
-    @Override
-    public List<EmployeeViewDTO> searchAllByFirstAndLastName(final String firstName, final String lastName) {
-        return this.convertAll(this.getEmployeeRepo().searchByFirstAndLastName(firstName, lastName));
-    }
-
-    @Override
-    public List<EmployeeViewDTO> searchEmployeeByName(final String name) {
-        return this.convertAll(this.getEmployeeRepo().searchByName(name));
-    }
-
-    public Employee getEmployeeByDTO(final EmployeeViewDTO employeeViewDTO) {
-        return this.getEmployeeRepo().searchByDni(employeeViewDTO.getDni());
     }
 }

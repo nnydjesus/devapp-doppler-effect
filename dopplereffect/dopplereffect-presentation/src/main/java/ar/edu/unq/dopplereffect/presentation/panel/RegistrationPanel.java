@@ -23,50 +23,90 @@ import ar.edu.unq.dopplereffect.presentation.util.CallBack;
 import ar.edu.unq.dopplereffect.user.User;
 
 /**
+ * Panel que se encarga del registro de nuevos usuarios.
  */
 public class RegistrationPanel extends AbstractPanel<Model<String>> {
 
     private static final long serialVersionUID = 1L;
 
+    private static boolean rememberMe = false;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private TextField<String> userIdField;
 
     private PasswordTextField passField;
-
-    private static boolean rememberMe = false;
 
     private Authenticate service;
 
     private WebPage defaultPage;
 
+    /* *************************** CONSTRUCTORS *************************** */
+
     public RegistrationPanel(final String id) {
         super(id);
     }
 
+    /* **************************** ACCESSORS ***************************** */
+
+    public Authenticate getService() {
+        return service;
+    }
+
+    public void setService(final Authenticate service) {
+        this.service = service;
+    }
+
+    public PasswordTextField getPassField() {
+        return passField;
+    }
+
+    public void setPassField(final PasswordTextField passField) {
+        this.passField = passField;
+    }
+
+    public TextField<String> getUserIdField() {
+        return userIdField;
+    }
+
+    public void setUserIdField(final TextField<String> userIdField) {
+        this.userIdField = userIdField;
+    }
+
+    public WebPage getDefaultPage() {
+        return defaultPage;
+    }
+
+    public void setDefaultPage(final WebPage defaultPage) {
+        this.defaultPage = defaultPage;
+    }
+
+    public boolean isRememberMe() {
+        return rememberMe;
+    }
+
+    /* **************************** OPERATIONS **************************** */
+
     public void init() {
         this.add(this.createForm("loginForm"));
     }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     @Override
     protected Form<Model<String>> createForm(final String formName) {
         Form<Model<String>> form = new Form<Model<String>>(formName);
         this.setUserIdField(new RequiredTextField<String>("name", new Model<String>("")));
         this.setPassField(new PasswordTextField("password", new Model<String>("")));
-
         WebMarkupContainer rememberMeRow = new WebMarkupContainer("rememberMeRow");
-        //
-        // // Add rememberMe checkbox
+        // Add rememberMe checkbox
         rememberMeRow.add(new CheckBox("rememberMe", new PropertyModel<Boolean>(this, "rememberMe")));
-
         // Make form values persistent
         this.getUserIdField().setPersistent(rememberMe);
-
         // Show remember me checkbox?
         rememberMeRow.setVisible(true);
-
-        /* Make sure that password field shows up during page re-render * */
-
+        // Make sure that password field shows up during page re-render
         this.getPassField().setResetPassword(true);
-
         this.setDefaultPage(new HomePage());
         form.add(this.getUserIdField());
         form.add(this.getPassField());
@@ -127,41 +167,5 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
                 RegistrationPanel.this.setResponsePage(RegistrationPanel.this.getDefaultPage());
             }
         };
-    }
-
-    public void setService(final Authenticate service) {
-        this.service = service;
-    }
-
-    public Authenticate getService() {
-        return service;
-    }
-
-    public void setPassField(final PasswordTextField passField) {
-        this.passField = passField;
-    }
-
-    public PasswordTextField getPassField() {
-        return passField;
-    }
-
-    public void setUserIdField(final TextField<String> userIdField) {
-        this.userIdField = userIdField;
-    }
-
-    public TextField<String> getUserIdField() {
-        return userIdField;
-    }
-
-    public void setDefaultPage(final WebPage defaultPage) {
-        this.defaultPage = defaultPage;
-    }
-
-    public WebPage getDefaultPage() {
-        return defaultPage;
-    }
-
-    public boolean isRememberMe() {
-        return rememberMe;
     }
 }

@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.persistence.leaverequest;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -77,6 +78,27 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
                     .add(Restrictions.ilike("reason", "%" + searchReason + "%"));
         }
         return criteria.list();
+    }
+
+    @SuppressWarnings(UNCHECKED)
+    public List<LeaveRequest> searchLeaveRequestsContainingDate(final DateTime dateTime) {
+        if (dateTime == null) {
+            return new LinkedList<LeaveRequest>();
+        } else {
+            String dateString = dateTime.toString("yyyy-MM-dd HH:mm:ss.SSS");
+            // @formatter:off
+            String includedInIntervalCondition = 
+                "{alias}.start_date <= '" + dateString + 
+                "' and {alias}.end_date >= '" + dateString + "'";
+            Criteria criteria = this.getSession().createCriteria(this.getEntityClass())
+                .createCriteria("durationStrategy")
+                    .add(Restrictions.disjunction()
+                        .add(Restrictions.eq("date", dateTime))
+                        .add(Restrictions.sqlRestriction(includedInIntervalCondition))
+            );
+            // @formatter:on
+            return criteria.list();
+        }
     }
 
     private Junction getStartDateRestriction(final DateTime dateTime) {

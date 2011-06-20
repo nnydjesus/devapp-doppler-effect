@@ -12,16 +12,16 @@ public interface EmployeeService extends Service {
 
     void updateEmployee(EmployeeDTO employee);
 
+    List<EmployeeViewDTO> searchAllEmployees();
+
+    List<EmployeeViewDTO> searchAllByFirstAndLastName(String firstName, String lastName);
+
     List<EmployeeViewDTO> searchAllByExample(EmployeeViewDTO theExample);
 
-    List<EmployeeViewDTO> searchAllEmployees();
+    List<EmployeeViewDTO> searchEmployeeByName(String name);
 
     EmployeeDetailDTO getDetailForEmployee(EmployeeViewDTO employeeViewDTO);
 
     EmployeeDTO createEditDTO(EmployeeViewDTO viewDTO);
-
-    List<EmployeeViewDTO> searchAllByFirstAndLastName(String firstName, String lastName);
-
-    List<EmployeeViewDTO> searchEmployeeByName(String name);
 
 }

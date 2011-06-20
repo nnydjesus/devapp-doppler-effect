@@ -12,21 +12,28 @@ public class LoginPanelSubmitButton extends AjaxButton {
 
     private static final long serialVersionUID = 1L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private LoginPanel loginPanel;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public LoginPanelSubmitButton(final String id, final LoginPanel loginPanel) {
         super(id);
         this.loginPanel = loginPanel;
     }
 
+    /* **************************** ACCESSORS ***************************** */
+
     public LoginPanel getLoginPanel() {
         return loginPanel;
     }
 
     public void setLoginPanel(final LoginPanel loginPanel) {
-        // solo porque rompe las bolas el PMD
-        this.loginPanel = loginPanel;
+        this.loginPanel = loginPanel; // solo porque rompe las bolas el PMD
     }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     @Override
     protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {

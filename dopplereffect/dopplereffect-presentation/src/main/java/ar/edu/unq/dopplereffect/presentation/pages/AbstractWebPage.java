@@ -13,29 +13,35 @@ import ar.edu.unq.dopplereffect.presentation.panel.SimplePanel;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
- * Pagina para probar el wicket extend No puede hacer que reflesque por ajax el
- * body
+ * Representa la estructura de la pagina principal de la aplicacion.
  */
 public class AbstractWebPage<T extends Component> extends WebPage implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
-    protected static final String BODY = "body";
+    // @formatter:off
+    protected static final String
+        BODY = "body",
+        FOOTER = "footer",
+        HEADER = "header",
+        SIDEBAR = "sidebar",
+        TITLE = "title",
+        TITLE2 = "title2";
+    // @formatter:on
 
-    protected static final String FOOTER = "footer";
-
-    protected static final String HEADER = "header";
-
-    protected static final String SIDEBAR = "sidebar";
-
-    protected static final String TITLE = "title";
-
-    protected static final String TITLE2 = "title2";
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private Component defaultBody = new Label("body", new Model<String>("Welcome to de dance of death"));
 
     private Panel ajaxPanel;
 
     private Component body;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    public AbstractWebPage() {
+        this(new Label(BODY, new Model<String>("Welcome to de dance of death")));
+    }
 
     public AbstractWebPage(final Class<T> body, final Object... params) {
         this(ReflectionUtils.instanciate(body, params));
@@ -57,9 +63,38 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     }
 
+    /* **************************** ACCESSORS ***************************** */
+
     protected Component getBody() {
         return body;
     }
+
+    public void setBody(final Component component) {
+        component.setOutputMarkupId(true);
+        ajaxPanel.addOrReplace(component);
+    }
+
+    public void setDefaultBody() {
+        this.setBody(defaultBody);
+    }
+
+    public Component getAjaxPanel() {
+        return ajaxPanel;
+    }
+
+    public void setAjaxPanel(final Panel bodyPanel) {
+        this.ajaxPanel = bodyPanel;
+    }
+
+    public Component getDefaultBody() {
+        return defaultBody;
+    }
+
+    public void setDefaultBody(final Component defaultBody) {
+        this.defaultBody = defaultBody;
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     protected Component createSidebar() {
         return new Label(SIDEBAR, new Model<String>("Sidebar"));
@@ -70,7 +105,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
     }
 
     protected Component createHeader() {
-        return new Label(HEADER, new Model<String>("Doopler"));
+        return new Label(HEADER, new Model<String>("Doppler"));
     }
 
     protected Component createTitle() {
@@ -80,34 +115,4 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
     protected Component createTitle2() {
         return new Label(TITLE2, new Model<String>("Effect"));
     }
-
-    public AbstractWebPage() {
-        this(new Label(BODY, new Model<String>("Welcome to de dance of death")));
-    }
-
-    public void setDefaultBody() {
-        this.setBody(defaultBody);
-    }
-
-    public void setBody(final Component component) {
-        component.setOutputMarkupId(true);
-        ajaxPanel.addOrReplace(component);
-    }
-
-    public void setAjaxPanel(final Panel bodyPanel) {
-        this.ajaxPanel = bodyPanel;
-    }
-
-    public Component getAjaxPanel() {
-        return ajaxPanel;
-    }
-
-    public void setDefaultBody(final Component defaultBody) {
-        this.defaultBody = defaultBody;
-    }
-
-    public Component getDefaultBody() {
-        return defaultBody;
-    }
-
 }

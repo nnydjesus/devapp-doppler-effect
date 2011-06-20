@@ -6,14 +6,27 @@ import org.apache.wicket.request.target.coding.MixedParamHybridUrlCodingStrategy
 
 public class MounterURL {
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private WebApplication webApplication;
 
-    /**
-     * @param webApplication
-     */
+    /* *************************** CONSTRUCTORS *************************** */
+
     public MounterURL(final WebApplication webApplication) {
         this.setWebApplication(webApplication);
     }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public WebApplication getWebApplication() {
+        return webApplication;
+    }
+
+    public void setWebApplication(final WebApplication webApplication) {
+        this.webApplication = webApplication;
+    }
+
+    /* **************************** OPERATIONS **************************** */
 
     /**
      * @param mountPath
@@ -45,13 +58,5 @@ public class MounterURL {
         MixedParamHybridUrlCodingStrategy urls = new MixedParamHybridUrlCodingStrategy(mountPath, pageClass,
                 redirectOnBookmarkableRequest, parameters);
         this.getWebApplication().mount(urls);
-    }
-
-    public void setWebApplication(final WebApplication webApplication) {
-        this.webApplication = webApplication;
-    }
-
-    public WebApplication getWebApplication() {
-        return webApplication;
     }
 }

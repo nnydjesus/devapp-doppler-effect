@@ -21,16 +21,12 @@ public class EmployeePanel extends EntityPanel<EmployeeDTO> {
 
     private static final long serialVersionUID = 1L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     @SpringBean(name = "service.career_plan")
     private CareerPlanService careerPlanService;
 
-    public CareerPlanService getCareerPlanService() {
-        return careerPlanService;
-    }
-
-    public void setCareerPlanService(final CareerPlanService careerPlanService) {
-        this.careerPlanService = careerPlanService;
-    }
+    /* *************************** CONSTRUCTORS *************************** */
 
     public EmployeePanel(final String id, final EmployeeDTO model, final Boolean editMode) {
         super(id, model, editMode);
@@ -43,6 +39,18 @@ public class EmployeePanel extends EntityPanel<EmployeeDTO> {
     public EmployeePanel(final String id) {
         super(id, new EmployeeDTO());
     }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public CareerPlanService getCareerPlanService() {
+        return careerPlanService;
+    }
+
+    public void setCareerPlanService(final CareerPlanService careerPlanService) {
+        this.careerPlanService = careerPlanService;
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     @Override
     protected void addFields(final Form<EmployeeDTO> form) {
@@ -91,11 +99,6 @@ public class EmployeePanel extends EntityPanel<EmployeeDTO> {
                 .setButtonText("<div class=\"ui-icon ui-icon-calendar\"></div>").setShowOn(ShowOnEnum.BOTH)
                 .setShowButtonPanel(true);
         form.add(datePicker);
-    }
-
-    @Override
-    protected void beforeConstruct() {
-        // x
     }
 
     @Override

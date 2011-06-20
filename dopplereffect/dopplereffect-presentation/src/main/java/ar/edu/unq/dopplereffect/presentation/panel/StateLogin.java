@@ -3,6 +3,8 @@ package ar.edu.unq.dopplereffect.presentation.panel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
+ * Representa los diferentes estados por los que puede pasar un usuario en la
+ * aplicacion.
  */
 public enum StateLogin {
     LOGIN {

@@ -31,10 +31,17 @@ import ar.edu.unq.dopplereffect.user.User;
 import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
 
 /**
+ * Panel que se encarga de mostrar todo el proceso de identificacion y
+ * autenticacion.
  */
 public class LoginPanel extends AbstractPanel<Model<String>> {
 
     private static final long serialVersionUID = 1L;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
+
+    @SpringBean(name = "authenticate")
+    private Authenticate service;
 
     private TextField<String> userIdField;
 
@@ -42,10 +49,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     private boolean rememberMe = false;
 
-    @SpringBean(name = "authenticate")
-    private Authenticate service;
-
-    private WebPage dafaultPage;
+    private WebPage defaultPage;
 
     private StateLogin state = StateLogin.LOGIN;
 
@@ -69,9 +73,151 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     private ButtonBehavior registerBehavior;
 
+    /* *************************** CONSTRUCTORS *************************** */
+
     public LoginPanel(final String id) {
         super(id);
     }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public Authenticate getService() {
+        return service;
+    }
+
+    public void setService(final Authenticate service) {
+        this.service = service;
+    }
+
+    public PasswordTextField getPassField() {
+        return passField;
+    }
+
+    public void setPassField(final PasswordTextField passField) {
+        this.passField = passField;
+    }
+
+    public TextField<String> getUserIdField() {
+        return userIdField;
+    }
+
+    public void setUserIdField(final TextField<String> userIdField) {
+        this.userIdField = userIdField;
+    }
+
+    public WebPage getDefaultPage() {
+        return defaultPage;
+    }
+
+    public void setDefaultPage(final WebPage defaultPage) {
+        this.defaultPage = defaultPage;
+    }
+
+    public boolean isRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(final boolean rememberMe) {
+        this.rememberMe = rememberMe;
+    }
+
+    public WebMarkupContainer getRememberMeRow() {
+        return rememberMeRow;
+    }
+
+    public void setRememberMeRow(final WebMarkupContainer rememberMeRow) {
+        this.rememberMeRow = rememberMeRow;
+    }
+
+    public StateLogin getState() {
+        return state;
+    }
+
+    public void setState(final StateLogin state) {
+        this.state = state;
+    }
+
+    public Component getRegister() {
+        return register;
+    }
+
+    public void setRegister(final Component register) {
+        this.register = register;
+    }
+
+    public Component getSubmit() {
+        return submit;
+    }
+
+    public void setSubmit(final Component submit) {
+        this.submit = submit;
+    }
+
+    public StringResourceModel getLoginSubmitModel() {
+        return loginSubmitModel;
+    }
+
+    public void setLoginSubmitModel(final StringResourceModel loginSubmitModel) {
+        this.loginSubmitModel = loginSubmitModel;
+    }
+
+    public StringResourceModel getRegisterSubmitModel() {
+        return registerSubmitModel;
+    }
+
+    public void setRegisterSubmitModel(final StringResourceModel registerSubmitModel) {
+        this.registerSubmitModel = registerSubmitModel;
+    }
+
+    public StringResourceModel getLoginRegisterModel() {
+        return loginRegisterModel;
+    }
+
+    public void setLoginRegisterModel(final StringResourceModel loginregisterModel) {
+        loginRegisterModel = loginregisterModel;
+    }
+
+    public StringResourceModel getRegisterBackModel() {
+        return this.getRegisterBackmModel();
+    }
+
+    public void setRegisterBackmmodel(final StringResourceModel registerBackmmodel) {
+        this.setRegisterBackmModel(registerBackmmodel);
+    }
+
+    public ButtonBehavior getRegisterBehavior() {
+        return registerBehavior;
+    }
+
+    public void setRegisterBehavior(final ButtonBehavior registerBehavior) {
+        this.registerBehavior = registerBehavior;
+    }
+
+    public AjaxLink<String> getRegisterButton() {
+        return registerButton;
+    }
+
+    public void setRegisterButton(final AjaxLink<String> registerButton) {
+        this.registerButton = registerButton;
+    }
+
+    public AjaxButton getSubmitButton() {
+        return submitButton;
+    }
+
+    public void setSubmitButton(final AjaxButton submitButton) {
+        this.submitButton = submitButton;
+    }
+
+    public StringResourceModel getRegisterBackmModel() {
+        return registerBackmModel;
+    }
+
+    public void setRegisterBackmModel(final StringResourceModel registerBackmModel) {
+        this.registerBackmModel = registerBackmModel;
+    }
+
+    /* **************************** OPERATIONS **************************** */
 
     public void init() {
         this.setLoginSubmitModel(this.createLocaleResources("login.submit"));
@@ -111,7 +257,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         this.setRegisterBehavior(new ButtonBehavior().setLabel(this.getLoginRegisterModel()));
         this.setRegister(this.getRegisterButton().add(this.getRegisterBehavior()));
 
-        this.setDafaultPage(new HomePage());
+        this.setDefaultPage(new HomePage());
         form.add(this.getUserIdField());
         form.add(this.getPassField());
         form.add(this.getRememberMeRow());
@@ -177,7 +323,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
             @Override
             public void execute(final AjaxRequestTarget ajaxTarget, final Object component) {
-                LoginPanel.this.setResponsePage(LoginPanel.this.getDafaultPage());
+                LoginPanel.this.setResponsePage(LoginPanel.this.getDefaultPage());
             }
         };
     }
@@ -218,141 +364,5 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         LoginPanel.this.getRememberMeRow().setVisible(false);
         this.getSubmitButton().setModel(this.getRegisterSubmitModel());
         this.getRegisterBehavior().setLabel(this.getRegisterBackModel());
-    }
-
-    public void setService(final Authenticate service) {
-        this.service = service;
-    }
-
-    public Authenticate getService() {
-        return service;
-    }
-
-    public void setPassField(final PasswordTextField passField) {
-        this.passField = passField;
-    }
-
-    public PasswordTextField getPassField() {
-        return passField;
-    }
-
-    public void setUserIdField(final TextField<String> userIdField) {
-        this.userIdField = userIdField;
-    }
-
-    public TextField<String> getUserIdField() {
-        return userIdField;
-    }
-
-    public void setDafaultPage(final WebPage dafaultPage) {
-        this.dafaultPage = dafaultPage;
-    }
-
-    public WebPage getDafaultPage() {
-        return dafaultPage;
-    }
-
-    public void setRememberMe(final boolean rememberMe) {
-        this.rememberMe = rememberMe;
-    }
-
-    public boolean isRememberMe() {
-        return rememberMe;
-    }
-
-    public void setRememberMeRow(final WebMarkupContainer rememberMeRow) {
-        this.rememberMeRow = rememberMeRow;
-    }
-
-    public WebMarkupContainer getRememberMeRow() {
-        return rememberMeRow;
-    }
-
-    public void setState(final StateLogin state) {
-        this.state = state;
-    }
-
-    public StateLogin getState() {
-        return state;
-    }
-
-    public void setRegister(final Component register) {
-        this.register = register;
-    }
-
-    public Component getRegister() {
-        return register;
-    }
-
-    public void setSubmit(final Component submit) {
-        this.submit = submit;
-    }
-
-    public Component getSubmit() {
-        return submit;
-    }
-
-    public void setLoginSubmitModel(final StringResourceModel loginSubmitModel) {
-        this.loginSubmitModel = loginSubmitModel;
-    }
-
-    public StringResourceModel getLoginSubmitModel() {
-        return loginSubmitModel;
-    }
-
-    public void setRegisterSubmitModel(final StringResourceModel registerSubmitModel) {
-        this.registerSubmitModel = registerSubmitModel;
-    }
-
-    public StringResourceModel getRegisterSubmitModel() {
-        return registerSubmitModel;
-    }
-
-    public void setLoginRegisterModel(final StringResourceModel loginregisterModel) {
-        loginRegisterModel = loginregisterModel;
-    }
-
-    public StringResourceModel getLoginRegisterModel() {
-        return loginRegisterModel;
-    }
-
-    public void setRegisterBackmmodel(final StringResourceModel registerBackmmodel) {
-        this.setRegisterBackmModel(registerBackmmodel);
-    }
-
-    public StringResourceModel getRegisterBackModel() {
-        return this.getRegisterBackmModel();
-    }
-
-    public void setRegisterBehavior(final ButtonBehavior registerBehavior) {
-        this.registerBehavior = registerBehavior;
-    }
-
-    public ButtonBehavior getRegisterBehavior() {
-        return registerBehavior;
-    }
-
-    public void setRegisterButton(final AjaxLink<String> registerButton) {
-        this.registerButton = registerButton;
-    }
-
-    public AjaxLink<String> getRegisterButton() {
-        return registerButton;
-    }
-
-    public void setSubmitButton(final AjaxButton submitButton) {
-        this.submitButton = submitButton;
-    }
-
-    public AjaxButton getSubmitButton() {
-        return submitButton;
-    }
-
-    public void setRegisterBackmModel(final StringResourceModel registerBackmModel) {
-        this.registerBackmModel = registerBackmModel;
-    }
-
-    public StringResourceModel getRegisterBackmModel() {
-        return registerBackmModel;
     }
 }

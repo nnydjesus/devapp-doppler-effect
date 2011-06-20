@@ -23,6 +23,8 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
 
     private static final long serialVersionUID = 1511189466309907850L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     @SpringBean(name = "service.leave_request")
     private LeaveRequestService leaveRequestService;
 
@@ -30,6 +32,18 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
     private EmployeeService employeeService;
 
     private EmployeeViewDTO employee;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    public LeaveRequestPanel(final String id) {
+        super(id, new LeaveRequestDTO());
+    }
+
+    public LeaveRequestPanel(final String id, final LeaveRequestDTO model) {
+        super(id, model, true);
+    }
+
+    /* **************************** ACCESSORS ***************************** */
 
     public LeaveRequestService getLeaveRequestService() {
         return leaveRequestService;
@@ -55,13 +69,7 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
         this.employeeService = employeeService;
     }
 
-    public LeaveRequestPanel(final String id) {
-        super(id, new LeaveRequestDTO());
-    }
-
-    public LeaveRequestPanel(final String id, final LeaveRequestDTO model) {
-        super(id, model, true);
-    }
+    /* ************************* PRIVATE METHODS ************************** */
 
     @Override
     protected void beforeConstruct() {

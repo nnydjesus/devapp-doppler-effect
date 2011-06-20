@@ -1,12 +1,14 @@
 package ar.edu.unq.dopplereffect.presentation.search.leaverequest;
 
+import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
 
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestDTO;
-import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestDetailDTO;
 import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestService;
 import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestViewDTO;
 
@@ -17,6 +19,8 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
     /* ************************ INSTANCE VARIABLES ************************ */
 
     private LeaveRequestService service;
+
+    private Date searchByDate;
 
     private String searchByReason;
 
@@ -36,6 +40,22 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
 
     public void setService(final LeaveRequestService service) {
         this.service = service;
+    }
+
+    public Date getSearchByDate() {
+        if (searchByDate == null) {
+            return null;
+        } else {
+            return (Date) searchByDate.clone();
+        }
+    }
+
+    public void setSearchByDate(final Date searchByDate) {
+        if (searchByDate == null) {
+            this.searchByDate = null;
+        } else {
+            this.searchByDate = (Date) searchByDate.clone();
+        }
     }
 
     public EmployeeViewDTO getSearchByEmployee() {
@@ -60,6 +80,10 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
     public void search() {
         this.setResults(this.getService().searchAllByReasonAndEmployee(this.getSearchByReason(),
                 this.getSearchByEmployee()));
+        if (this.getSearchByDate() != null) {
+            this.getResults().retainAll(
+                    this.getService().searchLeaveRequestsContainingDate(new DateTime(this.getSearchByDate())));
+        }
     }
 
     @Override
@@ -86,10 +110,6 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
     @SuppressWarnings("unchecked")
     public LeaveRequestDTO createEditDTO(final LeaveRequestViewDTO viewDTO) {
         return this.getService().createEditDTO(viewDTO);
-    }
-
-    public LeaveRequestDetailDTO getDetailForLeaveRequest(final LeaveRequestViewDTO leaveReqDTO) {
-        return this.getService().getDetailForLeaveRequest(leaveReqDTO);
     }
 
     @Override

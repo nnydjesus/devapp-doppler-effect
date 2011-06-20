@@ -17,15 +17,43 @@ import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.service.DTO;
 
+/**
+ * Representa un panel de creacion/edicion de alguna entidad.
+ */
 public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
+
     private static final long serialVersionUID = 1L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
+    /**
+     * Nos indica si se esta editando el objeto. Si es <code>false</code>,
+     * entonces se esta usando el panel para crear un objeto nuevo.
+     */
     private boolean editMode;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public EntityPanel(final String id, final T model, final boolean isEditMode) {
         super(id, model);
         this.editMode = isEditMode;
     }
+
+    public EntityPanel(final String id, final T model) {
+        this(id, model, false);
+    }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(final boolean editMode) {
+        this.editMode = editMode;
+    }
+
+    /* **************************** OPERATIONS **************************** */
 
     public void init(final AjaxCallBack<Component> callback, final AbstractSearchPanel<?> backPanel) {
         super.init(callback, backPanel);
@@ -37,16 +65,7 @@ public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
         this.addButtons(form);
     }
 
-    public EntityPanel(final String id, final T model) {
-        this(id, model, false);
-    }
-
-    // abstracto porque el PMD se queja
-    protected abstract void beforeConstruct();
-
-    public boolean isEditMode() {
-        return editMode;
-    }
+    /* **************************** OPERATIONS **************************** */
 
     protected void addButtons(final Form<T> form) {
         form.add(this.makeAcceptButton().add(new ButtonBehavior()));
@@ -116,8 +135,14 @@ public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
 
     protected String getFormWicketId() {
         return this.getModelObject().getClass().getSimpleName().toLowerCase() + "Form"; // default
-                                                                                        // value
+        // value
     }
+
+    protected void beforeConstruct() {
+        new Object(); // esto lo hago porque sino el PMD chilla
+    }
+
+    /* ************************ ABSTRACT METHODS ************************** */
 
     /**
      * Agrega los campos deseados al formulario dado como parametro. Para
@@ -125,8 +150,4 @@ public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
      * <code>form.add(this.getFeedbackPanel());</code>
      */
     protected abstract void addFields(Form<T> form);
-
-    public void setEditMode(final boolean editMode) {
-        this.editMode = editMode;
-    }
 }

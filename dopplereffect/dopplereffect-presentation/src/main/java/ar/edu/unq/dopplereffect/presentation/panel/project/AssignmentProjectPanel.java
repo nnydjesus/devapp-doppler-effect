@@ -32,9 +32,13 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
 
     private static final long serialVersionUID = 7612811876399884445L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private ProjectSearchModel projectSearchModel;
 
     private ProjectDTO project;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public AssignmentProjectPanel(final String id, final ProjectDTO projectDTO, final AjaxCallBack<Component> callback,
             final AbstractPanel<ProjectDTO> backPanel, final AbstractSearchPanel<SearchModel<ProjectDTO>> searchPanel) {
@@ -46,24 +50,41 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
         this.addNavigationButtons();
     }
 
-    public void makePanel() {
+    /* **************************** ACCESSORS ***************************** */
 
-        final List<ProjectAssignmentDTO> assignments = project.getAssignment();
-        final List<EmployeeViewDTO> allEmployee = (List<EmployeeViewDTO>) CollectionUtils.disjunction(
+    public ProjectSearchModel getProjectSearchModel() {
+        return projectSearchModel;
+    }
+
+    public void setProjectSearchModel(final ProjectSearchModel projectSearchModel) {
+        this.projectSearchModel = projectSearchModel;
+    }
+
+    public ProjectDTO getProject() {
+        return project;
+    }
+
+    public void setProject(final ProjectDTO project) {
+        this.project = project;
+    }
+
+    /* **************************** OPERATIONS **************************** */
+
+    public void makePanel() {
+        List<ProjectAssignmentDTO> assignments = project.getAssignment();
+        List<EmployeeViewDTO> allEmployee = (List<EmployeeViewDTO>) CollectionUtils.disjunction(
                 ((ProjectServiceImpl) projectSearchModel.getService()).getEmployeeService().searchAllEmployees(),
                 this.getEmployeeAvailable(assignments));
-
         ListView<EmployeeViewDTO> availableListView = this.createListView("available", allEmployee);
-
         WebMarkupContainer selectableWicket = new WebMarkupContainer("availableWicket");
         selectableWicket.setMarkupId("availableWicket");
         selectableWicket.add(availableListView);
 
-        final SelectableBehavior availableSelectableBehavior = new SelectableBehavior();
+        SelectableBehavior availableSelectableBehavior = new SelectableBehavior();
         selectableWicket.add(availableSelectableBehavior);
         this.add(selectableWicket);
 
-        final AddIntervaDuration addIntervaDuration = this.createIntervalDurationDialog(allEmployee,
+        AddIntervalDuration addIntervaDuration = this.createIntervalDurationDialog(allEmployee,
                 availableSelectableBehavior);
 
         AjaxActionPanel addEmployee = this.createAddemployeeButton(availableSelectableBehavior, addIntervaDuration);
@@ -81,6 +102,8 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
         this.add(addEmployee);
         this.add(selectableAjaxWicket);
     }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     protected List<EmployeeViewDTO> getEmployeeAvailable(final List<ProjectAssignmentDTO> assignments) {
         List<EmployeeViewDTO> result = new ArrayList<EmployeeViewDTO>();
@@ -111,7 +134,7 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
     }
 
     protected AjaxActionPanel createAddemployeeButton(final SelectableBehavior availableSelectableBehavior,
-            final AddIntervaDuration addIntervaDuration) {
+            final AddIntervalDuration addIntervaDuration) {
         return new AjaxActionPanel("add", "add.png", "") {
             private static final long serialVersionUID = 1L;
 
@@ -125,13 +148,13 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
     }
 
     @SuppressWarnings("unchecked")
-    protected AddIntervaDuration createIntervalDurationDialog(final List<EmployeeViewDTO> values,
+    protected AddIntervalDuration createIntervalDurationDialog(final List<EmployeeViewDTO> values,
             final SelectableBehavior availableSelectableBehavior) {
-        return new AddIntervaDuration("dialog") {
+        return new AddIntervalDuration("dialog") {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onAcept(final IntervalDurationStrategy intervalDurationStrategy, final AjaxRequestTarget target) {
+            public void onAccept(final IntervalDurationStrategy intervalDurationStrategy, final AjaxRequestTarget target) {
                 EmployeeViewDTO modelObject = ((ListItem<EmployeeViewDTO>) availableSelectableBehavior
                         .getComponentModel()).getModelObject();
                 AssignmentProjectPanel.this.getProjectSearchModel().assignmentEmployee(
@@ -179,21 +202,5 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
     protected void addNavigationButtons() {
         this.add(new PanelCallbackLink("back_button", this.getCallback(), this.getBackPanel(), new StringResourceModel(
                 "back_button", new Model<String>(""))));
-    }
-
-    public void setProjectSearchModel(final ProjectSearchModel projectSearchModel) {
-        this.projectSearchModel = projectSearchModel;
-    }
-
-    public ProjectSearchModel getProjectSearchModel() {
-        return projectSearchModel;
-    }
-
-    public void setProject(final ProjectDTO project) {
-        this.project = project;
-    }
-
-    public ProjectDTO getProject() {
-        return project;
     }
 }

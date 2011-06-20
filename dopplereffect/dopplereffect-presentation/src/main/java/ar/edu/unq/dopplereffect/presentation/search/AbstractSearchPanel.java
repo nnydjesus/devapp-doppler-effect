@@ -24,7 +24,10 @@ import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 @SuppressWarnings("rawtypes")
 public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> extends AbstractCallbackPanel<T> {
+
     private static final long serialVersionUID = 1L;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private Component ajaxSectionResult;
 
@@ -33,6 +36,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     private List<String> fields;
 
     private Model<String> modelSearchByName;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -53,6 +58,48 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
         this.setAbm(abm);
         super.init(aCallback, backPanel);
         this.init(this.createForm(this.getFormWicketId()));
+    }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public Component getAjaxSectionResult() {
+        return ajaxSectionResult;
+    }
+
+    public void setAjaxSectionResult(final Component ajaxSectionResult) {
+        this.ajaxSectionResult = ajaxSectionResult;
+    }
+
+    public Class<Component> getAbmClass() {
+        return this.getEntityPanel();
+    }
+
+    public void setAbm(final Class<Component> abm) {
+        this.setEntityPanel(abm);
+    }
+
+    public List<String> getFields() {
+        return fields;
+    }
+
+    public void setFields(final List<String> fields) {
+        this.fields = fields;
+    }
+
+    public Class<Component> getEntityPanel() {
+        return entityPanel;
+    }
+
+    public void setEntityPanel(final Class<Component> entityPanel) {
+        this.entityPanel = entityPanel;
+    }
+
+    public Model<String> getModelSearchByName() {
+        return modelSearchByName;
+    }
+
+    public void setModelSearchByName(final Model<String> modelSearchByName) {
+        this.modelSearchByName = modelSearchByName;
     }
 
     protected void init(final Form<T> formulario) {
@@ -113,8 +160,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     // }
 
     protected void buildForm(final Form<T> form) {
-        modelSearchByName = new Model<String>("");
-        form.add(new TextField<String>(this.getDefaultInputSearchWicketId(), modelSearchByName));
+        this.setModelSearchByName(new Model<String>(""));
+        form.add(new TextField<String>(this.getDefaultInputSearchWicketId(), this.getModelSearchByName()));
     }
 
     protected void addGeneralResultSection(final ITable listView) {
@@ -171,10 +218,10 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     }
 
     public void search() {
-        if (modelSearchByName != null && !StringUtils.isBlank(modelSearchByName.getObject())) {
-            this.getModelObject().searchByName(modelSearchByName.getObject());
-        } else {
+        if (this.getModelSearchByName() == null || StringUtils.isBlank(this.getModelSearchByName().getObject())) {
             this.getModelObject().search();
+        } else {
+            this.getModelObject().searchByName(this.getModelSearchByName().getObject());
         }
         ajaxSectionResult.setVisible(true);
     }
@@ -182,37 +229,4 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     protected String getBeanName() {
         return ((SearchModel) this.getDefaultModelObject()).getEntityType().getSimpleName();
     }
-
-    public Component getAjaxSectionResult() {
-        return ajaxSectionResult;
-    }
-
-    public void setAjaxSectionResult(final Component ajaxSectionResult) {
-        this.ajaxSectionResult = ajaxSectionResult;
-    }
-
-    public Class<Component> getAbmClass() {
-        return this.getEntityPanel();
-    }
-
-    public void setAbm(final Class<Component> abm) {
-        this.setEntityPanel(abm);
-    }
-
-    public List<String> getFields() {
-        return fields;
-    }
-
-    public void setFields(final List<String> fields) {
-        this.fields = fields;
-    }
-
-    public Class<Component> getEntityPanel() {
-        return entityPanel;
-    }
-
-    public void setEntityPanel(final Class<Component> entityPanel) {
-        this.entityPanel = entityPanel;
-    }
-
 }
