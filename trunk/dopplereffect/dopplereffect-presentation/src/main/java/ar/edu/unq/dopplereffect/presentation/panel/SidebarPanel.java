@@ -14,6 +14,8 @@ import ar.edu.unq.dopplereffect.presentation.util.Model;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 /**
+ * Panel que hace las veces de menu, conteniendo links utiles para la navegacion
+ * en la aplicacion.
  */
 public class SidebarPanel extends AbstractPanel<Model<String>> {
 
@@ -32,13 +34,9 @@ public class SidebarPanel extends AbstractPanel<Model<String>> {
                 new SalarySpecSearchPanel(idPanel, callback, homePage.getSalarySpecSearchModel())));
         this.add(homePage.createPanelLink("leave_requests",
                 new LeaveRequestSearchPanel(idPanel, callback, homePage.getLeaveReqSearchModel())));
-        // this.add(this.createPanelLink("career_plans", new
-        // CareerPlanPanel(bodyId, callback)));
-
         this.add(homePage.createPanelLink(
                 "calendar",
                 new CalendarPanel<EmployeeViewDTO>(idPanel, homePage.getEmployeeSearchModel(), homePage
                         .getLeaveReqSearchModel(), callback)));
     }
-
 }

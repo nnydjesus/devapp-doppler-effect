@@ -61,12 +61,12 @@ public class EmployeeViewDTO implements DTO, Calendareable {
 
     }
 
-    public void setAssignments(final Set<Assignable> set) {
-        assignments = set;
-    }
-
     public Set<Assignable> getAssignments() {
         return assignments;
+    }
+
+    public void setAssignments(final Set<Assignable> set) {
+        assignments = set;
     }
 
 }

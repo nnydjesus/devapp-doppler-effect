@@ -11,10 +11,10 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.leaverequest.LeaveRequestSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
+import ar.edu.unq.dopplereffect.presentation.search.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;

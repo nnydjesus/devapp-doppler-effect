@@ -24,9 +24,7 @@ public class LanguageSelectorPanel extends AbstractPanel<Object> {
             @Override
             public void onClick() {
                 this.getSession().setLocale(locale);
-                // this.setResponsePage(Home.class);
             }
-
         });
     }
 }

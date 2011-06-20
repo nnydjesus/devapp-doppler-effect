@@ -9,6 +9,7 @@ import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 
 public class ProjectSearchPanel extends AbstractSearchPanel<ProjectSearchModel> {
+
     private static final long serialVersionUID = 1L;
 
     public ProjectSearchPanel(final String id, final AjaxCallBack<Component> parentPage, final ProjectSearchModel model) {

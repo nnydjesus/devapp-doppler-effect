@@ -28,11 +28,17 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
 
     private static final long serialVersionUID = -4327535350301917583L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private LeaveRequestRepositoryImpl leaveRequestRepo;
 
     private LeaveRequestTypeRepositoryImpl leaveRequestTypeRepo;
 
     private EmployeeServiceImpl employeeService;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    /* **************************** ACCESSORS ***************************** */
 
     public LeaveRequestRepositoryImpl getLeaveRequestRepo() {
         return leaveRequestRepo;
@@ -58,40 +64,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
         this.employeeService = employeeService;
     }
 
-    @Override
-    @Transactional
-    public List<LeaveRequestViewDTO> searchAllLeaveRequests() {
-        return this.convertAll(this.getLeaveRequestRepo().searchAll());
-    }
-
-    @Override
-    @Transactional
-    public List<LeaveRequestViewDTO> searchAllByDateAndEmployee(final Date date, final String employeeFirstName,
-            final String employeeLastName) {
-        Employee employee = this.getEmployeeService().getEmployeeRepo()
-                .findFirstWithName(employeeFirstName, employeeLastName);
-        return this.convertAll(this.getLeaveRequestRepo().searchAllByDateAndEmployee(new DateTime(date), employee));
-    }
-
-    @Override
-    @Transactional
-    public List<LeaveRequestViewDTO> searchAllByDate(final Date date) {
-        return this.convertAll(this.getLeaveRequestRepo().searchAllByDate(new DateTime(date)));
-    }
-
-    @Override
-    @Transactional
-    public List<LeaveRequestViewDTO> searchAllByEmployee(final String firstName, final String lastName) {
-        Employee employee = this.getEmployeeService().getEmployeeRepo().findFirstWithName(firstName, lastName);
-        return this.convertAll(this.getLeaveRequestRepo().searchAllByEmployee(employee));
-    }
-
-    @Override
-    @Transactional
-    public LeaveRequestDetailDTO getDetailForLeaveRequest(final LeaveRequestViewDTO leaveReqDTO) {
-        // TODO
-        return new LeaveRequestDetailDTO();
-    }
+    /* **************************** OPERATIONS **************************** */
 
     @Override
     @Transactional
@@ -131,11 +104,40 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
 
     @Override
     @Transactional
+    public List<LeaveRequestViewDTO> searchAllLeaveRequests() {
+        return this.convertAll(this.getLeaveRequestRepo().searchAll());
+    }
+
+    @Override
+    @Transactional
+    public List<LeaveRequestViewDTO> searchAllByDateAndEmployee(final Date date, final String employeeFirstName,
+            final String employeeLastName) {
+        Employee employee = this.getEmployeeService().getEmployeeRepo()
+                .findFirstWithName(employeeFirstName, employeeLastName);
+        return this.convertAll(this.getLeaveRequestRepo().searchAllByDateAndEmployee(new DateTime(date), employee));
+    }
+
+    @Override
+    @Transactional
+    public List<LeaveRequestViewDTO> searchAllByDate(final Date date) {
+        return this.convertAll(this.getLeaveRequestRepo().searchAllByDate(new DateTime(date)));
+    }
+
+    @Override
+    @Transactional
+    public List<LeaveRequestViewDTO> searchAllByEmployee(final String firstName, final String lastName) {
+        Employee employee = this.getEmployeeService().getEmployeeRepo().findFirstWithName(firstName, lastName);
+        return this.convertAll(this.getLeaveRequestRepo().searchAllByEmployee(employee));
+    }
+
+    @Override
+    @Transactional
     public List<String> searchAllReasons() {
         return this.getLeaveRequestTypeRepo().searchAllReasons();
     }
 
     @Override
+    @Transactional
     public LeaveRequestDTO createEditDTO(final LeaveRequestViewDTO viewDTO) {
         Employee emp = this.getEmployeeService().getEmployeeRepo().searchByDni(viewDTO.getEmployee().getDni());
         LeaveRequest leaveRequest = this.getLeaveRequestRepo().searchByStartDateAndEmployee(
@@ -152,6 +154,24 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
         result.setEmployee(this.getEmployeeService().convert(leaveRequest.getEmployee()));
         return result;
     }
+
+    @Override
+    @Transactional
+    public List<LeaveRequestViewDTO> searchAllByReasonAndEmployee(final String reason, final EmployeeViewDTO employee) {
+        Employee emp = null;
+        if (employee != null) {
+            emp = this.getEmployeeService().getEmployeeRepo().searchByDni(employee.getDni());
+        }
+        return this.convertAll(this.getLeaveRequestRepo().searchAllByReasonAndEmployee(reason, emp));
+    }
+
+    @Override
+    @Transactional
+    public List<LeaveRequestViewDTO> searchLeaveRequestsContainingDate(final DateTime searchByDate) {
+        return this.convertAll(this.getLeaveRequestRepo().searchLeaveRequestsContainingDate(searchByDate));
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     private List<LeaveRequestViewDTO> convertAll(final List<LeaveRequest> leaveRequests) {
         List<LeaveRequestViewDTO> results = new LinkedList<LeaveRequestViewDTO>();
@@ -201,14 +221,5 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     private List<DateTime> startEndDates(final LeaveRequestDTO leaveReqDTO) {
         // solo porque el PMD chilla
         return DateHelpers.getDates(new DateTime(leaveReqDTO.getStartDate()), new DateTime(leaveReqDTO.getEndDate()));
-    }
-
-    @Override
-    public List<LeaveRequestViewDTO> searchAllByReasonAndEmployee(final String reason, final EmployeeViewDTO employee) {
-        Employee emp = null;
-        if (employee != null) {
-            emp = this.getEmployeeService().getEmployeeRepo().searchByDni(employee.getDni());
-        }
-        return this.convertAll(this.getLeaveRequestRepo().searchAllByReasonAndEmployee(reason, emp));
     }
 }

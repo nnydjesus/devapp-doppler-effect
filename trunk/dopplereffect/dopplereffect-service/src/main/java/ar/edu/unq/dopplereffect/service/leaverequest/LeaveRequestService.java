@@ -3,6 +3,8 @@ package ar.edu.unq.dopplereffect.service.leaverequest;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import ar.edu.unq.dopplereffect.service.Service;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
@@ -22,11 +24,6 @@ public interface LeaveRequestService extends Service {
      */
     List<LeaveRequestViewDTO> searchAllByDateAndEmployee(Date date, String employeeFirstName, String employeeLastName);
 
-    /**
-     * Dada una licencia con datos basicos, obtiene una licencia mas detallada.
-     */
-    LeaveRequestDetailDTO getDetailForLeaveRequest(LeaveRequestViewDTO leaveReqDTO);
-
     List<LeaveRequestViewDTO> searchAllByDate(Date date);
 
     List<LeaveRequestViewDTO> searchAllByEmployee(String firstName, String lastName);
@@ -36,5 +33,7 @@ public interface LeaveRequestService extends Service {
     List<String> searchAllReasons();
 
     List<LeaveRequestViewDTO> searchAllByReasonAndEmployee(String reason, EmployeeViewDTO employee);
+
+    List<LeaveRequestViewDTO> searchLeaveRequestsContainingDate(DateTime searchByDate);
 
 }

@@ -12,11 +12,16 @@ import org.odlabs.wiquery.ui.dialog.Dialog;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 
 public class HeaderPanel extends AbstractPanel<Object> {
+
     private static final long serialVersionUID = 1L;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     private Dialog dialog;
 
     private Page parentPage;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public HeaderPanel(final String id) {
         super(id);
@@ -35,8 +40,27 @@ public class HeaderPanel extends AbstractPanel<Object> {
         this.add(this.createButton("logout"));
     }
 
-    private Button createButton(final String id) {
+    /* **************************** ACCESSORS ***************************** */
 
+    public Dialog getDialog() {
+        return dialog;
+    }
+
+    public void setDialog(final Dialog dialog) {
+        this.dialog = dialog;
+    }
+
+    public Page getParentPage() {
+        return parentPage;
+    }
+
+    public void setParentPage(final Page parentPage) {
+        this.parentPage = parentPage;
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
+
+    private Button createButton(final String id) {
         Button button = new Button(id);
         button.add(new ButtonBehavior());
         button.add(new WiQueryEventBehavior(new Event(MouseEvent.CLICK) {
@@ -54,21 +78,5 @@ public class HeaderPanel extends AbstractPanel<Object> {
 
         }));
         return button;
-    }
-
-    public void setDialog(final Dialog dialog) {
-        this.dialog = dialog;
-    }
-
-    public Dialog getDialog() {
-        return dialog;
-    }
-
-    public void setParentPage(final Page parentPage) {
-        this.parentPage = parentPage;
-    }
-
-    public Page getParentPage() {
-        return parentPage;
     }
 }

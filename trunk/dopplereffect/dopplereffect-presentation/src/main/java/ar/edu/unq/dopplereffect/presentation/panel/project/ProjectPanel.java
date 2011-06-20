@@ -23,7 +23,10 @@ import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
 import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
 
 public class ProjectPanel extends EntityPanel<ProjectDTO> {
+
     private static final long serialVersionUID = 1L;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public ProjectPanel(final String id, final ProjectDTO model) {
         super(id, model, true);
@@ -32,6 +35,8 @@ public class ProjectPanel extends EntityPanel<ProjectDTO> {
     public ProjectPanel(final String id) {
         super(id, new ProjectDTO());
     }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     @Override
     protected void addFields(final Form<ProjectDTO> form) {
@@ -79,10 +84,5 @@ public class ProjectPanel extends EntityPanel<ProjectDTO> {
     @Override
     protected String getFormWicketId() {
         return "projectForm";
-    }
-
-    @Override
-    protected void beforeConstruct() {
-        // x
     }
 }

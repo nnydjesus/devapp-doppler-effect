@@ -16,11 +16,11 @@ import org.odlabs.wiquery.ui.sortable.SortableAjaxBehavior.SortedEvent;
 
 import ar.edu.unq.dopplereffect.presentation.panel.utils.SortableAjax;
 
-/**
- */
 public class SortablePanel<T extends Serializable> extends Panel {
 
     private static final long serialVersionUID = 1L;
+
+    /* ************************ INSTANCE VARIABLES ************************ */
 
     // definido asi porque al findbugs no le gusta los booleanos
     private final Object mutex = new Object();
@@ -38,6 +38,8 @@ public class SortablePanel<T extends Serializable> extends Panel {
     private SortableAjax<WebMarkupContainer> sortable;
 
     private List<T> list;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -111,6 +113,62 @@ public class SortablePanel<T extends Serializable> extends Panel {
 
     }
 
+    /* **************************** ACCESSORS ***************************** */
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(final String message) {
+        this.message = message;
+    }
+
+    public boolean isShowPlaceholder() {
+        return showPlaceholder;
+    }
+
+    public void setShowPlaceholder(final boolean showPlaceholder) {
+        this.showPlaceholder = showPlaceholder;
+    }
+
+    public boolean isRestrictToYAxis() {
+        return restrictToYAxis;
+    }
+
+    public void setRestrictToYAxis(final boolean restrictToYAxis) {
+        this.restrictToYAxis = restrictToYAxis;
+    }
+
+    public List<T> getList() {
+        return list;
+    }
+
+    public void setList(final List<T> list) {
+        this.list = list;
+    }
+
+    public SortableAjax<WebMarkupContainer> getSortable() {
+        return sortable;
+    }
+
+    public void setSortable(final SortableAjax<WebMarkupContainer> sortable) {
+        this.sortable = sortable;
+    }
+
+    public WebMarkupContainer getSortableW() {
+        return sortableW;
+    }
+
+    public void setSortableW(final WebMarkupContainer sortableW) {
+        this.sortableW = sortableW;
+    }
+
+    public Object getMutex() {
+        return mutex;
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
+
     protected DroppableAjaxBehavior<WebMarkupContainer> createDroppableBehavior() {
         return new DroppableAjaxBehavior<WebMarkupContainer>() {
             private static final long serialVersionUID = 1L;
@@ -159,57 +217,5 @@ public class SortablePanel<T extends Serializable> extends Panel {
             }
 
         };
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(final String message) {
-        this.message = message;
-    }
-
-    public boolean isShowPlaceholder() {
-        return showPlaceholder;
-    }
-
-    public void setShowPlaceholder(final boolean showPlaceholder) {
-        this.showPlaceholder = showPlaceholder;
-    }
-
-    public boolean isRestrictToYAxis() {
-        return restrictToYAxis;
-    }
-
-    public void setRestrictToYAxis(final boolean restrictToYAxis) {
-        this.restrictToYAxis = restrictToYAxis;
-    }
-
-    public void setList(final List<T> list) {
-        this.list = list;
-    }
-
-    public List<T> getList() {
-        return list;
-    }
-
-    public void setSortable(final SortableAjax<WebMarkupContainer> sortable) {
-        this.sortable = sortable;
-    }
-
-    public SortableAjax<WebMarkupContainer> getSortable() {
-        return sortable;
-    }
-
-    public void setSortableW(final WebMarkupContainer sortableW) {
-        this.sortableW = sortableW;
-    }
-
-    public WebMarkupContainer getSortableW() {
-        return sortableW;
-    }
-
-    public Object getMutex() {
-        return mutex;
     }
 }

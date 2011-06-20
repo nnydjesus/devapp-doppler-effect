@@ -25,7 +25,7 @@
 		<property name="service" ref="service.project" />
 	</bean>
 	
-	<bean id="search_model.employee" class="ar.edu.unq.dopplereffect.presentation.employee.EmployeeSearchModel">
+	<bean id="search_model.employee" class="ar.edu.unq.dopplereffect.presentation.search.employee.EmployeeSearchModel">
 		<property name="service" ref="service.employee" />
 	</bean>
 	

@@ -1,11 +1,13 @@
 package ar.edu.unq.dopplereffect.presentation.panel.leaverequest;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.odlabs.wiquery.ui.datepicker.DatePicker;
 
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
@@ -18,7 +20,7 @@ public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSea
 
     public LeaveRequestSearchPanel(final String id, final AjaxCallBack<Component> parentPage,
             final AbstractPanel<?> backPanel, final LeaveRequestSearchModel model) {
-        super(id, parentPage, backPanel, model, Arrays.asList("startDate", "amountOfDays", "reason"),
+        super(id, parentPage, backPanel, model, Arrays.asList("employee", "startDate", "amountOfDays", "reason"),
                 LeaveRequestPanel.class);
         this.getModelObject().search();
     }
@@ -45,21 +47,10 @@ public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSea
 
     @Override
     protected void buildForm(final Form<LeaveRequestSearchModel> form) {
-        // StyleDateConverter converter = new StyleDateConverter(true);
-        // DateTextField dateTextField = new DateTextField("searchByDate", new
-        // PropertyModel<Date>(
-        // form.getDefaultModelObject(), "searchByDate"), converter);
-        // dateTextField.add(new DatePicker());
-        // form.add(dateTextField);
+        DatePicker<Date> datePicker = new DatePicker<Date>("searchByDate");
+        form.add(datePicker);
         List<String> choices = this.getModelObject().getService().searchAllReasons();
         DropDownChoice<String> reasonCombo = new DropDownChoice<String>("searchByReason", choices);
         form.add(reasonCombo);
-    }
-
-    @Override
-    protected LeaveRequestAjaxDataTablePage createAjaxTable() {
-        return new LeaveRequestAjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
-                (LeaveRequestSearchModel) this.getDefaultModelObject(), this.getCallback(), this.getFields(),
-                this.getAbmClass());
     }
 }

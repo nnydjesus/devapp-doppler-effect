@@ -29,17 +29,31 @@ import ar.edu.unq.dopplereffect.presentation.util.GenericSortableDataProvider;
 import ar.edu.unq.dopplereffect.presentation.util.Model;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
-/**
- */
 public class CalendarTable<T extends Calendareable> implements Serializable {
 
     private static final long serialVersionUID = -2312382166995179303L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private CalendarPanel<T> calendarPanel;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public CalendarTable(final CalendarPanel<T> calendarPanel) {
         this.setCalendarPanel(calendarPanel);
     }
+
+    /* **************************** ACCESSORS ***************************** */
+
+    public CalendarPanel<T> getCalendarPanel() {
+        return calendarPanel;
+    }
+
+    public void setCalendarPanel(final CalendarPanel<T> calendarPanel) {
+        this.calendarPanel = calendarPanel;
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
 
     protected AjaxFallbackDefaultDataTable<Entry<T, Map<DateTime, Assignable>>> updateTable() {
         ArrayList<IColumn<Entry<T, Map<DateTime, Assignable>>>> columns = new ArrayList<IColumn<Entry<T, Map<DateTime, Assignable>>>>();
@@ -53,12 +67,10 @@ public class CalendarTable<T extends Calendareable> implements Serializable {
                 cellItem.add(new Label(componentId, new Model<T>(cellModel.getObject().getKey())));
             }
         });
-
         CalendarStrategy strategy = this.getCalendarPanel().getCalendar().getStrategy().cloneStrategy();
 
         for (int day = 1; day <= this.getCalendarPanel().getCalendar().getStrategy().getTotalDays(); day++) {
             final DateTime date = strategy.getDay();
-
             columns.add(this.createColumn(date));
             strategy.plus();
         }
@@ -97,14 +109,6 @@ public class CalendarTable<T extends Calendareable> implements Serializable {
                 cellItem.add(link);
             }
         };
-    }
-
-    public void setCalendarPanel(final CalendarPanel<T> calendarPanel) {
-        this.calendarPanel = calendarPanel;
-    }
-
-    public CalendarPanel<T> getCalendarPanel() {
-        return calendarPanel;
     }
 
 }
