@@ -32,6 +32,8 @@ public class GeneralGrid<T extends Serializable> extends Grid<T> {
 
     private Component resultSection;
 
+    /* *************************** CONSTRUCTORS *************************** */
+
     public GeneralGrid(final String arg0, final GridModel<T> arg1, final IDataProvider<T> arg2) {
         super(arg0, arg1, arg2);
         this.addEventListener();
@@ -46,6 +48,21 @@ public class GeneralGrid<T extends Serializable> extends Grid<T> {
         this(arg0, null, null);
     }
 
+    /* **************************** ACCESSORS ***************************** */
+
+    public void setResultSection(final Component resultSection) {
+        this.resultSection = resultSection;
+    }
+
+    public Component getResultSection() {
+        return resultSection;
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
+
+    /**
+     * Setea todos los listener para poder manejarlos son crear inerclases
+     */
     private void addEventListener() {
 
         this.addEvent(new OnSelectRowAjaxEvent<T>() {
@@ -170,11 +187,4 @@ public class GeneralGrid<T extends Serializable> extends Grid<T> {
         this.getClass();
     }
 
-    public void setResultSection(final Component resultSection) {
-        this.resultSection = resultSection;
-    }
-
-    public Component getResultSection() {
-        return resultSection;
-    }
 }
