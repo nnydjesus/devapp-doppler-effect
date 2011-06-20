@@ -12,7 +12,11 @@ public abstract class AjaxActionPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
 
+    /* ************************ INSTANCE VARIABLES ************************ */
+
     private AjaxLink<String> ajaxLink;
+
+    /* *************************** CONSTRUCTORS *************************** */
 
     public AjaxActionPanel(final String id) {
         super(id, new Model<String>(""));
@@ -27,10 +31,8 @@ public abstract class AjaxActionPanel extends Panel {
         });
     }
 
-    public AjaxActionPanel(final String id, final String image, final String prevPath) {
-        this(id);
-        this.getAjaxLink().add(new Image("image", new Model<String>(image)));
-        this.add(this.getAjaxLink());
+    public AjaxActionPanel(final String id, final String image) {
+        this(id, image, "");
     }
 
     public AjaxActionPanel(final String id, final Model<?> model) {
@@ -39,17 +41,23 @@ public abstract class AjaxActionPanel extends Panel {
         this.add(this.getAjaxLink());
     }
 
-    public AjaxActionPanel(final String id, final String image) {
-        this(id, image, "");
+    public AjaxActionPanel(final String id, final String image, final String prevPath) {
+        this(id);
+        this.getAjaxLink().add(new Image("image", new Model<String>(image)));
+        this.add(this.getAjaxLink());
     }
 
-    public abstract void onAction(final AjaxRequestTarget target);
+    /* **************************** ACCESSORS ***************************** */
+
+    public AjaxLink<String> getAjaxLink() {
+        return ajaxLink;
+    }
 
     public void setAjaxLink(final AjaxLink<String> ajaxLink) {
         this.ajaxLink = ajaxLink;
     }
 
-    public AjaxLink<String> getAjaxLink() {
-        return ajaxLink;
-    }
+    /* ************************ ABSTRACT METHODS ************************** */
+
+    public abstract void onAction(final AjaxRequestTarget target);
 }

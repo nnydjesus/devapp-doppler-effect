@@ -3,6 +3,7 @@ package ar.edu.unq.dopplereffect.persistence.leaverequest;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
 
@@ -18,6 +19,8 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
     // esto lo hice por el PMD, es realmente absurdo
     private static final String UNCHECKED = "unchecked";
 
+    private static final String EMPLOYEE_FIELD = "employee";
+
     /* ************************ INSTANCE VARIABLES ************************ */
 
     /* *************************** CONSTRUCTORS *************************** */
@@ -29,13 +32,13 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
     /* **************************** OPERATIONS **************************** */
 
     public List<LeaveRequest> searchAllByEmployee(final Employee employee) {
-        return this.getByCriterionList(Restrictions.eq("employee", employee));
+        return this.getByCriterionList(Restrictions.eq(EMPLOYEE_FIELD, employee));
     }
 
     @SuppressWarnings(UNCHECKED)
     public List<LeaveRequest> searchAllByDateAndEmployee(final DateTime dateTime, final Employee employee) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
-        criteria.add(Restrictions.eq("employee", employee));
+        criteria.add(Restrictions.eq(EMPLOYEE_FIELD, employee));
         return criteria.list();
     }
 
@@ -44,15 +47,9 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
      */
     @SuppressWarnings(UNCHECKED)
     public LeaveRequest searchByStartDateAndEmployee(final DateTime dateTime, final Employee employee) {
-        // @formatter:off
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass())
-                .add(Restrictions.eq("employee", employee))
-                .createCriteria("durationStrategy")
-                    .add(Restrictions.disjunction()
-                        .add(Restrictions.eq("date", dateTime))
-                        .add(Restrictions.sqlRestriction("{alias}.start_date = '" + dateTime.toString("yyyy-MM-dd HH:mm:ss.SSS") + "'"))
-                    );
-        // @formatter:on
+                .add(Restrictions.eq(EMPLOYEE_FIELD, employee)).createCriteria("durationStrategy")
+                .add(this.getStartDateRestriction(dateTime));
         List<LeaveRequest> results = criteria.list();
         if (results.isEmpty()) {
             throw new UserException("no se pudo encontrar la licencia con los datos dados");
@@ -62,7 +59,8 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
 
     @SuppressWarnings(UNCHECKED)
     public List<LeaveRequest> searchAllByDate(final DateTime dateTime) {
-        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
+        Criteria criteria = this.getSession().createCriteria(this.getEntityClass()).createCriteria("durationStrategy")
+                .add(this.getStartDateRestriction(dateTime));
         return criteria.list();
     }
 
@@ -72,12 +70,19 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
         Criteria criteria;
         if (employee == null) {
             criteria = this.getSession().createCriteria(this.getEntityClass()).createCriteria("type")
-                    .add(Restrictions.like("reason", "%" + searchReason + "%"));
+                    .add(Restrictions.ilike("reason", "%" + searchReason + "%"));
         } else {
             criteria = this.getSession().createCriteria(this.getEntityClass())
-                    .add(Restrictions.eq("employee", employee)).createCriteria("type")
-                    .add(Restrictions.like("reason", "%" + searchReason + "%"));
+                    .add(Restrictions.eq(EMPLOYEE_FIELD, employee)).createCriteria("type")
+                    .add(Restrictions.ilike("reason", "%" + searchReason + "%"));
         }
         return criteria.list();
+    }
+
+    private Junction getStartDateRestriction(final DateTime dateTime) {
+        String isStartDateFromAnInterval = "{alias}.start_date = '" + dateTime.toString("yyyy-MM-dd HH:mm:ss.SSS")
+                + "'";
+        return Restrictions.disjunction().add(Restrictions.eq("date", dateTime))
+                .add(Restrictions.sqlRestriction(isStartDateFromAnInterval));
     }
 }
