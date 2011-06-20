@@ -4,7 +4,13 @@ package ar.edu.unq.dopplereffect.employees;
  * Identifica el area de trabajo de un empleado.
  */
 public enum CareerPlan {
-    TECHNICIAN, TESTER, FUNCTIONAL, DESIGNER;
+    TECHNICIAN("Technician"), TESTER("Tester"), FUNCTIONAL("Funtional"), DESIGNER("Designer");
+
+    private String value;
+
+    private CareerPlan(final String value) {
+        this.setValue(value);
+    }
 
     /**
      * @return el plan de carrera anterior, es decir aquel mas principiante.
@@ -43,5 +49,18 @@ public enum CareerPlan {
         default:
             return null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public void setValue(final String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

@@ -11,7 +11,7 @@ import ar.edu.unq.dopplereffect.builders.employees.PersonalDataBuilder;
 import ar.edu.unq.dopplereffect.data.PersonalData;
 import ar.edu.unq.dopplereffect.employees.EmployeeTimeCalculator;
 import ar.edu.unq.dopplereffect.projects.Project;
-import ar.edu.unq.dopplereffect.projects.ProjectAssignmentStrategy;
+import ar.edu.unq.dopplereffect.projects.ProjectAssignmentStrategyImpl;
 import ar.edu.unq.dopplereffect.projects.Skill;
 
 public class ProjectBuilder implements Builder<Project> {
@@ -28,7 +28,7 @@ public class ProjectBuilder implements Builder<Project> {
 
     protected transient EmployeeTimeCalculator calculator = new EmployeeTimeCalculator();
 
-    protected transient ProjectAssignmentStrategy assignmentStrategy = new ProjectAssignmentStrategy();
+    protected transient ProjectAssignmentStrategyImpl assignmentStrategy = new ProjectAssignmentStrategyImpl();
 
     public ProjectBuilder withName(final String theName) {
         name = theName;
@@ -66,7 +66,7 @@ public class ProjectBuilder implements Builder<Project> {
         return this;
     }
 
-    public ProjectBuilder withAssignmentStrategy(final ProjectAssignmentStrategy strategy) {
+    public ProjectBuilder withAssignmentStrategy(final ProjectAssignmentStrategyImpl strategy) {
         assignmentStrategy = strategy;
         return this;
     }

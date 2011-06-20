@@ -39,7 +39,7 @@ public class Project extends Entity {
 
     private Set<ProjectAssignment> projectAssignment = new HashSet<ProjectAssignment>();
 
-    private ProjectAssignmentStrategy projectAssignmentStrategy;
+    private IProjectAssignmentStrategy projectAssignmentStrategy;
 
     /* *************************** CONSTRUCTORS *************************** */
 
@@ -49,7 +49,7 @@ public class Project extends Entity {
         this.setCurrentEffort(0L);
     }
 
-    public Project(final ProjectAssignmentStrategy strategy) {
+    public Project(final IProjectAssignmentStrategy strategy) {
         this();
         this.setProjectAssignmentStrategy(strategy);
     }
@@ -199,7 +199,7 @@ public class Project extends Entity {
         this.setProjectAssignment(assignedEmployees);
     }
 
-    public void setProjectAssignmentStrategy(final ProjectAssignmentStrategy projectAssignmentStrategy) {
+    public void setProjectAssignmentStrategy(final IProjectAssignmentStrategy projectAssignmentStrategy) {
         this.projectAssignmentStrategy = projectAssignmentStrategy;
     }
 
