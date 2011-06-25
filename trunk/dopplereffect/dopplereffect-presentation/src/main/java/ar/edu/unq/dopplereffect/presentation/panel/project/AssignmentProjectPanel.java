@@ -141,7 +141,9 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
             @Override
             public void onAction(final AjaxRequestTarget target) {
                 if (availableSelectableBehavior.getComponentModel() != null) {
-                    target.appendJavascript(addIntervaDuration.open().render().toString());
+                    addIntervaDuration.open(target);
+                    // AbstractWebPage.showError("adsfasdfasdfas asdfasd",
+                    // target);
                 }
             }
         };

@@ -8,6 +8,8 @@ import org.odlabs.wiquery.core.javascript.JsStatement;
 import org.odlabs.wiquery.core.options.Options;
 import org.odlabs.wiquery.ui.commons.WiQueryUIPlugin;
 
+/**
+ */
 @WiQueryUIPlugin
 public class ScrollPaneBehavior extends WiQueryAbstractBehavior {
 
@@ -15,47 +17,17 @@ public class ScrollPaneBehavior extends WiQueryAbstractBehavior {
 
     private static ResourceReference aCSS = new ResourceReference(ScrollPaneBehavior.class, "jquery.jscrollpane.css");
 
-    /* ************************ INSTANCE VARIABLES ************************ */
-
     private Options options;
 
     private boolean includeDefaultCss = true;
 
-    /* *************************** CONSTRUCTORS *************************** */
-
+    /**
+     * Constructor.
+     */
     public ScrollPaneBehavior() {
         super();
         this.setOptions(new Options());
     }
-
-    /* **************************** ACCESSORS ***************************** */
-
-    public Options getOptions() {
-        return options;
-    }
-
-    public void setOptions(final Options options) {
-        this.options = options;
-    }
-
-    /**
-     * @return if default CCS should be included.
-     */
-    public boolean isIncludeDefaultCss() {
-        return includeDefaultCss;
-    }
-
-    /**
-     * Allows to set whether default CCS will be included or not.
-     * 
-     * @param includeCss
-     */
-    public ScrollPaneBehavior setIncludeDefaultCss(final boolean includeCss) {
-        includeDefaultCss = includeCss;
-        return this;
-    }
-
-    /* **************************** OPERATIONS **************************** */
 
     @Override
     public void contribute(final WiQueryResourceManager wiQueryResourceManager) {
@@ -65,6 +37,11 @@ public class ScrollPaneBehavior extends WiQueryAbstractBehavior {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.odlabs.wiquery.core.behavior.WiQueryAbstractBehavior#statement()
+     */
     @Override
     public JsStatement statement() {
         return new JsQuery(this.getComponent()).$().chain("jScrollPane", this.getOptions().getJavaScriptOptions());
@@ -118,4 +95,30 @@ public class ScrollPaneBehavior extends WiQueryAbstractBehavior {
         Boolean maintainPosition = this.getOptions().getBoolean("maintainPosition");
         return maintainPosition == null ? true : maintainPosition.booleanValue();
     }
+
+    /**
+     * @return if default CCS should be included.
+     */
+    public boolean isIncludeDefaultCss() {
+        return includeDefaultCss;
+    }
+
+    /**
+     * Allows to set whether default CCS will be included or not.
+     * 
+     * @param includeCss
+     */
+    public ScrollPaneBehavior setIncludeDefaultCss(final boolean includeCss) {
+        includeDefaultCss = includeCss;
+        return this;
+    }
+
+    public void setOptions(final Options options) {
+        this.options = options;
+    }
+
+    public Options getOptions() {
+        return options;
+    }
+
 }

@@ -2,6 +2,8 @@ package ar.edu.unq.dopplereffect.presentation.jquery.scroolpane;
 
 import org.odlabs.wiquery.core.commons.WiQueryJavaScriptResourceReference;
 
+/**
+ */
 public class ScrollPaneJavascriptResourceReference extends WiQueryJavaScriptResourceReference {
     private static final long serialVersionUID = 1;
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.persistence.project.ProjectRepositoryImpl;
 import ar.edu.unq.dopplereffect.projects.Project;
 import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
@@ -80,6 +81,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
         project.setSkills(skills);
         this.getProjectRepo().save(project);
+        throw new UserException();
     }
 
     @Override
