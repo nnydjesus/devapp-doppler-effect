@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.odlabs.wiquery.ui.dialog.util.DialogUtilsBehavior;
 
 import ar.edu.unq.dopplereffect.presentation.panel.LanguageSelectorPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SimplePanel;
@@ -37,6 +38,8 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     private Component body;
 
+    private DialogUtilsBehavior dialogUtilsBehavior;
+
     /* *************************** CONSTRUCTORS *************************** */
 
     public AbstractWebPage() {
@@ -63,6 +66,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         this.add(this.createTitle());
         this.add(this.createTitle2());
         this.add(this.createSidebar());
+        this.dialogUtilsBehavior = new DialogUtilsBehavior();
         this.add(new LanguageSelectorPanel("language_select"));
     }
 
@@ -117,5 +121,13 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     protected Component createTitle2() {
         return new Label(TITLE2, new Model<String>("Effect"));
+    }
+
+    /* ************************* OPERATIONS ************************** */
+
+    public void showError(final String message) {
+        dialogUtilsBehavior.errorDialog(message).render();
+        // App.INSTANCE.newAjaxRequestTarget(this).appendJavascript(
+        // dialogUtilsBehavior.errorDialog(message).render().toString());
     }
 }

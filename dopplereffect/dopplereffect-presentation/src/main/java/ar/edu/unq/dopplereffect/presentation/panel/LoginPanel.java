@@ -299,11 +299,11 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
     }
 
     public void submitRegister(final String userName, final String password, final AjaxRequestTarget target) {
-        this.getService().signUp(userName, password, this.registerCallBack(target), this.errorCallback());
+        this.getService().signUp(userName, password, this.registerCallBack(target), this.errorCallback(target));
     }
 
     public void submitLogin(final String userName, final String password, final AjaxRequestTarget target) {
-        this.getService().login(userName, password, this.loginCallback(target), this.errorCallback());
+        this.getService().login(userName, password, this.loginCallback(target), this.errorCallback(target));
     }
 
     protected CallBack<User> loginCallback(final AjaxRequestTarget target) {
@@ -313,6 +313,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
             @Override
             public void execute(final User user) {
                 LoginPanel.this.getCallBack().execute(target, user);
+
             }
         };
     }
@@ -328,7 +329,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         };
     }
 
-    protected CallBack<UserException> errorCallback() {
+    protected CallBack<UserException> errorCallback(final AjaxRequestTarget target) {
         return new CallBack<UserException>() {
             private static final long serialVersionUID = 1L;
 
@@ -336,6 +337,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
             public void execute(final UserException exception) {
                 LoginPanel.this
                         .error(LoginPanel.this.getLocalizer().getString(exception.getMessage(), LoginPanel.this));
+                target.addComponent(LoginPanel.this.getFeedbackPanel());
             }
         };
     }

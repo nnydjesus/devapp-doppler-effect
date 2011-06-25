@@ -12,10 +12,10 @@
 		</id>
 		
 		<many-to-one name="personalData" class="EmployeeData" column="employee_data_id"
-		not-null="true" cascade="all" unique="true" lazy="false" />
+		not-null="true" cascade="all, delete-orphan" unique="true" lazy="false" />
 		
 		<many-to-one name="careerData" class="CareerData" column="career_data_id"
-		not-null="true" cascade="all" unique="true" lazy="false" />
+		not-null="true" cascade="save-update" unique="true" lazy="false" />
 		
 		<set name="assignments" cascade="all, delete-orphan" >
 		

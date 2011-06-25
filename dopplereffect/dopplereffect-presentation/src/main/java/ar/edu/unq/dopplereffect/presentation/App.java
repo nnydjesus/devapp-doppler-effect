@@ -85,6 +85,6 @@ public class App extends AuthenticatedWebApplication {// implements
 
     // @Override
     // public ResourceReference getTheme(final Session session) {
-    // return LeFrogTheme.getInstance().getTheme();
+    // return RedmondTheme.getInstance().getTheme();
     // }
 }
