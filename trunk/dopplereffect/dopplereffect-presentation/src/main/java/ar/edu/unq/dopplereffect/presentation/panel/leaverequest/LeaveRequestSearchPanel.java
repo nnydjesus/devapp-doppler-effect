@@ -13,6 +13,7 @@ import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSearchModel> {
 
@@ -28,6 +29,14 @@ public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSea
     public LeaveRequestSearchPanel(final String id, final AjaxCallBack<Component> parentPage,
             final LeaveRequestSearchModel model) {
         this(id, parentPage, null, model);
+    }
+
+    public LeaveRequestSearchPanel(final String string, final AjaxCallBack<Component> callback,
+            final AbstractPanel<?> parentPanel, final LeaveRequestSearchModel leaveReqSearchModel,
+            final EmployeeViewDTO employee) {
+        this(string, callback, parentPanel, leaveReqSearchModel);
+        leaveReqSearchModel.setSearchByEmployee(employee);
+        leaveReqSearchModel.search();
     }
 
     @Override
