@@ -51,5 +51,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="salarySpecRepo" ref="repo.salary_spec" />
 		<property name="loginService" ref="service.user" />
 	</bean>
+	
+	<bean id="service.log" class="ar.edu.unq.dopplereffect.log.LogAspect">
+	</bean>
 
 </beans>
