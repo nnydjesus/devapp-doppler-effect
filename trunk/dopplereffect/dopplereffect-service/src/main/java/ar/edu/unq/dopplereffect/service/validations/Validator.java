@@ -2,6 +2,8 @@ package ar.edu.unq.dopplereffect.service.validations;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import ar.edu.unq.dopplereffect.exceptions.ValidationException;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
@@ -71,6 +73,6 @@ public class Validator {
 
     private Object getProperty(final String field) {
         return ReflectionUtils
-                .invokeMethod(object, "get" + Character.toUpperCase(field.charAt(0)) + field.substring(1));
+                .invokeMethod(object, "get" + StringUtils.capitalize(field));
     }
 }
