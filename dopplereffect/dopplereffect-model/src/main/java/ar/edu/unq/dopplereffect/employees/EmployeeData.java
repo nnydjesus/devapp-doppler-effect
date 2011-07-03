@@ -12,7 +12,7 @@ public class EmployeeData extends PersonalData {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    private int dni;
+    private Integer dni;
 
     private String lastName;
 
@@ -37,11 +37,11 @@ public class EmployeeData extends PersonalData {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public int getDni() {
+    public Integer getDni() {
         return dni;
     }
 
-    public void setDni(final int dni) {
+    public void setDni(final Integer dni) {
         this.dni = dni;
     }
 
