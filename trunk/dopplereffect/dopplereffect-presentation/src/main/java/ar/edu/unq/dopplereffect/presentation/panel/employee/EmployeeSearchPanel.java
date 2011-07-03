@@ -7,16 +7,14 @@ import org.apache.wicket.markup.html.form.TextField;
 
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
-import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
-import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 /**
  * Representa la pagina de busqueda de empleados.
  */
-public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<EmployeeViewDTO>> {
+public class EmployeeSearchPanel extends AbstractSearchPanel<EmployeeSearchModel> {
 
     private static final long serialVersionUID = -7425688577267166062L;
 
@@ -69,7 +67,7 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<SearchModel<Employe
     }
 
     @Override
-    protected void buildForm(final Form<SearchModel<EmployeeViewDTO>> form) {
+    protected void buildForm(final Form<EmployeeSearchModel> form) {
         form.add(new TextField<String>("searchByFirstName"));
         form.add(new TextField<String>("searchByLastName"));
     }

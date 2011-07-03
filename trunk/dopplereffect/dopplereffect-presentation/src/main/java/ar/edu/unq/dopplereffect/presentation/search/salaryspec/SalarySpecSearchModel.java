@@ -84,4 +84,8 @@ public class SalarySpecSearchModel extends SearchModel<SalarySpecDTO> {
         return this.getAllResultsFromService();
     }
 
+    @Override
+    public void export(final String pathFile) {
+    }
+
 }

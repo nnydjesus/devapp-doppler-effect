@@ -116,4 +116,8 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
     protected List<LeaveRequestViewDTO> getByNameResultsFromService(final String name) {
         return this.getAllResultsFromService();
     }
+
+    @Override
+    public void export(final String pathFile) {
+    }
 }

@@ -84,6 +84,11 @@ public class EmployeeAjaxDataTable extends AjaxDataTablePage<EmployeeViewDTO, Em
         });
     }
 
+    @Override
+    protected int getPageSize() {
+        return 3;
+    }
+
     public LeaveRequestSearchModel getLeaveRequestSearchModel() {
         return leaveRequestSearchModel;
     }

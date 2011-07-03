@@ -64,6 +64,8 @@ public abstract class SearchModel<T> implements Serializable {
         this.setResults(new LinkedList<T>());
     }
 
+    public abstract void export(final String pathFile);
+
     protected abstract List<T> getAllResultsFromService();
 
     protected abstract List<T> getByNameResultsFromService(String name);
@@ -75,4 +77,5 @@ public abstract class SearchModel<T> implements Serializable {
     protected abstract <D extends DTO> void callUpdateOnService(D entity);
 
     public abstract <D extends DTO> D createEditDTO(T viewDTO);
+
 }

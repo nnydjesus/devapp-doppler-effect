@@ -83,4 +83,8 @@ public class ProjectSearchModel extends SearchModel<ProjectDTO> {
             final IntervalDurationStrategy intervalDurationStrategy) {
         return this.getService().assignmentEmployee(projectDTO, employeeViewDTO, intervalDurationStrategy);
     }
+
+    @Override
+    public void export(final String pathFile) {
+    }
 }

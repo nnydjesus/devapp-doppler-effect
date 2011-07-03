@@ -1,6 +1,7 @@
 <html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
 <wicket:panel >
     <a wicket:id="back" href="#"><wicket:message key="link.back" /></a>
+	<span wicket:id="uploadPanel" class="export"></span>
     <form wicket:id="searchEmployeeForm">
       <table align="center" id="panel">
 	    <tr>
@@ -15,6 +16,7 @@
           <td colspan="2">
           	<input type="submit" wicket:id="search" wicket:message="value:button.search" />          
           	<input type="submit" wicket:id="newEmployee" wicket:message="value:button.new_employee" />
+<!--           	<input type="button" wicket:id="export" wicket:message="value:button.export" /> -->
           </td>
         </tr>
       </table>

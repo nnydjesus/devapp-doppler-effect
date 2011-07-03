@@ -9,17 +9,15 @@ import org.apache.wicket.protocol.http.request.CryptedUrlWebRequestCodingStrateg
 import org.apache.wicket.protocol.http.request.WebRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCodingStrategy;
 import org.apache.wicket.request.IRequestCycleProcessor;
+import org.apache.wicket.request.target.coding.QueryStringUrlCodingStrategy;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 
+import ar.edu.unq.dopplereffect.presentation.pages.ErrorPage;
 import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
 import ar.edu.unq.dopplereffect.presentation.pages.Login;
 
 public class App extends AuthenticatedWebApplication {// implements
                                                       // IThemableApplication {
-
-    // para tener datos en memoria.... per solo se quiere
-    // ingresar esos datos cuando levanta el jetty
-    private static boolean create = false;
 
     @Override
     protected void init() {
@@ -33,6 +31,7 @@ public class App extends AuthenticatedWebApplication {// implements
         MounterURL aMounterURL = new MounterURL(this);
         aMounterURL.mount("autenticate", Login.class, "");
         aMounterURL.mount("home", HomePage.class, "");
+        this.mount(new QueryStringUrlCodingStrategy("error404", ErrorPage.class));
     }
 
     private void addResources() {
@@ -73,14 +72,6 @@ public class App extends AuthenticatedWebApplication {// implements
 
     public String getContextPath() {
         return this.getServletContext().getContextPath();
-    }
-
-    public static void setCreate(final boolean isCreate) {
-        App.create = isCreate;
-    }
-
-    public static boolean isCreate() {
-        return create;
     }
 
     // @Override

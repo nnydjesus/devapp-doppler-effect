@@ -5,7 +5,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ar.edu.unq.dopplereffect.presentation.App;
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SidebarPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
@@ -41,10 +40,7 @@ public class HomePage extends AbstractWebPage<Component> {
 
     @Override
     protected void makePage() {
-        if (!App.isCreate()) {
-            addDefaultValuesService.addAllData();
-            App.setCreate(true);
-        }
+        addDefaultValuesService.init();
         super.makePage();
     }
 
