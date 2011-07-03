@@ -7,6 +7,7 @@ import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeDTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeDetailDTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeService;
+import ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 /**
@@ -102,5 +103,9 @@ public class EmployeeSearchModel extends SearchModel<EmployeeViewDTO> {
     @Override
     protected List<EmployeeViewDTO> getByNameResultsFromService(final String name) {
         return this.getService().searchAllByFirstAndLastName(this.getSearchByFirstName(), this.getSearchByLastName());
+    }
+
+    public void export(final String pathFile) {
+        ((EmployeeServiceImpl) this.getService()).export(pathFile);
     }
 }

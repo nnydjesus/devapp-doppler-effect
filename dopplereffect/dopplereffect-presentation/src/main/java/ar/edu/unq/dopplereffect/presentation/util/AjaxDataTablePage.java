@@ -212,9 +212,13 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
         });
         this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(this.getId(), columns,
                 new GenericSortableDataProvider<T>(this.getId(), this.getSearchModel(), this.getSortName()),
-                SearchModel.PAGE_SIZE));
+                getPageSize()));
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
+    }
+
+    protected int getPageSize() {
+        return SearchModel.PAGE_SIZE;
     }
 
     protected Component createEditPanel(final IModel<T> model) {

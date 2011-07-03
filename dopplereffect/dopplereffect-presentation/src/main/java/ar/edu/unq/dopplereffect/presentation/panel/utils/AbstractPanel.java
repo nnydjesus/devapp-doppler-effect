@@ -51,6 +51,10 @@ public class AbstractPanel<T> extends Panel {
         return this.getModel().getObject();
     }
 
+    public void setModelObject(final T object) {
+        this.getModel().setObject(object);
+    }
+
     @SuppressWarnings("unchecked")
     protected IModel<T> getModel() {
         return (IModel<T>) this.getDefaultModel();

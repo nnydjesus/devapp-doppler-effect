@@ -25,8 +25,13 @@ public class GridPanel<T extends DTO> extends Panel implements ITable {
         super(id, new Model<Object>(defaultmodel));
 
         GeneralGridModel<T> model = new GeneralGridModel<T>(beanClass, fields);
+
         GeneralGrid<T> grid = new GeneralGrid<T>("grid", model, new GenericSortableDataProvider<T>(id,
                 this.getDefaultModelObject(), "name"));
+        // GeneralGrid<T> grid = new GeneralGrid<T>("grid", new
+        // GeneralTableModel(beanClass, fields),
+        // new GenericSortableDataProvider<T>(id, this.getDefaultModelObject(),
+        // "name"));
 
         this.add(grid);
     }

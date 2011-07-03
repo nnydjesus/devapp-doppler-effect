@@ -13,6 +13,7 @@ import org.apache.wicket.model.StringResourceModel;
 import ar.edu.unq.dopplereffect.presentation.grid.GridPanel;
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.upload.UploadPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
@@ -103,12 +104,14 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
         this.modelSearchByName = modelSearchByName;
     }
 
+    @SuppressWarnings("unchecked")
     protected void init(final Form<T> formulario) {
         this.buildForm(formulario);
         this.addResultSection(this.selectITable());
         this.addButtons(formulario);
         this.add(formulario);
         this.add(this.getAjaxSectionResult());
+        this.add(new UploadPanel("uploadPanel", this.getModelObject()));
     }
 
     protected void addButtons(final Form<T> form) {
