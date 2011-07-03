@@ -1,0 +1,23 @@
+<configuration>
+
+    <section name="pagination">
+        <entry key="MAX_RESULT_PAGE" value="6"/>
+    </section>
+
+    <section name="mailing">
+        <entry key="user" value="nny.fwk@gmail.com"/>
+        <entry key="password" value="sarasaza"/>
+        <entry key="activated" value="true"/>
+        <entry key="disabledAccount" value="nny.fwk@gmail.com"/>
+        <entry key="from.defaultAddress" value="nny.fwk@gmail.com"/>
+        <entry key="from.defaultSender" value="doopler-effect"/>
+        <entry key="mail.smtp.host" value="smtp.gmail.com"/>
+        <entry key="mail.smtp.auth" value="true"/>
+        <entry key="mail.debug" value="true"/>
+        <entry key="mail.smtp.port" value="465"/>
+        <entry key="mail.smtp.socketFactory.port" value="465"/>
+        <entry key="mail.smtp.socketFactory.class" value="javax.net.ssl.SSLSocketFactory"/>
+        <entry key="mail.smtp.socketFactory.fallback" value="false"/>
+    </section>
+    
+</configuration>

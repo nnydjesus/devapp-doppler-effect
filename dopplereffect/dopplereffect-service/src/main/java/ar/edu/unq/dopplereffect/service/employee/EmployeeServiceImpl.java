@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.service.employee;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import ar.edu.unq.dopplereffect.data.Address;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.persistence.employee.CareerPlanLevelRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.employee.EmployeeRepositoryImpl;
+import ar.edu.unq.dopplereffect.service.export.ExportSercvice;
 import ar.edu.unq.dopplereffect.service.validations.Validator;
 
 @Service
@@ -25,7 +27,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private CareerPlanLevelRepositoryImpl careerPlanLevelRepo;
 
+    private ExportSercvice<Employee> exportService;
+
     /* *************************** CONSTRUCTORS *************************** */
+
+    // TODO inyectar, pero como le paso la case??
+    public EmployeeServiceImpl() {
+        exportService = new ExportSercvice<Employee>(Employee.class);
+    }
 
     /* **************************** ACCESSORS ***************************** */
 
@@ -183,5 +192,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         emp.getCareerData().setCareerPlan(employeeDTO.getCareerPlan());
         emp.getCareerData().setLevel(this.getCareerPlanLevelRepo().getByName(employeeDTO.getCareerPlanLevel()));
         emp.getCareerData().setPercentage(employeeDTO.getPercentage());
+    }
+
+    public void export(final String pathFile) {
+        exportService.export(pathFile, this.getEmployeeRepo().searchAll(), new HashMap<String, String>());
     }
 }

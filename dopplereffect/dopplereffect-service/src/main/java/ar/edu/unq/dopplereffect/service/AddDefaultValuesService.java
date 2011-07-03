@@ -99,7 +99,16 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
 
     private LoginService loginService;
 
-    public void addAllData() {
+    private Boolean isCreated = false;
+
+    public void init() {
+        if (!isCreated) {
+            this.addAllData();
+            isCreated = true;
+        }
+    }
+
+    private void addAllData() {
         this.addCareerPlanLevels();
         this.addEmployees();
         this.addLeaveRequestTypes();
