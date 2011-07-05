@@ -51,4 +51,9 @@ public class ServiceTransactionalTest extends SpringServiceTest {
             Assert.assertTrue(salarySpecService.searchAllSalarySpecs().isEmpty());
         }
     }
+
+    // @Test
+    // public void testIsNotTransactional() {
+    //
+    // }
 }
