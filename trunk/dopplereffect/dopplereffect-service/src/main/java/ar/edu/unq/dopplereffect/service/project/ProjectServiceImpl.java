@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.exceptions.FatalException;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
+import ar.edu.unq.dopplereffect.log.NotLoggable;
 import ar.edu.unq.dopplereffect.persistence.project.ProjectRepositoryImpl;
 import ar.edu.unq.dopplereffect.projects.Project;
 import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
@@ -33,9 +35,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public List<ProjectDTO> searchAllProjects() {
+//    	throw new FatalException("ASDFasdfA SdfASDfAsd fasDFsadFasdFsadfsd");
         return this.convertAll(this.getProjectRepo().searchAll());
     }
 
+    @NotLoggable
     private List<ProjectDTO> convertAll(final List<Project> projects) {
         List<ProjectDTO> results = new LinkedList<ProjectDTO>();
         for (Project p : projects) {
@@ -44,6 +48,7 @@ public class ProjectServiceImpl implements ProjectService {
         return results;
     }
 
+    @NotLoggable
     private ProjectDTO convert(final Project project) {
         ProjectDTO pDTO = new ProjectDTO();
         pDTO.setName(project.getName());
@@ -55,6 +60,7 @@ public class ProjectServiceImpl implements ProjectService {
         return pDTO;
     }
 
+    @NotLoggable
     private List<ProjectAssignmentDTO> convertAllProjectAssignment(final Set<ProjectAssignment> projectAssignments) {
         List<ProjectAssignmentDTO> results = new ArrayList<ProjectAssignmentDTO>();
         for (ProjectAssignment projectAssignment : projectAssignments) {
@@ -63,6 +69,7 @@ public class ProjectServiceImpl implements ProjectService {
         return results;
     }
 
+    @NotLoggable
     protected ProjectAssignmentDTO convertProjectAssignment(final ProjectAssignment projectAssignment) {
         return new ProjectAssignmentDTO(this.getEmployeeService().convert(projectAssignment.getEmployee()),
                 projectAssignment.getIntervals());

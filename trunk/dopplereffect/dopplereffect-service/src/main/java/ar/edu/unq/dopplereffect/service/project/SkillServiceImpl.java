@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.dopplereffect.log.NotLoggable;
 import ar.edu.unq.dopplereffect.persistence.project.SkillRepositoryImpl;
 import ar.edu.unq.dopplereffect.projects.Skill;
 
@@ -31,10 +32,12 @@ public class SkillServiceImpl implements SkillService {
         return this.convertAll(this.getSkillRepo().searchAll());
     }
 
+    @NotLoggable
     public List<SkillDTO> convertAll(final Set<Skill> skills) {
         return this.convertAll(new LinkedList<Skill>(skills));
     }
 
+    @NotLoggable
     public List<SkillDTO> convertAll(final List<Skill> skills) {
         List<SkillDTO> results = new LinkedList<SkillDTO>();
         for (Skill sk : skills) {
@@ -43,6 +46,7 @@ public class SkillServiceImpl implements SkillService {
         return results;
     }
 
+    @NotLoggable
     public SkillDTO convert(final Skill sk) {
         SkillDTO result = new SkillDTO();
         result.setLevel(sk.getLevel());
