@@ -3,6 +3,7 @@ package ar.edu.unq.dopplereffect.service.salaryspec;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,11 +76,7 @@ public class SalarySpecServiceImpl implements SalarySpecService {
     @Override
     @Transactional
     public List<SalarySpecDTO> searchAllSalarySpecs() {
-        List<SalarySpecDTO> result = new LinkedList<SalarySpecDTO>();
-        for (SalarySpecification spec : this.getRepository().searchAll()) {
-            result.add(this.convert(spec));
-        }
-        return result;
+        return this.convertAll(this.getRepository().searchAll());
     }
 
     @Override
@@ -129,35 +126,32 @@ public class SalarySpecServiceImpl implements SalarySpecService {
         return salarySpecDTO;
     }
 
-    @NotLoggable
     private List<SalarySpecDTO> convertAll(final List<SalarySpecification> specs) {
         List<SalarySpecDTO> results = new LinkedList<SalarySpecDTO>();
         for (SalarySpecification spec : specs) {
-            results.add(this.convert(spec));
+            SalarySpecDTO converted = this.convert(spec);
+            Hibernate.initialize(converted.getPercentages());
+            results.add(converted);
         }
         return results;
     }
     
     @NotLoggable
     private void validatePercentages(final List<Integer> percentages) {
-        if (!percentages.contains(0) || !percentages.contains(100)) {
+        if (!percentages.contains(0) || !percentages.contains(100))
             throw new ValidationException("validations.percentages.basic");
-        }
         for (int perc : percentages) {
-            if (perc < 0 || perc > 100) {
+            if (perc < 0 || perc > 100)
                 throw new ValidationException("validations.percentages.outOfBounds");
-            }
         }
     }
     
     @NotLoggable
     private void doValidations(final SalarySpecDTO salarySpecDTO, final SalarySpecification salarySpec) {
         this.validatePercentages(salarySpecDTO.getPercentages());
-        if (this.getRepository().checkForExistentSalarySpec(salarySpec)) {
+        if (this.getRepository().checkForExistentSalarySpec(salarySpec))
             throw new ValidationException("validations.existent");
-        }
-        if (salarySpecDTO.getMinSalary() >= salarySpecDTO.getMaxSalary()) {
+        if (salarySpecDTO.getMinSalary() >= salarySpecDTO.getMaxSalary())
             throw new ValidationException("validations.salary");
-        }
     }
 }
