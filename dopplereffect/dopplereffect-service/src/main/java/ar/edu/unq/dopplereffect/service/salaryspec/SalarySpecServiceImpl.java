@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.employees.CareerPlanLevel;
 import ar.edu.unq.dopplereffect.exceptions.ValidationException;
+import ar.edu.unq.dopplereffect.log.NotLoggable;
 import ar.edu.unq.dopplereffect.persistence.employee.SalarySpecificationRepositoryImpl;
 import ar.edu.unq.dopplereffect.salaries.SalarySpecification;
 import ar.edu.unq.dopplereffect.service.employee.CareerPlanServiceImpl;
@@ -108,6 +109,7 @@ public class SalarySpecServiceImpl implements SalarySpecService {
 
     /* ************************* PRIVATE METHODS ************************** */
 
+    @NotLoggable
     private SalarySpecification convert(final SalarySpecDTO salarySpecDTO) {
         CareerPlanLevel careerPlanLevel = this.getCareerPlanService().findFirstLevelWithName(
                 salarySpecDTO.getCareerPlanLevel());
@@ -115,6 +117,7 @@ public class SalarySpecServiceImpl implements SalarySpecService {
                 salarySpecDTO.getMinSalary(), salarySpecDTO.getMaxSalary(), salarySpecDTO.getPercentages());
     }
 
+    @NotLoggable
     private SalarySpecDTO convert(final SalarySpecification spec) {
         SalarySpecDTO salarySpecDTO = new SalarySpecDTO();
         salarySpecDTO.setYear(spec.getYear());
@@ -126,6 +129,7 @@ public class SalarySpecServiceImpl implements SalarySpecService {
         return salarySpecDTO;
     }
 
+    @NotLoggable
     private List<SalarySpecDTO> convertAll(final List<SalarySpecification> specs) {
         List<SalarySpecDTO> results = new LinkedList<SalarySpecDTO>();
         for (SalarySpecification spec : specs) {
@@ -133,7 +137,8 @@ public class SalarySpecServiceImpl implements SalarySpecService {
         }
         return results;
     }
-
+    
+    @NotLoggable
     private void validatePercentages(final List<Integer> percentages) {
         if (!percentages.contains(0) || !percentages.contains(100)) {
             throw new ValidationException("validations.percentages.basic");
@@ -144,7 +149,8 @@ public class SalarySpecServiceImpl implements SalarySpecService {
             }
         }
     }
-
+    
+    @NotLoggable
     private void doValidations(final SalarySpecDTO salarySpecDTO, final SalarySpecification salarySpec) {
         this.validatePercentages(salarySpecDTO.getPercentages());
         if (this.getRepository().checkForExistentSalarySpec(salarySpec)) {

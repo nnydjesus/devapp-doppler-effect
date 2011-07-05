@@ -7,17 +7,20 @@ import ar.edu.unq.dopplereffect.service.Service;
 import ar.edu.unq.tpi.util.services.jasper.Report;
 
 /**
- * TODO tratar de inyectarle la clase del bean
  */
-public class ExportSercvice<T> implements Service {
+public class ExportService<T> implements Service {
     private static final long serialVersionUID = 1L;
 
     private Class<T> bean;
 
     private Report<T> report;
+    
+    public ExportService() {
+	}
 
-    public ExportSercvice(final Class<T> aBean) {
-        bean = aBean;
+    @SuppressWarnings("unchecked")
+	public ExportService(final String classBean) throws ClassNotFoundException {
+        bean = (Class<T>) Class.forName(classBean);
         report = new Report<T>(bean.getSimpleName());
     }
 
@@ -27,7 +30,7 @@ public class ExportSercvice<T> implements Service {
         } else if (pathFile.endsWith(FormatterExportType.EXCEL.getExtension())) {
             this.exportToEXEL(pathFile, beanCollection, parameters);
         } else if (pathFile.endsWith(FormatterExportType.RTF.getExtension())) {
-            this.exportToEXEL(pathFile, beanCollection, parameters);
+            this.exportToRTF(pathFile, beanCollection, parameters);
         }
 
     }

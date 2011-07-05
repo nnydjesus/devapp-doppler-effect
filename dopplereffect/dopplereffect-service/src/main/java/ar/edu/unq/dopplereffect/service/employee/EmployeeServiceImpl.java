@@ -11,9 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.dopplereffect.data.Address;
 import ar.edu.unq.dopplereffect.employees.Employee;
+import ar.edu.unq.dopplereffect.log.NotLoggable;
 import ar.edu.unq.dopplereffect.persistence.employee.CareerPlanLevelRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.employee.EmployeeRepositoryImpl;
-import ar.edu.unq.dopplereffect.service.export.ExportSercvice;
+import ar.edu.unq.dopplereffect.service.export.ExportService;
 import ar.edu.unq.dopplereffect.service.validations.Validator;
 
 @Service
@@ -27,14 +28,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private CareerPlanLevelRepositoryImpl careerPlanLevelRepo;
 
-    private ExportSercvice<Employee> exportService;
+    private ExportService<Employee> exportService;
 
     /* *************************** CONSTRUCTORS *************************** */
 
-    // TODO inyectar, pero como le paso la case??
-    public EmployeeServiceImpl() {
-        exportService = new ExportSercvice<Employee>(Employee.class);
-    }
 
     /* **************************** ACCESSORS ***************************** */
 
@@ -54,9 +51,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.careerPlanLevelRepo = careerPlanLevelRepo;
     }
 
+    public void setExportService(ExportService<Employee> exportService) {
+    	this.exportService = exportService;
+    }
+    
+    public ExportService<Employee> getExportService() {
+    	return exportService;
+    }
     /* **************************** OPERATIONS **************************** */
 
-    @Override
+
+	@Override
     @Transactional
     public void newEmployee(final EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
@@ -151,6 +156,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return result;
     }
 
+    @NotLoggable
     public EmployeeViewDTO convert(final Employee employee) {
         EmployeeViewDTO result = new EmployeeViewDTO();
         result.setFirstName(employee.getFirstName());
@@ -161,12 +167,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         return result;
     }
 
+    @NotLoggable
     public Employee getEmployeeByDTO(final EmployeeViewDTO employeeViewDTO) {
         return this.getEmployeeRepo().searchByDni(employeeViewDTO.getDni());
     }
 
     /* ************************* PRIVATE METHODS ************************** */
 
+    @NotLoggable
     private List<EmployeeViewDTO> convertAll(final List<Employee> employees) {
         List<EmployeeViewDTO> results = new LinkedList<EmployeeViewDTO>();
         for (Employee emp : employees) {
@@ -175,6 +183,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return results;
     }
 
+    @NotLoggable
     private void synchronizeWithDTO(final EmployeeDTO employeeDTO, final Employee emp) {
         emp.setFirstName(employeeDTO.getFirstName());
         emp.setLastName(employeeDTO.getLastName());
@@ -195,6 +204,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public void export(final String pathFile) {
-        exportService.export(pathFile, this.getEmployeeRepo().searchAll(), new HashMap<String, String>());
+        getExportService().export(pathFile, this.getEmployeeRepo().searchAll(), new HashMap<String, String>());
     }
 }
