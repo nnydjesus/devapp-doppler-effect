@@ -119,7 +119,7 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
     }
 
     private void addDefaultUser() {
-        this.getLoginService().signUp("a", HashUtils.hash("a"));
+        this.getLoginService().signUp("a", HashUtils.hash("a"), "nnydjesus@gmail.com");
     }
 
     private void addSalarySpecs() {

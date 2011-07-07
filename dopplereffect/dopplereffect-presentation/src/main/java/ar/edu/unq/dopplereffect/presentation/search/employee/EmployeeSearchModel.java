@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.presentation.search.employee;
 
+import java.io.File;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
@@ -9,6 +10,7 @@ import ar.edu.unq.dopplereffect.service.employee.EmployeeDetailDTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeService;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.export.FormatterExportType;
 
 /**
  * Modelo de busqueda de empleados, que permite buscar por nombre y apellido.
@@ -105,7 +107,9 @@ public class EmployeeSearchModel extends SearchModel<EmployeeViewDTO> {
         return this.getService().searchAllByFirstAndLastName(this.getSearchByFirstName(), this.getSearchByLastName());
     }
 
-    public void export(final String pathFile) {
-        ((EmployeeServiceImpl) this.getService()).export(pathFile);
+    @Override
+    public File export(final String folder, final FormatterExportType type) {
+        return ((EmployeeServiceImpl) this.getService()).export(folder + "/Employee." + type.getExtension());
     }
+
 }

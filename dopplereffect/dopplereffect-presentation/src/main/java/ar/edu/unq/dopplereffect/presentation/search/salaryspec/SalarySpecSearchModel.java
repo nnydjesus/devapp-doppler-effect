@@ -1,10 +1,12 @@
 package ar.edu.unq.dopplereffect.presentation.search.salaryspec;
 
+import java.io.File;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.DTO;
+import ar.edu.unq.dopplereffect.service.export.FormatterExportType;
 import ar.edu.unq.dopplereffect.service.salaryspec.SalarySpecDTO;
 import ar.edu.unq.dopplereffect.service.salaryspec.SalarySpecService;
 
@@ -85,7 +87,8 @@ public class SalarySpecSearchModel extends SearchModel<SalarySpecDTO> {
     }
 
     @Override
-    public void export(final String pathFile) {
+    public File export(final String folder, final FormatterExportType type) {
+        return null;
     }
 
 }

@@ -28,7 +28,7 @@ import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
 import ar.edu.unq.dopplereffect.service.project.ProjectServiceImpl;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
-public class AssignmentProjectPanel extends NavigablePanel<String> {
+public class AssignmentProjectPanel extends NavigablePanel<Void> {
 
     private static final long serialVersionUID = 7612811876399884445L;
 
@@ -42,7 +42,7 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
 
     public AssignmentProjectPanel(final String id, final ProjectDTO projectDTO, final AjaxCallBack<Component> callback,
             final AbstractPanel<ProjectDTO> backPanel, final AbstractSearchPanel<SearchModel<ProjectDTO>> searchPanel) {
-        super(id, "");
+        super(id, null);
         project = projectDTO;
         projectSearchModel = (ProjectSearchModel) searchPanel.getModelObject();
         this.init(callback, backPanel);
@@ -142,8 +142,6 @@ public class AssignmentProjectPanel extends NavigablePanel<String> {
             public void onAction(final AjaxRequestTarget target) {
                 if (availableSelectableBehavior.getComponentModel() != null) {
                     addIntervaDuration.open(target);
-                    // AbstractWebPage.showError("adsfasdfasdfas asdfasd",
-                    // target);
                 }
             }
         };

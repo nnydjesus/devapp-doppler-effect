@@ -211,8 +211,8 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
             }
         });
         this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(this.getId(), columns,
-                new GenericSortableDataProvider<T>(this.getId(), this.getSearchModel(), this.getSortName()),
-                getPageSize()));
+                new GenericSortableDataProvider<T>(this.getId(), this.getSearchModel(), this.getSortName()), this
+                        .getPageSize()));
         this.setSortableAjaxWicket(new WebMarkupContainer("markup"));
         this.getSortableAjaxWicket().add(this.getAjaxdataTable());
     }

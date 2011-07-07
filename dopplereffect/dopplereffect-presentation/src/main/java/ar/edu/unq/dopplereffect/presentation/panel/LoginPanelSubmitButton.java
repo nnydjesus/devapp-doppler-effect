@@ -5,7 +5,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.Form;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
-import ar.edu.unq.dopplereffect.presentation.util.CallBack;
+import ar.edu.unq.dopplereffect.presentation.util.CallBackObject;
 import ar.edu.unq.dopplereffect.user.User;
 
 public class LoginPanelSubmitButton extends AjaxButton {
@@ -39,12 +39,13 @@ public class LoginPanelSubmitButton extends AjaxButton {
     protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
         String userName = this.getLoginPanel().getUserIdField().getDefaultModelObjectAsString();
         String password = this.getLoginPanel().getPassField().getDefaultModelObjectAsString();
+        String email = this.getLoginPanel().getEmailField().getDefaultModelObjectAsString();
         if (this.getLoginPanel().getState().equals(StateLogin.LOGIN)) {
             this.getLoginPanel().getService()
                     .login(userName, password, this.loginCallback(target), this.errorCallback());
         } else {
             this.getLoginPanel().getService()
-                    .signUp(userName, password, this.registerCallBack(target), this.errorCallback());
+                    .signUp(userName, password, email, this.registerCallBack(target), this.errorCallback());
         }
     }
 
@@ -53,8 +54,8 @@ public class LoginPanelSubmitButton extends AjaxButton {
         target.addComponent(this.getLoginPanel().getFeedbackPanel());
     }
 
-    protected CallBack<User> loginCallback(final AjaxRequestTarget target) {
-        return new CallBack<User>() {
+    protected CallBackObject<User> loginCallback(final AjaxRequestTarget target) {
+        return new CallBackObject<User>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -64,8 +65,8 @@ public class LoginPanelSubmitButton extends AjaxButton {
         };
     }
 
-    protected CallBack<Object> registerCallBack(final AjaxRequestTarget target) {
-        return new CallBack<Object>() {
+    protected CallBackObject<Object> registerCallBack(final AjaxRequestTarget target) {
+        return new CallBackObject<Object>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -76,8 +77,8 @@ public class LoginPanelSubmitButton extends AjaxButton {
         };
     }
 
-    protected CallBack<UserException> errorCallback() {
-        return new CallBack<UserException>() {
+    protected CallBackObject<UserException> errorCallback() {
+        return new CallBackObject<UserException>() {
             private static final long serialVersionUID = 1L;
 
             @Override

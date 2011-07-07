@@ -13,6 +13,7 @@
 
 		<property name="name" not-null="true" />
 		<property name="password" not-null="true" />
+		<property name="email" not-null="true" />
 
 	</class>
 

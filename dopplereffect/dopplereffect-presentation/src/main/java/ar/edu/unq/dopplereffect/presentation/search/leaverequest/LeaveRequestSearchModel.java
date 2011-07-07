@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.presentation.search.leaverequest;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.joda.time.DateTime;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.export.FormatterExportType;
 import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestDTO;
 import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestService;
 import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestViewDTO;
@@ -118,6 +120,7 @@ public class LeaveRequestSearchModel extends SearchModel<LeaveRequestViewDTO> {
     }
 
     @Override
-    public void export(final String pathFile) {
+    public File export(final String folder, final FormatterExportType type) {
+        return null;
     }
 }

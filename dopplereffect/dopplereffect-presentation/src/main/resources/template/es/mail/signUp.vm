@@ -1,0 +1,6 @@
+<html>
+  <head><title>Registracion</title></head>
+    <h1>Hola ${user}</h1>
+    Te acabas de registrar en <a href="${link}">Doppler-Effect</a>
+  </body>
+</html>

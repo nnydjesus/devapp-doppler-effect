@@ -21,17 +21,18 @@ public class LogAspect {
     @Around("execution(* ar.edu.unq.dopplereffect.service.*.*.*(..))")
     public Object aroundSearch(final ProceedingJoinPoint pjp) throws Throwable {
         try {
-        	if(!((MethodSignature) pjp.getSignature()).getMethod().isAnnotationPresent(NotLoggable.class)){
-        		LOG.info(pjp.getTarget() + " execute " + pjp.getSignature().getName());
-        	}
-        	
+            if (!((MethodSignature) pjp.getSignature()).getMethod().isAnnotationPresent(NotLoggable.class)) {
+                LOG.info(pjp.getTarget() + " execute " + pjp.getSignature().getName());
+            }
+
             return pjp.proceed();
         } catch (UserException e) {
             LOG.error(pjp.getTarget() + " execute " + pjp.getSignature().getName() + " with error " + e);
             throw e;
         } catch (Exception e) {
             LOG.error(pjp.getTarget() + " execute " + pjp.getSignature().getName() + " with error " + e);
-            this.getMailService().sendErrorMail(e, "nnydjesus@gmail.com");
+            this.getMailService().sendErrorMail(e, "nnydjesus@gmail.com", "n.garbezza@gmail.com",
+                    "cristianelopez@gmail.com");
             throw e;
         }
     }

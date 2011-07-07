@@ -1,0 +1,6 @@
+<html>
+  <head>
+    <title>Error en la applicaion Doppler-Effect </title>
+    <p>${exception}</p>
+  </body>
+</html>

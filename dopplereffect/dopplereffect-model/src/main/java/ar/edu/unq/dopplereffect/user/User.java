@@ -12,12 +12,15 @@ public class User extends Entity {
 
     private String password;
 
+    private String email;
+
     /* *************************** CONSTRUCTORS *************************** */
 
-    public User(final String userName, final String password2) {
+    public User(final String userName, final String password2, final String anEmail) {
         super();
         name = userName;
         password = password2;
+        email = anEmail;
     }
 
     public User() {
@@ -40,5 +43,13 @@ public class User extends Entity {
 
     public void setPassword(final String password) {
         this.password = password;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

@@ -19,7 +19,7 @@ import ar.edu.unq.dopplereffect.presentation.Authenticate;
 import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
-import ar.edu.unq.dopplereffect.presentation.util.CallBack;
+import ar.edu.unq.dopplereffect.presentation.util.CallBackObject;
 import ar.edu.unq.dopplereffect.user.User;
 
 /**
@@ -133,8 +133,8 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
                 target.addComponent(RegistrationPanel.this.getFeedbackPanel());
             }
 
-            private CallBack<User> loginCallback(final AjaxRequestTarget target) {
-                return new CallBack<User>() {
+            private CallBackObject<User> loginCallback(final AjaxRequestTarget target) {
+                return new CallBackObject<User>() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -144,8 +144,8 @@ public class RegistrationPanel extends AbstractPanel<Model<String>> {
                 };
             }
 
-            private CallBack<UserException> errorCallback() {
-                return new CallBack<UserException>() {
+            private CallBackObject<UserException> errorCallback() {
+                return new CallBackObject<UserException>() {
                     private static final long serialVersionUID = 1L;
 
                     @Override

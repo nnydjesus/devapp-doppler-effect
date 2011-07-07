@@ -40,6 +40,7 @@ public class App extends AuthenticatedWebApplication {// implements
         this.getResourceSettings().addResourceFolder("pages");
         this.getResourceSettings().addResourceFolder("components");
         this.getResourceSettings().addResourceFolder("theme");
+        this.getResourceSettings().addResourceFolder("minigames");
     }
 
     /**

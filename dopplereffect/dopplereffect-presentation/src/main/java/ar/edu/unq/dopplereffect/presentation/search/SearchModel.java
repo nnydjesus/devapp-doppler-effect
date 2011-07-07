@@ -1,11 +1,13 @@
 package ar.edu.unq.dopplereffect.presentation.search;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.service.DTO;
+import ar.edu.unq.dopplereffect.service.export.FormatterExportType;
 
 public abstract class SearchModel<T> implements Serializable {
 
@@ -64,7 +66,7 @@ public abstract class SearchModel<T> implements Serializable {
         this.setResults(new LinkedList<T>());
     }
 
-    public abstract void export(final String pathFile);
+    public abstract File export(final String folder, FormatterExportType type);
 
     protected abstract List<T> getAllResultsFromService();
 
