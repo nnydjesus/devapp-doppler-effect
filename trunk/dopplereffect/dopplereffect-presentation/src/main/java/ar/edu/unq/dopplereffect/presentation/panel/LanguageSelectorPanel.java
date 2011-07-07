@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.apache.wicket.markup.html.link.Link;
 
+import ar.edu.unq.dopplereffect.mail.LocaleManager;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 
 public class LanguageSelectorPanel extends AbstractPanel<Object> {
@@ -14,6 +15,7 @@ public class LanguageSelectorPanel extends AbstractPanel<Object> {
         super(id);
         this.addLanguageSelectorLinkFor("select_spanish_link", new Locale("es"));
         this.addLanguageSelectorLinkFor("select_english_link", Locale.US);
+        this.getSession().setLocale(LocaleManager.getLocaleManager().getLocale());
     }
 
     private void addLanguageSelectorLinkFor(final String wicketId, final Locale locale) {
@@ -23,8 +25,13 @@ public class LanguageSelectorPanel extends AbstractPanel<Object> {
 
             @Override
             public void onClick() {
-                this.getSession().setLocale(locale);
+                LanguageSelectorPanel.this.setLocale(locale);
             }
         });
+    }
+
+    protected void setLocale(final Locale locale) {
+        this.getSession().setLocale(locale);
+        LocaleManager.getLocaleManager().setLocale(locale);
     }
 }

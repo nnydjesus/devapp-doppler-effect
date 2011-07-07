@@ -81,12 +81,22 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
 
     @Override
     protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
-        this.execute();
+        this.execute(target);
         target.addComponent((Component) this.getObject());
     }
 
-    protected void execute() {
-        ReflectionUtils.invokeMethod(this.getObject(), this.getAction());
+    protected void execute(final AjaxRequestTarget target) {
+        new HandlerErrorAction() {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onExecute() {
+                ReflectionUtils.invokeMethod(ReflectionAjaxButton.this.getObject(),
+                        ReflectionAjaxButton.this.getAction());
+            }
+
+        }.execute();
     }
 
     @Override

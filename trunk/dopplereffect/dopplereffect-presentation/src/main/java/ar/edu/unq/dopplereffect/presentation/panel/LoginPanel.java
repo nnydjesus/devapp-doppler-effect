@@ -8,6 +8,7 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -25,7 +26,7 @@ import ar.edu.unq.dopplereffect.presentation.Authenticate;
 import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
-import ar.edu.unq.dopplereffect.presentation.util.CallBack;
+import ar.edu.unq.dopplereffect.presentation.util.CallBackObject;
 import ar.edu.unq.dopplereffect.user.User;
 
 import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
@@ -44,6 +45,8 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
     private Authenticate service;
 
     private TextField<String> userIdField;
+
+    private TextField<String> emailField;
 
     private PasswordTextField passField;
 
@@ -209,6 +212,14 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         this.submitButton = submitButton;
     }
 
+    public void setEmailField(final TextField<String> emailField) {
+        this.emailField = emailField;
+    }
+
+    public TextField<String> getEmailField() {
+        return emailField;
+    }
+
     public StringResourceModel getRegisterBackmModel() {
         return registerBackmModel;
     }
@@ -225,6 +236,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         this.setLoginRegisterModel(this.createLocaleResources("login.register"));
         this.setRegisterBackmmodel(this.createLocaleResources("register.back"));
         this.add(this.createForm("loginForm"));
+        this.gotoLogin();
     }
 
     protected StringResourceModel createLocaleResources(final String key) {
@@ -239,6 +251,9 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
                 .add(new TextFieldWatermarkBehaviour("User name")));
         this.setPassField((PasswordTextField) new PasswordTextField("password", new Model<String>(""))
                 .add(new TextFieldWatermarkBehaviour("Password")));
+
+        emailField = (TextField<String>) new RequiredTextField<String>("email", new Model<String>(""))
+                .add(new TextFieldWatermarkBehaviour("email"));
 
         this.setRememberMeRow(new WebMarkupContainer("rememberMeRow"));
         // // Add rememberMe checkbox
@@ -263,7 +278,9 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         form.add(this.getRememberMeRow());
         form.add(this.setFeedbackPanel(new FeedbackPanel("feedbackPanel")));
         form.add(this.getSubmit());
+        form.add(this.getEmailField());
         form.add(this.getRegister());
+        form.add(new Label("labelEmal"));
         return form;
     }
 
@@ -275,7 +292,8 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
             protected void onSubmit(final AjaxRequestTarget target, final Form<?> form) {
                 String userName = LoginPanel.this.getUserIdField().getDefaultModelObjectAsString();
                 String password = LoginPanel.this.getPassField().getDefaultModelObjectAsString();
-                LoginPanel.this.getState().submit(userName, password, LoginPanel.this, target);
+                String email = LoginPanel.this.getEmailField().getDefaultModelObjectAsString();
+                LoginPanel.this.getState().submit(userName, password, email, LoginPanel.this, target);
             }
 
             @Override
@@ -298,16 +316,17 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         };
     }
 
-    public void submitRegister(final String userName, final String password, final AjaxRequestTarget target) {
-        this.getService().signUp(userName, password, this.registerCallBack(target), this.errorCallback(target));
+    public void submitRegister(final String userName, final String password, final String email,
+            final AjaxRequestTarget target) {
+        this.getService().signUp(userName, password, email, this.registerCallBack(target), this.errorCallback(target));
     }
 
     public void submitLogin(final String userName, final String password, final AjaxRequestTarget target) {
         this.getService().login(userName, password, this.loginCallback(target), this.errorCallback(target));
     }
 
-    protected CallBack<User> loginCallback(final AjaxRequestTarget target) {
-        return new CallBack<User>() {
+    protected CallBackObject<User> loginCallback(final AjaxRequestTarget target) {
+        return new CallBackObject<User>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -329,8 +348,8 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         };
     }
 
-    protected CallBack<UserException> errorCallback(final AjaxRequestTarget target) {
-        return new CallBack<UserException>() {
+    protected CallBackObject<UserException> errorCallback(final AjaxRequestTarget target) {
+        return new CallBackObject<UserException>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -342,8 +361,8 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
         };
     }
 
-    protected CallBack<Object> registerCallBack(final AjaxRequestTarget target) {
-        return new CallBack<Object>() {
+    protected CallBackObject<Object> registerCallBack(final AjaxRequestTarget target) {
+        return new CallBackObject<Object>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -357,6 +376,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
     protected void gotoLogin() {
         this.setState(StateLogin.LOGIN);
         this.getRememberMeRow().setVisible(true);
+        emailField.setVisible(false);
         this.getSubmitButton().setModel(this.getLoginSubmitModel());
         this.getRegisterBehavior().setLabel(this.getLoginRegisterModel());
     }
@@ -364,6 +384,7 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
     protected void gotoRegister() {
         LoginPanel.this.setState(StateLogin.REGISTER);
         LoginPanel.this.getRememberMeRow().setVisible(false);
+        emailField.setVisible(true);
         this.getSubmitButton().setModel(this.getRegisterSubmitModel());
         this.getRegisterBehavior().setLabel(this.getRegisterBackModel());
     }

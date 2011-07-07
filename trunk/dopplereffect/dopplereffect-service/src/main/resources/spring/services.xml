@@ -5,6 +5,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 	<bean id="service.user" class="ar.edu.unq.dopplereffect.service.LoginService" >
 		<property name="repository" ref="repo.user"/>
+		<property name="mailService" ref="service.mail"/>
 	</bean>
 	
 	<bean id="service.employeeReporting" class="ar.edu.unq.dopplereffect.service.export.ExportService">

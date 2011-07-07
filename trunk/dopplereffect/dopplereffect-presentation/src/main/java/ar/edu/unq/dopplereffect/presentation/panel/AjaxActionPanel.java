@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import ar.edu.unq.dopplereffect.presentation.util.HandlerErrorAction;
 import ar.edu.unq.dopplereffect.presentation.util.Model;
 
 /**
@@ -29,7 +30,15 @@ public abstract class AjaxActionPanel extends Panel {
 
             @Override
             public void onClick(final AjaxRequestTarget target) {
-                AjaxActionPanel.this.onAction(target);
+                new HandlerErrorAction() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onExecute() {
+                        AjaxActionPanel.this.onAction(target);
+                    }
+                }.execute();
+
             }
         });
     }

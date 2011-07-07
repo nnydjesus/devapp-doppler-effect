@@ -3,7 +3,7 @@ package ar.edu.unq.dopplereffect.presentation;
 import java.io.Serializable;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
-import ar.edu.unq.dopplereffect.presentation.util.CallBack;
+import ar.edu.unq.dopplereffect.presentation.util.CallBackObject;
 import ar.edu.unq.dopplereffect.service.LoginService;
 import ar.edu.unq.dopplereffect.user.User;
 import ar.edu.unq.tpi.util.common.HashUtils;
@@ -33,8 +33,8 @@ public class Authenticate implements Serializable {
 
     /* **************************** OPERATIONS **************************** */
 
-    public void login(final String userName, final String password, final CallBack<User> callback,
-            final CallBack<UserException> errorCallback) {
+    public void login(final String userName, final String password, final CallBackObject<User> callback,
+            final CallBackObject<UserException> errorCallback) {
         try {
             User login = loginService.login(userName, HashUtils.hash(password));
             callback.execute(login);
@@ -43,10 +43,10 @@ public class Authenticate implements Serializable {
         }
     }
 
-    public void signUp(final String userName, final String password, final CallBack<Object> callback,
-            final CallBack<UserException> errorCallback) {
+    public void signUp(final String userName, final String password, final String email,
+            final CallBackObject<Object> callback, final CallBackObject<UserException> errorCallback) {
         try {
-            loginService.signUp(userName, HashUtils.hash(password));
+            loginService.signUp(userName, HashUtils.hash(password), email);
             callback.execute(null);
         } catch (UserException e) {
             errorCallback.execute(e);

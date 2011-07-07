@@ -7,10 +7,10 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
-import org.odlabs.wiquery.ui.dialog.util.DialogUtilsBehavior;
 
 import ar.edu.unq.dopplereffect.presentation.panel.LanguageSelectorPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SimplePanel;
+import ar.edu.unq.dopplereffect.presentation.panel.project.ManagerException;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
@@ -32,13 +32,15 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    private Component defaultBody = new Label("body", new Model<String>("Welcome to de dance of death"));
+    private Component defaultBody = new Label(BODY, new Model<String>("Welcome to de dance of death"));
 
     private Panel ajaxPanel;
 
     private Component body;
 
-    private DialogUtilsBehavior dialogUtilsBehavior;
+    private static ManagerException managerException;
+
+    // private WebMarkupContainer bodyContainer;
 
     /* *************************** CONSTRUCTORS *************************** */
 
@@ -52,8 +54,10 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     public AbstractWebPage(final Component component) {
         super();
+        this.setOutputMarkupId(true);
+        managerException = new ManagerException(this);
         body = component;
-        ajaxPanel = new SimplePanel(BODY);
+        ajaxPanel = new SimplePanel("body");
         ajaxPanel.add(component);
         ajaxPanel.setOutputMarkupId(true);
         this.makePage();
@@ -66,7 +70,6 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         this.add(this.createTitle());
         this.add(this.createTitle2());
         this.add(this.createSidebar());
-        this.dialogUtilsBehavior = new DialogUtilsBehavior();
         this.add(new LanguageSelectorPanel("language_select"));
     }
 
@@ -125,9 +128,14 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     /* ************************* OPERATIONS ************************** */
 
-    public void showError(final String message) {
-        dialogUtilsBehavior.errorDialog(message).render();
-        // App.INSTANCE.newAjaxRequestTarget(this).appendJavascript(
-        // dialogUtilsBehavior.errorDialog(message).render().toString());
+    public void showError(final Exception e) {
+        ErrorPage errorPage = new ErrorPage();
+        errorPage.setTitle(e.getMessage());
+        errorPage.setMessage("A ocurrido un error inesperado. \nLe reconmendamos recargar la pagina");
+        this.setResponsePage(errorPage);
+    }
+
+    public static ManagerException getManagerException() {
+        return managerException;
     }
 }

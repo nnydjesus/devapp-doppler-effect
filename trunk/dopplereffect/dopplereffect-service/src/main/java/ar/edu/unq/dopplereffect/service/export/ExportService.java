@@ -1,53 +1,61 @@
 package ar.edu.unq.dopplereffect.service.export;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.service.Service;
 import ar.edu.unq.tpi.util.services.jasper.Report;
 
-/**
- */
 public class ExportService<T> implements Service {
     private static final long serialVersionUID = 1L;
 
     private Class<T> bean;
 
     private Report<T> report;
-    
+
     public ExportService() {
-	}
+    }
 
     @SuppressWarnings("unchecked")
-	public ExportService(final String classBean) throws ClassNotFoundException {
+    public ExportService(final String classBean) throws ClassNotFoundException {
         bean = (Class<T>) Class.forName(classBean);
-        report = new Report<T>(bean.getSimpleName());
+        this.setReport(new Report<T>(bean.getSimpleName()));
     }
 
-    public void export(final String pathFile, final List<T> beanCollection, final HashMap<String, String> parameters) {
+    public File export(final String pathFile, final List<T> beanCollection, final HashMap<String, String> parameters) {
         if (pathFile.endsWith(FormatterExportType.PDF.getExtension())) {
-            this.exportToPDF(pathFile, beanCollection, parameters);
+            return this.exportToPDF(pathFile, beanCollection, parameters);
         } else if (pathFile.endsWith(FormatterExportType.EXCEL.getExtension())) {
-            this.exportToEXEL(pathFile, beanCollection, parameters);
+            return this.exportToEXEL(pathFile, beanCollection, parameters);
         } else if (pathFile.endsWith(FormatterExportType.RTF.getExtension())) {
-            this.exportToRTF(pathFile, beanCollection, parameters);
+            return this.exportToEXEL(pathFile, beanCollection, parameters);
         }
+        return null;
 
     }
 
-    public void exportToPDF(final String pathFile, final List<T> beanCollection,
+    public File exportToPDF(final String pathFile, final List<T> beanCollection,
             final HashMap<String, String> parameters) {
-        report.exportPDF(pathFile, beanCollection, parameters);
+        return report.exportPDF(pathFile, beanCollection, parameters);
     }
 
-    public void exportToEXEL(final String pathFile, final List<T> beanCollection,
+    public File exportToEXEL(final String pathFile, final List<T> beanCollection,
             final HashMap<String, String> parameters) {
-        report.exportEXEL(pathFile, beanCollection, parameters);
+        return report.exportEXEL(pathFile, beanCollection, parameters);
     }
 
-    public void exportToRTF(final String pathFile, final List<T> beanCollection,
+    public File exportToRTF(final String pathFile, final List<T> beanCollection,
             final HashMap<String, String> parameters) {
-        report.exportRTF(pathFile, beanCollection, parameters);
+        return report.exportRTF(pathFile, beanCollection, parameters);
+    }
+
+    public void setReport(final Report<T> report) {
+        this.report = report;
+    }
+
+    public Report<T> getReport() {
+        return report;
     }
 
 }

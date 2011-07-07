@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exceptions.FatalException;
-import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.log.NotLoggable;
 import ar.edu.unq.dopplereffect.persistence.project.ProjectRepositoryImpl;
 import ar.edu.unq.dopplereffect.projects.Project;
@@ -88,7 +87,6 @@ public class ProjectServiceImpl implements ProjectService {
         }
         project.setSkills(skills);
         this.getProjectRepo().save(project);
-        throw new UserException();
     }
 
     @Override
@@ -113,11 +111,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public List<ProjectDTO> searchByNameProjects(final String name) {
         return this.convertAll(this.getProjectRepo().searchByName(name));
     }
 
     @Override
+    @Transactional
     public ProjectAssignmentDTO assignmentEmployee(final ProjectDTO projectDTO, final EmployeeViewDTO employeeViewDTO,
             final IntervalDurationStrategy intervalDurationStrategy) {
         Project project = this.getProjectRepo().getByName(projectDTO.getName());

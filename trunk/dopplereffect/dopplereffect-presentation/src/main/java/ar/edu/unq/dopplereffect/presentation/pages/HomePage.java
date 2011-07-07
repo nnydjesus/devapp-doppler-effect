@@ -14,6 +14,7 @@ import ar.edu.unq.dopplereffect.presentation.search.employee.EmployeeSearchModel
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
+import ar.edu.unq.dopplereffect.presentation.util.HandlerErrorAction;
 import ar.edu.unq.dopplereffect.service.AddDefaultValuesService;
 
 /**
@@ -74,12 +75,19 @@ public class HomePage extends AbstractWebPage<Component> {
 
             @Override
             public void execute(final AjaxRequestTarget ajaxTarget, final Component component) {
-                if (component == null) {
-                    HomePage.this.setDefaultBody();
-                } else {
-                    HomePage.this.setBody(component);
-                }
-                ajaxTarget.addComponent(HomePage.this.getAjaxPanel());
+                new HandlerErrorAction() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onExecute() {
+                        if (component == null) {
+                            HomePage.this.setDefaultBody();
+                        } else {
+                            HomePage.this.setBody(component);
+                        }
+                        ajaxTarget.addComponent(HomePage.this.getAjaxPanel());
+                    }
+                }.execute();
             }
         };
     }

@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.service.employee;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -167,6 +168,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return result;
     }
 
+    @Transactional
     @NotLoggable
     public Employee getEmployeeByDTO(final EmployeeViewDTO employeeViewDTO) {
         return this.getEmployeeRepo().searchByDni(employeeViewDTO.getDni());
@@ -203,7 +205,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         emp.getCareerData().setPercentage(employeeDTO.getPercentage());
     }
 
-    public void export(final String pathFile) {
-        getExportService().export(pathFile, this.getEmployeeRepo().searchAll(), new HashMap<String, String>());
+    public File export(final String pathFile) {
+        return exportService.export(pathFile, this.getEmployeeRepo().searchAll(), new HashMap<String, String>());
     }
 }

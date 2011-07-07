@@ -18,12 +18,12 @@ public class UserRepositoryImpl extends HibernatePersistentRepository<User> {
         super(User.class);
     }
 
-    public void signUp(final String userName, final String password) {
+    public void signUp(final String userName, final String password, final String email) {
         User user = this.getByName(userName);
         if (user != null) {
             throw new UserException(USER_NAME_ALREADY_EXIST);
         }
-        this.save(new User(userName, password));
+        this.save(new User(userName, password, email));
     }
 
     public User login(final String userName, final String password) {

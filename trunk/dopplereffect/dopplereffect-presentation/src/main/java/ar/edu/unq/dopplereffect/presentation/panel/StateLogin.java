@@ -10,7 +10,7 @@ public enum StateLogin {
     LOGIN {
 
         @Override
-        public void submit(final String userName, final String password, final LoginPanel panel,
+        public void submit(final String userName, final String password, final String email, final LoginPanel panel,
                 final AjaxRequestTarget target) {
             panel.submitLogin(userName, password, target);
         }
@@ -23,9 +23,9 @@ public enum StateLogin {
     REGISTER {
 
         @Override
-        public void submit(final String userName, final String password, final LoginPanel panel,
+        public void submit(final String userName, final String password, final String email, final LoginPanel panel,
                 final AjaxRequestTarget target) {
-            panel.submitRegister(userName, password, target);
+            panel.submitRegister(userName, password, email, target);
         }
 
         @Override
@@ -34,7 +34,8 @@ public enum StateLogin {
         }
     };
 
-    public abstract void submit(String userName, String password, LoginPanel panel, AjaxRequestTarget target);
+    public abstract void submit(String userName, String password, String email, LoginPanel panel,
+            AjaxRequestTarget target);
 
     public abstract void onLink(LoginPanel panel);
 

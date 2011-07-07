@@ -8,6 +8,7 @@ import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.presentation.pages.basic.WebComponentFactory;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
+import ar.edu.unq.dopplereffect.presentation.util.HandlerErrorAction;
 
 public class PanelCallbackLink extends AjaxLink<String> {
     private static final long serialVersionUID = 1L;
@@ -38,7 +39,16 @@ public class PanelCallbackLink extends AjaxLink<String> {
 
     @Override
     public void onClick(final AjaxRequestTarget target) {
-        this.getCallBack().execute(target, this.getComponent().createPage());
+        new HandlerErrorAction() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onExecute() {
+                PanelCallbackLink.this.getCallBack()
+                        .execute(target, PanelCallbackLink.this.getComponent().createPage());
+            }
+        }.execute();
+
     }
 
     public void setCallBack(final AjaxCallBack<Component> callBack) {

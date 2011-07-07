@@ -1,10 +1,9 @@
 package ar.edu.unq.dopplereffect.service.export;
 
 /**
- * TODO: description
  */
 public enum FormatterExportType {
-    PDF(".pdf"), RTF(".rtf"), EXCEL(".xls");
+    PDF("pdf"), RTF("rtf"), EXCEL("xls");
 
     private String extension;
 

@@ -1,10 +1,12 @@
 package ar.edu.unq.dopplereffect.presentation.project;
 
+import java.io.File;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.export.FormatterExportType;
 import ar.edu.unq.dopplereffect.service.project.ProjectAssignmentDTO;
 import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
 import ar.edu.unq.dopplereffect.service.project.ProjectService;
@@ -85,6 +87,7 @@ public class ProjectSearchModel extends SearchModel<ProjectDTO> {
     }
 
     @Override
-    public void export(final String pathFile) {
+    public File export(final String folder, final FormatterExportType type) {
+        return null;
     }
 }

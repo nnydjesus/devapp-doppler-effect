@@ -16,7 +16,8 @@
  */
 package ar.edu.unq.dopplereffect.presentation.panel.upload;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import java.io.File;
+
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -30,6 +31,7 @@ import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.Model;
+import ar.edu.unq.dopplereffect.service.export.FormatterExportType;
 
 /**
  * 
@@ -41,7 +43,7 @@ public class UploadPanel<T> extends Panel {
 
     private SearchModel<T> searchModel;
 
-    private Folder uploadFolder = new Folder("C:/dev-app/download/", "DopplerEffect Export");
+    private Folder uploadFolder = new Folder(System.getProperty("java.io.tmpdir"), "doppler-effect-download");
 
     private FeedbackPanel uploadFeedback;
 
@@ -58,9 +60,9 @@ public class UploadPanel<T> extends Panel {
         uploadFeedback.setOutputMarkupId(true);
 
         this.add(uploadFeedback);
-        setDialogSelectedTypeToExport(new DialogSelectedTypeToExport("selectType", this));
-        getDialogSelectedTypeToExport().setTitle(new StringResourceModel("selectType.title", new Model<String>()));
-        this.add(getDialogSelectedTypeToExport());
+        this.setDialogSelectedTypeToExport(new DialogSelectedTypeToExport("selectType", this));
+        this.getDialogSelectedTypeToExport().setTitle(new StringResourceModel("selectType.title", new Model<String>()));
+        this.add(this.getDialogSelectedTypeToExport());
         this.addButtons();
 
     }
@@ -72,7 +74,7 @@ public class UploadPanel<T> extends Panel {
 
             @Override
             public JsScope callback() {
-                return JsScope.quickScope(getDialogSelectedTypeToExport().open().render());
+                return JsScope.quickScope(UploadPanel.this.getDialogSelectedTypeToExport().open().render());
             }
 
         }));
@@ -81,24 +83,16 @@ public class UploadPanel<T> extends Panel {
 
     }
 
-    public void onExport(final AjaxRequestTarget target, final String type) {
-        String pathFile = uploadFolder.getAbsolutePath() + "/" + searchModel.getEntityType().getSimpleName() + type;
-        try {
-            searchModel.export(pathFile);
-            UploadPanel.this.info("el archivo " + pathFile + " se a exportado con exito");
-        } catch (Exception e) {
-            UploadPanel.this.error("No se pudo exportar el archivo");
-        } finally {
-            target.addComponent(uploadFeedback);
-        }
-    }
-
-    public void setDialogSelectedTypeToExport(DialogSelectedTypeToExport dialogSelectedTypeToExport) {
+    public void setDialogSelectedTypeToExport(final DialogSelectedTypeToExport dialogSelectedTypeToExport) {
         this.dialogSelectedTypeToExport = dialogSelectedTypeToExport;
     }
 
     public DialogSelectedTypeToExport getDialogSelectedTypeToExport() {
         return dialogSelectedTypeToExport;
+    }
+
+    public File onExport(final FormatterExportType type) {
+        return searchModel.export(uploadFolder.getAbsolutePath(), type);
     }
 
 }

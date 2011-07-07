@@ -14,6 +14,7 @@ import org.odlabs.wiquery.ui.datepicker.DatePicker;
 import org.odlabs.wiquery.ui.dialog.Dialog;
 
 import ar.edu.unq.dopplereffect.exceptions.AssignmentException;
+import ar.edu.unq.dopplereffect.presentation.util.HandlerErrorAction;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 public abstract class AddIntervalDuration extends Dialog implements Serializable {
@@ -75,22 +76,27 @@ public abstract class AddIntervalDuration extends Dialog implements Serializable
 
             @Override
             protected void onSubmit(final AjaxRequestTarget target, final Form<?> theForm) {
-                try {
-                    AddIntervalDuration.this.validateDates();
-                    AddIntervalDuration.this.onAccept(
-                            new IntervalDurationStrategy(new DateTime(AddIntervalDuration.this.getStartDate()),
-                                    new DateTime(AddIntervalDuration.this.getEndDate())), target);
-                    target.appendJavascript(AddIntervalDuration.this.close().render().toString());
-                    AddIntervalDuration.this.clean();
-                } catch (AssignmentException e) {
-                    theForm.error(AddIntervalDuration.this.getLocalizer().getString(e.getKey(),
-                            AddIntervalDuration.this)
-                            + e.getExtraData());
-                    target.addComponent(theForm);
-                } catch (Exception e) {
-                    theForm.error(e.getMessage());
-                    target.addComponent(theForm);
-                }
+                new HandlerErrorAction() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onExecute() {
+                        try {
+                            AddIntervalDuration.this.validateDates();
+                            AddIntervalDuration.this.onAccept(
+                                    new IntervalDurationStrategy(new DateTime(AddIntervalDuration.this.getStartDate()),
+                                            new DateTime(AddIntervalDuration.this.getEndDate())), target);
+                            target.appendJavascript(AddIntervalDuration.this.close().render().toString());
+                            AddIntervalDuration.this.clean();
+                        } catch (AssignmentException e) {
+                            theForm.error(AddIntervalDuration.this.getLocalizer().getString(e.getKey(),
+                                    AddIntervalDuration.this)
+                                    + e.getExtraData());
+                            target.addComponent(theForm);
+                        }
+                    }
+                }.execute();
+
             }
         };
     }
