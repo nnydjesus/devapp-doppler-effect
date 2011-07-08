@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd">
 
 	<!-- Proxy to a set of filters that enforce authentication and authorization. -->
 	<bean id="filterChainProxy" class="org.springframework.security.util.FilterChainProxy">
@@ -21,26 +21,32 @@
 		<property name="forceEagerSessionCreation" value="true" />
 	</bean>
 
-	<bean id="search_model.project" class="ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel">
+	<bean id="dopplereffect_app" class="ar.edu.unq.dopplereffect.presentation.App" />
+
+	<bean id="search_model.project"	class="ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel">
 		<property name="service" ref="service.project" />
 	</bean>
-	
+
 	<bean id="search_model.employee" class="ar.edu.unq.dopplereffect.presentation.search.employee.EmployeeSearchModel">
 		<property name="service" ref="service.employee" />
 	</bean>
-	
-	<bean id="search_model.salary_spec" class="ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel">
+
+	<bean id="search_model.salary_spec"	class="ar.edu.unq.dopplereffect.presentation.search.salaryspec.SalarySpecSearchModel">
 		<property name="service" ref="service.salary_spec" />
 	</bean>
-	
+
 	<bean id="search_model.leave_request" class="ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel">
 		<property name="service" ref="service.leave_request" />
 	</bean>
 	
-	<bean id="authenticate" class="ar.edu.unq.dopplereffect.presentation.Authenticate">
-		<property name="loginService" ref="service.user" />
-	</bean>
-
 	<bean id="managerException" class="ar.edu.unq.dopplereffect.presentation.ManagerExceptionAspect" />
+
+	<security:authentication-manager alias="authenticationManager" />
 	
+	<security:authentication-provider user-service-ref="service.user" />
+
+	<security:http auto-config='true'>
+		<security:intercept-url pattern="/**" access="ROLE_USER" />
+	</security:http>
+
 </beans>

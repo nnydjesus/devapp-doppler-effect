@@ -6,6 +6,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -22,12 +23,13 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
-import ar.edu.unq.dopplereffect.presentation.Authenticate;
 import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.CallBackObject;
+import ar.edu.unq.dopplereffect.service.LoginService;
 import ar.edu.unq.dopplereffect.user.User;
+import ar.edu.unq.tpi.util.common.HashUtils;
 
 import com.wiquery.plugin.watermark.TextFieldWatermarkBehaviour;
 
@@ -41,8 +43,8 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    @SpringBean(name = "authenticate")
-    private Authenticate service;
+    @SpringBean(name = "service.user")
+    private LoginService service;
 
     private TextField<String> userIdField;
 
@@ -84,11 +86,11 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     /* **************************** ACCESSORS ***************************** */
 
-    public Authenticate getService() {
+    public LoginService getService() {
         return service;
     }
 
-    public void setService(final Authenticate service) {
+    public void setService(final LoginService service) {
         this.service = service;
     }
 
@@ -318,11 +320,21 @@ public class LoginPanel extends AbstractPanel<Model<String>> {
 
     public void submitRegister(final String userName, final String password, final String email,
             final AjaxRequestTarget target) {
-        this.getService().signUp(userName, password, email, this.registerCallBack(target), this.errorCallback(target));
+        try {
+            this.getService().signUpUser(userName, HashUtils.hash(password), email);
+            this.registerCallBack(target).execute(null);
+        } catch (UserException e) {
+            this.errorCallback(target).execute(e);
+        }
     }
 
-    public void submitLogin(final String userName, final String password, final AjaxRequestTarget target) {
-        this.getService().login(userName, password, this.loginCallback(target), this.errorCallback(target));
+    public void submitLogin(final String username, final String password, final AjaxRequestTarget target) {
+        AuthenticatedWebSession session = AuthenticatedWebSession.get();
+        if (session.signIn(username, password)) {
+            this.loginCallback(target).execute(null);
+        } else {
+            this.errorCallback(target).execute(new UserException("exception.loginFailed"));
+        }
     }
 
     protected CallBackObject<User> loginCallback(final AjaxRequestTarget target) {

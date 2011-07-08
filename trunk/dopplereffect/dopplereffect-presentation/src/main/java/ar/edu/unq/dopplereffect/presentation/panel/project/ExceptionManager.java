@@ -6,14 +6,11 @@ import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.presentation.pages.AbstractWebPage;
 import ar.edu.unq.dopplereffect.presentation.util.HandlerErrorAction;
 
-/**
- * TODO: description
- */
-public class ManagerException {
+public class ExceptionManager {
 
     private AbstractWebPage<? extends Component> webPage;
 
-    public ManagerException(final AbstractWebPage<? extends Component> abstractWebPage) {
+    public ExceptionManager(final AbstractWebPage<? extends Component> abstractWebPage) {
         webPage = abstractWebPage;
     }
 

@@ -12,8 +12,20 @@
 		</id>
 
 		<property name="name" not-null="true" />
+		
 		<property name="password" not-null="true" />
+		
 		<property name="email" not-null="true" />
+
+		<list name="roles" table="user_roles" cascade="all">
+
+				<key column="user_id" />
+
+				<list-index column="role_order" />
+
+				<element type="java.lang.String" column="role" />
+
+			</list>
 
 	</class>
 

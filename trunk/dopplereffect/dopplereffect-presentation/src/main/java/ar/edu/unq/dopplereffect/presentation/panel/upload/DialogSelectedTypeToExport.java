@@ -2,7 +2,6 @@ package ar.edu.unq.dopplereffect.presentation.panel.upload;
 
 import java.io.File;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.DownloadLink;
 import org.apache.wicket.model.PropertyModel;
 import org.odlabs.wiquery.ui.dialog.Dialog;
@@ -11,8 +10,6 @@ import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.util.HandlerErrorAction;
 import ar.edu.unq.dopplereffect.service.export.FormatterExportType;
 
-/**
- */
 public class DialogSelectedTypeToExport extends Dialog {
 
     private static final long serialVersionUID = 1L;

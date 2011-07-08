@@ -29,6 +29,8 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
 
     private static final long serialVersionUID = 1L;
 
+    public static final String UNCHECKED = "unchecked";
+
     /* ************************ INSTANCE VARIABLES ************************ */
 
     private Component ajaxSectionResult;
@@ -52,7 +54,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
         this(id, parentPage, null, model, fields, abm);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     public AbstractSearchPanel(final String id, final AjaxCallBack<Component> aCallback,
             final AbstractPanel<?> backPanel, final T model, final List<String> fields, final Class abm) {
         super(id, model);
@@ -104,7 +106,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
         this.modelSearchByName = modelSearchByName;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     protected void init(final Form<T> formulario) {
         this.buildForm(formulario);
         this.addResultSection(this.selectITable());
@@ -152,12 +154,13 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
         return ajaxDataTablePage;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     protected AjaxDataTablePage createAjaxTable() {
         return new AjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
                 ((SearchModel) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbmClass());
     }
 
+    @SuppressWarnings(UNCHECKED)
     protected GridPanel createAjaxGrid() {
         return new GridPanel(this.getTableWicketId(), this.getModelObject(), this.getModelObject().getEntityType(),
                 this.getFields());

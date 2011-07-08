@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.dopplereffect.employees.Employee;
-import ar.edu.unq.dopplereffect.exceptions.FatalException;
 import ar.edu.unq.dopplereffect.log.NotLoggable;
 import ar.edu.unq.dopplereffect.persistence.project.ProjectRepositoryImpl;
 import ar.edu.unq.dopplereffect.projects.Project;
@@ -34,7 +33,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public List<ProjectDTO> searchAllProjects() {
-//    	throw new FatalException("ASDFasdfA SdfASDfAsd fasDFsadFasdFsadfsd");
+        // throw new FatalException("ASDFasdfA SdfASDfAsd fasDFsadFasdFsadfsd");
         return this.convertAll(this.getProjectRepo().searchAll());
     }
 

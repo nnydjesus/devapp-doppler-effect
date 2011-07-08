@@ -158,8 +158,8 @@ public class SortablePanel<T extends Serializable> extends Panel {
         };
     }
 
-    protected ListView<T> createListView(final List<T> list) {
-        return new ListView<T>("items", list) {
+    protected ListView<T> createListView(final List<T> aList) {
+        return new ListView<T>("items", aList) {
             private static final long serialVersionUID = 1L;
 
             @Override

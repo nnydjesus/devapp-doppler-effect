@@ -35,10 +35,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="employeeService" ref="service.employee" />
 	</bean>
 	
-	<bean id="service.leave_request_type" class="ar.edu.unq.dopplereffect.service.ServiceImpl">
-		<property name="repository" ref="repo.leave_request_type" />
-	</bean>
-	
 	<bean id="service.skill" class="ar.edu.unq.dopplereffect.service.project.SkillServiceImpl">
 		<property name="skillRepo" ref="repo.skill" />
 	</bean>
@@ -58,7 +54,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="loginService" ref="service.user" />
 	</bean>
 
-	<bean id="service.mail" class="ar.edu.unq.dopplereffect.mail.MailService"></bean>
+	<bean id="service.mail" class="ar.edu.unq.dopplereffect.mail.MailService" />
 	
 	<bean id="service.log" class="ar.edu.unq.dopplereffect.log.LogAspect">
 		<property name="mailService" ref="service.mail" />

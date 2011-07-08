@@ -73,6 +73,7 @@ public class HeaderPanel extends AbstractPanel<Object> {
             private static final long serialVersionUID = 1L;
 
             @Override
+            @SuppressWarnings("synthetic-access")
             public void onClick(final AjaxRequestTarget target) {
                 swf.setMovie(movie);
                 dialog.addOrReplace(swf);

@@ -115,11 +115,12 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
         this.addLeaveRequests();
         this.addProjects();
         this.addSalarySpecs();
-        this.addDefaultUser();
+        this.addDefaultUsers();
     }
 
-    private void addDefaultUser() {
-        this.getLoginService().signUp("a", HashUtils.hash("a"), "nnydjesus@gmail.com");
+    private void addDefaultUsers() {
+        this.getLoginService().signUpAdmin("admin", HashUtils.hash("admin"), "nnydjesus@gmail.com");
+        this.getLoginService().signUpUser("user", HashUtils.hash("user"), "nnydjesus@gmail.com");
     }
 
     private void addSalarySpecs() {
