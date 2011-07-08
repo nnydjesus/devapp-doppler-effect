@@ -16,121 +16,127 @@ import org.apache.wicket.request.ClientInfo;
 import org.apache.wicket.util.value.IValueMap;
 
 public abstract class ObjectContainer extends WebMarkupContainer {
-	private static final long serialVersionUID = 1L;
-	// Some general attributes for the object tag:
-	private static final String ATTRIBUTE_CONTENTTYPE = "type";
-	private static final String ATTRIBUTE_CLASSID = "classid";
-	private static final String ATTRIBUTE_CODEBASE = "codebase";
+    private static final long serialVersionUID = 1L;
 
-	// This is used for browser specific adjustments
-	private ClientProperties clientProperties = null;
+    // Some general attributes for the object tag:
+    private static final String ATTRIBUTE_CONTENTTYPE = "type";
 
-	public ObjectContainer(String id) {
-		super(id);
-	}
+    private static final String ATTRIBUTE_CLASSID = "classid";
 
-	// Set an attribute/property
-	public abstract void setValue(String name, String value);
+    private static final String ATTRIBUTE_CODEBASE = "codebase";
 
-	// Get an attribute/property
-	public abstract String getValue(String name);
+    // This is used for browser specific adjustments
+    private ClientProperties clientProperties = null;
 
-	// Set the object's content type
-	protected abstract String getContentType();
+    public ObjectContainer(final String id) {
+        super(id);
+    }
 
-	// Set the object's clsid (for IE)
-	protected abstract String getClsid();
+    // Set an attribute/property
+    public abstract void setValue(String name, String value);
 
-	// Where to get the browser plugin (for IE)
-	protected abstract String getCodebase();
+    // Get an attribute/property
+    public abstract String getValue(String name);
 
-	// Object's valid attribute names
-	protected abstract List<String> getAttributeNames();
+    // Set the object's content type
+    protected abstract String getContentType();
 
-	// Object's valid parameter names
-	protected abstract List<String> getParameterNames();
+    // Set the object's clsid (for IE)
+    protected abstract String getClsid();
 
-	// Utility function to get the URL for the object's data
-	protected String resolveResource(String src) {
-		// if it's an absolute path, return it:
-		if (src.startsWith("/") || src.startsWith("http://")
-				|| src.startsWith("https://"))
-			return (src);
+    // Where to get the browser plugin (for IE)
+    protected abstract String getCodebase();
 
-		// use the parent container class to resolve the resource reference
-		Component parent = getParent();
-		if (parent != null) {
-			ResourceReference resRef = new ResourceReference(parent.getClass(),
-					src);
-			return (urlFor(resRef).toString());
-		}
+    // Object's valid attribute names
+    protected abstract List<String> getAttributeNames();
 
-		return (src);
-	}
+    // Object's valid parameter names
+    protected abstract List<String> getParameterNames();
 
-	public void onComponentTag(ComponentTag tag) {
-		super.onComponentTag(tag);
+    // Utility function to get the URL for the object's data
+    protected String resolveResource(final String src) {
+        // if it's an absolute path, return it:
+        if (src.startsWith("/") || src.startsWith("http://") || src.startsWith("https://")) {
+            return src;
+        }
 
-		// get the attributes from the html-source
-		IValueMap attributeMap = tag.getAttributes();
+        // use the parent container class to resolve the resource reference
+        Component parent = this.getParent();
+        if (parent != null) {
+            ResourceReference resRef = new ResourceReference(parent.getClass(), src);
+            return this.urlFor(resRef).toString();
+        }
 
-		// set the content type
-		String contentType = getContentType();
-		if (contentType != null && !"".equals(contentType))
-			attributeMap.put(ATTRIBUTE_CONTENTTYPE, contentType);
+        return src;
+    }
 
-		// set clsid and codebase for IE
-		if (getClientProperties().isBrowserInternetExplorer()) {
-			String clsid = getClsid();
-			String codeBase = getCodebase();
+    @Override
+    public void onComponentTag(final ComponentTag tag) {
+        super.onComponentTag(tag);
 
-			if (clsid != null && !"".equals(clsid))
-				attributeMap.put(ATTRIBUTE_CLASSID, clsid);
-			if (codeBase != null && !"".equals(codeBase))
-				attributeMap.put(ATTRIBUTE_CODEBASE, codeBase);
-		}
+        // get the attributes from the html-source
+        IValueMap attributeMap = tag.getAttributes();
 
-		// add all attributes
-		for (String name : getAttributeNames()) {
-			String value = getValue(name);
-			if (value != null)
-				attributeMap.put(name, value);
-		}
-	}
+        // set the content type
+        String contentType = this.getContentType();
+        if (contentType != null && !"".equals(contentType)) {
+            attributeMap.put(ATTRIBUTE_CONTENTTYPE, contentType);
+        }
 
-	public void onComponentTagBody(MarkupStream markupStream,
-			ComponentTag openTag) {
-		Response response = getResponse();
-		response.write("\n");
+        // set clsid and codebase for IE
+        if (this.getClientProperties().isBrowserInternetExplorer()) {
+            String clsid = this.getClsid();
+            String codeBase = this.getCodebase();
 
-		// add all object's parameters:
-		for (String name : getParameterNames()) {
-			String value = getValue(name);
-			if (value != null) {
-				response.write("<param name=\"");
-				response.write(name);
-				response.write("\" value=\"");
-				response.write(value);
-				response.write("\"/>\n");
-			}
-		}
+            if (clsid != null && !"".equals(clsid)) {
+                attributeMap.put(ATTRIBUTE_CLASSID, clsid);
+            }
+            if (codeBase != null && !"".equals(codeBase)) {
+                attributeMap.put(ATTRIBUTE_CODEBASE, codeBase);
+            }
+        }
 
-		super.onComponentTagBody(markupStream, openTag);
-	}
+        // add all attributes
+        for (String name : this.getAttributeNames()) {
+            String value = this.getValue(name);
+            if (value != null) {
+                attributeMap.put(name, value);
+            }
+        }
+    }
 
-	// shortcut to the client properties:
-	protected ClientProperties getClientProperties() {
-		if (clientProperties == null) {
-			ClientInfo clientInfo = WebSession.get().getClientInfo();
+    @Override
+    public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
+        Response response = this.getResponse();
+        response.write("\n");
 
-			if (clientInfo == null || !(clientInfo instanceof WebClientInfo)) {
-				clientInfo = new WebClientInfo(
-						(WebRequestCycle) getRequestCycle());
-				WebSession.get().setClientInfo(clientInfo);
-			}
+        // add all object's parameters:
+        for (String name : this.getParameterNames()) {
+            String value = this.getValue(name);
+            if (value != null) {
+                response.write("<param name=\"");
+                response.write(name);
+                response.write("\" value=\"");
+                response.write(value);
+                response.write("\"/>\n");
+            }
+        }
 
-			clientProperties = ((WebClientInfo) clientInfo).getProperties();
-		}
-		return (clientProperties);
-	}
+        super.onComponentTagBody(markupStream, openTag);
+    }
+
+    // shortcut to the client properties:
+    protected ClientProperties getClientProperties() {
+        if (clientProperties == null) {
+            ClientInfo clientInfo = WebSession.get().getClientInfo();
+
+            if (clientInfo == null || !(clientInfo instanceof WebClientInfo)) {
+                clientInfo = new WebClientInfo((WebRequestCycle) this.getRequestCycle());
+                WebSession.get().setClientInfo(clientInfo);
+            }
+
+            clientProperties = ((WebClientInfo) clientInfo).getProperties();
+        }
+        return clientProperties;
+    }
 }

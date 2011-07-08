@@ -9,8 +9,9 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 
 import ar.edu.unq.dopplereffect.presentation.panel.LanguageSelectorPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.LoginStatusPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SimplePanel;
-import ar.edu.unq.dopplereffect.presentation.panel.project.ManagerException;
+import ar.edu.unq.dopplereffect.presentation.panel.project.ExceptionManager;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
@@ -38,7 +39,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     private Component body;
 
-    private static ManagerException managerException;
+    private static ExceptionManager managerException;
 
     // private WebMarkupContainer bodyContainer;
 
@@ -55,7 +56,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
     public AbstractWebPage(final Component component) {
         super();
         this.setOutputMarkupId(true);
-        managerException = new ManagerException(this);
+        managerException = new ExceptionManager(this);
         body = component;
         ajaxPanel = new SimplePanel("body");
         ajaxPanel.add(component);
@@ -111,7 +112,8 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
     }
 
     protected Component createFooter() {
-        return new Label(FOOTER, new Model<String>("Footer!!!"));
+        // return new Label(FOOTER, new Model<String>("Footer!!!"));
+        return new LoginStatusPanel(FOOTER);
     }
 
     protected Component createHeader() {
@@ -119,7 +121,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
     }
 
     protected Component createTitle() {
-        return new Label(TITLE, new Model<String>("Doopler"));
+        return new Label(TITLE, new Model<String>("Doppler"));
     }
 
     protected Component createTitle2() {
@@ -128,14 +130,14 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     /* ************************* OPERATIONS ************************** */
 
-    public void showError(final Exception e) {
+    public void showError(final Exception exception) {
         ErrorPage errorPage = new ErrorPage();
-        errorPage.setTitle(e.getMessage());
+        errorPage.setTitle(exception.getMessage());
         errorPage.setMessage("A ocurrido un error inesperado. \nLe reconmendamos recargar la pagina");
         this.setResponsePage(errorPage);
     }
 
-    public static ManagerException getManagerException() {
+    public static ExceptionManager getManagerException() {
         return managerException;
     }
 }

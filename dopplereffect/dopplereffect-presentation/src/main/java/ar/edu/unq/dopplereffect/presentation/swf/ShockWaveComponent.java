@@ -10,137 +10,146 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.util.value.IValueMap;
 
 public class ShockWaveComponent extends ObjectContainer {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final String CONTENTTYPE = "application/x-shockwave-flash";
-	private static final String CLSID = "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000";
-	private static final String CODEBASE = "http://fpdownload.adobe.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0";
+    private static final String CONTENTTYPE = "application/x-shockwave-flash";
 
-	// valid attributes
-	private static final List<String> attributeNames = Arrays
-			.asList(new String[] { "classid", "width", "height", "codebase",
-					"align", "base", "data" });
-	// valid parameters
-	private static final List<String> parameterNames = Arrays
-			.asList(new String[] { "devicefont", "movie", "play", "loop",
-					"quality", "bgcolor", "scale", "salign", "menu", "wmode",
-					"allowscriptaccess", "seamlesstabbing" });
+    private static final String CLSID = "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000";
 
-	// combined options (to iterate over them)
-	private static final List<String> optionNames = new ArrayList<String>(
-			attributeNames.size() + parameterNames.size());
-	static {
-		optionNames.addAll(attributeNames);
-		optionNames.addAll(parameterNames);
-	}
+    private static final String CODEBASE = "http://fpdownload.adobe.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0";
 
-	private Map<String, String> attributes;
-	private Map<String, String> parameters;
+    // valid attributes
+    private static final List<String> ATTRIBUTE_NAMES = Arrays.asList(new String[] { "classid", "width", "height",
+            "codebase", "align", "base", "data" });
 
-	public ShockWaveComponent(String id) {
-		super(id);
+    // valid parameters
+    private static final List<String> PARAMETER_NAMES = Arrays.asList(new String[] { "devicefont", "movie", "play",
+            "loop", "quality", "bgcolor", "scale", "salign", "menu", "wmode", "allowscriptaccess", "seamlesstabbing" });
 
-		attributes = new HashMap<String, String>();
-		parameters = new HashMap<String, String>();
-	}
+    // combined options (to iterate over them)
+    private static final List<String> OPTION_NAMES = new ArrayList<String>(ATTRIBUTE_NAMES.size()
+            + PARAMETER_NAMES.size());
+    static {
+        OPTION_NAMES.addAll(ATTRIBUTE_NAMES);
+        OPTION_NAMES.addAll(PARAMETER_NAMES);
+    }
 
-	public ShockWaveComponent(String id, String movie, String width,
-			String height) {
-		this(id);
+    private Map<String, String> attributes;
 
-		setValue("movie", movie);
-		setValue("width", width);
-		setValue("height", height);
-	}
+    private Map<String, String> parameters;
 
-	public void setMovie(String movie) {
-		setValue("movie", movie);
-	}
+    public ShockWaveComponent(final String id) {
+        super(id);
 
-	public void setValue(String name, String value) {
-		// IE and other browsers handle movie/data differently. So movie is used
-		// for IE, whereas
-		// data is used for all other browsers. The class uses movie parameter
-		// to handle url and
-		// puts the values to the maps depending on the browser information
-		String parameter = name.toLowerCase();
-		if ("data".equals(parameter))
-			parameter = "movie";
+        attributes = new HashMap<String, String>();
+        parameters = new HashMap<String, String>();
+    }
 
-		if ("movie".equals(parameter)
-				&& !getClientProperties().isBrowserInternetExplorer())
-			attributes.put("data", value);
+    public ShockWaveComponent(final String id, final String movie, final String width, final String height) {
+        this(id);
 
-		if (attributeNames.contains(parameter))
-			attributes.put(parameter, value);
-		else if (parameterNames.contains(parameter))
-			parameters.put(parameter, value);
-	}
+        this.setValue("movie", movie);
+        this.setValue("width", width);
+        this.setValue("height", height);
+    }
 
-	public String getValue(String name) {
-		String parameter = name.toLowerCase();
-		String value = null;
+    public void setMovie(final String movie) {
+        this.setValue("movie", movie);
+    }
 
-		if ("data".equals(parameter)) {
-			if (getClientProperties().isBrowserInternetExplorer())
-				return (null);
-			parameter = "movie";
-		}
+    @Override
+    public void setValue(final String name, final String value) {
+        // IE and other browsers handle movie/data differently. So movie is used
+        // for IE, whereas
+        // data is used for all other browsers. The class uses movie parameter
+        // to handle url and
+        // puts the values to the maps depending on the browser information
+        String parameter = name.toLowerCase();
+        if ("data".equals(parameter)) {
+            parameter = "movie";
+        }
 
-		if (attributeNames.contains(parameter))
-			value = attributes.get(parameter);
-		else if (parameterNames.contains(parameter))
-			value = parameters.get(parameter);
+        if ("movie".equals(parameter) && !this.getClientProperties().isBrowserInternetExplorer()) {
+            attributes.put("data", value);
+        }
 
-		// special treatment of movie to resolve to the url
-		if (value != null && parameter.equals("movie"))
-			value = resolveResource(value);
+        if (ATTRIBUTE_NAMES.contains(parameter)) {
+            attributes.put(parameter, value);
+        } else if (PARAMETER_NAMES.contains(parameter)) {
+            parameters.put(parameter, value);
+        }
+    }
 
-		return (value);
-	}
+    @Override
+    public String getValue(final String name) {
+        String parameter = name.toLowerCase();
+        String value = null;
 
-	public void onComponentTag(ComponentTag tag) {
-		// get options from the markup
-		IValueMap valueMap = tag.getAttributes();
+        if ("data".equals(parameter)) {
+            if (this.getClientProperties().isBrowserInternetExplorer()) {
+                return null;
+            }
+            parameter = "movie";
+        }
 
-		// Iterate over valid options
-		for (String s : optionNames) {
-			if (valueMap.containsKey(s)) {
-				// if option isn't set programmatically, set value from markup
-				if (!attributes.containsKey(s) && !parameters.containsKey(s))
-					setValue(s, valueMap.getString(s));
-				// remove attribute - they are added in super.onComponentTag()
-				// to
-				// the right place as attribute or param
-				valueMap.remove(s);
-			}
-		}
+        if (ATTRIBUTE_NAMES.contains(parameter)) {
+            value = attributes.get(parameter);
+        } else if (PARAMETER_NAMES.contains(parameter)) {
+            value = parameters.get(parameter);
+        }
 
-		super.onComponentTag(tag);
-	}
+        // special treatment of movie to resolve to the url
+        if (value != null && parameter.equals("movie")) {
+            value = this.resolveResource(value);
+        }
 
-	@Override
-	protected String getClsid() {
-		return (CLSID);
-	}
+        return value;
+    }
 
-	@Override
-	protected String getCodebase() {
-		return (CODEBASE);
-	}
+    @Override
+    public void onComponentTag(final ComponentTag tag) {
+        // get options from the markup
+        IValueMap valueMap = tag.getAttributes();
 
-	@Override
-	protected String getContentType() {
-		return (CONTENTTYPE);
-	}
+        // Iterate over valid options
+        for (String s : OPTION_NAMES) {
+            if (valueMap.containsKey(s)) {
+                // if option isn't set programmatically, set value from markup
+                if (!attributes.containsKey(s) && !parameters.containsKey(s)) {
+                    this.setValue(s, valueMap.getString(s));
+                }
+                // remove attribute - they are added in super.onComponentTag()
+                // to
+                // the right place as attribute or param
+                valueMap.remove(s);
+            }
+        }
 
-	@Override
-	protected List<String> getAttributeNames() {
-		return (attributeNames);
-	}
+        super.onComponentTag(tag);
+    }
 
-	@Override
-	protected List<String> getParameterNames() {
-		return (parameterNames);
-	}
+    @Override
+    protected String getClsid() {
+        return CLSID;
+    }
+
+    @Override
+    protected String getCodebase() {
+        return CODEBASE;
+    }
+
+    @Override
+    protected String getContentType() {
+        return CONTENTTYPE;
+    }
+
+    @Override
+    protected List<String> getAttributeNames() {
+        return ATTRIBUTE_NAMES;
+    }
+
+    @Override
+    protected List<String> getParameterNames() {
+        return PARAMETER_NAMES;
+    }
 }

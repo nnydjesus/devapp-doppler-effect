@@ -85,7 +85,7 @@ public class ReflectionAjaxButton<T> extends AjaxButton {
         target.addComponent((Component) this.getObject());
     }
 
-    protected void execute(final AjaxRequestTarget target) {
+    protected void execute(@SuppressWarnings("unused") final AjaxRequestTarget target) {
         new HandlerErrorAction() {
 
             private static final long serialVersionUID = 1L;

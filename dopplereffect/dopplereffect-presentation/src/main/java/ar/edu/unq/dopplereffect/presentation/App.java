@@ -63,7 +63,7 @@ public class App extends AuthenticatedWebApplication {// implements
 
     @Override
     protected Class<? extends AuthenticatedWebSession> getWebSessionClass() {
-        return WicketWebSession.class;
+        return DopplerEffectAuthenticatedWebSession.class;
     }
 
     @Override

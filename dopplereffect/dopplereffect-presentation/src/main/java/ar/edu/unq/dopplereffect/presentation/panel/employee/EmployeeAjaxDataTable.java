@@ -78,6 +78,7 @@ public class EmployeeAjaxDataTable extends AjaxDataTablePage<EmployeeViewDTO, Em
                         LeaveRequestSearchPanel comp = new LeaveRequestSearchPanel("body", callback,
                                 EmployeeAjaxDataTable.this.getParentPanel(), leaveReqSearchModel, rowModel.getObject());
                         callback.execute(target, comp);
+                        leaveReqSearchModel.setSearchByEmployee(null);
                     }
                 });
             }

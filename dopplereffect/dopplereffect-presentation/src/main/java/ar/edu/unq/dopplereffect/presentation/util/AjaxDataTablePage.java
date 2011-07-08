@@ -234,7 +234,7 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
      * Agrega columnas personalizadas a las columnas ya existentes, pasadas como
      * parametro.
      */
-    protected void addCustomColumns(final List<IColumn<T>> columns) {
+    protected void addCustomColumns(@SuppressWarnings("unused") final List<IColumn<T>> columns) {
         // x
     }
 

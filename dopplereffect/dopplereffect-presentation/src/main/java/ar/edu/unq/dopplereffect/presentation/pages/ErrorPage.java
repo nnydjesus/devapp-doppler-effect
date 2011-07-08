@@ -17,6 +17,7 @@ public class ErrorPage extends AbstractWebPage<Component> {
     private String title = "Error";
 
     public ErrorPage() {
+        super();
         this.setBody(new Label("body", new PropertyModel<String>(this, "title")));
         this.add(new Label("message", new PropertyModel<String>(this, "message")));
         this.add(CustomComponent.addButtonSking(new AjaxLink<String>("acept") {

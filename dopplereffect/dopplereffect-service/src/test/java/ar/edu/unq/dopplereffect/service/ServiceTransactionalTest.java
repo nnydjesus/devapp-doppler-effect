@@ -27,17 +27,20 @@ public class ServiceTransactionalTest extends SpringServiceTest {
     @Test
     public void testIsTransactional() {
         try {
+            @SuppressWarnings("unused")
             SalarySpecification s = new SalarySpecificationBuilder().build();
             SalarySpecificationRepositoryImpl repo = new SalarySpecificationRepositoryImpl() {
                 private static final long serialVersionUID = -1284863682412375353L;
 
                 @Override
+                @SuppressWarnings("synthetic-access")
                 public void save(final SalarySpecification object) {
                     repoPosta.save(object);
                     throw new RuntimeException();
                 }
 
                 @Override
+                @SuppressWarnings("synthetic-access")
                 public List<SalarySpecification> searchAll() {
                     return repoPosta.searchAll();
                 }
