@@ -11,16 +11,16 @@
 			<generator class="native" />
 		</id>
 		
-		<property name="firstName" column="first_name" not-null="false" />
+		<property name="firstName" column="first_name" not-null="false" lazy="false"/>
 		
-		<property name="phoneNumber" column="phone_number" not-null="false" />
+		<property name="phoneNumber" column="phone_number" not-null="false" lazy="false"/>
 		
 		<property name="email" not-null="false" />
 		
 		<many-to-one name="address" class="ar.edu.unq.dopplereffect.data.Address"
 		column="address_id" cascade="all" unique="true" lazy="false" />
 		
-		<joined-subclass name="ar.edu.unq.dopplereffect.employees.EmployeeData" table="employee_data" >
+		<joined-subclass name="ar.edu.unq.dopplereffect.employees.EmployeeData" table="employee_data" lazy="false">
 			
 			<key column="personal_data_id" />
 		

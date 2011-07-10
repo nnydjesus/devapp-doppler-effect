@@ -121,7 +121,7 @@ public class Project extends Entity {
     public ProjectAssignment findOrCreateAssignment(final Employee employee) {
         ProjectAssignment assignment = this.getAssignment(employee);
         if (assignment == null) {
-            assignment = new ProjectAssignment(employee);
+            assignment = new ProjectAssignment(employee, this);
             this.getAssignedEmployees().add(assignment);
         }
         return assignment;

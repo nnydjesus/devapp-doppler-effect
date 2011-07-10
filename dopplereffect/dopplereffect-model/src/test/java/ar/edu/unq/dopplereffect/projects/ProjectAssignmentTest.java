@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.projects;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import junit.framework.Assert;
 
 import org.joda.time.Interval;
@@ -20,12 +21,15 @@ public class ProjectAssignmentTest {
 
     private IntervalDurationStrategy interval2;
 
+    private Project project;
+
     @Before
     public void setUp() {
         this.setEmployee1(mock(Employee.class));
         this.setEmployee2(mock(Employee.class));
         this.setInterval1(mock(IntervalDurationStrategy.class));
         this.setInterval2(mock(IntervalDurationStrategy.class));
+        project = mock(Project.class);
         Interval interval = new Interval(0, 5);
 
         when(this.getInterval1().overlapsInterval(interval)).thenReturn(true);
@@ -33,7 +37,7 @@ public class ProjectAssignmentTest {
     }
 
     protected ProjectAssignment createProyect() {
-        ProjectAssignment projectAssignment = new ProjectAssignment(this.getEmployee1());
+        ProjectAssignment projectAssignment = new ProjectAssignment(this.getEmployee1(), project);
         projectAssignment.addInterval(this.getInterval1());
         return projectAssignment;
     }
@@ -116,5 +120,13 @@ public class ProjectAssignmentTest {
 
     protected Employee getEmployee1() {
         return employee1;
+    }
+
+    public void setProject(final Project project) {
+        this.project = project;
+    }
+
+    public Project getProject() {
+        return project;
     }
 }

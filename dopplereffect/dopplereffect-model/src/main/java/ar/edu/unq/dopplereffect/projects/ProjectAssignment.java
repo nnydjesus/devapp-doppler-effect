@@ -22,13 +22,16 @@ public class ProjectAssignment extends Entity implements Assignable {
 
     private Employee employee;
 
+    private Project project;
+
     private Set<IntervalDurationStrategy> intervals = new HashSet<IntervalDurationStrategy>();
 
     /* *************************** CONSTRUCTORS *************************** */
 
-    public ProjectAssignment(final Employee anEmployee) {
+    public ProjectAssignment(final Employee anEmployee, final Project aProject) {
         super();
         employee = anEmployee;
+        project = aProject;
     }
 
     public ProjectAssignment() {
@@ -53,6 +56,14 @@ public class ProjectAssignment extends Entity implements Assignable {
     @Override
     public void setEmployee(final Employee employee) {
         this.employee = employee;
+    }
+
+    public void setProject(final Project project) {
+        this.project = project;
+    }
+
+    public Project getProject() {
+        return project;
     }
 
     /* **************************** OPERATIONS **************************** */
@@ -143,5 +154,10 @@ public class ProjectAssignment extends Entity implements Assignable {
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.getProject().getName();
     }
 }
