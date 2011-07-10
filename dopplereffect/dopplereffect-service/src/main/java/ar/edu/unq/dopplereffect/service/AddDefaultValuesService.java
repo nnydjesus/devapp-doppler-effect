@@ -77,7 +77,7 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
         AOP_M = new Skill("AOP", SkillLevel.MEDIUM);
     
     private static final Project 
-        SERENITO = new ProjectBuilder().withName("Serenito").withSkill(JAVA_E).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(12552555).build(),
+        SERENITO = new ProjectBuilder().withName("Serenito").withSkill(JAVA_E).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(1255255555).build(),
         CINDOR = new ProjectBuilder().withName("Cindor").withSkill(HIBERNATE_B).withInformationClient(new PersonalData("Danone",null)).withEstimatedEffort(32145555).build(),
         CINE_PLEX = new ProjectBuilder().withName("Cine Plex").withSkill(POO_E).withInformationClient(new PersonalData("De Niro",null)).withEstimatedEffort(545214555).build(),
         SANTANDER = new ProjectBuilder().withName("Santander").withSkill(AOP_M).withInformationClient(new PersonalData("Rio",null)).withEstimatedEffort(5555555).build();
@@ -116,6 +116,7 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
         this.addProjects();
         this.addSalarySpecs();
         this.addDefaultUsers();
+        this.addAssignments();
     }
 
     private void addDefaultUsers() {
@@ -156,6 +157,37 @@ public class AddDefaultValuesService implements ar.edu.unq.dopplereffect.service
 
     private void addProjects() {
         projectRepo.saveAll(SERENITO, CINDOR, CINE_PLEX, SANTANDER);
+    }
+
+    private void addAssignments() {
+        SERENITO.manualAssignment(
+                EMPLOYEE_1,
+                new IntervalDurationStrategyBuilder().withStartDate(new DateTime("2011-08-01"))
+                        .withEndDate(new DateTime("2011-08-09")).build());
+        SERENITO.manualAssignment(
+                EMPLOYEE_2,
+                new IntervalDurationStrategyBuilder().withStartDate(new DateTime("2011-08-01"))
+                        .withEndDate(new DateTime("2011-08-09")).build());
+        CINDOR.manualAssignment(
+                EMPLOYEE_3,
+                new IntervalDurationStrategyBuilder().withStartDate(new DateTime("2011-08-10"))
+                        .withEndDate(new DateTime("2011-08-15")).build());
+        CINDOR.manualAssignment(
+                EMPLOYEE_5,
+                new IntervalDurationStrategyBuilder().withStartDate(new DateTime("2011-08-15"))
+                        .withEndDate(new DateTime("2011-08-18")).build());
+        CINE_PLEX.manualAssignment(
+                EMPLOYEE_4,
+                new IntervalDurationStrategyBuilder().withStartDate(new DateTime("2011-08-01"))
+                        .withEndDate(new DateTime("2011-09-01")).build());
+        SANTANDER.manualAssignment(
+                EMPLOYEE_3,
+                new IntervalDurationStrategyBuilder().withStartDate(new DateTime("2011-08-16"))
+                        .withEndDate(new DateTime("2011-09-01")).build());
+        projectRepo.update(SERENITO);
+        projectRepo.update(CINDOR);
+        projectRepo.update(CINE_PLEX);
+        projectRepo.update(SANTANDER);
     }
 
     private void addLeaveRequestTypes() {

@@ -13,7 +13,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.WebRequest;
 
 import ar.edu.unq.dopplereffect.mail.LocaleManager;
-import ar.edu.unq.dopplereffect.presentation.ExceptionManager;
+import ar.edu.unq.dopplereffect.presentation.HandlerException;
 import ar.edu.unq.dopplereffect.presentation.panel.LanguageSelectorPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.LoginStatusPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SimplePanel;
@@ -44,7 +44,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     private Component body;
 
-    private static ExceptionManager managerException;
+    private static HandlerException managerException;
 
     // private WebMarkupContainer bodyContainer;
 
@@ -62,7 +62,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         super();
         this.setOutputMarkupId(true);
         this.readCookies();
-        managerException = new ExceptionManager(this);
+        managerException = new HandlerException(this);
         body = component;
         ajaxPanel = new SimplePanel("body");
         ajaxPanel.add(component);
@@ -164,7 +164,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         this.setResponsePage(errorPage);
     }
 
-    public static ExceptionManager getManagerException() {
+    public static HandlerException getManagerException() {
         return managerException;
     }
 }

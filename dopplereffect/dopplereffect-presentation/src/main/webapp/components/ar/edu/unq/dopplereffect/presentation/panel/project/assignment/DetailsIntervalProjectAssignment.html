@@ -16,10 +16,11 @@
 	<wicket:panel id="panel" >
 			<ol wicket:id="availableWicket">
 				<li wicket:id="intervals">
-					desde <span wicket:id="startDate" /> 
-					hasta  <span wicket:id="endDate" /></li>
+					<wicket:message key="from" /> <span wicket:id="startDate" /> 
+					<wicket:message key="to" />  <span wicket:id="endDate" /></li>
 			</ol>
-<!-- 			 <button wicket:id="back_button" href="#"><wicket:message key="back_button" /></button> -->
+			<br/><br/>
+			 <button wicket:id="back_button" href="#"><wicket:message key="back_button" /></button>
 		</wicket:panel>
 	</body>
 </html>

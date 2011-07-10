@@ -24,7 +24,7 @@ public class ProjectBuilder implements Builder<Project> {
 
     protected transient PersonalData infoClient = new PersonalDataBuilder().build();
 
-    protected transient Period consideredEffort = new Period(Months.ONE);
+    protected transient Period consideredEffort = new Period(Months.FOUR);
 
     protected transient EmployeeTimeCalculator calculator = new EmployeeTimeCalculator();
 

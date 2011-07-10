@@ -193,24 +193,26 @@ public class AjaxDataTable<T extends DTO, S extends SearchModel<T>> implements S
             });
         }
 
-        columns.add(new AbstractColumn<T>(new StringResourceModel("header.delete", new Model<String>(""))) {
-            private static final long serialVersionUID = 1L;
+        if (this.getParentPanel().cantDelete()) {
+            columns.add(new AbstractColumn<T>(new StringResourceModel("header.delete", new Model<String>(""))) {
+                private static final long serialVersionUID = 1L;
 
-            @Override
-            public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
-                    final IModel<T> rowModel) {
-                String confirmText = new Localizer().getString("confirm.delete", AjaxDataTable.this.getParentPage());
-                cellItem.add(new AjaxActionPanelWithConfirm(componentId, "delete.png", confirmText) {
-                    private static final long serialVersionUID = 1L;
+                @Override
+                public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
+                        final IModel<T> rowModel) {
+                    String confirmText = new Localizer().getString("confirm.delete", AjaxDataTable.this.getParentPage());
+                    cellItem.add(new AjaxActionPanelWithConfirm(componentId, "delete.png", confirmText) {
+                        private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void onAction(final AjaxRequestTarget target) {
-                        AjaxDataTable.this.getSearchModel().remove(rowModel.getObject());
-                        target.addComponent(AjaxDataTable.this.getAjaxdataTable());
-                    }
-                });
-            }
-        });
+                        @Override
+                        public void onAction(final AjaxRequestTarget target) {
+                            AjaxDataTable.this.getSearchModel().remove(rowModel.getObject());
+                            target.addComponent(AjaxDataTable.this.getAjaxdataTable());
+                        }
+                    });
+                }
+            });
+        }
         this.setAjaxdataTable(new AjaxFallbackDefaultDataTable<T>(this.getId(), columns,
                 new GenericSortableDataProvider<T>(this.getId(), this.getSearchModel(), this.getSortName()), this
                         .getPageSize()));

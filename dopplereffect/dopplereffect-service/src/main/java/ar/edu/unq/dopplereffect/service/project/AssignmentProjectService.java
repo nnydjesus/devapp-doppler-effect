@@ -2,6 +2,9 @@ package ar.edu.unq.dopplereffect.service.project;
 
 import java.util.List;
 
+import org.joda.time.DateTime;
+
+import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
 import ar.edu.unq.dopplereffect.service.Service;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 import ar.edu.unq.dopplereffect.service.employee.IEmployeeDTO;
@@ -13,13 +16,15 @@ public interface AssignmentProjectService extends Service {
 
     List<ProjectAssignmentDTO> searchByEmployee(IEmployeeDTO employeeDTO);
 
-    void newProject(ProjectAssignmentDTO entity);
-
-    void deleteProject(ProjectAssignmentDTO entity);
-
-    void updateProject(ProjectAssignmentDTO entity);
-
     ProjectAssignmentDTO assignmentEmployee(ProjectDTO projectDTO, EmployeeViewDTO employeeViewDTO,
             IntervalDurationStrategy intervalDurationStrategy);
+
+    List<ProjectAssignmentDTO> automaticRecommendation(ProjectDTO projectDTO, DateTime from);
+
+    List<ProjectDTO> searchAllProjects();
+
+    void automaticAssignment(ProjectDTO project, DateTime from);
+
+    ProjectAssignmentDTO getProjectAssignmentDTO(ProjectAssignment assignment);
 
 }

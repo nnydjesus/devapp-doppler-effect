@@ -25,6 +25,7 @@ import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.jquery.scroolpane.ScrollPaneBehavior;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxReflectionActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
+import ar.edu.unq.dopplereffect.presentation.project.AssignmentProjectSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
@@ -70,15 +71,19 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
 
     private LeaveRequestSearchModel leaveRequestSearchModel;
 
+    private AssignmentProjectSearchModel assignmentProjectSearchModel;
+
     private CalendarTable<T> calendarTable;
 
     /* *************************** CONSTRUCTORS *************************** */
 
     public CalendarPanel(final String id, final SearchModel<T> employeeSearchModel,
-            final LeaveRequestSearchModel leaveReqSearchModel, final AjaxCallBack<Component> callback) {
+            final LeaveRequestSearchModel leaveReqSearchModel,
+            final AssignmentProjectSearchModel assignmentProjectSearchModel, final AjaxCallBack<Component> callback) {
         super(id, new Model<SearchModel<T>>(employeeSearchModel));
         model = employeeSearchModel;
         this.setLeaveRequestSearchModel(leaveReqSearchModel);
+        this.setAssignmentProjectSearchModel(assignmentProjectSearchModel);
         this.setCallback(callback);
         employeeSearchModel.search();
         DateTime day = new DateTime();
@@ -189,6 +194,14 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
     }
 
     /* **************************** OPERATIONS **************************** */
+
+    public void setAssignmentProjectSearchModel(final AssignmentProjectSearchModel assignmentProjectSearchModel) {
+        this.assignmentProjectSearchModel = assignmentProjectSearchModel;
+    }
+
+    public AssignmentProjectSearchModel getAssignmentProjectSearchModel() {
+        return assignmentProjectSearchModel;
+    }
 
     public void next() {
         this.getCalendar().getStrategy().next();

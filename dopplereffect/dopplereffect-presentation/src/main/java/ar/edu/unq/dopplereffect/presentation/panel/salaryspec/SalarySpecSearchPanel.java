@@ -35,7 +35,7 @@ public class SalarySpecSearchPanel extends AbstractSearchPanel<SalarySpecSearchM
     }
 
     @Override
-    protected void buildForm(final Form<SalarySpecSearchModel> form) {
+    protected void addInputSearch(final Form<SalarySpecSearchModel> form) {
         DropDownChoice<CareerPlan> ddc1 = new DropDownChoice<CareerPlan>("searchByCareerPlan", Arrays.asList(CareerPlan
                 .values()));
         ddc1.setNullValid(true);

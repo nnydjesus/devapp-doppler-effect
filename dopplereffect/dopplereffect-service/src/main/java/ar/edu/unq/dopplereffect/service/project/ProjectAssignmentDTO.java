@@ -62,4 +62,8 @@ public class ProjectAssignmentDTO implements DTO {
         return projectDTO.getName();
     }
 
+    public String getEmployeeName() {
+        return this.getEmployeeDTO().getFirstName();
+    }
+
 }
