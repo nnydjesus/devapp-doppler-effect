@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:wicket="http://wicket.apache.org/">
+	<wicket:head>
+		
+		<style type="text/css">
+			#selectableWicket .ui-selecting, #availableWicket .ui-selecting { background: lightGoldenRodYellow; }
+			#selectableWicket .ui-selected, #availableWicket .ui-selected { background: lightCoral; color: white; }
+			#selectableWicket, #availableWicket { border: 1px solid black; list-style-type: none; margin: 0; padding: 0; width: 90%; }
+			#selectableWicket li, #availableWicket li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+ 		</style> 
+	</wicket:head>
+	<body>
+	
+
+			
+	<wicket:panel id="panel" >
+			<ol wicket:id="availableWicket">
+				<li wicket:id="intervals">
+					desde <span wicket:id="startDate" /> 
+					hasta  <span wicket:id="endDate" /></li>
+			</ol>
+<!-- 			 <button wicket:id="back_button" href="#"><wicket:message key="back_button" /></button> -->
+		</wicket:panel>
+	</body>
+</html>
+

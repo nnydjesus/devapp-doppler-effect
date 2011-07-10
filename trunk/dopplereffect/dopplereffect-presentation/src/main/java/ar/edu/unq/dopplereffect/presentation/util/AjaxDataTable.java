@@ -21,13 +21,12 @@ import org.apache.wicket.model.StringResourceModel;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanelWithConfirm;
 import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
-public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implements Serializable, ITable {
+public class AjaxDataTable<T extends DTO, S extends SearchModel<T>> implements Serializable, ITable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,7 +46,7 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
 
     private WebMarkupContainer sortableAjaxWicket;
 
-    private AbstractPanel<?> parentPanel;
+    private AbstractSearchPanel<?> parentPanel;
 
     private AjaxCallBack<Component> callBack;
 
@@ -57,7 +56,7 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
 
     /* *************************** CONSTRUCTORS *************************** */
 
-    public AjaxDataTablePage(final AbstractPanel<?> parent, final String id, final String sortName,
+    public AjaxDataTable(final AbstractSearchPanel<?> parent, final String id, final String sortName,
             final S searchModel, final AjaxCallBack<Component> callBack, final List<String> fields,
             final Class<? extends Component> abmClass) {
 
@@ -122,11 +121,11 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
         this.sortableAjaxWicket = sortableAjaxWicket;
     }
 
-    public AbstractPanel<?> getParentPanel() {
+    public AbstractSearchPanel<?> getParentPanel() {
         return parentPanel;
     }
 
-    public void setParentPanel(final AbstractPanel<?> parentPanel) {
+    public void setParentPanel(final AbstractSearchPanel<?> parentPanel) {
         this.parentPanel = parentPanel;
     }
 
@@ -172,25 +171,27 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
         }
         this.addCustomColumns(columns);
 
-        columns.add(new AbstractColumn<T>(new StringResourceModel("header.edit", new Model<String>(""))) {
-            private static final long serialVersionUID = 1L;
+        if (this.getParentPanel().cantEdit()) {
+            columns.add(new AbstractColumn<T>(new StringResourceModel("header.edit", new Model<String>(""))) {
+                private static final long serialVersionUID = 1L;
 
-            @Override
-            public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
-                    final IModel<T> model) {
-                cellItem.add(new AjaxActionPanel(componentId, "edit.png") {
-                    private static final long serialVersionUID = 1L;
+                @Override
+                public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
+                        final IModel<T> model) {
+                    cellItem.add(new AjaxActionPanel(componentId, "edit.png") {
+                        private static final long serialVersionUID = 1L;
 
-                    @Override
-                    @SuppressWarnings("synthetic-access")
-                    public void onAction(final AjaxRequestTarget target) {
-                        Component page = AjaxDataTablePage.this.createEditPanel(model);
-                        callBack.execute(target, page);
-                    }
+                        @Override
+                        @SuppressWarnings("synthetic-access")
+                        public void onAction(final AjaxRequestTarget target) {
+                            Component page = AjaxDataTable.this.createEditPanel(model);
+                            callBack.execute(target, page);
+                        }
 
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
 
         columns.add(new AbstractColumn<T>(new StringResourceModel("header.delete", new Model<String>(""))) {
             private static final long serialVersionUID = 1L;
@@ -198,14 +199,14 @@ public class AjaxDataTablePage<T extends DTO, S extends SearchModel<T>> implemen
             @Override
             public void populateItem(final Item<ICellPopulator<T>> cellItem, final String componentId,
                     final IModel<T> rowModel) {
-                String confirmText = new Localizer().getString("confirm.delete", AjaxDataTablePage.this.getParentPage());
+                String confirmText = new Localizer().getString("confirm.delete", AjaxDataTable.this.getParentPage());
                 cellItem.add(new AjaxActionPanelWithConfirm(componentId, "delete.png", confirmText) {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void onAction(final AjaxRequestTarget target) {
-                        AjaxDataTablePage.this.getSearchModel().remove(rowModel.getObject());
-                        target.addComponent(AjaxDataTablePage.this.getAjaxdataTable());
+                        AjaxDataTable.this.getSearchModel().remove(rowModel.getObject());
+                        target.addComponent(AjaxDataTable.this.getAjaxdataTable());
                     }
                 });
             }

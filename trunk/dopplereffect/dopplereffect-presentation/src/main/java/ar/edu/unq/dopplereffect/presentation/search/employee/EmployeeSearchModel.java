@@ -8,7 +8,6 @@ import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeDTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeDetailDTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeService;
-import ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 import ar.edu.unq.dopplereffect.service.export.FormatterExportType;
 
@@ -109,7 +108,7 @@ public class EmployeeSearchModel extends SearchModel<EmployeeViewDTO> {
 
     @Override
     public File export(final String folder, final FormatterExportType type) {
-        return ((EmployeeServiceImpl) this.getService()).export(folder + "/Employee." + type.getExtension());
+        return this.getService().export(folder + "/Employee." + type.getExtension());
     }
 
 }

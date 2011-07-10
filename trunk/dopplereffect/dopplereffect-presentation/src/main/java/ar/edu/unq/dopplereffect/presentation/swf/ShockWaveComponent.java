@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.presentation.swf;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.Map;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.util.value.IValueMap;
 
-public class ShockWaveComponent extends ObjectContainer {
+public class ShockWaveComponent extends ObjectContainer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final String CONTENTTYPE = "application/x-shockwave-flash";
@@ -18,12 +19,16 @@ public class ShockWaveComponent extends ObjectContainer {
 
     private static final String CODEBASE = "http://fpdownload.adobe.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0";
 
+    private static final String DATA = "data";
+
+    private static final String MOVIE = "movie";
+
     // valid attributes
     private static final List<String> ATTRIBUTE_NAMES = Arrays.asList(new String[] { "classid", "width", "height",
-            "codebase", "align", "base", "data" });
+            "codebase", "align", "base", DATA });
 
     // valid parameters
-    private static final List<String> PARAMETER_NAMES = Arrays.asList(new String[] { "devicefont", "movie", "play",
+    private static final List<String> PARAMETER_NAMES = Arrays.asList(new String[] { "devicefont", MOVIE, "play",
             "loop", "quality", "bgcolor", "scale", "salign", "menu", "wmode", "allowscriptaccess", "seamlesstabbing" });
 
     // combined options (to iterate over them)
@@ -48,13 +53,13 @@ public class ShockWaveComponent extends ObjectContainer {
     public ShockWaveComponent(final String id, final String movie, final String width, final String height) {
         this(id);
 
-        this.setValue("movie", movie);
+        this.setValue(MOVIE, movie);
         this.setValue("width", width);
         this.setValue("height", height);
     }
 
     public void setMovie(final String movie) {
-        this.setValue("movie", movie);
+        this.setValue(MOVIE, movie);
     }
 
     @Override
@@ -65,12 +70,12 @@ public class ShockWaveComponent extends ObjectContainer {
         // to handle url and
         // puts the values to the maps depending on the browser information
         String parameter = name.toLowerCase();
-        if ("data".equals(parameter)) {
-            parameter = "movie";
+        if (DATA.equals(parameter)) {
+            parameter = MOVIE;
         }
 
-        if ("movie".equals(parameter) && !this.getClientProperties().isBrowserInternetExplorer()) {
-            attributes.put("data", value);
+        if (MOVIE.equals(parameter) && !this.getClientProperties().isBrowserInternetExplorer()) {
+            attributes.put(DATA, value);
         }
 
         if (ATTRIBUTE_NAMES.contains(parameter)) {
@@ -85,11 +90,11 @@ public class ShockWaveComponent extends ObjectContainer {
         String parameter = name.toLowerCase();
         String value = null;
 
-        if ("data".equals(parameter)) {
+        if (DATA.equals(parameter)) {
             if (this.getClientProperties().isBrowserInternetExplorer()) {
                 return null;
             }
-            parameter = "movie";
+            parameter = MOVIE;
         }
 
         if (ATTRIBUTE_NAMES.contains(parameter)) {
@@ -99,7 +104,7 @@ public class ShockWaveComponent extends ObjectContainer {
         }
 
         // special treatment of movie to resolve to the url
-        if (value != null && parameter.equals("movie")) {
+        if (value != null && parameter.equals(MOVIE)) {
             value = this.resolveResource(value);
         }
 

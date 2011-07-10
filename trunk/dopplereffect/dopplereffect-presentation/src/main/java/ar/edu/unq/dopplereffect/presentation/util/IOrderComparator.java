@@ -3,11 +3,13 @@ package ar.edu.unq.dopplereffect.presentation.util;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import org.apache.commons.lang.StringUtils;
+
+import ar.edu.unq.tpi.util.common.ReflectionUtils;
 import ar.edu.unq.tpi.util.commons.exeption.UserException;
 
 import com.wiquery.plugins.jqgrid.model.SortInfo;
 import com.wiquery.plugins.jqgrid.model.SortOrder;
-import com.wiquery.plugins.jqgrid.util.ReflectionUtils;
 
 class IOrderComparator<T> implements Comparator<T>, Serializable {
 
@@ -39,8 +41,10 @@ class IOrderComparator<T> implements Comparator<T>, Serializable {
     @SuppressWarnings("unchecked")
     public int compare(final T o1, final T o2) {
         try {
-            Object ov1 = ReflectionUtils.getPropertyValue(o1, this.getOrder().getProperty());
-            Object ov2 = ReflectionUtils.getPropertyValue(o2, this.getOrder().getProperty());
+            Object ov1 = ReflectionUtils
+                    .invokeMethod(o1, "get" + StringUtils.capitalize(this.getOrder().getProperty()));
+            Object ov2 = ReflectionUtils
+                    .invokeMethod(o2, "get" + StringUtils.capitalize(this.getOrder().getProperty()));
             if (ov1 instanceof Comparable && ov2 instanceof Comparable) {
                 Comparable<Object> c1 = (Comparable<Object>) ov1;
                 Comparable<Object> c2 = (Comparable<Object>) ov2;

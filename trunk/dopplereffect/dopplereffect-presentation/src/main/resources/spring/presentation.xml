@@ -26,6 +26,9 @@
 	<bean id="search_model.project"	class="ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel">
 		<property name="service" ref="service.project" />
 	</bean>
+	<bean id="search_model.projectAssignment"	class="ar.edu.unq.dopplereffect.presentation.project.AssignmentProjectSearchModel">
+		<property name="service" ref="service.assignment" />
+	</bean>
 
 	<bean id="search_model.employee" class="ar.edu.unq.dopplereffect.presentation.search.employee.EmployeeSearchModel">
 		<property name="service" ref="service.employee" />
@@ -39,8 +42,6 @@
 		<property name="service" ref="service.leave_request" />
 	</bean>
 	
-	<bean id="managerException" class="ar.edu.unq.dopplereffect.presentation.ManagerExceptionAspect" />
-
 	<security:authentication-manager alias="authenticationManager" />
 	
 	<security:authentication-provider user-service-ref="service.user" />
