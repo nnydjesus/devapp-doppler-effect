@@ -1,18 +1,17 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
 <wicket:panel id="panel">
-		<div>
-			<a href="#" type="button" wicket:id="mensual"><wicket:message key="monthday"/> </a>
-			<a href="#" type="button" wicket:id="semanal"> <wicket:message key="weekday"/></a>
-			<input wicket:id="datePicker" class="ui-state-default" />
-			<span wicket:id="hasta" class="ui-state-default" />
-		</div>
-		<div wicket:id="scrollpane">
-		<table align="center" id="tabla" class="dataview" BORDER
-			wicket:id="calendarTable">[table]
-		</table>
-		</div>
-		<div >
-			<button wicket:id="previousMonth" ></button>
-			<button  wicket:id="nextMonth" > </button>
-		</div>
-
+	<div>
+		<a href="#" type="button" wicket:id="mensual"><wicket:message key="monthday"/></a>
+		<a href="#" type="button" wicket:id="semanal"> <wicket:message key="weekday"/></a>
+		<input wicket:id="datePicker" class="ui-state-default" />
+		<span wicket:id="hasta" class="ui-state-default" ></span>
+	</div>
+	<div wicket:id="scrollpane">
+		<table align="center" id="tabla" class="dataview" BORDER wicket:id="calendarTable"></table>
+	</div>
+	<div >
+		<button wicket:id="previousMonth"></button>
+		<button  wicket:id="nextMonth"></button>
+	</div>
 </wicket:panel>
+</html>

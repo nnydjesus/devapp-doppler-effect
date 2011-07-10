@@ -12,6 +12,7 @@
 			classpath*:/spring/services.xml,
 			classpath*:/spring/transactions.xml,
 			classpath*:/spring/presentation.xml,
+			classpath*:/spring/reporting.xml,
 			classpath*:/spring/internationalization.xml
 		</param-value>
 	</context-param>

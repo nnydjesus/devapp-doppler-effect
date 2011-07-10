@@ -6,7 +6,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 
-import ar.edu.unq.dopplereffect.presentation.panel.NavigablePanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
@@ -16,7 +16,7 @@ import ar.edu.unq.dopplereffect.service.employee.EmployeeDetailDTO;
  * Representa un panel que muestra de manera detallada todos los datos de un
  * empleado.
  */
-public class EmployeeDetailPanel extends NavigablePanel<EmployeeDetailDTO> {
+public class EmployeeDetailPanel extends AbstractCallbackPanel<EmployeeDetailDTO> {
 
     private static final long serialVersionUID = 7612811876399884445L;
 

@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.data.Address;
 import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.log.NotLoggable;
@@ -78,7 +79,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public void deleteEmployee(final EmployeeViewDTO employeeDTO) {
-        this.getEmployeeRepo().delete(this.getEmployeeRepo().searchByDni(employeeDTO.getDni()));
+        Employee employee = this.getEmployeeRepo().searchByDni(employeeDTO.getDni());
+        // primero se eliminan las asignaciones que posee
+        for (Assignable assignable : employee.getAssignments()) {
+            if (assignable.getEmployee().equals(employee)) {
+                employee.getAssignments().remove(employee);
+            }
+        }
+        this.getEmployeeRepo().delete(employee);
     }
 
     @Override

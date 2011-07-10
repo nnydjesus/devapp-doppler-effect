@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="service.employeeReporting" class="ar.edu.unq.dopplereffect.service.export.ExportService">
+		<constructor-arg value="ar.edu.unq.dopplereffect.employees.Employee"/>
+	</bean>
+	
+	<bean id="service.projectReporting" class="ar.edu.unq.dopplereffect.service.export.ExportService">
+		<constructor-arg value="ar.edu.unq.dopplereffect.projects.Project"/>
+	</bean>
+	
+</beans>

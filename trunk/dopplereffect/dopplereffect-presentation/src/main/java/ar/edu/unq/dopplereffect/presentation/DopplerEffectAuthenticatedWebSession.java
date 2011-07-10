@@ -70,7 +70,9 @@ public class DopplerEffectAuthenticatedWebSession extends AuthenticatedWebSessio
     private void getRolesIfSignedIn(final Roles roles) {
         if (this.isSignedIn()) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            this.addRolesFromAuthentication(roles, authentication);
+            if (authentication != null) {
+                this.addRolesFromAuthentication(roles, authentication);
+            }
         }
     }
 

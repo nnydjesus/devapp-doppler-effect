@@ -44,6 +44,8 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     private Component body;
 
+    private Panel footer;
+
     private static HandlerException managerException;
 
     // private WebMarkupContainer bodyContainer;
@@ -111,6 +113,16 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         this.defaultBody = defaultBody;
     }
 
+    public Panel getFooter() {
+        return footer;
+    }
+
+    public void setFooter(final Panel footer) {
+        footer.setOutputMarkupId(true);
+        this.addOrReplace(footer);
+        this.footer = footer;
+    }
+
     /* ************************* PRIVATE METHODS ************************** */
 
     protected Component createSidebar() {
@@ -118,8 +130,9 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
     }
 
     protected Component createFooter() {
-        // return new Label(FOOTER, new Model<String>("Footer!!!"));
-        return new LoginStatusPanel(FOOTER);
+        this.setFooter(new LoginStatusPanel(FOOTER));
+        // return new Label(FOOTER, new Model<String>(""));
+        return this.getFooter();
     }
 
     protected Component createHeader() {
@@ -148,7 +161,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
                 variant = cookie.getValue();
             }
         }
-        if (language != null || country != null | variant != null) {
+        if (language != null || country != null || variant != null) {
             Locale locale = new Locale(language, country, variant);
             LocaleManager.getLocaleManager().setLocale(locale);
             this.getSession().setLocale(locale);

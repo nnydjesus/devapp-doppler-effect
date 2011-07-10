@@ -185,6 +185,48 @@ public class LeaveRequestCustomType extends Entity implements LeaveRequestType {
     /* ****************** EQUALS, HASHCODE, TOSTRING ********************** */
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + maxDaysInYear;
+        result = prime * result + maxLimit;
+        result = prime * result + minLimit;
+        result = prime * result + (reason == null ? 0 : reason.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        LeaveRequestCustomType other = (LeaveRequestCustomType) obj;
+        if (maxDaysInYear != other.maxDaysInYear) {
+            return false;
+        }
+        if (maxLimit != other.maxLimit) {
+            return false;
+        }
+        if (minLimit != other.minLimit) {
+            return false;
+        }
+        if (reason == null) {
+            if (other.reason != null) {
+                return false;
+            }
+        } else if (!reason.equals(other.reason)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
         return this.getReason();
     }
