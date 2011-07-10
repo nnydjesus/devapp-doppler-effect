@@ -17,6 +17,7 @@
 package ar.edu.unq.dopplereffect.presentation.panel.upload;
 
 import java.io.File;
+import java.io.Serializable;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -36,7 +37,7 @@ import ar.edu.unq.dopplereffect.service.export.FormatterExportType;
 /**
  * 
  */
-public class UploadPanel<T> extends Panel {
+public class UploadPanel<T> extends Panel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // }
@@ -44,8 +45,6 @@ public class UploadPanel<T> extends Panel {
     private SearchModel<T> searchModel;
 
     private Folder uploadFolder = new Folder(System.getProperty("java.io.tmpdir"), "doppler-effect-download");
-
-    private FeedbackPanel uploadFeedback;
 
     private DialogSelectedTypeToExport dialogSelectedTypeToExport;
 
@@ -56,7 +55,7 @@ public class UploadPanel<T> extends Panel {
         // crea el directorio si no existe
         uploadFolder.mkdirs();
 
-        uploadFeedback = new FeedbackPanel("uploadFeedback");
+        FeedbackPanel uploadFeedback = new FeedbackPanel("uploadFeedback");
         uploadFeedback.setOutputMarkupId(true);
 
         this.add(uploadFeedback);

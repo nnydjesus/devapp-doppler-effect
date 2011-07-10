@@ -7,6 +7,7 @@ import ar.edu.unq.dopplereffect.presentation.panel.calendar.CalendarPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.employee.EmployeeSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.leaverequest.LeaveRequestSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.project.ProjectSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.project.assignment.AssignmentProjectSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.salaryspec.SalarySpecSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
@@ -26,6 +27,8 @@ public class SidebarPanel extends AbstractPanel<Model<String>> {
         super(id);
         this.add(homePage.createPanelLink("projects",
                 new ProjectSearchPanel(idPanel, callback, homePage.getProjectSearchModel())));
+        this.add(homePage.createPanelLink("assignments",
+                new AssignmentProjectSearchPanel(idPanel, callback, homePage.getProjectAssignment())));
         this.add(homePage.createPanelLink(
                 "employees",
                 new EmployeeSearchPanel(idPanel, callback, homePage.getEmployeeSearchModel(), homePage

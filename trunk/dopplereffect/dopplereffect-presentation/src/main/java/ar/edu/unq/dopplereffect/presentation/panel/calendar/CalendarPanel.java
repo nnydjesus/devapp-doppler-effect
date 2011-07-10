@@ -3,7 +3,6 @@ package ar.edu.unq.dopplereffect.presentation.panel.calendar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -21,6 +20,7 @@ import ar.edu.unq.dopplereffect.calendar.Calendareable;
 import ar.edu.unq.dopplereffect.calendar.Matrix;
 import ar.edu.unq.dopplereffect.calendar.MonthStrategy;
 import ar.edu.unq.dopplereffect.calendar.WeekdayStrategy;
+import ar.edu.unq.dopplereffect.mail.LocaleManager;
 import ar.edu.unq.dopplereffect.presentation.components.CustomComponent;
 import ar.edu.unq.dopplereffect.presentation.jquery.scroolpane.ScrollPaneBehavior;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxReflectionActionPanel;
@@ -214,7 +214,7 @@ public class CalendarPanel<T extends Calendareable> extends AbstractCallbackPane
 
     private void makePage() {
         this.setHastaModel(new Model<String>(""));
-        this.setDateFormat(new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()));
+        this.setDateFormat(new SimpleDateFormat("dd/MM/yyyy", LocaleManager.getLocaleManager().getLocale()));
         this.updateTable();
         this.addComponents();
     }

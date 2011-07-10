@@ -13,24 +13,24 @@ import org.apache.wicket.model.Model;
 
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.leaverequest.LeaveRequestSearchPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
+import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.search.employee.EmployeeSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
-import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTable;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 
 /**
- * Similar a una {@link AjaxDataTablePage} pero con el agregado de un link con
- * mas detalles.
+ * Similar a una {@link AjaxDataTable} pero con el agregado de un link con mas
+ * detalles.
  */
-public class EmployeeAjaxDataTable extends AjaxDataTablePage<EmployeeViewDTO, EmployeeSearchModel> {
+public class EmployeeAjaxDataTable extends AjaxDataTable<EmployeeViewDTO, EmployeeSearchModel> {
 
     private static final long serialVersionUID = 6376218516758816207L;
 
     private LeaveRequestSearchModel leaveRequestSearchModel;
 
-    public EmployeeAjaxDataTable(final AbstractPanel<?> parent, final String id, final String sortName,
+    public EmployeeAjaxDataTable(final AbstractSearchPanel<?> parent, final String id, final String sortName,
             final EmployeeSearchModel searchModel, final AjaxCallBack<Component> aCallBack, final List<String> fields,
             final Class<? extends Component> abm) {
         super(parent, id, sortName, searchModel, aCallBack, fields, abm);
@@ -45,7 +45,7 @@ public class EmployeeAjaxDataTable extends AjaxDataTablePage<EmployeeViewDTO, Em
             @Override
             public void populateItem(final Item<ICellPopulator<EmployeeViewDTO>> cellItem, final String componentId,
                     final IModel<EmployeeViewDTO> rowModel) {
-                cellItem.add(new AjaxActionPanel(componentId, "details.png") {
+                cellItem.add(new AjaxActionPanel(componentId, "../details.png") {
 
                     private static final long serialVersionUID = 1026116621448693265L;
 
