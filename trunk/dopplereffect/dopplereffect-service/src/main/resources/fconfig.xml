@@ -8,7 +8,7 @@
         <entry key="user" value="nny.fwk@gmail.com"/>
         <entry key="password" value="sarasaza"/>
 <!--         True para que mande los mails, false en caso contrario -->
-        <entry key="activated" value="false"/>
+        <entry key="activated" value="false"/>  
         <entry key="disabledAccount" value="nny.fwk@gmail.com"/>
         <entry key="from.defaultAddress" value="nny.fwk@gmail.com"/>
         <entry key="from.defaultSender" value="doopler-effect"/>
@@ -23,5 +23,9 @@
     
     <section name="appLocation">
         <entry key="uri" value="http://localhost:8082/dooper-effect/"/>
+    </section>
+    
+    <section name="users">
+        <entry key="user" value="nnydjesus@gmail.com,n.garbezza@gmail.com,cristianelopez@gmail.com"/>
     </section>
 </configuration>

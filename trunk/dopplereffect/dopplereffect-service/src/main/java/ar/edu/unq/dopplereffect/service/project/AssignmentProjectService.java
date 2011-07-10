@@ -1,27 +1,25 @@
 package ar.edu.unq.dopplereffect.service.project;
 
-import java.io.File;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.service.Service;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.employee.IEmployeeDTO;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
-public interface ProjectService extends Service {
+public interface AssignmentProjectService extends Service {
 
-    List<ProjectDTO> searchAllProjects();
+    List<ProjectAssignmentDTO> searchAllAssignmentProjects();
 
-    List<ProjectDTO> searchByNameProjects(String name);
+    List<ProjectAssignmentDTO> searchByEmployee(IEmployeeDTO employeeDTO);
 
-    void newProject(ProjectDTO entity);
+    void newProject(ProjectAssignmentDTO entity);
 
-    void deleteProject(ProjectDTO entity);
+    void deleteProject(ProjectAssignmentDTO entity);
 
-    void updateProject(ProjectDTO entity);
+    void updateProject(ProjectAssignmentDTO entity);
 
     ProjectAssignmentDTO assignmentEmployee(ProjectDTO projectDTO, EmployeeViewDTO employeeViewDTO,
             IntervalDurationStrategy intervalDurationStrategy);
-
-    File export(String string);
 
 }

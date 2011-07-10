@@ -6,7 +6,7 @@ import java.util.Locale;
  */
 public class LocaleManager {
 
-    private Locale locale = new Locale("es");
+    private Locale locale = Locale.US;
 
     private static Object mutex = new Object();
 
