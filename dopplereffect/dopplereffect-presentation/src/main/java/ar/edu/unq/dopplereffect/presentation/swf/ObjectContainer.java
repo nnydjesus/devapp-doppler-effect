@@ -1,21 +1,22 @@
 package ar.edu.unq.dopplereffect.presentation.swf;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Response;
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.protocol.http.ClientProperties;
 import org.apache.wicket.protocol.http.WebRequestCycle;
-import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
 import org.apache.wicket.request.ClientInfo;
 import org.apache.wicket.util.value.IValueMap;
 
-public abstract class ObjectContainer extends WebMarkupContainer {
+public abstract class ObjectContainer extends WebMarkupContainer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // Some general attributes for the object tag:
@@ -78,12 +79,21 @@ public abstract class ObjectContainer extends WebMarkupContainer {
         IValueMap attributeMap = tag.getAttributes();
 
         // set the content type
-        String contentType = this.getContentType();
-        if (contentType != null && !"".equals(contentType)) {
-            attributeMap.put(ATTRIBUTE_CONTENTTYPE, contentType);
-        }
+        this.setContentType(attributeMap);
 
         // set clsid and codebase for IE
+        this.setCLSIDAndCodeBaseForIE(attributeMap);
+
+        // add all attributes
+        for (String name : this.getAttributeNames()) {
+            String value = this.getValue(name);
+            if (value != null) {
+                attributeMap.put(name, value);
+            }
+        }
+    }
+
+    public void setCLSIDAndCodeBaseForIE(final IValueMap attributeMap) {
         if (this.getClientProperties().isBrowserInternetExplorer()) {
             String clsid = this.getClsid();
             String codeBase = this.getCodebase();
@@ -95,13 +105,12 @@ public abstract class ObjectContainer extends WebMarkupContainer {
                 attributeMap.put(ATTRIBUTE_CODEBASE, codeBase);
             }
         }
+    }
 
-        // add all attributes
-        for (String name : this.getAttributeNames()) {
-            String value = this.getValue(name);
-            if (value != null) {
-                attributeMap.put(name, value);
-            }
+    public void setContentType(final IValueMap attributeMap) {
+        String contentType = this.getContentType();
+        if (contentType != null && !"".equals(contentType)) {
+            attributeMap.put(ATTRIBUTE_CONTENTTYPE, contentType);
         }
     }
 
@@ -128,11 +137,11 @@ public abstract class ObjectContainer extends WebMarkupContainer {
     // shortcut to the client properties:
     protected ClientProperties getClientProperties() {
         if (clientProperties == null) {
-            ClientInfo clientInfo = WebSession.get().getClientInfo();
+            ClientInfo clientInfo = Session.get().getClientInfo();
 
             if (clientInfo == null || !(clientInfo instanceof WebClientInfo)) {
                 clientInfo = new WebClientInfo((WebRequestCycle) this.getRequestCycle());
-                WebSession.get().setClientInfo(clientInfo);
+                Session.get().setClientInfo(clientInfo);
             }
 
             clientProperties = ((WebClientInfo) clientInfo).getProperties();

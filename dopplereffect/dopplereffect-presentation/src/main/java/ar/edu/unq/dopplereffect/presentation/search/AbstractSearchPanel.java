@@ -18,7 +18,7 @@ import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
-import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTablePage;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxDataTable;
 import ar.edu.unq.dopplereffect.presentation.util.ITable;
 import ar.edu.unq.dopplereffect.presentation.util.ReflectionAjaxButton;
 import ar.edu.unq.dopplereffect.service.DTO;
@@ -148,15 +148,15 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
                 this.getAbmClass(), this.getCallback());
     }
 
-    private AjaxDataTablePage getNewAjaxTable() {
-        AjaxDataTablePage ajaxDataTablePage = this.createAjaxTable();
+    private AjaxDataTable getNewAjaxTable() {
+        AjaxDataTable ajaxDataTablePage = this.createAjaxTable();
         ajaxDataTablePage.init();
         return ajaxDataTablePage;
     }
 
     @SuppressWarnings(UNCHECKED)
-    protected AjaxDataTablePage createAjaxTable() {
-        return new AjaxDataTablePage(this, this.getTableWicketId(), this.getSortName(),
+    protected AjaxDataTable createAjaxTable() {
+        return new AjaxDataTable(this, this.getTableWicketId(), this.getSortName(),
                 ((SearchModel) this.getDefaultModelObject()), this.getCallback(), this.getFields(), this.getAbmClass());
     }
 
@@ -222,6 +222,10 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     public void reset() {
         super.reset();
         ajaxSectionResult.setVisible(false);
+    }
+
+    public Boolean cantEdit() {
+        return true;
     }
 
     public void search() {

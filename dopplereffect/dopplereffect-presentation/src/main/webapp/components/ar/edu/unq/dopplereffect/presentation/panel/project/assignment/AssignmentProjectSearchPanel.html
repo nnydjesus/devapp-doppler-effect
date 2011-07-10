@@ -1,0 +1,33 @@
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
+<wicket:panel id="panel">
+	<a wicket:id="back" href="#"><wicket:message key="link.back" /></a>
+	<span wicket:id="uploadPanel" id="export"/>
+	<form wicket:id="searchProjectForm">
+		<table align="center" id="panel">
+			<tr>
+				<td align="right"><wicket:message key="name"/></td>
+				<td align="left"><input wicket:id="searchByName" type="text" name="name" class="ui-state-default"/></td>			
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="submit" wicket:id="search" wicket:message="value:button.search" /> 
+					<input type="submit" wicket:id="newProject" wicket:message="value:button.new_project" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	<br />
+	<br />
+
+	<div wicket:id="resultSecction" class="resultSecction">
+				<div wicket:id="markup" id="tabla" >
+					<table align="center" id="tabla" class="dataview" BORDER wicket:id="results"></table>
+				</div>
+			</div>
+			
+<!-- 	<div wicket:id="resultSecction" class="resultSecction"> -->
+<!-- 		<wicket:child wicket:id="results" id="tabla" /> -->
+<!-- 	</div> -->
+</wicket:panel>
+</html>
