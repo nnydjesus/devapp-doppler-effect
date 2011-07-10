@@ -1,4 +1,4 @@
-package ar.edu.unq.dopplereffect.presentation.panel.project;
+package ar.edu.unq.dopplereffect.presentation;
 
 import org.apache.wicket.Component;
 

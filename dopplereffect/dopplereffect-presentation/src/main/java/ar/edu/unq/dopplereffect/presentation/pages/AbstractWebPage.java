@@ -13,10 +13,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.protocol.http.WebRequest;
 
 import ar.edu.unq.dopplereffect.mail.LocaleManager;
+import ar.edu.unq.dopplereffect.presentation.ExceptionManager;
 import ar.edu.unq.dopplereffect.presentation.panel.LanguageSelectorPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.LoginStatusPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SimplePanel;
-import ar.edu.unq.dopplereffect.presentation.panel.project.ExceptionManager;
 import ar.edu.unq.tpi.util.common.ReflectionUtils;
 
 /**
