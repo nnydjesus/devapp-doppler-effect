@@ -14,13 +14,24 @@ public class ProjectAssignmentDTO implements DTO {
 
     private EmployeeViewDTO employeeDTO;
 
+    private ProjectDTO projectDTO;
+
     private Set<IntervalDurationStrategy> intervals = new HashSet<IntervalDurationStrategy>();
 
-    public ProjectAssignmentDTO(final EmployeeViewDTO employeeViewDTO,
+    public ProjectAssignmentDTO() {
+    }
+
+    public ProjectAssignmentDTO(final EmployeeViewDTO employeeViewDTO, final ProjectDTO aProjectDTO,
             final Set<IntervalDurationStrategy> intervalDurationStrategies) {
         super();
         employeeDTO = employeeViewDTO;
         intervals = intervalDurationStrategies;
+        projectDTO = aProjectDTO;
+    }
+
+    @Override
+    public String toString() {
+        return this.getProjectName();
     }
 
     public void setEmployeeDTO(final EmployeeViewDTO employeeDTO) {
@@ -37,6 +48,18 @@ public class ProjectAssignmentDTO implements DTO {
 
     public Set<IntervalDurationStrategy> getIntervals() {
         return intervals;
+    }
+
+    public void setProjectDTO(final ProjectDTO projectDTO) {
+        this.projectDTO = projectDTO;
+    }
+
+    public ProjectDTO getProjectDTO() {
+        return projectDTO;
+    }
+
+    public String getProjectName() {
+        return projectDTO.getName();
     }
 
 }

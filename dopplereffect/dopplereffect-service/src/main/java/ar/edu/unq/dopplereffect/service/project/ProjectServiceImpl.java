@@ -1,6 +1,8 @@
 package ar.edu.unq.dopplereffect.service.project;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +19,7 @@ import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
 import ar.edu.unq.dopplereffect.projects.Skill;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.export.ExportService;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
 @Service
@@ -29,6 +32,8 @@ public class ProjectServiceImpl implements ProjectService {
     private SkillServiceImpl skillService;
 
     private EmployeeServiceImpl employeeService;
+
+    private ExportService<Project> exportService;
 
     @Override
     @Transactional
@@ -47,29 +52,33 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @NotLoggable
-    private ProjectDTO convert(final Project project) {
+    public ProjectDTO convert(final Project project) {
         ProjectDTO pDTO = new ProjectDTO();
         pDTO.setName(project.getName());
         pDTO.setClientName(project.getClientData().getFirstName());
         pDTO.setTimeProject(project.getTimeProyect());
         pDTO.setMaxEffort(project.getMaxEffort());
         pDTO.setSkills(this.getSkillService().convertAll(project.getSkills()));
-        pDTO.setAssignment(this.convertAllProjectAssignment(project.getAssignedEmployees()));
+        List<ProjectAssignmentDTO> projectAssignment = this.convertAllProjectAssignment(project.getAssignedEmployees(),
+                pDTO);
+        pDTO.setAssignment(projectAssignment);
         return pDTO;
     }
 
     @NotLoggable
-    private List<ProjectAssignmentDTO> convertAllProjectAssignment(final Set<ProjectAssignment> projectAssignments) {
+    private List<ProjectAssignmentDTO> convertAllProjectAssignment(final Set<ProjectAssignment> projectAssignments,
+            final ProjectDTO pDTO) {
         List<ProjectAssignmentDTO> results = new ArrayList<ProjectAssignmentDTO>();
         for (ProjectAssignment projectAssignment : projectAssignments) {
-            results.add(this.convertProjectAssignment(projectAssignment));
+            results.add(this.convertProjectAssignment(projectAssignment, pDTO));
         }
         return results;
     }
 
     @NotLoggable
-    protected ProjectAssignmentDTO convertProjectAssignment(final ProjectAssignment projectAssignment) {
-        return new ProjectAssignmentDTO(this.getEmployeeService().convert(projectAssignment.getEmployee()),
+    protected ProjectAssignmentDTO convertProjectAssignment(final ProjectAssignment projectAssignment,
+            final ProjectDTO pDTO) {
+        return new ProjectAssignmentDTO(this.getEmployeeService().convert(projectAssignment.getEmployee()), pDTO,
                 projectAssignment.getIntervals());
     }
 
@@ -123,10 +132,19 @@ public class ProjectServiceImpl implements ProjectService {
         Employee employee = this.getEmployeeService().getEmployeeByDTO(employeeViewDTO);
         ProjectAssignment assignment = project.manualAssignment(employee, intervalDurationStrategy);
         employeeViewDTO.getAssignments().add(assignment);
-        ProjectAssignmentDTO projectAssignmentDTO = new ProjectAssignmentDTO(employeeViewDTO, assignment.getIntervals());
+        ProjectAssignmentDTO projectAssignmentDTO = new ProjectAssignmentDTO(employeeViewDTO, this.convert(assignment
+                .getProject()), assignment.getIntervals());
         projectDTO.getAssignment().add(projectAssignmentDTO);
         return projectAssignmentDTO;
 
+    }
+
+    @Override
+    @Transactional
+    public File export(final String pathFile) {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put("Title", "Projects");
+        return this.getExportService().export(pathFile, this.getProjectRepo().searchAll(), parameters);
     }
 
     public void setEmployeeService(final EmployeeServiceImpl employeeService) {
@@ -151,5 +169,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     public void setSkillService(final SkillServiceImpl skillService) {
         this.skillService = skillService;
+    }
+
+    public void setExportService(final ExportService<Project> exportService) {
+        this.exportService = exportService;
+    }
+
+    public ExportService<Project> getExportService() {
+        return exportService;
     }
 }

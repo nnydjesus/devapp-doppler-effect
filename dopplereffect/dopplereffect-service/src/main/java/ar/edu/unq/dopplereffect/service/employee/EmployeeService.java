@@ -1,5 +1,6 @@
 package ar.edu.unq.dopplereffect.service.employee;
 
+import java.io.File;
 import java.util.List;
 
 import ar.edu.unq.dopplereffect.service.Service;
@@ -23,5 +24,7 @@ public interface EmployeeService extends Service {
     EmployeeDetailDTO getDetailForEmployee(EmployeeViewDTO employeeViewDTO);
 
     EmployeeDTO createEditDTO(EmployeeViewDTO viewDTO);
+
+    File export(String string);
 
 }

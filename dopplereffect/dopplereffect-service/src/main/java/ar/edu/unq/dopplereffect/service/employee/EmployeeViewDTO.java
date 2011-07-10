@@ -7,9 +7,8 @@ import org.joda.time.DateTime;
 
 import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.calendar.Calendareable;
-import ar.edu.unq.dopplereffect.service.DTO;
 
-public class EmployeeViewDTO implements DTO, Calendareable {
+public class EmployeeViewDTO implements IEmployeeDTO, Calendareable {
 
     private static final long serialVersionUID = -2377606763449769912L;
 
@@ -21,6 +20,7 @@ public class EmployeeViewDTO implements DTO, Calendareable {
 
     private Set<Assignable> assignments = new HashSet<Assignable>();
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
@@ -29,6 +29,7 @@ public class EmployeeViewDTO implements DTO, Calendareable {
         this.firstName = firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
@@ -37,6 +38,7 @@ public class EmployeeViewDTO implements DTO, Calendareable {
         this.lastName = lastName;
     }
 
+    @Override
     public int getDni() {
         return dni;
     }

@@ -3,9 +3,8 @@ package ar.edu.unq.dopplereffect.service.employee;
 import java.util.Date;
 
 import ar.edu.unq.dopplereffect.employees.CareerPlan;
-import ar.edu.unq.dopplereffect.service.DTO;
 
-public class EmployeeDTO implements DTO {
+public class EmployeeDTO implements IEmployeeDTO {
 
     private static final long serialVersionUID = -8217656824150568037L;
 
@@ -37,6 +36,7 @@ public class EmployeeDTO implements DTO {
         joinDate = new Date();
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
@@ -45,6 +45,7 @@ public class EmployeeDTO implements DTO {
         this.firstName = firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
@@ -53,6 +54,7 @@ public class EmployeeDTO implements DTO {
         this.lastName = lastName;
     }
 
+    @Override
     public int getDni() {
         return dni;
     }

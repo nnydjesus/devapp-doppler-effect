@@ -11,6 +11,9 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="service.employeeReporting" class="ar.edu.unq.dopplereffect.service.export.ExportService">
 		<constructor-arg value="ar.edu.unq.dopplereffect.employees.Employee"/>
 	</bean>
+	<bean id="service.projectReporting" class="ar.edu.unq.dopplereffect.service.export.ExportService">
+		<constructor-arg value="ar.edu.unq.dopplereffect.projects.Project"/>
+	</bean>
 	
 	<bean id="service.employee" class="ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl">
 		<property name="employeeRepo" ref="repo.employee" />
@@ -21,7 +24,14 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="service.project" class="ar.edu.unq.dopplereffect.service.project.ProjectServiceImpl">
 		<property name="projectRepo" ref="repo.project" />
 		<property name="skillService" ref="service.skill" />
+		<property name="exportService" ref="service.projectReporting"/>
 		<property name="employeeService" ref="service.employee" />
+	</bean>
+	
+	<bean id="service.assignment" class="ar.edu.unq.dopplereffect.service.project.AssignmentProjectServiceImpl">
+		<property name="assignmentRepository" ref="repo.assignment" />
+		<property name="employeeService" ref="service.employee" />
+		<property name="projectService" ref="service.project" />
 	</bean>
 	
 	<bean id="service.salary_spec" class="ar.edu.unq.dopplereffect.service.salaryspec.SalarySpecServiceImpl">
@@ -56,8 +66,11 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
 	<bean id="service.mail" class="ar.edu.unq.dopplereffect.mail.MailService" />
 	
-	<bean id="service.log" class="ar.edu.unq.dopplereffect.log.LogAspect">
+	<bean id="service.expection" class="ar.edu.unq.dopplereffect.exceptions.ExceptionAspect">
 		<property name="mailService" ref="service.mail" />
+	</bean>
+	
+	<bean id="service.log" class="ar.edu.unq.dopplereffect.log.AuditAspect">
 	</bean>
 
 </beans>

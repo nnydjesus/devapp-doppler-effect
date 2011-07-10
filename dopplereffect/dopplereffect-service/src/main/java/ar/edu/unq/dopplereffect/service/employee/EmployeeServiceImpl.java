@@ -33,7 +33,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /* *************************** CONSTRUCTORS *************************** */
 
-
     /* **************************** ACCESSORS ***************************** */
 
     public EmployeeRepositoryImpl getEmployeeRepo() {
@@ -52,17 +51,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.careerPlanLevelRepo = careerPlanLevelRepo;
     }
 
-    public void setExportService(ExportService<Employee> exportService) {
-    	this.exportService = exportService;
+    public void setExportService(final ExportService<Employee> exportService) {
+        this.exportService = exportService;
     }
-    
+
     public ExportService<Employee> getExportService() {
-    	return exportService;
+        return exportService;
     }
+
     /* **************************** OPERATIONS **************************** */
 
-
-	@Override
+    @Override
     @Transactional
     public void newEmployee(final EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
@@ -170,8 +169,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @NotLoggable
-    public Employee getEmployeeByDTO(final EmployeeViewDTO employeeViewDTO) {
-        return this.getEmployeeRepo().searchByDni(employeeViewDTO.getDni());
+    public Employee getEmployeeByDTO(final IEmployeeDTO employeeDTO) {
+        return this.getEmployeeRepo().searchByDni(employeeDTO.getDni());
     }
 
     /* ************************* PRIVATE METHODS ************************** */
@@ -205,7 +204,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         emp.getCareerData().setPercentage(employeeDTO.getPercentage());
     }
 
+    @Override
+    @Transactional
     public File export(final String pathFile) {
-        return exportService.export(pathFile, this.getEmployeeRepo().searchAll(), new HashMap<String, String>());
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put("Title", "Employee");
+        return exportService.export(pathFile, this.getEmployeeRepo().searchAll(), parameters);
     }
 }
