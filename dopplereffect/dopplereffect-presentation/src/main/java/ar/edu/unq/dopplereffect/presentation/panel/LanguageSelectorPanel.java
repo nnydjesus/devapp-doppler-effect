@@ -2,7 +2,10 @@ package ar.edu.unq.dopplereffect.presentation.panel;
 
 import java.util.Locale;
 
+import javax.servlet.http.Cookie;
+
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.protocol.http.WebResponse;
 
 import ar.edu.unq.dopplereffect.mail.LocaleManager;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
@@ -33,5 +36,11 @@ public class LanguageSelectorPanel extends AbstractPanel<Object> {
     protected void setLocale(final Locale locale) {
         this.getSession().setLocale(locale);
         LocaleManager.getLocaleManager().setLocale(locale);
+        ((WebResponse) this.getRequestCycle().getResponse()).addCookie(new Cookie("locale.language", locale
+                .getLanguage()));
+        ((WebResponse) this.getRequestCycle().getResponse())
+                .addCookie(new Cookie("locale.country", locale.getCountry()));
+        ((WebResponse) this.getRequestCycle().getResponse())
+                .addCookie(new Cookie("locale.variant", locale.getVariant()));
     }
 }

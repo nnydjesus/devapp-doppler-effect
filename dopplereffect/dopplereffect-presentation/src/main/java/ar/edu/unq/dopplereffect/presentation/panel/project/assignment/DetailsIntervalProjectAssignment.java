@@ -1,0 +1,75 @@
+package ar.edu.unq.dopplereffect.presentation.panel.project.assignment;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.Model;
+
+import ar.edu.unq.dopplereffect.mail.LocaleManager;
+import ar.edu.unq.dopplereffect.presentation.panel.NavigablePanel;
+import ar.edu.unq.dopplereffect.presentation.util.SelectableBehavior;
+import ar.edu.unq.dopplereffect.service.project.ProjectAssignmentDTO;
+import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
+
+public class DetailsIntervalProjectAssignment extends NavigablePanel<ProjectAssignmentDTO> {
+
+    private static final long serialVersionUID = 1L;
+
+    private DateFormat dateFormat;
+
+    /* *************************** CONSTRUCTORS *************************** */
+
+    public DetailsIntervalProjectAssignment(final String id, final ProjectAssignmentDTO model) {
+        super(id, model);
+        this.addComponent(model);
+        this.setDateFormat(new SimpleDateFormat("dd/MM/yyyy", LocaleManager.getLocaleManager().getLocale()));
+    }
+
+    public DetailsIntervalProjectAssignment(final String id) {
+        this(id, new ProjectAssignmentDTO());
+    }
+
+    /* ************************* PRIVATE METHODS ************************** */
+
+    private void addComponent(final ProjectAssignmentDTO projectAssignmentDTO) {
+        WebMarkupContainer selectableWicket = new WebMarkupContainer("availableWicket");
+        selectableWicket.setMarkupId("availableWicket");
+        selectableWicket.add(this.createListView("intervals", new ArrayList<IntervalDurationStrategy>(
+                projectAssignmentDTO.getIntervals())));
+
+        SelectableBehavior availableSelectableBehavior = new SelectableBehavior();
+        selectableWicket.add(availableSelectableBehavior);
+        this.add(selectableWicket);
+    }
+
+    private ListView<IntervalDurationStrategy> createListView(final String id,
+            final List<IntervalDurationStrategy> intervals) {
+        return new ListView<IntervalDurationStrategy>(id, intervals) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void populateItem(final ListItem<IntervalDurationStrategy> listItem) {
+                final IntervalDurationStrategy employeeViewDto = listItem.getModelObject();
+                listItem.add(new Label("startDate", new Model<String>(DetailsIntervalProjectAssignment.this
+                        .getDateFormat().format(employeeViewDto.getStartDate().toDate()))).setOutputMarkupId(true));
+                listItem.add(new Label("endDate", new Model<String>(DetailsIntervalProjectAssignment.this
+                        .getDateFormat().format(employeeViewDto.getEndDate().toDate()))).setOutputMarkupId(true));
+                listItem.setOutputMarkupId(true);
+            }
+        };
+    }
+
+    public void setDateFormat(final DateFormat dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
+    public DateFormat getDateFormat() {
+        return dateFormat;
+    }
+}
