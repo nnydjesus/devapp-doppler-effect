@@ -12,6 +12,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.odlabs.wiquery.ui.button.ButtonBehavior;
 
 import ar.edu.unq.dopplereffect.exceptions.UserException;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.search.AbstractSearchPanel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
@@ -20,7 +21,7 @@ import ar.edu.unq.dopplereffect.service.DTO;
 /**
  * Representa un panel de creacion/edicion de alguna entidad.
  */
-public abstract class EntityPanel<T extends DTO> extends NavigablePanel<T> {
+public abstract class EntityPanel<T extends DTO> extends AbstractCallbackPanel<T> {
 
     private static final long serialVersionUID = 1L;
 

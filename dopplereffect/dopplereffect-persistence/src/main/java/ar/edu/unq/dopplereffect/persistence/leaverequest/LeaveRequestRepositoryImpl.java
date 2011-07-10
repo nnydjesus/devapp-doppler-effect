@@ -37,7 +37,8 @@ public class LeaveRequestRepositoryImpl extends HibernatePersistentRepository<Le
     }
 
     @SuppressWarnings(UNCHECKED)
-    public List<LeaveRequest> searchAllByDateAndEmployee(final DateTime dateTime, final Employee employee) {
+    public List<LeaveRequest> searchAllByDateAndEmployee(@SuppressWarnings("unused") final DateTime dateTime,
+            final Employee employee) {
         Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
         criteria.add(Restrictions.eq(EMPLOYEE_FIELD, employee));
         return criteria.list();

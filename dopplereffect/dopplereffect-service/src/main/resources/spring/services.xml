@@ -8,13 +8,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="mailService" ref="service.mail"/>
 	</bean>
 	
-	<bean id="service.employeeReporting" class="ar.edu.unq.dopplereffect.service.export.ExportService">
-		<constructor-arg value="ar.edu.unq.dopplereffect.employees.Employee"/>
-	</bean>
-	<bean id="service.projectReporting" class="ar.edu.unq.dopplereffect.service.export.ExportService">
-		<constructor-arg value="ar.edu.unq.dopplereffect.projects.Project"/>
-	</bean>
-	
 	<bean id="service.employee" class="ar.edu.unq.dopplereffect.service.employee.EmployeeServiceImpl">
 		<property name="employeeRepo" ref="repo.employee" />
 		<property name="careerPlanLevelRepo" ref="repo.career_plan_level" />

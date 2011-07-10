@@ -11,6 +11,6 @@ public abstract class SpringServiceTest extends AbstractTransactionalDataSourceS
     @Override
     protected String[] getConfigLocations() {
         return new String[] { "/spring/services.xml", "/spring/repositories.xml", "/spring/data-source.xml",
-                "/spring/transactions.xml" };
+                "/spring/transactions.xml", "/spring/reporting.xml" };
     }
 }

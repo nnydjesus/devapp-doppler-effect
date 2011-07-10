@@ -45,6 +45,24 @@ public class GenericPersistenceTest extends SpringPersistenceTest {
         }
     }
 
+    @Test
+    public void testSaveAndRetrieveAllEntities() {
+        List<Builder<? extends Entity>> builders = this.getAllBuilders();
+        for (Builder<? extends Entity> builder : builders) {
+            Object object = builder.build();
+            try {
+                repository.save(object);
+                repository.getSessionFactory().getCurrentSession().flush();
+                Object objectFromDB = repository.searchByExample(object).get(0);
+                Assert.assertEquals("el objeto persistido debe ser igual al objeto original", object, objectFromDB);
+                // para q no joda en la prox iteracion
+                repository.delete(object);
+            } catch (Exception e) {
+                Assert.fail("el test fallo debido a: " + e.getMessage() + e.getCause());
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private List<Builder<? extends Entity>> getAllBuilders() {
         // @formatter:off
@@ -53,10 +71,10 @@ public class GenericPersistenceTest extends SpringPersistenceTest {
             new SalarySpecificationBuilder(),
             new ProjectBuilder(),
             new SkillBuilder(),
-            new LeaveRequestBuilder(),
+            new LeaveRequestBuilder().withEmployee(null), // para q no tire error de transient
             new LeaveRequestCustomTypeBuilder(),
             new HolidayLeaveRequestTypeBuilder(),
-            new HolidayLeaveRequestBuilder(),
+            new HolidayLeaveRequestBuilder().withEmployee(null),
             new IntervalDurationStrategyBuilder(),
             new OneDayDurationStrategyBuilder(),
             new AddressBuilder(),

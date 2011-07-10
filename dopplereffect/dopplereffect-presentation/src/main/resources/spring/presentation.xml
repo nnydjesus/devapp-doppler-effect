@@ -47,7 +47,7 @@
 	<security:authentication-provider user-service-ref="service.user" />
 
 	<security:http auto-config='true'>
-		<security:intercept-url pattern="/**" access="ROLE_USER" />
+		<security:intercept-url pattern="/**" access="ROLE_ADMIN" />
 	</security:http>
 
 </beans>

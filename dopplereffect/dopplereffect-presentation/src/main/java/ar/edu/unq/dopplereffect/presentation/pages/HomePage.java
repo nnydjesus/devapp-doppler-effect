@@ -6,6 +6,7 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.LoginStatusPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SidebarPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.project.AssignmentProjectSearchModel;
@@ -90,6 +91,9 @@ public class HomePage extends AbstractWebPage<Component> {
                             HomePage.this.setBody(component);
                         }
                         ajaxTarget.addComponent(HomePage.this.getAjaxPanel());
+
+                        HomePage.this.setFooter(new LoginStatusPanel(HomePage.this.getFooter().getId()));
+                        ajaxTarget.addComponent(HomePage.this.getFooter());
                     }
                 }.execute();
             }
@@ -138,7 +142,7 @@ public class HomePage extends AbstractWebPage<Component> {
         this.addDefaultValuesService = addDefaultValuesService;
     }
 
-    public void setProjectAssignment(AssignmentProjectSearchModel projectAssignment) {
+    public void setProjectAssignment(final AssignmentProjectSearchModel projectAssignment) {
         this.projectAssignment = projectAssignment;
     }
 

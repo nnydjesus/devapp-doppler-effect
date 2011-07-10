@@ -14,7 +14,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.mail.LocaleManager;
-import ar.edu.unq.dopplereffect.presentation.panel.NavigablePanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
@@ -22,7 +22,7 @@ import ar.edu.unq.dopplereffect.presentation.util.SelectableBehavior;
 import ar.edu.unq.dopplereffect.service.project.ProjectAssignmentDTO;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
-public class DetailsIntervalProjectAssignment extends NavigablePanel<ProjectAssignmentDTO> {
+public class DetailsIntervalProjectAssignment extends AbstractCallbackPanel<ProjectAssignmentDTO> {
 
     private static final long serialVersionUID = 1L;
 

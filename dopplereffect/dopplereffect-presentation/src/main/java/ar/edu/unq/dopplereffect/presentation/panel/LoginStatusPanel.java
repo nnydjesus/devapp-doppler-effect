@@ -6,7 +6,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 
-import ar.edu.unq.dopplereffect.presentation.pages.HomePage;
+import ar.edu.unq.dopplereffect.presentation.pages.Login;
 
 /**
  * Muestra si estamos logueados, y un link para cerrar sesion.
@@ -17,25 +17,27 @@ public class LoginStatusPanel extends Panel {
 
     public LoginStatusPanel(final String id) {
         super(id);
-        Link<String> signOutLink = new Link<String>("sign_out_link") {
+        this.setOutputMarkupId(true);
+        Link<String> logOutLink = new Link<String>("sign_out_link") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick() {
-                this.setResponsePage(HomePage.class);
+                AuthenticatedWebSession.get().signOut();
+                this.setResponsePage(Login.class);
             }
 
         };
         AuthenticatedWebSession session = AuthenticatedWebSession.get();
-        String text = "Not signed in";
-        signOutLink.setVisible(false);
+        String text = this.getLocalizer().getString("login.not_logged_in", this);
+        logOutLink.setVisible(false);
         if (session.isSignedIn()) {
-            text = "Signed in as " + session.toString();
-            signOutLink.setVisible(true);
+            text = this.getLocalizer().getString("login.logged_in", this);
+            logOutLink.setVisible(true);
         }
         this.add(new Label("login_text", new Model<String>(text)));
-        this.add(signOutLink);
+        this.add(logOutLink);
     }
 
 }

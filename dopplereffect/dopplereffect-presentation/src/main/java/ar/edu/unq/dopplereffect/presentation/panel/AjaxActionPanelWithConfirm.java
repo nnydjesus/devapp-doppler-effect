@@ -1,9 +1,12 @@
 package ar.edu.unq.dopplereffect.presentation.panel;
 
+import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeAction;
+
 /**
  * Representa un panel con un link, el cual al ser clickeado pregunta primero
  * usando un cuadro de dialogo.
  */
+@AuthorizeAction(action = "RENDER", roles = { "ROLE_ADMIN" })
 public abstract class AjaxActionPanelWithConfirm extends AjaxActionPanel {
 
     private static final long serialVersionUID = 5303309712802671748L;

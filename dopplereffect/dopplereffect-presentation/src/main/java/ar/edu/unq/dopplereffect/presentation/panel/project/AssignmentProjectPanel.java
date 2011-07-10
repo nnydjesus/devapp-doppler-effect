@@ -14,7 +14,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
-import ar.edu.unq.dopplereffect.presentation.panel.NavigablePanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
 import ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel;
@@ -28,7 +28,7 @@ import ar.edu.unq.dopplereffect.service.project.ProjectDTO;
 import ar.edu.unq.dopplereffect.service.project.ProjectServiceImpl;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 
-public class AssignmentProjectPanel extends NavigablePanel<Void> {
+public class AssignmentProjectPanel extends AbstractCallbackPanel<Void> {
 
     private static final long serialVersionUID = 7612811876399884445L;
 
