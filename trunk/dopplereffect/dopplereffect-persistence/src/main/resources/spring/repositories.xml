@@ -7,6 +7,10 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean id="repo.assignment" class="ar.edu.unq.dopplereffect.persistence.project.AssignmentRepositoryImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	<bean id="repo.skill" class="ar.edu.unq.dopplereffect.persistence.project.SkillRepositoryImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
