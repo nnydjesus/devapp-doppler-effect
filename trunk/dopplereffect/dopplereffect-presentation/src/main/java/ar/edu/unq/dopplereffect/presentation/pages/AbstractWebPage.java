@@ -1,13 +1,18 @@
 package ar.edu.unq.dopplereffect.presentation.pages;
 
 import java.io.Serializable;
+import java.util.Locale;
+
+import javax.servlet.http.Cookie;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.protocol.http.WebRequest;
 
+import ar.edu.unq.dopplereffect.mail.LocaleManager;
 import ar.edu.unq.dopplereffect.presentation.panel.LanguageSelectorPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.LoginStatusPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SimplePanel;
@@ -56,6 +61,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
     public AbstractWebPage(final Component component) {
         super();
         this.setOutputMarkupId(true);
+        this.readCookies();
         managerException = new ExceptionManager(this);
         body = component;
         ajaxPanel = new SimplePanel("body");
@@ -126,6 +132,27 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
 
     protected Component createTitle2() {
         return new Label(TITLE2, new Model<String>("Effect"));
+    }
+
+    private void readCookies() {
+        String language = null;
+        String country = null;
+        String variant = null;
+
+        for (Cookie cookie : ((WebRequest) this.getRequestCycle().getRequest()).getCookies()) {
+            if (cookie.getName().equals("locale.language")) {
+                language = cookie.getValue();
+            } else if (cookie.getName().equals("locale.country")) {
+                country = cookie.getValue();
+            } else if (cookie.getName().equals("locale.variant")) {
+                variant = cookie.getValue();
+            }
+        }
+        if (language != null || country != null | variant != null) {
+            Locale locale = new Locale(language, country, variant);
+            LocaleManager.getLocaleManager().setLocale(locale);
+            this.getSession().setLocale(locale);
+        }
     }
 
     /* ************************* OPERATIONS ************************** */

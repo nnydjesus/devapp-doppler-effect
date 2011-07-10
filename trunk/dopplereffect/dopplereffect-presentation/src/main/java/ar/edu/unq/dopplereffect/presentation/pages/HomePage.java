@@ -8,6 +8,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ar.edu.unq.dopplereffect.presentation.panel.HeaderPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.SidebarPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractCallbackPanel;
+import ar.edu.unq.dopplereffect.presentation.project.AssignmentProjectSearchModel;
 import ar.edu.unq.dopplereffect.presentation.project.ProjectSearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.employee.EmployeeSearchModel;
@@ -35,6 +36,9 @@ public class HomePage extends AbstractWebPage<Component> {
 
     @SpringBean(name = "search_model.leave_request")
     private LeaveRequestSearchModel leaveReqSearchModel;
+
+    @SpringBean(name = "search_model.projectAssignment")
+    private AssignmentProjectSearchModel projectAssignment;
 
     @SpringBean(name = "service.default_values")
     private AddDefaultValuesService addDefaultValuesService;
@@ -132,5 +136,13 @@ public class HomePage extends AbstractWebPage<Component> {
 
     public void setAddDefaultValuesService(final AddDefaultValuesService addDefaultValuesService) {
         this.addDefaultValuesService = addDefaultValuesService;
+    }
+
+    public void setProjectAssignment(AssignmentProjectSearchModel projectAssignment) {
+        this.projectAssignment = projectAssignment;
+    }
+
+    public AssignmentProjectSearchModel getProjectAssignment() {
+        return projectAssignment;
     }
 }
