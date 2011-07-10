@@ -20,14 +20,18 @@ import ar.edu.unq.dopplereffect.assignments.Assignable;
 import ar.edu.unq.dopplereffect.calendar.CalendarStrategy;
 import ar.edu.unq.dopplereffect.calendar.Calendareable;
 import ar.edu.unq.dopplereffect.calendar.PrintDay;
+import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
 import ar.edu.unq.dopplereffect.presentation.panel.AjaxActionPanel;
 import ar.edu.unq.dopplereffect.presentation.panel.leaverequest.LeaveRequestSearchPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.project.assignment.DetailsIntervalProjectAssignment;
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
 import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.GenericSortableDataProvider;
 import ar.edu.unq.dopplereffect.presentation.util.Model;
+import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
+import ar.edu.unq.dopplereffect.service.project.ProjectAssignmentDTO;
 
 public class CalendarTable<T extends Calendareable> implements Serializable {
 
@@ -87,7 +91,7 @@ public class CalendarTable<T extends Calendareable> implements Serializable {
             @Override
             public void populateItem(final Item<ICellPopulator<Entry<T, Map<DateTime, Assignable>>>> cellItem,
                     final String componentId, final IModel<Entry<T, Map<DateTime, Assignable>>> cellModel) {
-                Assignable assignable = cellModel.getObject().getValue().get(date);
+                final Assignable assignable = cellModel.getObject().getValue().get(date);
 
                 final AjaxActionPanel link = new AjaxActionPanel(componentId, new Model<Assignable>(assignable)) {
 
@@ -96,19 +100,41 @@ public class CalendarTable<T extends Calendareable> implements Serializable {
                     @Override
                     public void onAction(final AjaxRequestTarget target) {
                         AjaxCallBack<Component> callBack = CalendarTable.this.getCalendarPanel().getCallback();
-                        LeaveRequestSearchModel leaveReqSearchModel = CalendarTable.this.getCalendarPanel()
-                                .getLeaveRequestSearchModel();
-                        LeaveRequestSearchPanel comp = new LeaveRequestSearchPanel("body", callBack,
-                                CalendarTable.this.getCalendarPanel(), leaveReqSearchModel);
-                        leaveReqSearchModel.setSearchByEmployee((EmployeeViewDTO) cellModel.getObject().getKey());
-                        leaveReqSearchModel.search();
+                        T model = cellModel.getObject().getKey();
+                        Component comp = null;
+                        if (assignable instanceof LeaveRequest) {
+                            comp = CalendarTable.this.createLeaveRequestPanel((EmployeeViewDTO) model, callBack);
+                        } else {
+                            comp = CalendarTable.this.createDetailsIntervalProjectAssignment(
+                                    (ProjectAssignment) assignable, callBack);
+                        }
+
                         callBack.execute(target, comp);
                     }
 
                 };
                 cellItem.add(link);
             }
+
         };
+    }
+
+    protected Component createDetailsIntervalProjectAssignment(final ProjectAssignment assignable,
+            final AjaxCallBack<Component> callBack) {
+        ProjectAssignmentDTO dto = this.getCalendarPanel().getAssignmentProjectSearchModel()
+                .getProjectAssignmentDTO(assignable);
+        return new DetailsIntervalProjectAssignment("body", dto, callBack, this.getCalendarPanel());
+    }
+
+    public LeaveRequestSearchPanel createLeaveRequestPanel(final EmployeeViewDTO model,
+            final AjaxCallBack<Component> callBack) {
+        LeaveRequestSearchModel leaveReqSearchModel = CalendarTable.this.getCalendarPanel()
+                .getLeaveRequestSearchModel();
+        LeaveRequestSearchPanel comp = new LeaveRequestSearchPanel("body", callBack,
+                CalendarTable.this.getCalendarPanel(), leaveReqSearchModel);
+        leaveReqSearchModel.setSearchByEmployee(model);
+        leaveReqSearchModel.search();
+        return comp;
     }
 
 }

@@ -33,7 +33,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
 
     /* ************************ INSTANCE VARIABLES ************************ */
 
-    private Component ajaxSectionResult;
+    private WebMarkupContainer ajaxSectionResult;
 
     private Class<Component> entityPanel;
 
@@ -66,11 +66,11 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
 
     /* **************************** ACCESSORS ***************************** */
 
-    public Component getAjaxSectionResult() {
+    public WebMarkupContainer getAjaxSectionResult() {
         return ajaxSectionResult;
     }
 
-    public void setAjaxSectionResult(final Component ajaxSectionResult) {
+    public void setAjaxSectionResult(final WebMarkupContainer ajaxSectionResult) {
         this.ajaxSectionResult = ajaxSectionResult;
     }
 
@@ -108,7 +108,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
 
     @SuppressWarnings(UNCHECKED)
     protected void init(final Form<T> formulario) {
-        this.buildForm(formulario);
+        this.addInputSearch(formulario);
         this.addResultSection(this.selectITable());
         this.addButtons(formulario);
         this.add(formulario);
@@ -119,6 +119,12 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     protected void addButtons(final Form<T> form) {
         form.add(new ReflectionAjaxButton<AbstractSearchPanel<T>>(this.getSubmitButtonWicketId(), this, this
                 .getAjaxSectionResult(), new StringResourceModel("searchButton", new Model<String>(""))));
+        this.addNewEntityButton(form);
+        this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), this.getBackPanel(),
+                new StringResourceModel("backButton", new Model<String>(""))));
+    }
+
+    protected void addNewEntityButton(final Form<T> form) {
         form.add(new PanelCallbackLink(this.getNewFromBeanWicketId(), this.getCallback(), new StringResourceModel(
                 "newEntityButton", new Model<String>("")), new WebComponentFactory<Component>() {
             private static final long serialVersionUID = 1L;
@@ -128,8 +134,6 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
                 return AbstractSearchPanel.this.createEntityPanel();
             }
         }));
-        this.add(new PanelCallbackLink(this.getBackButtonWicketId(), this.getCallback(), this.getBackPanel(),
-                new StringResourceModel("backButton", new Model<String>(""))));
     }
 
     protected void addResultSection(final ITable iTable) {
@@ -166,7 +170,7 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
                 this.getFields());
     }
 
-    protected void buildForm(final Form<T> form) {
+    protected void addInputSearch(final Form<T> form) {
         this.setModelSearchByName(new Model<String>(""));
         form.add(new TextField<String>(this.getDefaultInputSearchWicketId(), this.getModelSearchByName()));
     }
@@ -225,6 +229,10 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
     }
 
     public Boolean cantEdit() {
+        return true;
+    }
+
+    public Boolean cantDelete() {
         return true;
     }
 

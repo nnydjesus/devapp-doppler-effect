@@ -82,4 +82,9 @@ public class ProjectDTO implements DTO {
         return assignment;
     }
 
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
 }

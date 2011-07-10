@@ -100,14 +100,23 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void deleteProject(final ProjectDTO entity) {
-        Project project = this.getProjectRepo().getByName(entity.getName());
-        this.getProjectRepo().delete(project);
+        this.getProjectRepo().delete(this.getProjectByDTO(entity));
+    }
+
+    @Transactional
+    public Project getProjectByDTO(final ProjectDTO dto) {
+        return this.getProjectRepo().getByName(dto.getName());
+    }
+
+    @Transactional
+    public void updateProject(final Project project) {
+        this.getProjectRepo().update(project);
     }
 
     @Override
     @Transactional
     public void updateProject(final ProjectDTO entity) {
-        Project project = this.getProjectRepo().getByName(entity.getName());
+        Project project = this.getProjectByDTO(entity);
         project.setName(entity.getName());
         project.setMaxEffort(entity.getMaxEffort());
         Set<Skill> skills = new HashSet<Skill>();
@@ -128,7 +137,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     public ProjectAssignmentDTO assignmentEmployee(final ProjectDTO projectDTO, final EmployeeViewDTO employeeViewDTO,
             final IntervalDurationStrategy intervalDurationStrategy) {
-        Project project = this.getProjectRepo().getByName(projectDTO.getName());
+        Project project = this.getProjectByDTO(projectDTO);
         Employee employee = this.getEmployeeService().getEmployeeByDTO(employeeViewDTO);
         ProjectAssignment assignment = project.manualAssignment(employee, intervalDurationStrategy);
         employeeViewDTO.getAssignments().add(assignment);
@@ -178,4 +187,5 @@ public class ProjectServiceImpl implements ProjectService {
     public ExportService<Project> getExportService() {
         return exportService;
     }
+
 }

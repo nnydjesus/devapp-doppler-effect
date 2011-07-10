@@ -95,6 +95,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return this.convertAll(this.getEmployeeRepo().searchAll());
     }
 
+    @Transactional
+    public List<Employee> searchEmployees() {
+        return this.getEmployeeRepo().searchAll();
+    }
+
     @Override
     @Transactional
     public List<EmployeeViewDTO> searchAllByFirstAndLastName(final String firstName, final String lastName) {

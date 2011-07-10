@@ -67,7 +67,7 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<EmployeeSearchModel
     }
 
     @Override
-    protected void buildForm(final Form<EmployeeSearchModel> form) {
+    protected void addInputSearch(final Form<EmployeeSearchModel> form) {
         form.add(new TextField<String>("searchByFirstName"));
         form.add(new TextField<String>("searchByLastName"));
     }

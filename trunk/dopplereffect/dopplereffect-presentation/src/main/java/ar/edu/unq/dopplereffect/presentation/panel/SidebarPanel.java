@@ -40,6 +40,6 @@ public class SidebarPanel extends AbstractPanel<Model<String>> {
         this.add(homePage.createPanelLink(
                 "calendar",
                 new CalendarPanel<EmployeeViewDTO>(idPanel, homePage.getEmployeeSearchModel(), homePage
-                        .getLeaveReqSearchModel(), callback)));
+                        .getLeaveReqSearchModel(), homePage.getProjectAssignment(), callback)));
     }
 }

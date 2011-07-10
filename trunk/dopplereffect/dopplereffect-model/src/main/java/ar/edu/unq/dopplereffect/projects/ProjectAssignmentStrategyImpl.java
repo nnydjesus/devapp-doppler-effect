@@ -56,11 +56,12 @@ public class ProjectAssignmentStrategyImpl extends Entity implements IProjectAss
             final IntervalDurationStrategy intervalDurationStrategy) {
 
         this.setProject(anProject);
+        employeeTimeCalculator = new EmployeeTimeCalculator();
         // ordeno la lista por prioridad
         Collections.sort(employees, this.getComparatorBySkills(intervalDurationStrategy));
         for (Employee employee : employees) {
             this.assignInAvailableIntervals(intervalDurationStrategy, employee);
-            if (isTimeProjectExceeded()) {
+            if (this.isTimeProjectExceeded()) {
                 return;
             }
         }

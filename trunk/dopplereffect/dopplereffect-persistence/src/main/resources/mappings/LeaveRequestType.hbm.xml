@@ -23,7 +23,7 @@
 
 			<property name="maxLimit" column="max_limit" />
 
-			<list name="configurations" table="leave_request_days_configuration"
+			<list name="configurations" table="leave_request_days_configuration" lazy="false"
 				cascade="all">
 
 <!-- 				<key column="leave_request_type_id" /> -->

@@ -2,21 +2,26 @@
 <wicket:panel id="panel">
 	<a wicket:id="back" href="#"><wicket:message key="link.back" /></a>
 	<span wicket:id="uploadPanel" id="export"/>
-	<form wicket:id="searchProjectForm" >
-		<table align="center" id="panel">
+	<br/>
+	<form wicket:id="automaticAssignmentForm">
+		<table align="center" id="panel" >
 			<tr>
-				<td align="right"><wicket:message key="name"/></td>
-				<td align="left"><input wicket:id="searchByName" type="text" name="name" class="ui-state-default" wi/></td>			
+				<td align="right"><wicket:message key="searchByProject"/></td>
+          		<td align="left"><select wicket:id="searchByProject" class="ui-state-default" ></select></td>
+			</tr>
+			<tr>
+				<td align="right"><wicket:message key="fromDate"/></td>
+				<td align="left"><input wicket:id="fromDate" class="ui-state-default" /></td>
 			</tr>
 			<tr>
 				<td colspan="2">
 					<input type="submit" wicket:id="search" wicket:message="value:button.search" /> 
+<!-- 					<input type="submit" wicket:id="newProject" wicket:message="value:button.new_project" /> -->
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
-					<a href="#" wicket:id="automaticAssignment"> <wicket:message key="button.automaticAssignment" /></a>
-				</td>
+				<td height="20" colspan="2">
+				<div wicket:id="feedbak" id="feedbackPanelERROR"></div></td>
 			</tr>
 		</table>
 	</form>
@@ -25,6 +30,7 @@
 	<br />
 
 	<div wicket:id="resultSecction" class="resultSecction">
+			<a href="#" wicket:id="aceptButton" ><wicket:message key="button.acept"/></a> 
 				<div wicket:id="markup" id="tabla" >
 					<table align="center" id="tabla" class="dataview" BORDER wicket:id="results"></table>
 				</div>

@@ -5,14 +5,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.unq.dopplereffect.mail.LocaleManager;
 import ar.edu.unq.dopplereffect.presentation.panel.NavigablePanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.AbstractPanel;
+import ar.edu.unq.dopplereffect.presentation.panel.utils.PanelCallbackLink;
+import ar.edu.unq.dopplereffect.presentation.util.AjaxCallBack;
 import ar.edu.unq.dopplereffect.presentation.util.SelectableBehavior;
 import ar.edu.unq.dopplereffect.service.project.ProjectAssignmentDTO;
 import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
@@ -25,14 +30,13 @@ public class DetailsIntervalProjectAssignment extends NavigablePanel<ProjectAssi
 
     /* *************************** CONSTRUCTORS *************************** */
 
-    public DetailsIntervalProjectAssignment(final String id, final ProjectAssignmentDTO model) {
+    public DetailsIntervalProjectAssignment(final String id, final ProjectAssignmentDTO model,
+            final AjaxCallBack<Component> callBack, final AbstractPanel<?> backPanel) {
         super(id, model);
+        this.setCallback(callBack);
+        this.setBackPanel(backPanel);
         this.addComponent(model);
         this.setDateFormat(new SimpleDateFormat("dd/MM/yyyy", LocaleManager.getLocaleManager().getLocale()));
-    }
-
-    public DetailsIntervalProjectAssignment(final String id) {
-        this(id, new ProjectAssignmentDTO());
     }
 
     /* ************************* PRIVATE METHODS ************************** */
@@ -46,6 +50,7 @@ public class DetailsIntervalProjectAssignment extends NavigablePanel<ProjectAssi
         SelectableBehavior availableSelectableBehavior = new SelectableBehavior();
         selectableWicket.add(availableSelectableBehavior);
         this.add(selectableWicket);
+        this.addNavigationButtons();
     }
 
     private ListView<IntervalDurationStrategy> createListView(final String id,
@@ -63,6 +68,11 @@ public class DetailsIntervalProjectAssignment extends NavigablePanel<ProjectAssi
                 listItem.setOutputMarkupId(true);
             }
         };
+    }
+
+    protected void addNavigationButtons() {
+        this.add(new PanelCallbackLink("back_button", this.getCallback(), this.getBackPanel(), new StringResourceModel(
+                "back_button", new Model<String>(""))));
     }
 
     public void setDateFormat(final DateFormat dateFormat) {

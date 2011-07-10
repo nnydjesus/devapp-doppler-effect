@@ -3,7 +3,10 @@ package ar.edu.unq.dopplereffect.presentation.project;
 import java.io.File;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import ar.edu.unq.dopplereffect.presentation.search.SearchModel;
+import ar.edu.unq.dopplereffect.projects.ProjectAssignment;
 import ar.edu.unq.dopplereffect.service.DTO;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 import ar.edu.unq.dopplereffect.service.employee.IEmployeeDTO;
@@ -50,6 +53,10 @@ public class AssignmentProjectSearchModel extends SearchModel<ProjectAssignmentD
         return service;
     }
 
+    public List<ProjectDTO> getAllProjects() {
+        return this.getService().searchAllProjects();
+    }
+
     @Override
     protected List<ProjectAssignmentDTO> getAllResultsFromService() {
         return this.getService().searchAllAssignmentProjects();
@@ -57,17 +64,14 @@ public class AssignmentProjectSearchModel extends SearchModel<ProjectAssignmentD
 
     @Override
     protected <D extends DTO> void callSaveOnService(final D entity) {
-        this.getService().newProject((ProjectAssignmentDTO) entity);
     }
 
     @Override
     protected void callRemoveOnService(final ProjectAssignmentDTO entity) {
-        this.getService().deleteProject(entity);
     }
 
     @Override
     protected <D extends DTO> void callUpdateOnService(final D entity) {
-        this.getService().updateProject((ProjectAssignmentDTO) entity);
     }
 
     @Override
@@ -95,5 +99,17 @@ public class AssignmentProjectSearchModel extends SearchModel<ProjectAssignmentD
     @Override
     public File export(final String folder, final FormatterExportType type) {
         return null;
+    }
+
+    public void automaticRecommendation(final ProjectDTO project, final DateTime from) {
+        this.setResults(this.getService().automaticRecommendation(project, from));
+    }
+
+    public void automaticAssignment(final ProjectDTO project, final DateTime from) {
+        this.getService().automaticAssignment(project, from);
+    }
+
+    public ProjectAssignmentDTO getProjectAssignmentDTO(final ProjectAssignment assignment) {
+        return this.getService().getProjectAssignmentDTO(assignment);
     }
 }
