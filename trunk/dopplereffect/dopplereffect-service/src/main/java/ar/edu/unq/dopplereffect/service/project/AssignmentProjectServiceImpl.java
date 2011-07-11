@@ -118,4 +118,12 @@ public class AssignmentProjectServiceImpl implements AssignmentProjectService {
         return projectAssignmentDTO;
     }
 
+	@Override
+	public void deleteAssignmentProject(ProjectAssignment proAssignment) {
+		proAssignment.getEmployee().getAssignments().remove(proAssignment);
+		getEmployeeService().updateEmployeeModel(proAssignment.getEmployee());
+		assignmentRepository.delete(proAssignment);
+		
+	}
+
 }

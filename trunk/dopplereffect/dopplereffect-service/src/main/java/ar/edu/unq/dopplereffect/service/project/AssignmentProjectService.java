@@ -13,6 +13,8 @@ import ar.edu.unq.dopplereffect.time.IntervalDurationStrategy;
 public interface AssignmentProjectService extends Service {
 
     List<ProjectAssignmentDTO> searchAllAssignmentProjects();
+    
+    void deleteAssignmentProject(ProjectAssignment assignment);
 
     List<ProjectAssignmentDTO> searchByEmployee(IEmployeeDTO employeeDTO);
 

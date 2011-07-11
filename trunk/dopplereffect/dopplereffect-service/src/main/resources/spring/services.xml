@@ -19,6 +19,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="skillService" ref="service.skill" />
 		<property name="exportService" ref="service.projectReporting"/>
 		<property name="employeeService" ref="service.employee" />
+		<property name="assignmentProjectService" ref="service.assignment" />
 	</bean>
 	
 	<bean id="service.assignment" class="ar.edu.unq.dopplereffect.service.project.AssignmentProjectServiceImpl">

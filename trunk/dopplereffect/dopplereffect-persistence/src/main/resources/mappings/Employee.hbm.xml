@@ -17,12 +17,12 @@
 		<many-to-one name="careerData" class="CareerData" column="career_data_id"
 		not-null="true" cascade="save-update, delete-orphan" unique="true" lazy="false" />
 		
-		<set name="assignments" cascade="all, delete-orphan" lazy="false">
+		<set name="assignments" cascade="save-update" lazy="false">
 			<key column="employee_id" />
 			<one-to-many class="ar.edu.unq.dopplereffect.assignments.Assignable" />
 		</set>
 		
-		<set name="skills" cascade="all, delete-orphan" lazy="false">
+		<set name="skills"  lazy="false">
 			<key column="employee_id" />
 			<one-to-many class="ar.edu.unq.dopplereffect.projects.Skill" />
 		</set>
