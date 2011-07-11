@@ -12,7 +12,7 @@
 		</id>
 
 	<!-- cambiar el delete porque borra todo -->
-		<many-to-one name="employee" lazy="false" cascade="delete"
+		<many-to-one name="employee" lazy="false" 
 			class="ar.edu.unq.dopplereffect.employees.Employee" column="employee_id" />
 
 		<joined-subclass name="ar.edu.unq.dopplereffect.leaverequests.LeaveRequest"
@@ -35,7 +35,7 @@
 
 			<key column="assignable_id" not-null="true" />
 			
-			<many-to-one name="project" lazy="false"  cascade="delete"
+			<many-to-one name="project" lazy="false" 
 			class="ar.edu.unq.dopplereffect.projects.Project" column="project_id" />
 
 			<set name="intervals" table="project_assignment_intervals" cascade="all, delete-orphan" lazy="false">

@@ -30,11 +30,14 @@ public class ProjectAssignmentStrategyImpl extends Entity implements IProjectAss
 
     private transient EmployeeTimeCalculator employeeTimeCalculator;
 
+    public ProjectAssignmentStrategyImpl() {
+        employeeTimeCalculator = new EmployeeTimeCalculator();
+    }
+
     @Override
     public ProjectAssignment manualAssignment(final Project aProject, final Employee employee,
             final IntervalDurationStrategy interval) {
         this.setProject(aProject);
-        employeeTimeCalculator = new EmployeeTimeCalculator();
         return this.internalManualAssignment(employee, interval);
     }
 
@@ -56,7 +59,6 @@ public class ProjectAssignmentStrategyImpl extends Entity implements IProjectAss
             final IntervalDurationStrategy intervalDurationStrategy) {
 
         this.setProject(anProject);
-        employeeTimeCalculator = new EmployeeTimeCalculator();
         // ordeno la lista por prioridad
         Collections.sort(employees, this.getComparatorBySkills(intervalDurationStrategy));
         for (Employee employee : employees) {

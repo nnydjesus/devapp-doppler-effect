@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.projects;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.HashSet;

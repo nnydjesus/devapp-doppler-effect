@@ -224,4 +224,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         parameters.put("Title", "Employee");
         return exportService.export(pathFile, this.getEmployeeRepo().searchAll(), parameters);
     }
+
+	public void updateEmployeeModel(Employee employee) {
+		getEmployeeRepo().update(employee);
+	}
 }

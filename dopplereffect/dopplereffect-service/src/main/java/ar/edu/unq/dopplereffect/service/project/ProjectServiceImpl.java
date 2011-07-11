@@ -34,6 +34,8 @@ public class ProjectServiceImpl implements ProjectService {
     private EmployeeServiceImpl employeeService;
 
     private ExportService<Project> exportService;
+    
+    private AssignmentProjectServiceImpl assignmentProjectService;
 
     @Override
     @Transactional
@@ -100,7 +102,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void deleteProject(final ProjectDTO entity) {
-        this.getProjectRepo().delete(this.getProjectByDTO(entity));
+    	Project project = this.getProjectByDTO(entity);
+    	for (ProjectAssignment proAssignment : project.getProjectAssignment()) {
+			getAssignmentProjectService().deleteAssignmentProject(proAssignment);
+		}
+        this.getProjectRepo().delete(project);
     }
 
     @Transactional
@@ -187,5 +193,13 @@ public class ProjectServiceImpl implements ProjectService {
     public ExportService<Project> getExportService() {
         return exportService;
     }
+
+	public void setAssignmentProjectService(AssignmentProjectServiceImpl assignmentProjectService) {
+		this.assignmentProjectService = assignmentProjectService;
+	}
+
+	public AssignmentProjectServiceImpl getAssignmentProjectService() {
+		return assignmentProjectService;
+	}
 
 }

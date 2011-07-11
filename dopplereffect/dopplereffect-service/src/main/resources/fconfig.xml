@@ -22,7 +22,7 @@
     </section>
     
     <section name="appLocation">
-        <entry key="uri" value="http://localhost:8082/dooper-effect/"/>
+        <entry key="uri" value="http://localhost:8080/dooper-effect/"/>
     </section>
     
     <section name="users">
