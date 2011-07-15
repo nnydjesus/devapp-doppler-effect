@@ -71,4 +71,9 @@ public class EmployeeSearchPanel extends AbstractSearchPanel<EmployeeSearchModel
         form.add(new TextField<String>("searchByFirstName"));
         form.add(new TextField<String>("searchByLastName"));
     }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
 }

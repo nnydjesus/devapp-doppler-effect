@@ -13,6 +13,7 @@ import ar.edu.unq.dopplereffect.employees.Employee;
 import ar.edu.unq.dopplereffect.exceptions.UserException;
 import ar.edu.unq.dopplereffect.exceptions.ValidationException;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequest;
+import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestCustomType;
 import ar.edu.unq.dopplereffect.leaverequests.LeaveRequestType;
 import ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestRepositoryImpl;
 import ar.edu.unq.dopplereffect.persistence.leaverequest.LeaveRequestTypeRepositoryImpl;
@@ -97,9 +98,10 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     public void updateLeaveRequest(final LeaveRequestDTO leaveReqDTO) {
         Employee emp = this.getAndValidateEmployee(leaveReqDTO);
         this.validateExistentType(leaveReqDTO);
-        this.getAndValidateDurationStrategy(leaveReqDTO);
         LeaveRequest leaveRequest = this.getLeaveRequestRepo().searchByStartDateAndEmployee(
-                new DateTime(leaveReqDTO.getStartDate()), emp);
+                new DateTime(leaveReqDTO.getOldStartDate()), emp);
+        ((LeaveRequestCustomType) leaveRequest.getType()).setReason(leaveReqDTO.getReason());
+        leaveRequest.setDurationStrategy(this.getAndValidateDurationStrategy(leaveReqDTO));
         if (!leaveRequest.isValid()) {
             throw new ValidationException("validations.wrongDays");
         }
@@ -154,6 +156,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
             result.setDurationType("One Day");
         }
         result.setStartDate(leaveRequest.getFirstDate().toDate());
+        result.setOldStartDate(result.getStartDate());
         result.setReason(leaveRequest.getReason());
         result.setEmployee(this.getEmployeeService().convert(leaveRequest.getEmployee()));
         return result;

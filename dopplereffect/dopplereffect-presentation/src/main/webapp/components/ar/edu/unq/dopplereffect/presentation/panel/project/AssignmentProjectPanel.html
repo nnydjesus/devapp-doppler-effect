@@ -1,60 +1,87 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:wicket="http://wicket.apache.org/">
-	<wicket:head>
-		
-		<style type="text/css">
-			#selectableWicket .ui-selecting, #availableWicket .ui-selecting { background: lightGoldenRodYellow; }
-			#selectableWicket .ui-selected, #availableWicket .ui-selected { background: lightCoral; color: white; }
-			#selectableWicket, #availableWicket { border: 1px solid black; list-style-type: none; margin: 0; padding: 0; width: 90%; }
-			#selectableWicket li, #availableWicket li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
- 		</style> 
-	</wicket:head>
-	
-	<body>
-	<wicket:panel id="panel" >
-			<table style="height: 100%; width: 100%;">
-				<tbody>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+	xmlns:wicket="http://wicket.apache.org/">
+<wicket:head>
+
+	<style type="text/css">
+#selectableWicket .ui-selecting,#availableWicket .ui-selecting {
+	background: lightGoldenRodYellow;
+}
+
+#selectableWicket .ui-selected,#availableWicket .ui-selected {
+	background: lightCoral;
+	color: white;
+}
+
+#selectableWicket,#availableWicket {
+	border: 1px solid black;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 90%;
+}
+
+#selectableWicket li,#availableWicket li {
+	margin: 3px;
+	padding: 0.4em;
+	font-size: 1.4em;
+	height: 18px;
+}
+</style>
+</wicket:head>
+
+<body>
+	<wicket:panel id="panel">
+		<h3 wicket:id="panel_title"></h3>
+		<table style="height: 100%; width: 100%;">
+			<tbody>
+				<tr>
+					<td style="width: 50%;">
+						<ol wicket:id="availableWicket">
+							<li wicket:id="available">
+								<span wicket:id="firstName_available" />
+								<span wicket:id="lastName_available" />
+							</li>
+						</ol></td>
+					<td>
+						<div wicket:id="add" />
+						<div wicket:id="remove" /></td>
+					<td style="width: 50%">
+						<ol wicket:id="selectableWicket">
+							<li wicket:id="selected">
+								<span wicket:id="firstName_selected" />
+								<span wicket:id="lastName_selected" />
+							</li>
+						</ol></td>
+				</tr>
+			</tbody>
+		</table>
+		<button wicket:id="back_button" href="#">
+			<wicket:message key="back_button" />
+		</button>
+		<div wicket:id="dialog">
+			<form wicket:id="form"">
+				<table align="center" width="80%">
 					<tr>
-						<td style="width: 50%;">
-							<ol wicket:id="availableWicket">
-								<li wicket:id="available"><span wicket:id="firstName_available" /><span wicket:id="lastName_available" /></li>
-							</ol>
-						</td >
-						<td>
-								<div  wicket:id="add" />
-								<div wicket:id="remove" />
-						</td>
-						<td style="width: 50%">
-							<ol wicket:id="selectableWicket">
-								<li wicket:id="selected"><span wicket:id="firstName_selected" /><span wicket:id="lastName_selected" /></li>
-							</ol>
+						<td align="right"><wicket:message key="startDate" /></td>
+						<td align="left"><input type="text" wicket:id="startDate"></input></td>
+					</tr>
+					<tr>
+						<td align="right"><wicket:message key="endDate" /></td>
+						<td align="left"><input type="text" wicket:id="endDate"></input></td>
+					</tr>
+					<tr>
+						<td align="left"><input type="submit" wicket:id="acept"></input></td>
+					</tr>
+					<tr>
+						<td height="20" colspan="2">
+							<div wicket:id="feedback"></div>
 						</td>
 					</tr>
-				</tbody>
-			</table>
-			 <button wicket:id="back_button" href="#"><wicket:message key="back_button" /></button>
-			<div wicket:id="dialog">
-				<form wicket:id="form"">
-					<table align="center" width="80%" >
-						<tr>
-							<td align="right"><wicket:message key="startDate" /></td>
-							<td align="left"><input type="text" wicket:id="startDate"></input></td>
-						</tr>
-						<tr>
-							<td align="right"><wicket:message key="endDate" /></td>
-							<td align="left"><input type="text" wicket:id="endDate"></input></td>
-						</tr>				
-						<tr>
-							<td align="left"><input type="submit" wicket:id="acept"></input></td>
-						</tr>				
-						<tr>
-							<td height="20" colspan="2">
-							<div wicket:id="feedback"></div></td>
-						</tr>
-					</table>
-				</form>			
-			</div> 
-		</wicket:panel>
-	</body>
+				</table>
+			</form>
+		</div>
+	</wicket:panel>
+</body>
 </html>
 

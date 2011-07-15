@@ -64,4 +64,9 @@ public class LeaveRequestSearchPanel extends AbstractSearchPanel<LeaveRequestSea
         reasonCombo.setNullValid(true);
         form.add(reasonCombo);
     }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
 }

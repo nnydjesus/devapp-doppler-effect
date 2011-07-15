@@ -73,6 +73,10 @@ public class SalarySpecServiceImpl implements SalarySpecService {
         if (salarySpecDTO.getMinSalary() >= salarySpecDTO.getMaxSalary()) {
             throw new ValidationException("validations.salary");
         }
+        sspec.setYear(salarySpecDTO.getYear());
+        sspec.setMinSalary(salarySpecDTO.getMinSalary());
+        sspec.setMaxSalary(salarySpecDTO.getMaxSalary());
+        sspec.setPercentages(salarySpecDTO.getPercentages());
         this.getRepository().update(sspec);
     }
 

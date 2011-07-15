@@ -61,6 +61,6 @@ public class Address extends Entity {
 
     @Override
     public String toString() {
-        return "Address [street=" + street + ", number=" + number + ", city=" + city + "]";
+        return this.getStreet() + ", " + this.getNumber() + ", " + this.getCity();
     }
 }

@@ -18,6 +18,7 @@ import ar.edu.unq.dopplereffect.persistence.employee.CareerPlanLevelRepositoryIm
 import ar.edu.unq.dopplereffect.persistence.employee.EmployeeRepositoryImpl;
 import ar.edu.unq.dopplereffect.service.export.ExportService;
 import ar.edu.unq.dopplereffect.service.validations.Validator;
+import ar.edu.unq.tpi.util.commons.exeption.UserException;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -95,6 +96,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee emp = this.getEmployeeRepo().searchByDni(employeeDTO.getDni());
         this.synchronizeWithDTO(employeeDTO, emp);
         this.getEmployeeRepo().update(emp);
+        throw new UserException("sabeeeeee");
     }
 
     @Override
@@ -225,7 +227,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return exportService.export(pathFile, this.getEmployeeRepo().searchAll(), parameters);
     }
 
-	public void updateEmployeeModel(Employee employee) {
-		getEmployeeRepo().update(employee);
-	}
+    public void updateEmployeeModel(final Employee employee) {
+        this.getEmployeeRepo().update(employee);
+    }
 }

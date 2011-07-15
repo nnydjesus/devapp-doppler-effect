@@ -11,7 +11,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.odlabs.wiquery.ui.datepicker.DatePicker;
 
 import ar.edu.unq.dopplereffect.presentation.panel.EntityPanel;
-import ar.edu.unq.dopplereffect.presentation.search.leaverequest.LeaveRequestSearchModel;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeService;
 import ar.edu.unq.dopplereffect.service.employee.EmployeeViewDTO;
 import ar.edu.unq.dopplereffect.service.leaverequest.LeaveRequestDTO;
@@ -28,8 +27,6 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
 
     @SpringBean(name = "service.employee")
     private EmployeeService employeeService;
-
-    private EmployeeViewDTO employee;
 
     /* *************************** CONSTRUCTORS *************************** */
 
@@ -51,14 +48,6 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
         this.leaveRequestService = leaveRequestService;
     }
 
-    public EmployeeViewDTO getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(final EmployeeViewDTO employee) {
-        this.employee = employee;
-    }
-
     public EmployeeService getEmployeeService() {
         return employeeService;
     }
@@ -68,11 +57,6 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
     }
 
     /* ************************* PRIVATE METHODS ************************** */
-
-    @Override
-    protected void beforeConstruct() {
-        this.setEmployee(((LeaveRequestSearchModel) this.getBackPanel().getModelObject()).getSearchByEmployee());
-    }
 
     @Override
     protected void addFields(final Form<LeaveRequestDTO> form) {
@@ -90,9 +74,10 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
                         .searchAllEmployees());
         ddc.setNullValid(true);
         ddc.setRequired(true);
-        if (this.getEmployee() != null) {
+        if (this.getModelObject().getEmployee() != null) {
+            // if (this.getEmployee() != null) {
             for (EmployeeViewDTO choice : ddc.getChoices()) {
-                if (choice.getDni() == this.getEmployee().getDni()) {
+                if (choice.getDni() == this.getModelObject().getEmployee().getDni()) {
                     ddc.setModelObject(choice);
                 }
             }
@@ -130,5 +115,10 @@ public class LeaveRequestPanel extends EntityPanel<LeaveRequestDTO> {
     @Override
     protected String getFormWicketId() {
         return "leaveRequestForm";
+    }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
     }
 }

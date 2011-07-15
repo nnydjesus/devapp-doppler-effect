@@ -60,4 +60,9 @@ public class SalarySpecSearchPanel extends AbstractSearchPanel<SalarySpecSearchM
     protected String getNewFromBeanWicketId() {
         return "newSalarySpec";
     }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
 }

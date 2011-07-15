@@ -93,4 +93,9 @@ public class SalarySpecPanel extends EntityPanel<SalarySpecDTO> {
         }
         form.add(ddc);
     }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
 }

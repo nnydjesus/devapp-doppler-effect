@@ -49,8 +49,8 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
 
     @SuppressWarnings(UNCHECKED)
     public Employee searchByDni(final int dni) {
-        Criteria criteria = this.getSession().createCriteria(this.getEntityClass());
-        criteria.add(Restrictions.eq("personalData", this.getPersonalDataByDni(dni)));
+        Criteria criteria = this.getSession().createCriteria(this.getEntityClass()).createCriteria("personalData")
+                .add(Restrictions.eq("dni", dni));
         List<Employee> results = criteria.list();
         if (results.isEmpty()) {
             throw new UserException("No se pudo encontrar ningun empleado con el dni dado");
@@ -73,7 +73,7 @@ public class EmployeeRepositoryImpl extends HibernatePersistentRepository<Employ
 
     /* ************************* PRIVATE METHODS ************************** */
 
-    @SuppressWarnings(UNCHECKED)
+    @SuppressWarnings({ "unused", "unchecked" })
     private PersonalData getPersonalDataByDni(final int dni) {
         Criteria personalDataCriteria = this.getSession().createCriteria(PersonalData.class);
         personalDataCriteria.add(Restrictions.eq("dni", dni));
