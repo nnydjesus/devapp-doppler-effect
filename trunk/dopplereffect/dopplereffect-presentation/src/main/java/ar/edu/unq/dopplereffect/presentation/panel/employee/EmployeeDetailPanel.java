@@ -54,4 +54,9 @@ public class EmployeeDetailPanel extends AbstractCallbackPanel<EmployeeDetailDTO
                 "back_button", new Model<String>(""))));
     }
 
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
+
 }

@@ -74,4 +74,9 @@ public class AssignmentProjectSearchPanel extends AbstractSearchPanel<Assignment
     public Boolean cantEdit() {
         return false;
     }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
 }

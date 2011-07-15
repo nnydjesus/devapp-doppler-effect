@@ -85,4 +85,9 @@ public class ProjectPanel extends EntityPanel<ProjectDTO> {
     protected String getFormWicketId() {
         return "projectForm";
     }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
 }

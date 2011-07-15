@@ -203,4 +203,9 @@ public class AssignmentProjectPanel extends AbstractCallbackPanel<Void> {
         this.add(new PanelCallbackLink("back_button", this.getCallback(), this.getBackPanel(), new StringResourceModel(
                 "back_button", new Model<String>(""))));
     }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
 }

@@ -100,4 +100,9 @@ public class EmployeePanel extends EntityPanel<EmployeeDTO> {
     protected String getFormWicketId() {
         return "employeeForm";
     }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
 }

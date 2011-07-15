@@ -161,7 +161,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
                 variant = cookie.getValue();
             }
         }
-        if (language != null || country != null || variant != null) {
+        if (language != null && country != null && variant != null) {
             Locale locale = new Locale(language, country, variant);
             LocaleManager.getLocaleManager().setLocale(locale);
             this.getSession().setLocale(locale);

@@ -19,6 +19,8 @@ public class LeaveRequestDTO implements DTO {
 
     private Date endDate;
 
+    private Date oldStartDate;
+
     public String getReason() {
         return reason;
     }
@@ -43,7 +45,11 @@ public class LeaveRequestDTO implements DTO {
     }
 
     public void setStartDate(final Date startDate) {
-        this.startDate = (Date) startDate.clone();
+        if (startDate == null) {
+            this.startDate = null;
+        } else {
+            this.startDate = (Date) startDate.clone();
+        }
     }
 
     public Date getEndDate() {
@@ -54,7 +60,11 @@ public class LeaveRequestDTO implements DTO {
     }
 
     public void setEndDate(final Date endDate) {
-        this.endDate = (Date) endDate.clone();
+        if (endDate == null) {
+            this.endDate = null;
+        } else {
+            this.endDate = (Date) endDate.clone();
+        }
     }
 
     public EmployeeViewDTO getEmployee() {
@@ -63,5 +73,13 @@ public class LeaveRequestDTO implements DTO {
 
     public void setEmployee(final EmployeeViewDTO employee) {
         this.employee = employee;
+    }
+
+    public Date getOldStartDate() {
+        return (Date) oldStartDate.clone();
+    }
+
+    public void setOldStartDate(final Date oldStartDate) {
+        this.oldStartDate = (Date) oldStartDate.clone();
     }
 }

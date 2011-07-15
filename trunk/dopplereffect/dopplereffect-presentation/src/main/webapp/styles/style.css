@@ -366,11 +366,12 @@ table.dataview tr th a:active {
 	padding: 10px;
 	text-align: right;	
 }
+
 .login{
-	background: url(../Images/login.png) ;
-}
-.export {
-	padding: 10px;
-	text-align: right;	
+	background: url(../Images/login.png);
 }
 
+.export {
+	padding: 10px;
+	text-align: right;
+}

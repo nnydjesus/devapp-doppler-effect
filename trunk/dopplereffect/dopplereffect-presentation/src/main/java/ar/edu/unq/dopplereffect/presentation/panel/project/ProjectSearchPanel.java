@@ -31,4 +31,9 @@ public class ProjectSearchPanel extends AbstractSearchPanel<ProjectSearchModel> 
     protected String getNewFromBeanWicketId() {
         return "newProject";
     }
+
+    @Override
+    protected boolean showTitle() {
+        return true;
+    }
 }

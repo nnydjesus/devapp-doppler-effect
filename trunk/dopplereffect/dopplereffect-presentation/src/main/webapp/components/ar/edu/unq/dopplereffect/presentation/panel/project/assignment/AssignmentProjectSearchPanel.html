@@ -1,7 +1,6 @@
 <html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
 <wicket:panel id="panel">
-	<a wicket:id="back" href="#"><wicket:message key="link.back" /></a>
-	<span wicket:id="uploadPanel" id="export"></span>
+	<h3 wicket:id="panel_title"></h3>
 	<form wicket:id="searchProjectForm" >
 		<table align="center" id="panel">
 			<tr>
@@ -29,9 +28,7 @@
 			<table align="center" id="tabla" class="dataview" BORDER wicket:id="results"></table>
 		</div>
 	</div>
-			
-<!-- 	<div wicket:id="resultSecction" class="resultSecction"> -->
-<!-- 		<wicket:child wicket:id="results" id="tabla" /> -->
-<!-- 	</div> -->
+	<a wicket:id="back" href="#"><wicket:message key="link.back" /></a>
+	<span wicket:id="uploadPanel" id="export"></span>
 </wicket:panel>
 </html>
