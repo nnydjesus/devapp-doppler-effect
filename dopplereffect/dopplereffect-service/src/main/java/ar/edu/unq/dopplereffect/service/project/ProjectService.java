@@ -22,6 +22,6 @@ public interface ProjectService extends Service {
     ProjectAssignmentDTO assignmentEmployee(ProjectDTO projectDTO, EmployeeViewDTO employeeViewDTO,
             IntervalDurationStrategy intervalDurationStrategy);
 
-    File export(String string);
+    File export(String string, List<ProjectDTO> list);
 
 }

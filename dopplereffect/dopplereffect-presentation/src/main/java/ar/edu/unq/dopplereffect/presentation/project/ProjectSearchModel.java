@@ -88,6 +88,6 @@ public class ProjectSearchModel extends SearchModel<ProjectDTO> {
 
     @Override
     public File export(final String folder, final FormatterExportType type) {
-        return this.getService().export(folder + "/Employee." + type.getExtension());
+        return this.getService().export(folder + "/Project." + type.getExtension(), this.getResults());
     }
 }

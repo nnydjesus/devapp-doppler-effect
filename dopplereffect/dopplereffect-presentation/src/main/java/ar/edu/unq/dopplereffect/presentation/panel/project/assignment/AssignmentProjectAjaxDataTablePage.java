@@ -56,6 +56,11 @@ public class AssignmentProjectAjaxDataTablePage extends
         });
     }
 
+    @Override
+    protected int getPageSize() {
+        return 3;
+    }
+
     protected Component createDetailPanel(final IModel<ProjectAssignmentDTO> model) {
         return new DetailsIntervalProjectAssignment(this.getParentPanel().getId(), model.getObject(),
                 this.getCallBack(), this.getParentPanel());

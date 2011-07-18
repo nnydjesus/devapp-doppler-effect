@@ -4,7 +4,8 @@ import java.util.Locale;
 
 import javax.servlet.http.Cookie;
 
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.protocol.http.WebResponse;
 
 import ar.edu.unq.dopplereffect.mail.LocaleManager;
@@ -22,14 +23,16 @@ public class LanguageSelectorPanel extends AbstractPanel<Object> {
     }
 
     private void addLanguageSelectorLinkFor(final String wicketId, final Locale locale) {
-        this.add(new Link<Object>(wicketId) {
+        this.add(new AjaxLink(wicketId) {
 
             private static final long serialVersionUID = 8592087920042466102L;
 
             @Override
-            public void onClick() {
+            public void onClick(final AjaxRequestTarget target) {
                 LanguageSelectorPanel.this.setLocale(locale);
+                target.addComponent(this.getPage());
             }
+
         });
     }
 

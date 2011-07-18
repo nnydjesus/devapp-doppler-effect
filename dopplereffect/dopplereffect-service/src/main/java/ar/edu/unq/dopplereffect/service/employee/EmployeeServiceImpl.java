@@ -1,6 +1,7 @@
 package ar.edu.unq.dopplereffect.service.employee;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -188,6 +189,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         return this.getEmployeeRepo().searchByDni(employeeDTO.getDni());
     }
 
+    @Transactional
+    @NotLoggable
+    public List<Employee> getAllEmployeeByDTO(final List<? extends IEmployeeDTO> employeeDTOs) {
+        List<Employee> employees = new ArrayList<Employee>();
+        for (IEmployeeDTO employeeDTO : employeeDTOs) {
+            employees.add(this.getEmployeeByDTO(employeeDTO));
+        }
+        return employees;
+    }
+
     /* ************************* PRIVATE METHODS ************************** */
 
     @NotLoggable
@@ -221,10 +232,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public File export(final String pathFile) {
+    public File export(final String pathFile, final List<? extends IEmployeeDTO> dtos) {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put("Title", "Employee");
-        return exportService.export(pathFile, this.getEmployeeRepo().searchAll(), parameters);
+        return exportService.export(pathFile, this.getAllEmployeeByDTO(dtos), parameters);
     }
 
     public void updateEmployeeModel(final Employee employee) {

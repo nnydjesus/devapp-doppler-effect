@@ -1,8 +1,5 @@
 <html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd">
 <wicket:panel id="panel">
-	<a wicket:id="back" href="#"><wicket:message key="link.back" /></a>
-	<span wicket:id="uploadPanel" id="export"/>
-	<br/>
 	<form wicket:id="automaticAssignmentForm">
 		<table align="center" id="panel" >
 			<tr>
@@ -25,16 +22,16 @@
 			</tr>
 		</table>
 	</form>
-
-	<br />
 	<br />
 
 	<div wicket:id="resultSecction" class="resultSecction">
-			<a href="#" wicket:id="aceptButton" ><wicket:message key="button.acept"/></a> 
-				<div wicket:id="markup" id="tabla" >
-					<table align="center" id="tabla" class="dataview" BORDER wicket:id="results"></table>
-				</div>
-			</div>
+		<a href="#" wicket:id="aceptButton" ><wicket:message key="button.acept"/></a> 
+		<div wicket:id="markup" id="tabla" >
+			<table align="center" id="tabla" class="dataview" BORDER wicket:id="results"></table>
+		</div>
+	</div>
+	<a wicket:id="back" href="#"><wicket:message key="link.back" /></a>
+	<span wicket:id="uploadPanel" id="export"/>
 			
 <!-- 	<div wicket:id="resultSecction" class="resultSecction"> -->
 <!-- 		<wicket:child wicket:id="results" id="tabla" /> -->
