@@ -36,13 +36,13 @@ public class HeaderPanel extends AbstractPanel<Object> {
         dialog.setModal(true);
         dialog.setAutoOpen(false);
         this.add(dialog);
-        this.add(this.createButton("game1", "http://www.zonajuego.com/swf/bouncing_mario.swf"));
-        this.add(this.createButton("game2", "http://juegosflasheros.org/swf/18f716a9247a66bebc556b1ed5a4d0a7.swf"));
-        this.add(this.createButton("game3", "http://www.zonajuego.com/swf/bouncing_mario.swf"));
-        this.add(this.createButton("game4", "http://juegosflasheros.org/swf/naruto-blast-battle.swf"));
-        this.add(this.createButton("game5", "http://juegosflasheros.org/swf/bleach-vs-naruto.swf"));
-        this.add(this.createButton("game6", "http://juegosflasheros.org/swf/solarmax.swf"));
-        this.add(this.createButton("game7", "http://juegosflasheros.org/swf/money-and-bomb.swf"));
+//        this.add(this.createButton("game1", "http://www.zonajuego.com/swf/bouncing_mario.swf"));
+//        this.add(this.createButton("game2", "http://juegosflasheros.org/swf/18f716a9247a66bebc556b1ed5a4d0a7.swf"));
+//        this.add(this.createButton("game3", "http://www.zonajuego.com/swf/bouncing_mario.swf"));
+//        this.add(this.createButton("game4", "http://juegosflasheros.org/swf/naruto-blast-battle.swf"));
+//        this.add(this.createButton("game5", "http://juegosflasheros.org/swf/bleach-vs-naruto.swf"));
+//        this.add(this.createButton("game6", "http://juegosflasheros.org/swf/solarmax.swf"));
+//        this.add(this.createButton("game7", "http://juegosflasheros.org/swf/money-and-bomb.swf"));
         // this.add(swf);
 
     }
@@ -83,7 +83,8 @@ public class HeaderPanel extends AbstractPanel<Object> {
             }
 
         };
-        button.add(new ButtonBehavior());
+        //button.add(new ButtonBehavior());
+        button.setVisible(false);
         return button;
     }
 }

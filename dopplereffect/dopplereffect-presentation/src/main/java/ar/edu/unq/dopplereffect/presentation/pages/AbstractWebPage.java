@@ -63,7 +63,7 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
     public AbstractWebPage(final Component component) {
         super();
         this.setOutputMarkupId(true);
-        this.readCookies();
+//        this.readCookies();
         managerException = new HandlerException(this);
         body = component;
         ajaxPanel = new SimplePanel("body");
@@ -147,26 +147,26 @@ public class AbstractWebPage<T extends Component> extends WebPage implements Ser
         return new Label(TITLE2, new Model<String>("Effect"));
     }
 
-    private void readCookies() {
-        String language = null;
-        String country = null;
-        String variant = null;
-
-        for (Cookie cookie : ((WebRequest) this.getRequestCycle().getRequest()).getCookies()) {
-            if (cookie.getName().equals("locale.language")) {
-                language = cookie.getValue();
-            } else if (cookie.getName().equals("locale.country")) {
-                country = cookie.getValue();
-            } else if (cookie.getName().equals("locale.variant")) {
-                variant = cookie.getValue();
-            }
-        }
-        if (language != null && country != null && variant != null) {
-            Locale locale = new Locale(language, country, variant);
-            LocaleManager.getLocaleManager().setLocale(locale);
-            this.getSession().setLocale(locale);
-        }
-    }
+//    private void readCookies() {
+//        String language = null;
+//        String country = null;
+//        String variant = null;
+//        Cookie[] cookies = ((WebRequest) this.getRequestCycle().getRequest()).getCookies();
+//		for (Cookie cookie : cookies) {
+//            if (cookie.getName().equals("locale.language")) {
+//                language = cookie.getValue();
+//            } else if (cookie.getName().equals("locale.country")) {
+//                country = cookie.getValue();
+//            } else if (cookie.getName().equals("locale.variant")) {
+//                variant = cookie.getValue();
+//            }
+//        }
+//        if (language != null && country != null && variant != null) {
+//            Locale locale = new Locale(language, country, variant);
+//            LocaleManager.getLocaleManager().setLocale(locale);
+//            this.getSession().setLocale(locale);
+//        }
+//    }
 
     /* ************************* OPERATIONS ************************** */
 
