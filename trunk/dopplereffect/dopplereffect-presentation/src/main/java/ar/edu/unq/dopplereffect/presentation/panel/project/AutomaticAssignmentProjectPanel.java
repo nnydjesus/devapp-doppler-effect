@@ -101,7 +101,9 @@ public class AutomaticAssignmentProjectPanel extends AbstractSearchPanel<Assignm
     @Override
     public void search() {
         this.getModelObject().automaticRecommendation(this.getProjects().getModelObject(), new DateTime(fromDate));
-        this.getAjaxSectionResult().setVisible(true);
+        boolean emptyResult = this.getModelObject().getResults().isEmpty();
+        this.getAjaxSectionResult().setVisible(!emptyResult);
+        aceptAutomaticAssignment.setVisible(!emptyResult);
     }
 
     @Override

@@ -25,6 +25,6 @@ public interface EmployeeService extends Service {
 
     EmployeeDTO createEditDTO(EmployeeViewDTO viewDTO);
 
-    File export(String string);
+    File export(String string, List<? extends IEmployeeDTO> list);
 
 }

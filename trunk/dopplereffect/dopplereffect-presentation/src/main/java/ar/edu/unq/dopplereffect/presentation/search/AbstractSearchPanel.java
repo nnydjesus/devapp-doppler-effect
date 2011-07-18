@@ -242,7 +242,9 @@ public abstract class AbstractSearchPanel<T extends SearchModel<? extends DTO>> 
         } else {
             this.getModelObject().searchByName(this.getModelSearchByName().getObject());
         }
-        ajaxSectionResult.setVisible(true);
+        if (!this.getModelObject().getResults().isEmpty()) {
+            ajaxSectionResult.setVisible(true);
+        }
     }
 
     protected String getBeanName() {

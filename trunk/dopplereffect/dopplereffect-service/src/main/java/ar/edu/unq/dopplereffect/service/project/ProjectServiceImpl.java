@@ -110,8 +110,19 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Transactional
+    @NotLoggable
     public Project getProjectByDTO(final ProjectDTO dto) {
         return this.getProjectRepo().getByName(dto.getName());
+    }
+
+    @Transactional
+    @NotLoggable
+    public List<Project> getAllProjectByDTO(final List<ProjectDTO> dtos) {
+        List<Project> projects = new ArrayList<Project>();
+        for (ProjectDTO projectDTO : dtos) {
+            projects.add(this.getProjectByDTO(projectDTO));
+        }
+        return projects;
     }
 
     @Transactional
@@ -156,10 +167,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public File export(final String pathFile) {
+    public File export(final String pathFile, final List<ProjectDTO> projectDTOs) {
         HashMap<String, String> parameters = new HashMap<String, String>();
         parameters.put("Title", "Projects");
-        return this.getExportService().export(pathFile, this.getProjectRepo().searchAll(), parameters);
+        return this.getExportService().export(pathFile, this.getAllProjectByDTO(projectDTOs), parameters);
     }
 
     public void setEmployeeService(final EmployeeServiceImpl employeeService) {

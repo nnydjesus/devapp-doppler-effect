@@ -42,6 +42,9 @@ public class DetailsIntervalProjectAssignment extends AbstractCallbackPanel<Proj
     /* ************************* PRIVATE METHODS ************************** */
 
     private void addComponent(final ProjectAssignmentDTO projectAssignmentDTO) {
+        String title = "Asignaciones de " + projectAssignmentDTO.getEmployeeName() + " en el proyecto"
+                + projectAssignmentDTO.getProjectName();
+        this.add(new Label("panel_title", new Model<String>(title)));
         WebMarkupContainer selectableWicket = new WebMarkupContainer("availableWicket");
         selectableWicket.setMarkupId("availableWicket");
         selectableWicket.add(this.createListView("intervals", new ArrayList<IntervalDurationStrategy>(
